@@ -1,4 +1,4 @@
-# Brunch app
+# Wwoof France
 
 This is HTML5 application, built with [Brunch](http://brunch.io).
 

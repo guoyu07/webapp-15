@@ -1,6 +1,7 @@
 var hosts = require('./controllers/hosts');
 var photos = require('./controllers/photos');
 var departements = require('./controllers/departements');
+var wwoofers = require('./controllers/wwoofers');
 
 module.exports = function(app) {
   app.get('/api/1/hosts', hosts.index);
@@ -12,4 +13,6 @@ module.exports = function(app) {
   app.post('/api/1/photos', photos.create)
 
   app.get('/api/1/departements', departements.index);
+
+  app.get('/api/1/wwoofers', wwoofers.index);
 };

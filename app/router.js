@@ -6,7 +6,10 @@ App.Router.map(function () {
     }),
         this.resource('photos', { path: '/photos' }, function () {
             // additional child routes here later
-        });
+        }),
+        this.resource('wwoofers', { path: '/wwoofers' }, function () {
+            // additional child routes here later
+        })
 });
 
 App.PhotosIndexRoute = Ember.Route.extend({
