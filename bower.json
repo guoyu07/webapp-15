@@ -1,0 +1,17 @@
+{
+  "name": "wwoof",
+  "version": "0.0.1",
+  "main": "public/app.js",
+  "dependencies": {
+    "ember": "~1.3.2",
+    "ember-data": "~1.0.0-beta.6",
+    "bootstrap": "~3.1.1",
+    "jquery": "~2.1.0",
+    "swipeshow": "~0.10.5",
+    "alertify.js": "~0.3.11"
+  },
+  "overrides": {},
+  "resolutions": {
+    "jquery": ">= 1.7 < 2.1"
+  }
+}

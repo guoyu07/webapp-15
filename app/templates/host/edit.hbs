@@ -1,0 +1,86 @@
+<div class="page-header">
+    <h1>{{farmName}}
+        <small>{{contact}}</small>
+    </h1>
+</div>
+
+<form>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div {{bind-attr class=":form-group"}}>
+                <label for="contact" class="control-label">Contact</label>
+                {{input type="text" id="contact" name="contact" value=contact class="form-control" placeholder="Contact"}}
+            </div>
+
+            <div {{bind-attr class=":form-group"}}>
+                <label for="farm-name" class="control-label">Farm Name</label>
+                {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholder="La Ferme de M. Seguin"}}
+            </div>
+
+            <div {{bind-attr class=":form-group"}}>
+                <label for="address" class="control-label">Address</label>
+                {{input type="text" id="address" name="address" value=address class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div {{bind-attr class=":form-group"}}>
+                        <label for="zipCode" class="control-label">Zip Code</label>
+                        {{input type="text" id="zipCode" name="zipCode" value=zipCode class="form-control" placeholder="Code postal"}}
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div {{bind-attr class=":form-group"}}>
+                        <label for="city" class="control-label">City</label>
+                        {{input type="text" id="city" name="city" value=city class="form-control" placeholder="Ville"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div {{bind-attr class=":form-group"}}>
+                <label for="email" class="control-label">Email</label>
+                {{input type="email" id="email" name="email" value=email class="form-control" placeholder="nom@domaine.com"}}
+            </div>
+
+            <div {{bind-attr class=":form-group"}}>
+                <label for="phone" class="control-label">Phone Number</label>
+                {{input type="text" id="phone" name="phone" value=phone class="form-control" placeholder="+33 (0)6 12 34 56 78"}}
+            </div>
+
+            <div {{bind-attr class=":form-group"}}>
+                <label for="web" class="control-label">Website</label>
+                {{input type="text" id="web" name="web" value=web class="form-control" placeholder="http://www.ma-page-perso.fr"}}
+            </div>
+
+            <div {{bind-attr class=":form-group"}}>
+                <label for="travel" class="control-label">Travel</label>
+                {{input type="text" id="travel" name="travel" value=travel class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div {{bind-attr class=":form-group"}}>
+                <label for="entry" class="control-label">Entry</label>
+                {{textarea id="entry" name="entry" value=entry class="form-control" placeholder=""}}
+            </div>
+        </div>
+    </div>
+
+    <button {{action "saveHost"}} class="btn btn-default">Save</button>
+
+</form>
+
+<hr/>
+
+<form class="row" {{action "addPhoto" on="submit"}}>
+    <div class="form-group">
+        <label for="file_upload" class="control-label">Add a photo</label>
+        <input id="file_upload" type="file" name="files[]" data-url="/api/1/photos" multiple>
+    </div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</form>

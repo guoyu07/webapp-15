@@ -1,0 +1,45 @@
+<div class="page-header">
+    <h1>{{farmName}}
+        <small>{{contact}}</small>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+
+        <p>Address: {{address}}</p>
+
+        <p>Zip Code: {{zipCode}}</p>
+
+        <p>City: {{city}}</p>
+
+        <hr/>
+
+        <p>Email: {{email}}</p>
+
+        <p>Phone:  {{phone}}</p>
+
+        <p>Website: {{web}}</p>
+
+        <hr/>
+
+        <p>Entry: {{entry}}</p>
+
+        <p>Travel:  {{travel}}</p>
+
+    </div>
+    <div class="col-md-6">
+        <div class="host-gallery swipeshow">
+            <ul class="slides">
+                <li class="slide">
+                    {{#each photos}}
+                        <img {{bind-attr src="completeUrl"}} />
+                    {{else}}
+                        <img src="wwoof-no-photo.png"/>
+                    {{/each}}
+                </li>
+            </ul>
+            <!--<div class='dots'></div>-->
+        </div>
+    </div>
+</div>

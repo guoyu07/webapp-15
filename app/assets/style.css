@@ -1,0 +1,29 @@
+body {
+    padding-top: 70px;
+}
+
+.list-group-item {
+    text-transform: capitalize;
+}
+
+.host-gallery {
+    width: 500px;
+    height: 281px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.4);
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.host-gallery .slide img {
+    max-width: 500px;
+}
+
+.host-thumb {
+    width: 200px;
+    height: 132px;
+    overflow: hidden;
+}
+
+.host-thumb img {
+    width: 100%;
+}
