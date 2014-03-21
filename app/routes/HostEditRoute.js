@@ -7,7 +7,7 @@ App.HostEditRoute = Ember.Route.extend({
         return this.modelFor('host');
     },
     setupController: function(controller, model) {
-        this.controllerFor('hosts.new').setProperties({content:model});
+        this.controllerFor('hosts.new').setProperties({ content:model });
     },
     renderTemplate: function() {
         this.render('hosts/new')

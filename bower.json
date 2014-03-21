@@ -8,7 +8,8 @@
     "bootstrap": "~3.1.1",
     "jquery": "~2.1.0",
     "swipeshow": "~0.10.5",
-    "alertify.js": "~0.3.11"
+    "alertify.js": "~0.3.11",
+    "eonasdan-bootstrap-datetimepicker": "~3.0.0"
   },
   "overrides": {},
   "resolutions": {

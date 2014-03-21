@@ -24,6 +24,13 @@ body {
     overflow: hidden;
 }
 
-.host-thumb img {
+.host-thumb-small {
+    width: 100px;
+    height: 66px;
+    overflow: hidden;
+}
+
+.host-thumb img,
+.host-thumb-small img {
     width: 100%;
 }

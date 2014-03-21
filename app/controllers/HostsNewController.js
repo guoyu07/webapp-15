@@ -3,7 +3,7 @@
  */
 
 
-App.HostEditController = Ember.ObjectController.extend({
+App.HostsNewController = Ember.ObjectController.extend({
     actions: {
         "saveHost": function () {
             var content = this.get('content');

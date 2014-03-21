@@ -5,12 +5,15 @@ App.Router.map(function () {
             this.route("edit");
         });
     }),
-        this.resource('photos', { path: '/photos' }, function () {
-            // additional child routes here later
-        }),
-        this.resource('wwoofers', { path: '/wwoofers' }, function () {
-            // additional child routes here later
-        })
+    this.resource('wwoofers', { path: '/wwoofers' }, function () {
+        this.route("new");
+        this.resource("wwoofer", { path: "/:wwoofer_id" }, function () {
+            this.route("edit");
+        });
+    }),
+    this.resource('photos', { path: '/photos' }, function () {
+        // additional child routes here later
+    })
 });
 
 App.PhotosIndexRoute = Ember.Route.extend({

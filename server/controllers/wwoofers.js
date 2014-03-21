@@ -35,3 +35,13 @@ exports.index = function(req, res){
                 })
         });
 };
+
+exports.single = function(req, res) {
+    db.Wwoofer.find({
+        where: {id: req.params.id}
+    }).on('success', function(wwoofer) {
+            res.send({
+                wwoofer: wwoofer
+            });
+        })
+};

@@ -4,7 +4,8 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Photo = sequelize.define('Photo', {
-    fileName: DataTypes.STRING
+    fileName: DataTypes.STRING,
+    caption: DataTypes.STRING
   }, {
     tableName: 'photos',
     timestamps: false,
