@@ -18,7 +18,7 @@ App.Router.map(function () {
 });
 
 App.Router.reopen({
-    //location: window.history.replaceState ? "history" : "hash",
+    location: window.history.replaceState ? "history" : "hash",
     rootURL: "/app"
 });
 

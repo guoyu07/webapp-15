@@ -29,7 +29,7 @@ app.configure('development', function(){
 require('./server/routes')(app);
 
 // Delegate all of the routes we haven't set to the Ember App
-app.get('/app/#*', function (request, response) {
+app.get('/app/*', function (request, response) {
     console.log(request.query);
     return response.sendfile('./public/index.html');
 });
