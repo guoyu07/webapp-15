@@ -1,0 +1,13 @@
+
+<form>
+    <div {{bind-attr class=":form-group"}}>
+        <label for="username" class="control-label">Username</label>
+        {{input value=username type="text" class="form-control"}}
+    </div>
+    <div {{bind-attr class=":form-group"}}>
+        <label for="password" class="control-label">Password</label>
+        {{input value=password type="password" class="form-control"}}
+    </div>
+
+    <button {{action "login"}} class="btn btn-default">Log in</button>
+</form>

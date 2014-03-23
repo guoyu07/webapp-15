@@ -11,9 +11,15 @@ App.Router.map(function () {
             this.route("edit");
         });
     }),
+    this.resource('login', { path: '/login' }),
     this.resource('photos', { path: '/photos' }, function () {
         // additional child routes here later
     })
+});
+
+App.Router.reopen({
+    //location: window.history.replaceState ? "history" : "hash",
+    rootURL: "/app"
 });
 
 App.PhotosIndexRoute = Ember.Route.extend({
