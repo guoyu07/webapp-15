@@ -43,7 +43,7 @@ passport.use(new LocalStrategy(
         console.log('Authenticating user...');
 
         db.User.find({
-            where: {username: username}
+            where: { username: username }
         }).on('success', function (user) {
                 if (!user) {
                     return done(null, false, { message: 'Incorrect username.' });
@@ -51,8 +51,29 @@ passport.use(new LocalStrategy(
                 if (!user.password == password) {
                     return done(null, false, { message: 'Incorrect password.' });
                 }
-                console.log('User authenticated');
-                return done(null, user);
+
+                db.Token.findOrCreate(user.id)
+                    .success(function(token) {
+
+                    // Generate the token
+                    if (!token.token) {
+                        var payload = {
+                            userId: user.id
+                        };
+                        token.token = jwt.encode(payload, config.secret);
+                    }
+
+                    // Set the token expiration date (one hour from now)
+                    var now = new Date();
+                    token.expireAt = now.setHours(now.getHours() + 1);
+
+                    // Save the token
+                    token.save().success(function() {
+                        console.log('Authenticated user: ' + user.username);
+                        console.log('Token expires: ' + moment(token.expireAt).format('MMMM Do YYYY, h:mm:ss a'));
+                        return done(null, user);
+                    })
+                })
             })
     }
 ));
@@ -61,31 +82,44 @@ passport.use(new BearerStrategy(
 
         console.log('Validating user token...');
 
-        // Decode token
-        var token = jwt.decode(token, config.secret);
+        db.Token.find({
+            where: { token: token }
+        }).success(function(dbToken) {
 
-        // Validate token
-        if (!token || !token.expirationDate || !token.userId || isNaN(token.expirationDate)) {
-            return done(null, false);
-        }
+            // Decode token
+            var decodedToken = jwt.decode(token, config.secret);
 
-        var expirationDate = new Date(token.expirationDate);
-        console.log('Token expires: ' + moment(expirationDate).format('MMMM Do YYYY, h:mm:ss a'));
-
-        // Validate expiration
-        if (expirationDate < new Date()) {
-            return done(null, false);
-        }
-
-        // Find the associated user
-        db.User
-            .find(token.userId)
-            .success(function (user) {
-                return done(null, user);
-            })
-            .error(function(err) {
+            // Make sure the user id in the JWT token matches the id of the token
+            if (!decodedToken || !decodedToken.userId || (decodedToken.userId != dbToken.id))
                 return done(null, false);
-            });
+
+            // Check whether the token is expired
+            var now = new Date();
+            if (dbToken.expireAt < now)
+                return done(null, false);
+
+            // Delay the token expiration date to be in 1 hour from now
+            dbToken.expireAt = now.setHours(now.getHours() + 1);
+            console.log('Token expires: ' + moment(dbToken.expireAt).format('MMMM Do YYYY, h:mm:ss a'));
+
+            // Save the token
+            dbToken.save()
+                .success(function() {
+
+                    // Find the user in the DB
+                    db.User
+                        .find(dbToken.id)
+                        .success(function (user) {
+                            return done(null, user);
+                        })
+                        .error(function(err) {
+                            return done(null, false);
+                        });
+
+                }).error(function(err) {
+                    return done(null, false);
+                });
+        })
     }
 ));
 

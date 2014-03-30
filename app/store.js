@@ -6,5 +6,14 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     namespace: 'api/1',
     headers: {
         'Authorization': 'Bearer ' + localStorage['token']
+    },
+    ajaxError: function(jqXHR) {
+        var error = this._super(jqXHR);
+
+        // Redirect user to login page if authentication fails
+        if (jqXHR && jqXHR.status === 401) {
+            window.location.replace('/app/login');
+        }
+        return error;
     }
 });

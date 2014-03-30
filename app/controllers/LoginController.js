@@ -14,7 +14,7 @@ App.LoginController = Ember.Controller.extend({
                     localStorage["token"] = data.token;
 
                     // Go to host list
-                    self.transitionTo('hosts');
+                    self.transitionToRoute('hosts');
                 });
         }
     }

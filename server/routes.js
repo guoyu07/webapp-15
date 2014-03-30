@@ -17,12 +17,12 @@ module.exports = function (app) {
 
     app.get('/api/1/photos', photos.index);
     app.get('/api/1/photos/:id', photos.single);
-    app.post('/api/1/photos', photos.create)
+    app.post('/api/1/photos', photos.create);
 
     app.get('/api/1/departements', departements.index);
 
     app.get('/api/1/countries', countries.index);
 
     app.get('/api/1/wwoofers', passport.authenticate('bearer', { session: false }), wwoofers.index);
-    app.get('/api/1/wwoofers/:id', wwoofers.single);
+    app.get('/api/1/wwoofers/:id', passport.authenticate('bearer', { session: false }), wwoofers.single);
 };
