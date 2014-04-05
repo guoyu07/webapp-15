@@ -3,9 +3,9 @@
  */
 
 App.ApplicationAdapter = DS.RESTAdapter.extend({
-    namespace: 'api/1',
+    namespace: 'api',
     headers: {
-        'Authorization': 'Bearer ' + localStorage['token']
+        'Authorization': localStorage['token'] ? 'Bearer ' + localStorage['token'] : null
     },
     ajaxError: function(jqXHR) {
         var error = this._super(jqXHR);

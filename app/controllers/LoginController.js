@@ -3,19 +3,25 @@
  */
 
 App.LoginController = Ember.Controller.extend({
+
+    needs: 'hosts',
+
     actions: {
         login: function () {
             var self = this;
-            $.post("/login", {
+            $.post("/api/request_token", {
                 username: this.get("username"),
                 password: this.get("password")
             }).then(function (data) {
-                    // Store the token in the local storage
-                    localStorage["token"] = data.token;
+                // Store the token in the local storage
+                localStorage["token"] = data.token;
 
-                    // Go to host list
-                    self.transitionToRoute('hosts');
-                });
+                // Clear the host cache
+                // self.get('controllers.hosts.content').reload();
+
+                // Go to host list
+                self.transitionToRoute('hosts');
+            });
         }
     }
 });

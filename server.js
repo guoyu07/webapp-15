@@ -40,7 +40,7 @@ app.get('/app/*', function (request, response) {
 passport.use(new LocalStrategy(
     function (username, password, done) {
 
-        console.log('Authenticating user...');
+        console.log('Authenticating user \'' + username + '\'');
 
         db.User.find({
             where: { username: username }
