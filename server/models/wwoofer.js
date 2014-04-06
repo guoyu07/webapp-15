@@ -15,8 +15,7 @@ module.exports = function (sequelize, DataTypes) {
         postalCode: DataTypes.STRING,
         country: DataTypes.STRING
     }, {
-        tableName: 'wwoofer',
-        timestamps: false
+        tableName: 'wwoofer'
     })
 
     return Wwoofer

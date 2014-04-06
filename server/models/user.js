@@ -7,8 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         username: DataTypes.STRING,
         passwordHash: DataTypes.STRING
     }, {
-        tableName: 'users',
-        timestamps: false
+        tableName: 'users'
     })
 
     return User
