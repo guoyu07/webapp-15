@@ -3,23 +3,20 @@
  */
 
 module.exports = function (sequelize, DataTypes) {
-
     var Host = sequelize.define('Host', {
-        id: {
-            type: DataTypes.STRING,
-            primaryKey: true,
-            autoIncrement: false
-        },
+        id: { type: DataTypes.INTEGER, primaryKey: true},
         farmName: DataTypes.STRING
     }, {
-        tableName: 'frenchhost2',
+        tableName: 'hosts',
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                Host.hasMany(models.Photo, { foreignKey: 'whid', as: 'photos' })
+                Host.hasMany(models.Photo, {
+                    foreignKey: 'whid',
+                    as: 'photos',
+                    onDelete: 'cascade' })
             }
         }
     })
-
     return Host
 }
