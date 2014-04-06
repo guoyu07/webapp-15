@@ -11,10 +11,7 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: false,
         classMethods: {
             associate: function (models) {
-                Host.hasMany(models.Photo, {
-                    foreignKey: 'whid',
-                    as: 'photos',
-                    onDelete: 'cascade' })
+                Host.hasMany(models.Photo, { onDelete: 'cascade' })
             }
         }
     })
