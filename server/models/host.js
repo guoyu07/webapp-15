@@ -4,7 +4,6 @@
 
 module.exports = function (sequelize, DataTypes) {
     var Host = sequelize.define('Host', {
-        id: { type: DataTypes.INTEGER, primaryKey: true},
         farmName: DataTypes.STRING
     }, {
         tableName: 'hosts',
