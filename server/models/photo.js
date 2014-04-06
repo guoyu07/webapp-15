@@ -8,7 +8,6 @@ module.exports = function (sequelize, DataTypes) {
         caption: DataTypes.STRING
     }, {
         tableName: 'photos',
-        timestamps: false,
         classMethods: {
             associate: function (models) {
                 Photo.belongsTo(models.Host)

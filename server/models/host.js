@@ -8,10 +8,10 @@ module.exports = function (sequelize, DataTypes) {
         farmName: DataTypes.STRING
     }, {
         tableName: 'hosts',
-        timestamps: false,
         classMethods: {
             associate: function (models) {
                 Host.hasMany(models.Photo, { onDelete: 'cascade' })
+                Host.belongsTo(models.User)
             }
         }
     })

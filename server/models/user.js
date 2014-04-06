@@ -7,7 +7,12 @@ module.exports = function (sequelize, DataTypes) {
         username: DataTypes.STRING,
         passwordHash: DataTypes.STRING
     }, {
-        tableName: 'users'
+        tableName: 'users',
+        classMethods: {
+            associate: function (models) {
+                User.hasOne(models.Host, { onDelete: 'cascade' })
+            }
+        }
     })
 
     return User
