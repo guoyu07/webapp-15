@@ -4,8 +4,7 @@
 
 module.exports = function (sequelize, DataTypes) {
     var Departement = sequelize.define('Departement', {
-        nom: DataTypes.STRING
+        name: DataTypes.STRING
     });
-
     return Departement
 }

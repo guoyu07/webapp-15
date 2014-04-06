@@ -10,13 +10,16 @@ module.exports = function (sequelize, DataTypes) {
         firstName2: DataTypes.STRING,
         lastName2: DataTypes.STRING,
         birthDate2: DataTypes.DATE,
-
         city: DataTypes.STRING,
         postalCode: DataTypes.STRING,
         country: DataTypes.STRING
     }, {
-        tableName: 'wwoofer'
+        tableName: 'wwoofer',
+        classMethods: {
+            associate: function (models) {
+                Wwoofer.belongsTo(models.User)
+            }
+        }
     })
-
     return Wwoofer
 }

@@ -9,6 +9,5 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         tableName: 'tokens'
     })
-
     return Token
 }

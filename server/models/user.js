@@ -11,9 +11,9 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 User.hasOne(models.Host, { onDelete: 'cascade' })
+                User.hasOne(models.Wwoofer, { onDelete: 'cascade' })
             }
         }
     })
-
     return User
 }

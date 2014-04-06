@@ -6,6 +6,5 @@ module.exports = function (sequelize, DataTypes) {
     var Country = sequelize.define('Country', {
         name: DataTypes.STRING
     });
-
     return Country
 }
