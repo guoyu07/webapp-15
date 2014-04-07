@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
         tableName: 'renewals',
         classMethods: {
             associate: function (models) {
-                Renewal.belongsTo(models.User)
+                Renewal.belongsTo(models.User, { onDelete: 'cascade' })
             }
         }
     })

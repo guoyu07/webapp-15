@@ -1,7 +1,3 @@
-/**
- * Created by guillaumez on 3/2/14.
- */
-
 var fs = require('fs')
 config = require('../../wwoof-config'),
     path = require('path'),
@@ -17,11 +13,13 @@ fs
     })
     .forEach(function (file) {
         var model = sequelize.import(path.join(__dirname, file))
+        console.log('Create table for ' + model.name + ' model')
         db[model.name] = model
     })
 
 Object.keys(db).forEach(function (modelName) {
     if ('associate' in db[modelName]) {
+        console.log('Create associations for ' + modelName + ' model')
         db[modelName].associate(db)
     }
 })

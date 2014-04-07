@@ -1,14 +1,13 @@
 module.exports = function (sequelize, DataTypes) {
-    var Country = sequelize.define('Country', {
-        code: DataTypes.STRING,
+    var Department = sequelize.define('Department', {
         name: DataTypes.STRING
     }, {
-        tableName: 'countries',
+        tableName: 'departments',
         classMethods: {
             associate: function (models) {
-                Country.hasMany(models.Address)
+                Department.hasMany(models.Address)
             }
         }
     })
-    return Country
+    return Department
 }
