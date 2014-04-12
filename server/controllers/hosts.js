@@ -23,7 +23,7 @@ exports.index = function (req, res) {
             searchTerm = req.query.searchTerm || '';
 
         // Find all hosts matching parameters
-        db.Host.findAll({
+        db.Host.findAndCountAll({
             include: [
                 //{ model: db.Photo, as: 'photos' },
                 { model: db.User, as: 'user' },
@@ -40,7 +40,12 @@ exports.index = function (req, res) {
             )
         }).success(function (hosts) {
                 res.send({
-                    hosts: hosts
+                    hosts: hosts.rows,
+                    meta: {
+                        offset: offset,
+                        limit: limit,
+                        total: hosts.count
+                    }
                 });
             });
     })(req, res);
