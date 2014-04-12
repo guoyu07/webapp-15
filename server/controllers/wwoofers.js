@@ -14,25 +14,19 @@ exports.index = function (req, res) {
 //        where = ["contact like ? and zipCode like ?", '%' + searchTerm + '%', dpt + '%'];
 
     // Find all hosts matching parameters
-    db.Wwoofer.findAll({
+    db.Wwoofer.findAndCountAll({
         limit: limit,
         offset: offset
         // where: where
     }).success(function (wwoofers) {
-
-            // Count total hosts
-            db.Wwoofer.count({
-                // where: where
-            }).on('success', function (count) {
-                    res.send({
-                        wwoofers: wwoofers,
-                        meta: {
-                            offset: offset,
-                            limit: limit,
-                            total: count
-                        }
-                    });
-                })
+            res.send({
+                wwoofers: wwoofers.rows,
+                meta: {
+                    offset: offset,
+                    limit: limit,
+                    total: wwoofers.count
+                }
+            });
         });
 };
 
