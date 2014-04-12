@@ -1,11 +1,19 @@
 module.exports = function (sequelize, DataTypes) {
     var Wwoofer = sequelize.define('Wwoofer', {
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
-        birthDate: DataTypes.DATE,
         firstName2: DataTypes.STRING,
         lastName2: DataTypes.STRING,
-        birthDate2: DataTypes.DATE
+        birthDate2: DataTypes.DATE,
+        nationality: DataTypes.STRING,
+        tripDuration: DataTypes.INTEGER,
+        tripMotivation: DataTypes.INTEGER,
+        intro: DataTypes.STRING,
+        comment: DataTypes.STRING,
+        //paymentStatus: DataTypes.INTEGER,
+        //memId: DataTypes.STRING,
+        //txnId: DataTypes.STRING,
+        itemCode: DataTypes.INTEGER, // Convert to enum
+        paymentType: DataTypes.ENUM('PPL', 'CHQ'),
+        deletionDate: DataTypes.DATE
     }, {
         tableName: 'wwoofer',
         classMethods: {

@@ -1,6 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     var Department = sequelize.define('Department', {
-        name: DataTypes.STRING
+        name: DataTypes.STRING,
+        region: DataTypes.STRING
     }, {
         tableName: 'departments',
         classMethods: {

@@ -1,6 +1,15 @@
 module.exports = function (sequelize, DataTypes) {
     var Host = sequelize.define('Host', {
-        farmName: DataTypes.STRING
+        suspended: DataTypes.BOOLEAN,
+        farmName: DataTypes.STRING,
+        shortDescription: DataTypes.STRING,
+        fullDescription: DataTypes.STRING,
+        webSite: DataTypes.STRING,
+        travelDetails: DataTypes.STRING,
+        noPhone: DataTypes.BOOLEAN,
+        noEmail: DataTypes.BOOLEAN,
+        note: DataTypes.STRING, // (legend)
+        deletionDate: DataTypes.DATE
     }, {
         tableName: 'hosts',
         classMethods: {
