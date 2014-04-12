@@ -3,7 +3,7 @@ var login = require('./controllers/login');
 var users = require('./controllers/users');
 var hosts = require('./controllers/hosts');
 var photos = require('./controllers/photos');
-var departements = require('./controllers/departements');
+var departments = require('./controllers/departments');
 var wwoofers = require('./controllers/wwoofers');
 var countries = require('./controllers/countries');
 
@@ -21,7 +21,7 @@ module.exports = function (app) {
     app.get('/api/photos/:id', photos.single);
     app.post('/api/photos', photos.create);
 
-    app.get('/api/departements', departements.index);
+    app.get('/api/departments', departments.index);
 
     app.get('/api/countries', countries.index);
 

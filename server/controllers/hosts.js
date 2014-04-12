@@ -31,20 +31,20 @@ exports.index = function (req, res) {
             where: where
         }).success(function (hosts) {
 
-            // Count total hosts
-            db.Host.count({
-                where: where
-            }).on('success', function (count) {
-                res.send({
-                    hosts: hosts,
-                    meta: {
-                        offset: offset,
-                        limit: limit,
-                        total: count
-                    }
-                });
-            })
-        });
+                // Count total hosts
+                db.Host.count({
+                    where: where
+                }).on('success', function (count) {
+                        res.send({
+                            hosts: hosts,
+                            meta: {
+                                offset: offset,
+                                limit: limit,
+                                total: count
+                            }
+                        });
+                    })
+            });
     })(req, res);
 };
 
@@ -55,26 +55,26 @@ exports.single = function (req, res) {
         ],
         where: {id: req.params.id}
     }).on('success', function (host) {
-        res.send({
-            host: host
-        });
-    })
+            res.send({
+                host: host
+            });
+        })
 };
 
 exports.update = function (req, res) {
     db.Host.find({
         where: { id: req.params.id }
     }).on('success', function (host) {
-        if (host) {
-            host.updateAttributes({
-                farmName: req.body.host.farmName
-            }).success(function (host) {
-                res.send({
-                    host: host
-                });
-            });
-        } else {
-            res.send(404);
-        }
-    });
+            if (host) {
+                host.updateAttributes({
+                    farmName: req.body.host.farmName
+                }).success(function (host) {
+                        res.send({
+                            host: host
+                        });
+                    });
+            } else {
+                res.send(404);
+            }
+        });
 };

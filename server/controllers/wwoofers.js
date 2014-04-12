@@ -4,7 +4,7 @@
 
 var db = require('../models');
 
-exports.index = function(req, res){
+exports.index = function (req, res) {
 
     // Extract query params
     var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
@@ -18,12 +18,12 @@ exports.index = function(req, res){
         limit: limit,
         offset: offset
         // where: where
-    }).success(function(wwoofers) {
+    }).success(function (wwoofers) {
 
             // Count total hosts
             db.Wwoofer.count({
                 // where: where
-            }).on('success', function(count) {
+            }).on('success', function (count) {
                     res.send({
                         wwoofers: wwoofers,
                         meta: {
@@ -36,10 +36,10 @@ exports.index = function(req, res){
         });
 };
 
-exports.single = function(req, res) {
+exports.single = function (req, res) {
     db.Wwoofer.find({
         where: {id: req.params.id}
-    }).on('success', function(wwoofer) {
+    }).on('success', function (wwoofer) {
             res.send({
                 wwoofer: wwoofer
             });

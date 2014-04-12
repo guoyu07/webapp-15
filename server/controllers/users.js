@@ -10,26 +10,28 @@ exports.signUp = function (req, res) {
 
     db.User.find({
         where: { username: req.user.username }
-    }).success(function(user) {
-        if (user) { res.send(409) } // Conflict - User already exists
+    }).success(function (user) {
+            if (user) {
+                res.send(409)
+            } // Conflict - User already exists
 
-        var passwordHash = crypto.createHash('sha1').update(req.user.password).digest("hex")
+            var passwordHash = crypto.createHash('sha1').update(req.user.password).digest("hex")
 
-        db.User.create({
-            firstName: req.user.firstName,
-            lastName: req.user.lastName,
-            username: req.user.username,
-            passwordHash: passwordHash
-        }, ['username', 'passwordHash'])
-            .success(function(task) {
-            // you can now access the newly created task via the variable task
+            db.User.create({
+                firstName: req.user.firstName,
+                lastName: req.user.lastName,
+                username: req.user.username,
+                passwordHash: passwordHash
+            }, ['username', 'passwordHash'])
+                .success(function (task) {
+                    // you can now access the newly created task via the variable task
+                })
+
+            // Send back the JSON Web Token to the client
+            res.send({
+                token: token.token
+            });
         })
-
-        // Send back the JSON Web Token to the client
-        res.send({
-            token: token.token
-        });
-    })
 
     // create reusable transport method (opens pool of SMTP connections)
     var smtpTransport = nodemailer.createTransport("SMTP", {
