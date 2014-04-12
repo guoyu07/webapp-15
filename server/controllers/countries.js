@@ -4,9 +4,9 @@
 
 var db = require('../models');
 
-exports.index = function(req, res){
+exports.index = function (req, res) {
     db.Country.findAll()
-        .success(function(countries) {
+        .success(function (countries) {
             res.send({
                 countries: countries
             });

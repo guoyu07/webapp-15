@@ -4,7 +4,7 @@
 
 var db = require('../models');
 
-exports.index = function(req, res){
+exports.index = function (req, res) {
 
     // Extract query params
     var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
@@ -14,32 +14,26 @@ exports.index = function(req, res){
 //        where = ["contact like ? and zipCode like ?", '%' + searchTerm + '%', dpt + '%'];
 
     // Find all hosts matching parameters
-    db.Wwoofer.findAll({
+    db.Wwoofer.findAndCountAll({
         limit: limit,
         offset: offset
         // where: where
-    }).success(function(wwoofers) {
-
-            // Count total hosts
-            db.Wwoofer.count({
-                // where: where
-            }).on('success', function(count) {
-                    res.send({
-                        wwoofers: wwoofers,
-                        meta: {
-                            offset: offset,
-                            limit: limit,
-                            total: count
-                        }
-                    });
-                })
+    }).success(function (wwoofers) {
+            res.send({
+                wwoofers: wwoofers.rows,
+                meta: {
+                    offset: offset,
+                    limit: limit,
+                    total: wwoofers.count
+                }
+            });
         });
 };
 
-exports.single = function(req, res) {
+exports.single = function (req, res) {
     db.Wwoofer.find({
         where: {id: req.params.id}
-    }).on('success', function(wwoofer) {
+    }).on('success', function (wwoofer) {
             res.send({
                 wwoofer: wwoofer
             });
