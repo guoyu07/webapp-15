@@ -11,7 +11,8 @@ module.exports = function (app) {
 
     app.post('/api/request_token', passport.authenticate('local', { session: false }), login.successCallback);
 
-    app.post('/api/sign_up', users.signUp);
+    app.get('/api/users', users.index);
+    app.post('/api/users', users.create);
 
     app.get('/api/hosts', hosts.index);
     app.get('/api/hosts/:id', hosts.single);

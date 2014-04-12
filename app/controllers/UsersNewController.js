@@ -1,10 +1,6 @@
-/**
- * Created by guillaumez on 3/11/14.
- */
-
-App.HostsNewController = Ember.ObjectController.extend({
+App.UsersNewController = Ember.ObjectController.extend({
     actions: {
-        "saveHost": function () {
+        "saveUser": function () {
             var content = this.get('content');
 
             // TODO: make to create/update model depending on controller state

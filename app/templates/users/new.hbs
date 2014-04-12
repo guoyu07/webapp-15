@@ -1,0 +1,27 @@
+<form>
+    <div class="row">
+        <div class="col-md-6">
+            <div {{bind-attr class=":form-group"}}>
+                <label for="firstName" class="control-label">First name</label>
+                {{input type="text" id="firstName" name="firstName" value=firstName class="form-control" placeholder="First name"}}
+            </div>
+            <div {{bind-attr class=":form-group"}}>
+                <label for="lastName" class="control-label">Last name</label>
+                {{input type="text" id="lastName" name="lastName" value=lastName class="form-control" placeholder="Last name"}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div {{bind-attr class=":form-group"}}>
+                <label for="usermane" class="control-label">Email Address</label>
+                {{input type="text" id="usermane" name="usermane" value=username class="form-control" placeholder=""}}
+            </div>
+            <div {{bind-attr class=":form-group"}}>
+                <label for="password" class="control-label">Password</label>
+                {{input type="text" id="password" name="password" value=password class="form-control" placeholder=""}}
+            </div>
+        </div>
+    </div>
+
+    <button {{action "saveUser"}} class="btn btn-default">Save</button>
+
+</form>

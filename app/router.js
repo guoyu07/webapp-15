@@ -12,6 +12,12 @@ App.Router.map(function () {
         });
     }),
     this.resource('login', { path: '/login' }),
+    this.resource('users', { path: '/users' }, function () {
+        this.route("new");
+        this.resource("user", { path: "/:user_id" }, function () {
+            this.route("edit");
+        });
+    }),
     this.resource('photos', { path: '/photos' }, function () {
         // additional child routes here later
     })

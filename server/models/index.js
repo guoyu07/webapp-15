@@ -1,5 +1,9 @@
-var fs = require('fs')
-config = require('../../wwoof-config'),
+/**
+ *  Configures a connection to the database and to collects all model definitions.
+ */
+
+var fs = require('fs'),
+    config = require('../../wwoof-config'),
     path = require('path'),
     Sequelize = require('sequelize'),
     lodash = require('lodash'),

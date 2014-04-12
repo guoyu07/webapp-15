@@ -8,10 +8,28 @@ var express = require('express'),
     BearerStrategy = require('passport-http-bearer').Strategy,
     jwt = require('jwt-simple'),
     config = require('./wwoof-config'),
-    moment = require('moment');
+    moment = require('moment'),
+    mailer = require('express-mailer'),
+    jade = require('jade');
 
 // Configure express app
 app.set('port', process.env.PORT || 3333);
+app.set('views', __dirname + '/server/views');
+app.set('view engine', 'jade');
+
+// Configure mailer (must be called before "app.use(app.router)")
+mailer.extend(app, {
+    from: config.smtpFrom,
+    host: config.smtpHost,
+    secureConnection: config.smtpSecure,
+    port: config.smtpPort,
+    transportMethod: 'SMTP',
+    auth: {
+        user: config.smtpUsername,
+        pass: config.smtpPassword
+    }
+});
+
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
