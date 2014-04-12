@@ -9,6 +9,8 @@ var db = require('../models');
  * Returns a paginated list of hosts.
  * This route can be accessed from non authenticated users, but returns additional data for members.
  */
+var Sequelize = require('sequelize');
+
 exports.index = function (req, res) {
 
     // Manually call the authentication middleware
@@ -17,33 +19,29 @@ exports.index = function (req, res) {
         // Extract query params
         var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
             offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
-            dpt = (req.query.dpt || '') + '%',
-            searchTerm = req.query.searchTerm || '',
-            where = ["contact like ? and zipCode like ?", '%' + searchTerm + '%', dpt + '%'];
+            dpt = (req.query.dpt || ''),
+            searchTerm = req.query.searchTerm || '';
 
         // Find all hosts matching parameters
         db.Host.findAll({
             include: [
-                { model: db.Photo, as: 'photos' }
+                //{ model: db.Photo, as: 'photos' },
+                { model: db.User, as: 'user' },
+                { model: db.Address, as: 'address' }
             ],
             limit: limit,
             offset: offset,
-            where: where
+            where: Sequelize.and(
+                Sequelize.or(
+                    ["user.firstName like ?", '%' + searchTerm + '%'],
+                    ["user.lastName like ?", '%' + searchTerm + '%']
+                ),
+                { 'address.departmentId': dpt }
+            )
         }).success(function (hosts) {
-
-                // Count total hosts
-                db.Host.count({
-                    where: where
-                }).on('success', function (count) {
-                        res.send({
-                            hosts: hosts,
-                            meta: {
-                                offset: offset,
-                                limit: limit,
-                                total: count
-                            }
-                        });
-                    })
+                res.send({
+                    hosts: hosts
+                });
             });
     })(req, res);
 };

@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
         tableName: 'photos',
         classMethods: {
             associate: function (models) {
-                Photo.belongsTo(models.Host)
+                Photo.belongsTo(models.Host, { as: 'host' })
             }
         }
     })
