@@ -3,5 +3,6 @@
  */
 
 App.Country = DS.Model.extend({
+    code: DS.attr('string'),
     name: DS.attr('string')
 });

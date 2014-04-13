@@ -4,12 +4,13 @@
 
 var passport = require('passport');
 var db = require('../models');
+var Sequelize = require('sequelize');
 
 /**
  * Returns a paginated list of hosts.
  * This route can be accessed from non authenticated users, but returns additional data for members.
  */
-var Sequelize = require('sequelize');
+
 
 exports.index = function (req, res) {
 
@@ -19,7 +20,7 @@ exports.index = function (req, res) {
         // Extract query params
         var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
             offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
-            dpt = (req.query.dpt || ''),
+            dptCondition = req.query.dpt ? { 'address.departmentId': dpt } : null,
             searchTerm = req.query.searchTerm || '';
 
         // Find all hosts matching parameters
@@ -36,7 +37,7 @@ exports.index = function (req, res) {
                     ["user.firstName like ?", '%' + searchTerm + '%'],
                     ["user.lastName like ?", '%' + searchTerm + '%']
                 ),
-                { 'address.departmentId': dpt }
+                dptCondition
             )
         }).success(function (hosts) {
                 res.send({

@@ -51,12 +51,12 @@
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="web" class="control-label">Website</label>
-                {{input type="text" id="web" name="web" value=web class="form-control" placeholder="http://www.ma-page-perso.fr"}}
+                {{input type="text" id="webSite" name="webSite" value=web class="form-control" placeholder="http://www.ma-page-perso.fr"}}
             </div>
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="travel" class="control-label">Travel</label>
-                {{input type="text" id="travel" name="travel" value=travel class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
+                {{input type="text" id="travelDetails" name="travelDetails" value=travel class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
         <div class="col-md-12">
             <div {{bind-attr class=":form-group"}}>
                 <label for="entry" class="control-label">Entry</label>
-                {{textarea id="entry" name="entry" value=entry class="form-control" placeholder=""}}
+                {{textarea id="fullDescription" name="fullDescription" value=entry class="form-control" placeholder=""}}
             </div>
         </div>
     </div>

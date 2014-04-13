@@ -2,8 +2,8 @@ module.exports = function (sequelize, DataTypes) {
     var Host = sequelize.define('Host', {
         suspended: DataTypes.BOOLEAN,
         farmName: DataTypes.STRING,
-        shortDescription: DataTypes.STRING,
-        fullDescription: DataTypes.STRING,
+        shortDescription: DataTypes.STRING, // (location)
+        fullDescription: DataTypes.STRING, // (entry)
         webSite: DataTypes.STRING,
         travelDetails: DataTypes.STRING,
         noPhone: DataTypes.BOOLEAN,

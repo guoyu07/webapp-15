@@ -104,6 +104,10 @@ passport.use(new BearerStrategy(
             where: { token: token }
         }).success(function(dbToken) {
 
+            // Failed authentication if token was not found
+            if (!dbToken)
+                return done(null, false);
+
             // Decode token
             var decodedToken = jwt.decode(token, config.secret);
 
@@ -144,13 +148,40 @@ passport.use(new BearerStrategy(
 // Init Sequelize and start server
 db
     .sequelize
-    .sync({ force: false })
-    .complete(function (err) {
-        if (err) {
-            throw err
-        } else {
-            http.createServer(app).listen(app.get('port'), function () {
-                console.log('Express server listening on port ' + app.get('port'))
-            })
-        }
+    .query('SET FOREIGN_KEY_CHECKS = 0')
+    .then(function () {
+        return db.sequelize.sync({ force: true });
+    })
+    .then(function () {
+        return db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+    })
+    .then(function () {
+        console.log('Database synchronised.');
+
+        // Load sample data in the database
+        require('./server/bootstrap-db')(db);
+
+        http.createServer(app).listen(app.get('port'), function () {
+            console.log('Express server listening on port ' + app.get('port'))
+        })
+
+    }, function (err) {
+        console.log(err);
     });
+
+
+//db
+//    .sequelize
+//    .sync({ force: true })
+//    .complete(function (err) {
+//
+//
+//
+//        if (err) {
+//            throw err
+//        } else {
+//            http.createServer(app).listen(app.get('port'), function () {
+//                console.log('Express server listening on port ' + app.get('port'))
+//            })
+//        }
+//    });
