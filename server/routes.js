@@ -25,6 +25,7 @@ module.exports = function (app) {
     app.get('/api/departments', departments.index);
 
     app.get('/api/countries', countries.index);
+    app.get('/api/countries/:id', countries.single);
 
     app.get('/api/wwoofers', passport.authenticate('bearer', { session: false }), wwoofers.index);
     app.get('/api/wwoofers/:id', passport.authenticate('bearer', { session: false }), wwoofers.single);

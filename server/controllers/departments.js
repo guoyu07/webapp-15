@@ -5,7 +5,8 @@
 var db = require('../models');
 
 exports.index = function (req, res) {
-    db.Department.findAll()
+    db.Department
+        .findAll()
         .success(function (departments) {
             res.send({
                 departments: departments

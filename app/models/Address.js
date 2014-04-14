@@ -3,5 +3,7 @@ App.Address = DS.Model.extend({
     address2: DS.attr('string'),
     zipCode: DS.attr('string'),
     city: DS.attr('string'),
-    state: DS.attr('string')
+    state: DS.attr('string'),
+    department: DS.belongsTo('department'),
+    country: DS.belongsTo('country')
 });
