@@ -30,7 +30,11 @@ module.exports = function (db) {
                         ]).success(function () {
                             db.Wwoofer.bulkCreate([
                                 { firstName2: 'Another', lastName2: 'Name', birthDate2: '1985-03-24 18:15:10', nationality: 'FR', tripMotivation: 'Je veux apprendre a faire du fromage!', addressId: 3, userId: 3 }
-                            ])
+                            ]).success(function () {
+                                db.Token.bulkCreate([
+                                    { id: 2, token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjJ9.HNHWrX1U9ITwMneIUfAlFUNZFWNYrHcyhDAJoSCkqOI', expireAt: '2015-04-14 04:16:44' }
+                                ])
+                            })
                         })
                     })
                 })
