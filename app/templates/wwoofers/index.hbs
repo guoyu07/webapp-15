@@ -18,11 +18,11 @@
     <tbody>
     {{#each}}
         <tr>
-            <td>{{firstName}}</td>
-            <td>{{lastName}}</td>
-            <td>{{postalCode}}</td>
-            <td>{{city}}</td>
-            <td>{{country}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{address.zipCode}}</td>
+            <td>{{address.city}}</td>
+            <td>{{address.country}}</td>
             <td>
                 {{#link-to "wwoofer" model}}View{{/link-to}} |
                 <a href="#">Edit</a> |
