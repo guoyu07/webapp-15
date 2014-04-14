@@ -10,8 +10,6 @@ var Sequelize = require('sequelize');
  * Returns a paginated list of hosts.
  * This route can be accessed from non authenticated users, but returns additional data for members.
  */
-
-
 exports.index = function (req, res) {
 
     // Manually call the authentication middleware
@@ -53,16 +51,20 @@ exports.index = function (req, res) {
 };
 
 exports.single = function (req, res) {
-    db.Host.find({
-        include: [
-            { model: db.Photo, as: 'photos' }
-        ],
-        where: {id: req.params.id}
-    }).on('success', function (host) {
-        res.send({
-            host: host
-        });
-    })
+    db.Host
+        .find({
+            include: [
+                { model: db.Photo, as: 'photos' },
+                { model: db.User, as: 'user' },
+                { model: db.Address, as: 'address' }
+            ],
+            where: {id: req.params.id}
+        })
+        .success(function (host) {
+            res.send({
+                host: host
+            });
+        })
 };
 
 exports.update = function (req, res) {

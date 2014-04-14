@@ -24,9 +24,9 @@ module.exports = function (db) {
                         { farmName: 'La Grange Verte', shortDescription: 'Ferme de fromages bio!', fullDescription: 'Encore un fois, une description complete prendrait trop de place.', webSite: 'http://plop.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', addressId: 2, userId: 2 }
                     ]).success(function () {
                         db.Photo.bulkCreate([
-                            { fileName: 'maison.png', caption: 'Photo de Maison', hostId: 1 },
-                            { fileName: 'arbre.png', caption: 'Ceci est un arbre', hostId: 1 },
-                            { fileName: 'farm.png', caption: 'This is a farm', hostId: 1 }
+                            { fileName: 'maison.jpg', caption: 'Photo de Maison', hostId: 1 },
+                            { fileName: 'arbre.jpg', caption: 'Ceci est un arbre', hostId: 1 },
+                            { fileName: 'farm.jpg', caption: 'This is a farm', hostId: 1 }
                         ]).success(function () {
                             db.Wwoofer.bulkCreate([
                                 { firstName2: 'Another', lastName2: 'Name', birthDate2: '1985-03-24 18:15:10', nationality: 'FR', tripMotivation: 'Je veux apprendre a faire du fromage!', addressId: 3, userId: 3 }
