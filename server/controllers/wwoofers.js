@@ -15,27 +15,31 @@ exports.index = function (req, res) {
 
     // Find all hosts matching parameters
     db.Wwoofer.findAndCountAll({
+        include: [
+            { model: db.User, as: 'user' },
+            { model: db.Address, as: 'address' }
+        ],
         limit: limit,
         offset: offset
         // where: where
     }).success(function (wwoofers) {
-            res.send({
-                wwoofers: wwoofers.rows,
-                meta: {
-                    offset: offset,
-                    limit: limit,
-                    total: wwoofers.count
-                }
-            });
+        res.send({
+            wwoofers: wwoofers.rows,
+            meta: {
+                offset: offset,
+                limit: limit,
+                total: wwoofers.count
+            }
         });
+    });
 };
 
 exports.single = function (req, res) {
     db.Wwoofer.find({
         where: {id: req.params.id}
     }).on('success', function (wwoofer) {
-            res.send({
-                wwoofer: wwoofer
-            });
-        })
+        res.send({
+            wwoofer: wwoofer
+        });
+    })
 };
