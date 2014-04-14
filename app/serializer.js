@@ -90,7 +90,7 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
     },
 
     /**
-     Overridden method
+     Overridden method.
      */
     normalizePayload: function (type, payload) {
         var typeKey = type.typeKey,
@@ -111,5 +111,15 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
         }
 
         return payload;
+    },
+
+    /**
+     Overridden method.
+     Sequelize returns foreign keys with 'Id' at the end (ex: user => userId).
+     */
+    keyForRelationship: function (key, relationship) {
+        return (relationship === 'belongsTo')
+            ? key + 'Id'
+            : key;
     }
 });
