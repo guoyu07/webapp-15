@@ -7,6 +7,7 @@ App.UsersNewController = Ember.ObjectController.extend({
 
             content.save().then(null, function () {
                 content.rollback();
+                alertify.alert("We sent you an email with a confirmation link. See you in a bit :)");
             });
         }
     }

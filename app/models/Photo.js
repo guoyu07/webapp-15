@@ -5,7 +5,6 @@
 App.Photo = DS.Model.extend({
     fileName: DS.attr('string'),
     caption: DS.attr('string'),
-    whid: DS.attr('string'),
     host: DS.belongsTo('host'),
     completeUrl: function () {
         var baseUrl = 'http://localhost:3333/host_photos/'; // http://wwoof.fr/loggedon/images/

@@ -11,6 +11,7 @@ var express = require('express'),
     moment = require('moment'),
     mailer = require('express-mailer'),
     jade = require('jade');
+domain = require('domain');
 
 // Configure express app
 app.set('port', process.env.PORT || 3333);
@@ -30,6 +31,25 @@ mailer.extend(app, {
     }
 });
 
+// Global error handler
+// Note: must be improved to use clusters (see http://nodejs.org/api/domain.html)
+function domainWrapper() {
+    return function (req, res, next) {
+        var reqDomain = domain.create();
+        reqDomain.add(req);
+        reqDomain.add(res);
+
+        res.on('close', function () {
+            reqDomain.dispose();
+        });
+        reqDomain.on('error', function (err) {
+            next(err);
+        });
+        reqDomain.run(next);
+    }
+}
+
+app.use(domainWrapper());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -41,7 +61,7 @@ app.use(passport.initialize());
 app.use(app.router);
 
 // Development only
-app.configure('development', function(){
+app.configure('development', function () {
     app.use(express.errorHandler());
 })
 
@@ -61,17 +81,18 @@ passport.use(new LocalStrategy(
         console.log('Authenticating user \'' + username + '\'');
 
         db.User.find({
-            where: { username: username }
-        }).on('success', function (user) {
-                if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
-                }
-                if (!user.password == password) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
+            where: { email: username }
+        }).success(function (user) {
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+            if (!user.password == password) {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
 
-                db.Token.findOrCreate(user.id)
-                    .success(function(token) {
+            db.Token
+                .findOrCreate(user.id)
+                .success(function (token) {
 
                     // Generate the token
                     if (!token.token) {
@@ -86,23 +107,23 @@ passport.use(new LocalStrategy(
                     token.expireAt = now.setHours(now.getHours() + 1);
 
                     // Save the token
-                    token.save().success(function() {
+                    token.save().success(function () {
                         console.log('Authenticated user: ' + user.username);
                         console.log('Token expires: ' + moment(token.expireAt).format('MMMM Do YYYY, h:mm:ss a'));
                         return done(null, user);
                     })
                 })
-            })
+        })
     }
 ));
 passport.use(new BearerStrategy(
-    function(token, done) {
+    function (token, done) {
 
         console.log('Validating user token...');
 
         db.Token.find({
             where: { token: token }
-        }).success(function(dbToken) {
+        }).success(function (dbToken) {
 
             // Failed authentication if token was not found
             if (!dbToken)
@@ -126,7 +147,7 @@ passport.use(new BearerStrategy(
 
             // Save the token
             dbToken.save()
-                .success(function() {
+                .success(function () {
 
                     // Find the user in the DB
                     db.User
@@ -134,11 +155,11 @@ passport.use(new BearerStrategy(
                         .success(function (user) {
                             return done(null, user);
                         })
-                        .error(function(err) {
+                        .error(function (err) {
                             return done(null, false);
                         });
 
-                }).error(function(err) {
+                }).error(function (err) {
                     return done(null, false);
                 });
         })

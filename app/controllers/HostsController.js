@@ -7,20 +7,18 @@ App.HostsController = Ember.ArrayController.extend({
     itemController: 'host',
     content: [],
     searchTerm: null,
-    departementFilter: null,
-    departementFilterOptionsBinding: 'departements',
+    departmentFilter: null,
+    departmentFilterOptionsBinding: 'departments',
 
-    departements: function () {
-        return this.store.find('departement');
+    departments: function () {
+        return this.store.find('department');
     }.property(),
 
     parameters: function () {
         return {
-            //'orderBy': sortProperty,
-            //'ascending': !!this.get('sortAscending'),
             'searchTerm': $.trim(this.get('searchTerm')) || null,
-            'dpt': this.get('departementFilter.id')
+            'dpt': this.get('departmentFilter.id')
         };
-    }.property('sortProperties.@each', 'sortAscending', 'searchTerm', 'departementFilter.id')
+    }.property('searchTerm', 'departmentFilter.id')
 
 });

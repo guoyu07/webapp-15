@@ -1,31 +1,36 @@
 <div class="page-header">
     <h1>{{farmName}}
-        <small>{{contact}}</small>
+        <small>{{user.firstName}} {{user.lastName}}</small>
     </h1>
 </div>
 
 <div class="row">
     <div class="col-md-6">
 
-        <p>Address: {{address}}</p>
+        <p>Address:
+            {{address.address1}}
+            {{#if address.address2}}
+                / {{address.address2}}
+            {{/if}}
+        </p>
 
-        <p>Zip Code: {{zipCode}}</p>
+        <p>Zip Code: {{address.zipCode}}</p>
 
-        <p>City: {{city}}</p>
-
-        <hr/>
-
-        <p>Email: {{email}}</p>
-
-        <p>Phone:  {{phone}}</p>
-
-        <p>Website: {{web}}</p>
+        <p>City: {{address.city}}</p>
 
         <hr/>
 
-        <p>Entry: {{entry}}</p>
+        <p>Email: {{user.email}}</p>
 
-        <p>Travel:  {{travel}}</p>
+        <p>Phone:  {{user.phone}}</p>
+
+        <p>Website: {{webSite}}</p>
+
+        <hr/>
+
+        <p>Entry: {{fullDescription}}</p>
+
+        <p>Travel:  {{travelDetails}}</p>
 
     </div>
     <div class="col-md-6">

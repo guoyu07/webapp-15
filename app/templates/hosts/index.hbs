@@ -7,7 +7,7 @@
             </div>
             <div class="form-group">
                 <div class="dropdown-item">
-                    {{view Ember.Select class="form-control" prompt="Department" optionLabelPath="content.nom" content=controllers.hosts.departementFilterOptions value=controllers.hosts.departementFilter}}
+                    {{view Ember.Select class="form-control" prompt="Department" optionLabelPath="content.name" content=controllers.hosts.departmentFilterOptions value=controllers.hosts.departmentFilter}}
                 </div>
             </div>
             <button {{action "searchHosts"}} class="btn btn-default">Search</button>
@@ -28,7 +28,8 @@
                             </div>
                         </div>
                         <div class="col-md-9">
-                            {{farmName}} - {{contact}}
+                            {{farmName}} - {{user.firstName}}<br/>
+                            {{shortDescription}} ({{address.city}})
                         </div>
                     </div>
                 {{/link-to}}

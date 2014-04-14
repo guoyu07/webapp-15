@@ -8,13 +8,13 @@ exports.successCallback = function (req, res) {
     db.Token.find({
         where: { id: req.user.id }
     }).success(function (token) {
-            if (!token) {
-                res.send(500)
-            }
+        if (!token) {
+            res.send(500)
+        }
 
-            // Send back the JSON Web Token to the client
-            res.send({
-                token: token.token
-            });
-        })
-}
+        // Send back the JSON Web Token to the client
+        res.send({
+            token: token.token
+        });
+    })
+};

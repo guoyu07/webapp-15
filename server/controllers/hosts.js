@@ -20,7 +20,7 @@ exports.index = function (req, res) {
         // Extract query params
         var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
             offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
-            dptCondition = req.query.dpt ? { 'address.departmentId': dpt } : null,
+            dptCondition = req.query.dpt ? { 'address.departmentId': req.query.dpt } : null,
             searchTerm = req.query.searchTerm || '';
 
         // Find all hosts matching parameters
@@ -40,15 +40,15 @@ exports.index = function (req, res) {
                 dptCondition
             )
         }).success(function (hosts) {
-                res.send({
-                    hosts: hosts.rows,
-                    meta: {
-                        offset: offset,
-                        limit: limit,
-                        total: hosts.count
-                    }
-                });
+            res.send({
+                hosts: hosts.rows,
+                meta: {
+                    offset: offset,
+                    limit: limit,
+                    total: hosts.count
+                }
             });
+        });
     })(req, res);
 };
 
@@ -59,26 +59,26 @@ exports.single = function (req, res) {
         ],
         where: {id: req.params.id}
     }).on('success', function (host) {
-            res.send({
-                host: host
-            });
-        })
+        res.send({
+            host: host
+        });
+    })
 };
 
 exports.update = function (req, res) {
     db.Host.find({
         where: { id: req.params.id }
     }).on('success', function (host) {
-            if (host) {
-                host.updateAttributes({
-                    farmName: req.body.host.farmName
-                }).success(function (host) {
-                        res.send({
-                            host: host
-                        });
-                    });
-            } else {
-                res.send(404);
-            }
-        });
+        if (host) {
+            host.updateAttributes({
+                farmName: req.body.host.farmName
+            }).success(function (host) {
+                res.send({
+                    host: host
+                });
+            });
+        } else {
+            res.send(404);
+        }
+    });
 };

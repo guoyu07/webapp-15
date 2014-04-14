@@ -6,7 +6,7 @@ var db = require('../models');
 var crypto = require('crypto');
 var config = require('../../wwoof-config');
 
-exports.index = function(req, res){
+exports.index = function (req, res) {
 
     // Extract query params
     var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit);
@@ -17,12 +17,12 @@ exports.index = function(req, res){
         limit: limit,
         offset: offset
         // where: where
-    }).success(function(users) {
+    }).success(function (users) {
 
         // Count total hosts
         db.User.count({
             // where: where
-        }).on('success', function(count) {
+        }).on('success', function (count) {
             res.send({
                 users: users,
                 meta: {
@@ -37,15 +37,15 @@ exports.index = function(req, res){
 
 exports.create = function (req, res) {
 
-    console.dir(req.body)
+    console.dir(req.body);
 
     db.User.find({
-        where: { username: req.body.user.username }
+        where: { email: req.body.user.email }
     }).success(function (user) {
 
         // Conflict - User already exists
         if (user) {
-            res.send(409)
+            res.send(409);
         }
 
         // Creates a hash of the password
@@ -55,21 +55,19 @@ exports.create = function (req, res) {
         db.User.create({
             firstName: req.body.user.firstName,
             lastName: req.body.user.lastName,
-            username: req.body.user.username,
+            email: req.body.user.email,
             passwordHash: passwordHash
         }).success(function (user) {
 
-            // Send mail
-            res.mailer.send('signUp', {
-                to: user.username,
+            // Send email
+            res.mailer.send('register', {
+                to: user.email,
                 subject: 'Welcome to Wwoof France!',
                 firstName: user.firstName
             }, function (err) {
                 if (err) {
-                    // Handle error
                     console.log(err);
-                    res.send('There was an error sending the email');
-                    return;
+                    res.send(500);
                 }
                 res.send(201);
             });

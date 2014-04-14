@@ -3,8 +3,10 @@
  */
 
 App.User = DS.Model.extend({
-    username: DS.attr('string'),
-    password: DS.attr('string'),
+    email: DS.attr('string'),
+    password: DS.attr('string'), // Only used for sign up
     firstName: DS.attr('string'),
-    lastName: DS.attr('string')
+    lastName: DS.attr('string'),
+    birthDate: DS.attr('date'),
+    phone: DS.attr('string')
 });

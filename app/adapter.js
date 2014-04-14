@@ -7,7 +7,7 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     headers: {
         'Authorization': localStorage['token'] ? 'Bearer ' + localStorage['token'] : null
     },
-    ajaxError: function(jqXHR) {
+    ajaxError: function (jqXHR) {
         var error = this._super(jqXHR);
 
         // Redirect user to login page if authentication fails
@@ -17,3 +17,4 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
         return error;
     }
 });
+

@@ -15,10 +15,12 @@ module.exports = function (db) {
                 { address1: '1415 E Denny Way', address2: 'Capitol Hill', zipCode: '98122', city: 'Seattle', state: 'WA', countryId: 2 }
             ]).success(function () {
                 db.User.bulkCreate([
-                    { email: 'plop@plop.com', passwordHash: 'thisisnotarealhash', firstName: 'Bob', lastName: 'Dylan', birthDate: '1989-06-25 04:15:10', phone: '206-012-3465' }
+                    { email: 'plop@plop.com', passwordHash: 'thisisnotarealhash', firstName: 'Bob', lastName: 'Dylan', birthDate: '1989-06-25 04:15:10', phone: '206-012-3465' },
+                    { email: 'foo@bar.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Jean', lastName: 'Bon', birthDate: '1977-02-08 04:15:10', phone: '206-012-3465' }
                 ]).success(function () {
                     db.Host.bulkCreate([
-                        { farmName: 'La Belle Ferme', shortDescription: 'Ferme Bio dans le marais', fullDescription: 'Une description complete prendrait trop de place.', webSite: 'http://pouet.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', addressId: 1, userId: 1 }
+                        { farmName: 'La Belle Ferme', shortDescription: 'Ferme Bio dans le marais', fullDescription: 'Une description complete prendrait trop de place.', webSite: 'http://pouet.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', addressId: 1, userId: 1 },
+                        { farmName: 'La Grange Verte', shortDescription: 'Ferme de fromages bio!', fullDescription: 'Encore un fois, une description complete prendrait trop de place.', webSite: 'http://plop.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', addressId: 2, userId: 2 }
                     ]).success(function () {
                         db.Photo.bulkCreate([
                             { fileName: 'maison.png', caption: 'Photo de Maison', hostId: 1 },
