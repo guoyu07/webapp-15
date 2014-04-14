@@ -91,10 +91,10 @@ passport.use(new LocalStrategy(
             }
 
             db.Token
-                .findOrCreate(user.id)
+                .findOrCreate({id: user.id}, {id: user.id})
                 .success(function (token) {
 
-                    // Generate the token
+                    // Generate the token if not present
                     if (!token.token) {
                         var payload = {
                             userId: user.id
@@ -107,11 +107,13 @@ passport.use(new LocalStrategy(
                     token.expireAt = now.setHours(now.getHours() + 1);
 
                     // Save the token
-                    token.save().success(function () {
-                        console.log('Authenticated user: ' + user.username);
-                        console.log('Token expires: ' + moment(token.expireAt).format('MMMM Do YYYY, h:mm:ss a'));
-                        return done(null, user);
-                    })
+                    token
+                        .save()
+                        .success(function () {
+                            console.log('Authenticated user: ' + user.email);
+                            console.log('Token expires: ' + moment(token.expireAt).format('MMMM Do YYYY, h:mm:ss a'));
+                            return done(null, user);
+                        })
                 })
         })
     }
