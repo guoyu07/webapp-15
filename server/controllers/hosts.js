@@ -18,25 +18,41 @@ exports.index = function (req, res) {
         // Extract query params
         var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
             offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
-            dptCondition = req.query.dpt ? { 'address.departmentId': req.query.dpt } : null,
+            dptCondition = req.query.dpt ? { id: req.query.dpt } : null,
             searchTerm = req.query.searchTerm || '';
 
         // Find all hosts matching parameters
         db.Host.findAndCountAll({
-            include: [
-                //{ model: db.Photo, as: 'photos' },
-                { model: db.User, as: 'user' },
-                { model: db.Address, as: 'address' }
-            ],
             limit: limit,
             offset: offset,
-            where: Sequelize.and(
-                Sequelize.or(
-                    ["user.firstName like ?", '%' + searchTerm + '%'],
-                    ["user.lastName like ?", '%' + searchTerm + '%']
-                ),
-                dptCondition
-            )
+//            where: Sequelize.and(
+//                ,
+//                dptCondition
+//            ),
+            include: [
+                {
+                    model: db.User,
+                    as: 'user',
+                    where: Sequelize.or(
+                        ['user.firstName like ?', '%' + searchTerm + '%'],
+                        ['user.lastName like ?', '%' + searchTerm + '%']
+                    )
+                },
+                {
+                    model: db.Address,
+                    as: 'address',
+                    include: [
+                        {
+                            model: db.Department,
+                            where: dptCondition
+                        }
+                    ]
+                },
+                {
+                    model: db.Photo,
+                    as: 'photos'
+                }
+            ]
         }).success(function (hosts) {
             res.send({
                 hosts: hosts.rows,

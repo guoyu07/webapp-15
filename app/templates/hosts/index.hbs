@@ -3,11 +3,11 @@
         <form class="form" role="form">
             <div class="form-group">
                 <label class="sr-only" for="searchTerm">Email address</label>
-                {{input type="text" class="form-control" id="searchTerm" placeholder="Contact" value=controllers.hosts.searchTerm action="searchProjects"}}
+                {{input type="text" class="form-control" id="searchTerm" placeholder="Contact" value=searchTerm action="searchProjects"}}
             </div>
             <div class="form-group">
                 <div class="dropdown-item">
-                    {{view Ember.Select class="form-control" prompt="Department" optionLabelPath="content.name" content=controllers.hosts.departmentFilterOptions value=controllers.hosts.departmentFilter}}
+                    {{view Ember.Select class="form-control" prompt="Department" optionLabelPath="content.name" content=departmentFilterOptions value=departmentFilter}}
                 </div>
             </div>
             <button {{action "searchHosts"}} class="btn btn-default">Search</button>
