@@ -34,8 +34,8 @@ exports.index = function (req, res) {
                     model: db.User,
                     as: 'user',
                     where: Sequelize.or(
-                        ['user.firstName like ?', '%' + searchTerm + '%'],
-                        ['user.lastName like ?', '%' + searchTerm + '%']
+                        ['firstName like ?', '%' + searchTerm + '%'],
+                        ['lastName like ?', '%' + searchTerm + '%']
                     )
                 },
                 {
