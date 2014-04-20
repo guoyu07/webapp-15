@@ -1,4 +1,5 @@
 var passport = require('passport');
+var application = require('./controllers/application');
 var login = require('./controllers/login');
 var users = require('./controllers/users');
 var hosts = require('./controllers/hosts');
@@ -8,6 +9,8 @@ var wwoofers = require('./controllers/wwoofers');
 var countries = require('./controllers/countries');
 
 module.exports = function (app) {
+
+    app.get('/app/*', application.index);
 
     app.post('/api/request_token', passport.authenticate('local', { session: false }), login.successCallback);
 

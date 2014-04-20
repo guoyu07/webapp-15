@@ -10,8 +10,9 @@ var express = require('express'),
     config = require('./wwoof-config'),
     moment = require('moment'),
     mailer = require('express-mailer'),
-    jade = require('jade');
-domain = require('domain');
+    jade = require('jade'),
+    crypto = require('crypto'),
+    domain = require('domain');
 
 // Configure express app
 app.set('port', process.env.PORT || 3333);
@@ -63,16 +64,10 @@ app.use(app.router);
 // Development only
 app.configure('development', function () {
     app.use(express.errorHandler());
-})
+});
 
 // Add all REST API routes
 require('./server/routes')(app);
-
-// Delegate all of the routes we haven't set to the Ember App
-app.get('/app/*', function (request, response) {
-    console.log(request.query);
-    return response.sendfile('./public/index.html');
-});
 
 // Configure authentication middleware
 passport.use(new LocalStrategy(
@@ -80,13 +75,16 @@ passport.use(new LocalStrategy(
 
         console.log('Authenticating user \'' + username + '\'');
 
+        // Process the hash of the password
+        var passwordHash = crypto.createHash('sha1').update(password).digest("hex");
+
         db.User.find({
             where: { email: username }
         }).success(function (user) {
             if (!user) {
                 return done(null, false, { message: 'Incorrect username.' });
             }
-            if (!user.password == password) {
+            if (user.passwordHash !== passwordHash) {
                 return done(null, false, { message: 'Incorrect password.' });
             }
 

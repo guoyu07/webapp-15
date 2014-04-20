@@ -5,16 +5,31 @@ var db = require('../models');
 
 exports.successCallback = function (req, res) {
 
+    // Get connected user
+    var connectedUser = req.user;
+
+    // Data validation
+    if (!connectedUser) {
+        res.send(500)
+    }
+
+    // Find the token of the connected user
     db.Token.find({
-        where: { id: req.user.id }
+        where: { id: connectedUser.id }
     }).success(function (token) {
+
+        // Data validation
         if (!token) {
             res.send(500)
         }
 
-        // Send back the JSON Web Token to the client
+        // Cleanup the user hash before sending it back
+        connectedUser.passwordHash = undefined;
+
+        // Send back the token/user to the client
         res.send({
-            token: token.token
+            token: token.token,
+            user: connectedUser
         });
     })
 };

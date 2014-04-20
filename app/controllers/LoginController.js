@@ -4,7 +4,7 @@
 
 App.LoginController = Ember.Controller.extend({
 
-    needs: 'hosts',
+    needs: 'application',
 
     actions: {
         login: function () {
@@ -12,15 +12,25 @@ App.LoginController = Ember.Controller.extend({
             $.post("/api/request_token", {
                 username: this.get("username"),
                 password: this.get("password")
-            }).then(function (data) {
+            }).done(function (data) {
+
                 // Store the token in the local storage
                 localStorage["token"] = data.token;
+                self.set('controllers.application.currentUser', data.user);
 
-                // Clear the host cache
+                // TODO: Clear the host cache
                 // self.get('controllers.hosts.content').reload();
 
+                // Notify user
+                alertify.success("Welcome back!");
+
                 // Go to host list
-                self.transitionToRoute('hosts');
+                self.transitionToRoute('hosts.index');
+
+            }).fail(function (error) {
+
+                // Notify user
+                alertify.error("Email address or password incorrect.");
             });
         }
     }
