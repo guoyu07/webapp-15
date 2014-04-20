@@ -24,7 +24,7 @@
 
         <p>Phone:  {{user.phone}}</p>
 
-        <p>Website: {{webSite}}</p>
+        <p>Website: <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a></p>
 
         <hr/>
 
@@ -42,7 +42,7 @@
                     </li>
                 {{else}}
                     <li class="slide">
-                        <img src="wwoof-no-photo.png"/>
+                        <img src="/wwoof-no-photo.png"/>
                     </li>
                 {{/each}}
             </ul>
