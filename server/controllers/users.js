@@ -35,6 +35,27 @@ exports.index = function (req, res) {
     });
 };
 
+/**
+ * Search and returns a single user.
+ */
+exports.single = function (req, res) {
+    db.User.find({
+        where: {id: req.params.id}
+    }).success(function (user) {
+        // Not found
+        if (!user)
+            res.send(404);
+
+        // Unauthorized
+        if (user.id != req.user.id)
+            res.send(401);
+
+        res.send({
+            user: user
+        });
+    })
+};
+
 exports.create = function (req, res) {
 
     console.dir(req.body);
