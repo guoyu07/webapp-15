@@ -1,9 +1,11 @@
 /**
- * Created by guillaumez on 3/9/14.
+ * API controller for Wwoofers.
  */
-
 var db = require('../models');
 
+/**
+ * Search and returns a list of wwoofers.
+ */
 exports.index = function (req, res) {
 
     // Extract query params
@@ -13,11 +15,15 @@ exports.index = function (req, res) {
 //        searchTerm = req.query.searchTerm || '',
 //        where = ["contact like ? and zipCode like ?", '%' + searchTerm + '%', dpt + '%'];
 
-    // Find all hosts matching parameters
+    // Find all wwofers matching parameters
     db.Wwoofer.findAndCountAll({
         include: [
             { model: db.User, as: 'user' },
-            { model: db.Address, as: 'address' }
+            { model: db.Address, as: 'address', include: [
+                { model: db.Department },
+                { model: db.Country }
+            ]
+            }
         ],
         limit: limit,
         offset: offset
@@ -34,10 +40,25 @@ exports.index = function (req, res) {
     });
 };
 
+/**
+ * Search and returns a single wwoofer.
+ */
 exports.single = function (req, res) {
     db.Wwoofer.find({
-        where: {id: req.params.id}
-    }).on('success', function (wwoofer) {
+        where: {id: req.params.id},
+        include: [
+            { model: db.User },
+            { model: db.Address, include: [
+                { model: db.Department },
+                { model: db.Country }
+            ]
+            }
+        ]
+    }).success(function (wwoofer) {
+        // Not found
+        if (!wwoofer)
+            res.send(404);
+
         res.send({
             wwoofer: wwoofer
         });
