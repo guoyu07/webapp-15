@@ -5,8 +5,7 @@
 App.HostsNewRoute = Ember.Route.extend({
     model: function () {
         return this.store.createRecord('host', {
-            farmName: "La Ferme de M. Seguin",
-            contact: "Claude et Anette Petit"
+            farmName: "La Ferme de M. Seguin"
         });
     }
 });

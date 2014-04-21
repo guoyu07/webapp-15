@@ -3,5 +3,5 @@
  */
 
 App.WwoofersController = Ember.ArrayController.extend({
-    content: []
+    //content: []
 });

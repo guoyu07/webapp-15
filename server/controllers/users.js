@@ -6,6 +6,9 @@ var db = require('../models');
 var crypto = require('crypto');
 var config = require('../../wwoof-config');
 
+/**
+ * Searches and returns a list of users.
+ */
 exports.index = function (req, res) {
 
     // Extract query params
@@ -15,8 +18,11 @@ exports.index = function (req, res) {
     // Find all hosts matching parameters
     db.User.findAll({
         limit: limit,
-        offset: offset
-        // where: where
+        offset: offset,
+        include: [
+            { model: db.Wwoofer },
+            { model: db.Host }
+        ]
     }).success(function (users) {
 
         // Count total hosts
@@ -36,7 +42,7 @@ exports.index = function (req, res) {
 };
 
 /**
- * Search and returns a single user.
+ * Searches and returns a single user.
  */
 exports.single = function (req, res) {
     db.User.find({
@@ -94,4 +100,4 @@ exports.create = function (req, res) {
             });
         })
     })
-}
+};

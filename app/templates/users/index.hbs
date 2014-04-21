@@ -9,10 +9,10 @@
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>Username</th>
-        <th>Password</th>
-        <th>Host?</th>
-        <th>Wwoofer?</th>
+        <th>Email</th>
+        <th>Host</th>
+        <th>Wwoofer</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -20,11 +20,12 @@
         <tr>
             <td>{{firstName}}</td>
             <td>{{lastName}}</td>
-            <td>{{username}}</td>
-            <td>{{password}}</td>
+            <td>{{email}}</td>
+            <td>{{#if host}}<span class="glyphicon glyphicon-ok"></span>{{/if}}</td>
+            <td>{{#if wwoofer}}<span class="glyphicon glyphicon-ok"></span>{{/if}}</td>
             <td>
-                {{#link-to "user" model}}View{{/link-to}} |
-                <a href="#">Edit</a> |
+                {{#link-to "user" id}}View{{/link-to}} |
+                {{#link-to "user.edit" id}}Edit{{/link-to}} |
                 <a href="#">Delete</a>
             </td>
         </tr>

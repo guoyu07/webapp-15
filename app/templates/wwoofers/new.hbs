@@ -21,6 +21,7 @@
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="birthDate" class="control-label">Birth date</label>
+
                 <div class='input-group date' id='datetimepicker1'>
                     {{input type="text" id="birthDate" name="birthDate" value=birthDate class="form-control" placeholder=""}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -29,23 +30,23 @@
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="city" class="control-label">City</label>
-                {{input type="text" id="city" name="city" value=city class="form-control" placeholder=""}}
+                {{input type="text" id="city" name="city" value=address.city class="form-control" placeholder=""}}
             </div>
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="postalCode" class="control-label">Postal Code</label>
-                {{input type="text" id="postalCode" name="postalCode" value=postalCode class="form-control" placeholder=""}}
+                {{input type="text" id="postalCode" name="postalCode" value=address.zipCode class="form-control" placeholder=""}}
             </div>
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="country" class="control-label">Country</label>
                 {{view Ember.Select
-                       contentBinding="countries"
-                       optionValuePath="content.id"
-                       optionLabelPath="content.name"
-                       valueBinding="country"
-                       class="form-control"
-                       name="country"}}
+                contentBinding="countries"
+                optionValuePath="content.id"
+                optionLabelPath="content.name"
+                valueBinding="address.country.code"
+                class="form-control"
+                name="country"}}
             </div>
         </div>
         <div class="col-md-6">
@@ -64,6 +65,7 @@
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="birthDate2" class="control-label">Birth date</label>
+
                 <div class='input-group date' id='datetimepicker2'>
                     {{input type="text" id="birthDate2" name="birthDate2" value=birthDate2 class="form-control" placeholder=""}}
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>

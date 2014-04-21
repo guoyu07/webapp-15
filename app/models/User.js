@@ -8,5 +8,7 @@ App.User = DS.Model.extend({
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
     birthDate: DS.attr('date'),
-    phone: DS.attr('string')
+    phone: DS.attr('string'),
+    host: DS.belongsTo('host', {embedded: 'load'}),
+    wwoofer: DS.belongsTo('wwoofer', {embedded: 'load'})
 });
