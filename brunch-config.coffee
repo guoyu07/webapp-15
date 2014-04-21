@@ -1,10 +1,11 @@
 exports.config =
   files:
     javascripts:
-      joinTo: 'app.js': /^(app|vendor|bower_components)/
+      joinTo:
+        'app.js': /^(app|vendor|bower_components)/
       order:
         before: [
-          'bower_components/jquery/jquery.js'
+          'bower_components/jquery/dist/jquery.js'
           'bower_components/handlebars/handlebars.js'
           'bower_components/ember/ember.js'
           'bower_components/ember-data-shim/ember-data.js'
@@ -13,8 +14,10 @@ exports.config =
           'vendor/jquery.fileupload.js'
         ]
     stylesheets:
-      joinTo: 'app.css': /^(app|vendor|bower_components)/
+      joinTo:
+        'app.css': /^(app|vendor|bower_components)/
     templates:
       precompile: true
       root: 'templates'
-      joinTo: 'app.js': /^app/
+      joinTo:
+        'app.js': /^app/
