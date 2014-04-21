@@ -11,5 +11,13 @@
         "alertify.js": "~0.3.11",
         "eonasdan-bootstrap-datetimepicker": "~3.0.0"
     },
-    "overrides": {}
+    "overrides": {
+        "alertify.js": {
+            "main": [
+                "lib/alertify.js",
+                "themes/alertify.core.css",
+                "themes/alertify.bootstrap.css"
+            ]
+        }
+    }
 }
