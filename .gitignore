@@ -21,9 +21,6 @@ Thumbs.db
 .idea
 *.iml
 
-# Database config.
-wwoof-config.js
-
 # NPM packages folder.
 node_modules/
 

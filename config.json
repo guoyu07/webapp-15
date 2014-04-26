@@ -1,0 +1,26 @@
+{
+    "port": 3333,
+    "mysql": {
+        "schema": "wwoof",
+        "username": "foo",
+        "password": "bar"
+    },
+    "jwt_secret": "thisisasecret",
+    "paypal": {
+        "host": "api.sandbox.paypal.com",
+        "port": "",
+        "client_id": "",
+        "client_secret": ""
+    },
+    "smtp": {
+        "from": "Mister Sender <sender@domain.com>",
+        "host": "smtp.domain.com",
+        "secureConnection": true,
+        "port": 465,
+        "transportMethod": "SMTP",
+        "auth": {
+            "user": "sender@domain.com",
+            "pass": "thepassword"
+        }
+    }
+}

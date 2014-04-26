@@ -1,5 +1,4 @@
 var express = require('express'),
-    path = require('path'),
     http = require('http'),
     app = express(),
     db = require('./server/models'),
@@ -7,30 +6,24 @@ var express = require('express'),
     LocalStrategy = require('passport-local').Strategy,
     BearerStrategy = require('passport-http-bearer').Strategy,
     jwt = require('jwt-simple'),
-    config = require('./wwoof-config'),
+    config = require('./config'),
     moment = require('moment'),
     mailer = require('express-mailer'),
     jade = require('jade'),
     crypto = require('crypto'),
-    domain = require('domain');
+    domain = require('domain'),
+    paypal = require('paypal-rest-sdk');
 
 // Configure express app
-app.set('port', process.env.PORT || 3333);
+app.set('port', process.env.PORT || config.port);
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
+// Configure paypal
+paypal.configure(config.paypal);
+
 // Configure mailer (must be called before "app.use(app.router)")
-mailer.extend(app, {
-    from: config.smtpFrom,
-    host: config.smtpHost,
-    secureConnection: config.smtpSecure,
-    port: config.smtpPort,
-    transportMethod: 'SMTP',
-    auth: {
-        user: config.smtpUsername,
-        pass: config.smtpPassword
-    }
-});
+mailer.extend(app, config.smtp);
 
 // Global error handler
 // Note: must be improved to use clusters (see http://nodejs.org/api/domain.html)
@@ -97,7 +90,7 @@ passport.use(new LocalStrategy(
                         var payload = {
                             userId: user.id
                         };
-                        token.token = jwt.encode(payload, config.secret);
+                        token.token = jwt.encode(payload, config.jwt_secret);
                     }
 
                     // Set the token expiration date (one hour from now)
@@ -130,7 +123,7 @@ passport.use(new BearerStrategy(
                 return done(null, false);
 
             // Decode token
-            var decodedToken = jwt.decode(token, config.secret);
+            var decodedToken = jwt.decode(token, config.jwt_secret);
 
             // Make sure the user id in the JWT token matches the id of the token
             if (!decodedToken || !decodedToken.userId || (decodedToken.userId != dbToken.id))

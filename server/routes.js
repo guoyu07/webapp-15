@@ -16,7 +16,7 @@ module.exports = function (app) {
 
     app.get('/api/users', passport.authenticate('bearer', { session: false }), users.index);
     app.get('/api/users/:id', passport.authenticate('bearer', { session: false }), users.single);
-    app.post('/api/users', passport.authenticate('bearer', { session: false }), users.create);
+    app.post('/api/users', users.create);
 
     app.get('/api/hosts', hosts.index);
     app.get('/api/hosts/:id', hosts.single);

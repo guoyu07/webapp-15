@@ -4,7 +4,6 @@
 
 var db = require('../models');
 var crypto = require('crypto');
-var config = require('../../wwoof-config');
 
 /**
  * Searches and returns a list of users.
@@ -64,21 +63,20 @@ exports.single = function (req, res) {
 
 exports.create = function (req, res) {
 
-    console.dir(req.body);
-
+    // Make sure email address is not in use
     db.User.find({
         where: { email: req.body.user.email }
     }).success(function (user) {
 
-        // Conflict - User already exists
+        // User already exists
         if (user) {
-            res.send(409);
+            res.send(409); // Conflict
         }
 
-        // Creates a hash of the password
+        // Create a hash of the password
         var passwordHash = crypto.createHash('sha1').update(req.body.user.password).digest("hex");
 
-        // Creates the user
+        // Create the user
         db.User.create({
             firstName: req.body.user.firstName,
             lastName: req.body.user.lastName,
