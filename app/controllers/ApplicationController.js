@@ -32,8 +32,8 @@ App.ApplicationController = Ember.Controller.extend({
             // Notify user
             alertify.success("See you soon!");
 
-            // Go to host list
-            this.transitionToRoute('login');
+            // Go to host list (refresh the page to get fresh data from the API)
+            window.location.replace('/app/login');
         }
     }
 });

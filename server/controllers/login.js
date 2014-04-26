@@ -23,9 +23,6 @@ exports.successCallback = function (req, res) {
             res.send(500)
         }
 
-        // Cleanup the user hash before sending it back
-        connectedUser.passwordHash = undefined;
-
         // Send back the token/user to the client
         res.send({
             token: token.token,

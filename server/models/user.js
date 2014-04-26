@@ -23,6 +23,7 @@ module.exports = function (sequelize, DataTypes) {
             toJSON: function () {
                 // Add a 'wwooferId' and 'hostId' in the payload
                 var json = this.values;
+                json.passwordHash = undefined;
                 json.wwooferId = json.wwoofer ? json.wwoofer.id : null;
                 json.hostId = json.host ? json.host.id : null;
                 return json;

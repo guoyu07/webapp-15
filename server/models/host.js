@@ -14,11 +14,11 @@ module.exports = function (sequelize, DataTypes) {
         tableName: 'hosts',
         classMethods: {
             associate: function (models) {
-                Host.hasMany(models.Photo, { onDelete: 'cascade', as: 'photos' })
-                Host.belongsTo(models.User)
+                Host.hasMany(models.Photo, { onDelete: 'cascade', as: 'photos' });
+                Host.belongsTo(models.User);
                 Host.belongsTo(models.Address)
             }
         }
-    })
+    });
     return Host
-}
+};
