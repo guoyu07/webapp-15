@@ -12,12 +12,12 @@ This application is beeing developed by volonteers and will eventually replace t
     * Brunch plugins and Bower dependencies: `npm install & bower install`.
     * MySql server and client
 * Configure:
-    * Edit the `wwoof-config.js` file at the root of the project (not included yet).
+    * Edit the `config.json` file at the root of the project.
 * Run:
     * Terminal 1: `brunch watch` — watches the project with continuous rebuild.
     * Terminal 2: `node-dev server.js` — runs the Node.js server using Express.
-* Learn:
+* Good to know:
     * The `public/` dir is fully auto-generated and served by HTTP server.
-    * Place in `app/assets/` static files you want to be copied from to `public/`.
+    * Place in `app/assets/` static files you want to be copied to `public/`.
     * Write the Ember code in the `app/` dir.
     * Write the Express code in the `server/` dir.
