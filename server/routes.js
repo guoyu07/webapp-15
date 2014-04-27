@@ -7,10 +7,13 @@ var photos = require('./controllers/photos');
 var departments = require('./controllers/departments');
 var wwoofers = require('./controllers/wwoofers');
 var countries = require('./controllers/countries');
+var paypal = require('./controllers/paypal');
 
 module.exports = function (app) {
 
-    app.get('/app/*', application.index);
+    app.get('/payment/start', paypal.start);
+    app.get('/payment/execute', paypal.execute);
+    app.get('/app*', application.index);
 
     app.post('/api/request_token', passport.authenticate('local', { session: false }), login.successCallback);
 

@@ -12,7 +12,9 @@ var express = require('express'),
     jade = require('jade'),
     crypto = require('crypto'),
     domain = require('domain'),
-    paypal = require('paypal-rest-sdk');
+    paypal = require('paypal-rest-sdk'),
+    session = require('express-session'),
+    SessionStore = require('express-mysql-session');
 
 // Configure express app
 app.set('port', process.env.PORT || config.port);
@@ -43,23 +45,30 @@ function domainWrapper() {
     }
 }
 
+// Configure session
+app.use(express.cookieParser());
+app.use(session({
+    secret: config.session_secret,
+    store: new SessionStore(config.mysql_session)
+}));
+
+// Configure the rest of the application
 app.use(domainWrapper());
-app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(app.router);
 
-// Development only
+// Development only configuration
 app.configure('development', function () {
+    app.use(express.logger('dev'));
     app.use(express.errorHandler());
 });
 
-// Add all REST API routes
+// Init all routes
 require('./server/routes')(app);
 
 // Configure authentication middleware
