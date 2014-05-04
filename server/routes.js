@@ -28,6 +28,7 @@ module.exports = function (app) {
     app.post('/api/hosts', passport.authenticate('bearer', { session: false }), hosts.create);
 
     app.put('/api/addresses/:id', passport.authenticate('bearer', { session: false }), addresses.update);
+    app.post('/api/addresses', passport.authenticate('bearer', { session: false }), addresses.create);
 
     app.get('/api/photos', photos.index);
     app.get('/api/photos/:id', photos.single);

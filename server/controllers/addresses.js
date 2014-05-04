@@ -2,6 +2,7 @@
  * API controller for Addresses.
  */
 var db = require('../models');
+var updatableAttributes = ['address1', 'address2', 'zipCode', 'city', 'state', 'countryId', 'departmentId'];
 
 /**
  * Updates an address.
@@ -56,25 +57,40 @@ var updateInternal = function (req, res) {
             var updatedAddress = req.body.address;
 
             // Update the address
-            address.updateAttributes({
-                address1: updatedAddress.address1,
-                address2: updatedAddress.address2,
-                zipCode: updatedAddress.zipCode,
-                city: updatedAddress.city,
-                state: updatedAddress.state,
-                countryId: updatedAddress.countryId,
-                departmentId: updatedAddress.departmentId
-            }).success(function (address) {
-                res.send({
-                    address: address
+            address.updateAttributes(
+                req.body.address,
+                updatableAttributes
+            ).success(function (address) {
+                    res.send({
+                        address: address
+                    })
+                }).error(function (error) {
+                    res.send(500, error);
                 })
-            }).error(function (error) {
-                res.send(500, error);
-            })
         } else {
             res.send(404);
         }
     }).error(function (error) {
         res.send(500, error);
     });
+};
+
+/**
+ * Creates an address.
+ */
+exports.create = function (req, res) {
+
+    // Validate input
+    if (!req.body.address)
+        res.send(400);
+
+    // Create the host
+    db.Address.create(
+        req.body.address,
+        updatableAttributes
+    ).success(function (address) {
+            res.send({ address: address });
+        }).error(function (error) {
+            res.send(500, error);
+        })
 };
