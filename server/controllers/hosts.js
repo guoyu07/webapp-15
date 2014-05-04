@@ -1,10 +1,10 @@
 /**
  * API controller for Hosts.
  */
-
 var passport = require('passport');
 var db = require('../models');
 var Sequelize = require('sequelize');
+var updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails'];
 
 /**
  * Returns a paginated list of hosts.
@@ -108,17 +108,11 @@ exports.update = function (req, res) {
         }
     }).success(function (host) {
         if (host) {
-            // Get the updated host from body
-            var updatedHost = req.body.host;
-
             // Update the host
-            host.updateAttributes({
-                farmName: updatedHost.farmName,
-                shortDescription: updatedHost.shortDescription,
-                fullDescription: updatedHost.fullDescription,
-                webSite: updatedHost.webSite,
-                travelDetails: updatedHost.travelDetails
-            }).success(function (host) {
+            host.updateAttributes(
+                req.body.host,
+                updatableAttributes
+            ).success(function (host) {
                 res.send({
                     host: host
                 })
@@ -154,13 +148,10 @@ exports.create = function (req, res) {
             req.body.host.userId = req.user.id;
 
             // Create the host
-            db.Host.create(req.body.host, [
-                'farmName',
-                'shortDescription',
-                'fullDescription',
-                'webSite',
-                'travelDetails'
-            ]).success(function (host) {
+            db.Host.create(
+                req.body.host,
+                updatableAttributes
+            ).success(function (host) {
                 res.send({ host: host });
             }).error(function (error) {
                 res.send(500, error);
