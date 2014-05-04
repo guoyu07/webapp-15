@@ -38,15 +38,28 @@
             <div class="row">
                 <div class="col-md-6">
                     <div {{bind-attr class=":form-group"}}>
-                        <label for="country" class="control-label">Country => {{address.country.code}}</label>
-                        {{view Ember.Select content=countries optionValuePath="content.id" optionLabelPath="content.name" value=address.country.id class="form-control" name="country"}}
+                        <label for="country" class="control-label">Country</label>
+                        {{view Ember.Select
+                        content=controllers.countries.content
+                        optionValuePath="content.id"
+                        optionLabelPath="content.name"
+                        selection=address.country
+                        class="form-control"
+                        name="country"
+                        prompt="Select a country"}}
                     </div>
                 </div>
                 {{#if address.country.countryIsFrance}}
                     <div class="col-md-6">
                         <div {{bind-attr class=":form-group"}}>
                             <label for="department" class="control-label">Department</label>
-                            {{view Ember.Select content=departments optionValuePath="content.id" optionLabelPath="content.name" value=address.department.id class="form-control" name="department"}}
+                            {{view Ember.Select
+                            content=controllers.departments.content
+                            optionValuePath="content.id"
+                            optionLabelPath="content.name"
+                            selection=address.department
+                            class="form-control"
+                            name="department"}}
                         </div>
                     </div>
                 {{else}}

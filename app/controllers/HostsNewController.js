@@ -1,17 +1,35 @@
 /**
- * Created by guillaumez on 3/11/14.
+ * Ember controller for host creation.
  */
-
 App.HostsNewController = Ember.ObjectController.extend({
+
+    needs: ['countries', 'departments'],
+
     actions: {
-        "saveHost": function () {
-            var content = this.get('content');
+        saveHost: function () {
 
-            // TODO: make to create/update model depending on controller state
+            var host = this.get('model');
+            var address = host.get('address');
 
-            content.save().then(null, function () {
-                content.rollback();
-            });
+            // Prevent multiple save attempts
+//            if (this.get('isSaving')) {
+//                return;
+//            }
+
+            // Validate and save
+            address.save()
+                .then(function () {
+                    host.save()
+                        .then(function () {
+                            alertify.success('Host created!');
+                        }).catch(function () {
+                            // Delete the address
+                            address.destroyRecord();
+                            alertify.error('Cannot create the host.');
+                        });
+                }).catch(function () {
+                    alertify.error('Cannot save the address.');
+                });
         }
     }
 });
