@@ -16,13 +16,17 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             validate: { len: [2, 255] }
         },
-        state: DataTypes.STRING
+        state: DataTypes.STRING,
+        countryId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        } // overriden to be non-nullable
     }, {
         tableName: 'addresses',
         classMethods: {
             associate: function (models) {
                 Address.belongsTo(models.Department, { foreignKeyConstraint: true });
-                Address.belongsTo(models.Country, { foreignKeyConstraint: true });
+                Address.belongsTo(models.Country, { foreignKeyConstraint: true, foreignKey: 'countryId' });
                 Address.hasOne(models.Wwoofer, { onDelete: 'cascade' });
                 Address.hasOne(models.Host, { onDelete: 'cascade' })
             }
