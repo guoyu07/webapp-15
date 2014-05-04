@@ -1,4 +1,13 @@
 App.HostEditController = Ember.ObjectController.extend({
+
+    countries: function () {
+        return this.store.find('country');
+    }.property(),
+
+    departments: function () {
+        return this.store.find('department');
+    }.property(),
+
     actions: {
         saveHost: function () {
             var host = this.get('model');

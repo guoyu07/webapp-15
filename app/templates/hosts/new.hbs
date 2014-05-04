@@ -13,10 +13,13 @@
                 <label for="farm-name" class="control-label">Farm Name</label>
                 {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholder="La Ferme de M. Seguin"}}
             </div>
-
             <div {{bind-attr class=":form-group"}}>
-                <label for="address" class="control-label">Address</label>
+                <label for="address" class="control-label">Address 1</label>
                 {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+            </div>
+            <div {{bind-attr class=":form-group"}}>
+                <label for="address" class="control-label">Address 2</label>
+                {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -31,6 +34,29 @@
                         {{input type="text" id="city" name="city" value=address.city class="form-control" placeholder="Ville"}}
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div {{bind-attr class=":form-group"}}>
+                        <label for="country" class="control-label">Country => {{address.country.code}}</label>
+                        {{view Ember.Select content=countries optionValuePath="content.id" optionLabelPath="content.name" value=address.country.id class="form-control" name="country"}}
+                    </div>
+                </div>
+                {{#if address.country.countryIsFrance}}
+                    <div class="col-md-6">
+                        <div {{bind-attr class=":form-group"}}>
+                            <label for="department" class="control-label">Department</label>
+                            {{view Ember.Select content=departments optionValuePath="content.id" optionLabelPath="content.name" value=address.department.id class="form-control" name="department"}}
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="col-md-6">
+                        <div {{bind-attr class=":form-group"}}>
+                            <label for="state" class="control-label">State / Region</label>
+                            {{input type="text" id="state" name="state" value=address.state class="form-control" placeholder="State"}}
+                        </div>
+                    </div>
+                {{/if}}
             </div>
         </div>
         <div class="col-md-6">
@@ -64,7 +90,7 @@
 <form class="row" {{action "addPhoto" on="submit"}}>
     <div class="form-group">
         <label for="file_upload" class="control-label">Pick a file</label>
-        <input id="file_upload" type="file" name="files[]" data-url="/api/1/photos" multiple>
+        <input id="file_upload" type="file" name="files[]" data-url="/api/photos" multiple>
     </div>
     <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
