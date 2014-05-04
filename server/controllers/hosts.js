@@ -66,37 +66,69 @@ exports.index = function (req, res) {
     })(req, res);
 };
 
+/**
+ * Returns a single host.
+ */
 exports.single = function (req, res) {
-    db.Host
-        .find({
-            include: [
-                { model: db.Photo, as: 'photos' },
-                { model: db.User, as: 'user' },
-                { model: db.Address, as: 'address' }
-            ],
-            where: {id: req.params.id}
-        })
-        .success(function (host) {
+    db.Host.find({
+        include: [
+            { model: db.Photo, as: 'photos' },
+            { model: db.User, as: 'user' },
+            { model: db.Address, as: 'address' }
+        ],
+        where: { id: req.params.id }
+    }).success(function (host) {
+        // Returns host or 404 if not found
+        if (host) {
             res.send({
                 host: host
-            });
-        })
-};
-
-exports.update = function (req, res) {
-    db.Host.find({
-        where: { id: req.params.id }
-    }).on('success', function (host) {
-        if (host) {
-            host.updateAttributes({
-                farmName: req.body.host.farmName
-            }).success(function (host) {
-                res.send({
-                    host: host
-                });
             });
         } else {
             res.send(404);
         }
+    }).error(function (error) {
+        res.send(500, error);
+    });
+};
+
+/**
+ * Updates a host.
+ */
+exports.update = function (req, res) {
+
+    // Validate input
+    if (!req.body.host)
+        res.send(400);
+
+    // Find the original host
+    db.Host.find({
+        where: {
+            id: req.params.id,
+            userId: req.user.id
+        }
+    }).success(function (host) {
+        if (host) {
+            // Get the updated host from body
+            var updatedHost = req.body.host;
+
+            // Update the host
+            host.updateAttributes({
+                farmName: updatedHost.farmName,
+                shortDescription: updatedHost.shortDescription,
+                fullDescription: updatedHost.fullDescription,
+                webSite: updatedHost.webSite,
+                travelDetails: updatedHost.travelDetails
+            }).success(function (host) {
+                res.send({
+                    host: host
+                })
+            }).error(function (error) {
+                res.send(500, error);
+            })
+        } else {
+            res.send(404);
+        }
+    }).error(function (error) {
+        res.send(500, error);
     });
 };
