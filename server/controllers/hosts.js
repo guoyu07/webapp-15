@@ -132,3 +132,41 @@ exports.update = function (req, res) {
         res.send(500, error);
     });
 };
+
+/**
+ * Creates a host.
+ */
+exports.create = function (req, res) {
+
+    // Validate input
+    if (!req.body.host)
+        res.send(400);
+
+    // Make sure the current user does not have a host yet
+    db.Host.find({
+        where: { userId: req.user.id }
+    }).success(function (host) {
+        if (host) {
+            // Existing host found for this user
+            res.send(409);
+        } else {
+            // Set the user id
+            req.body.host.userId = req.user.id;
+
+            // Create the host
+            db.Host.create(req.body.host, [
+                'farmName',
+                'shortDescription',
+                'fullDescription',
+                'webSite',
+                'travelDetails'
+            ]).success(function (host) {
+                res.send({ host: host });
+            }).error(function (error) {
+                res.send(500, error);
+            })
+        }
+    }).error(function () {
+        res.send(500, error);
+    });
+};
