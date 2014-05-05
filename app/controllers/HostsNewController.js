@@ -16,19 +16,21 @@ App.HostsNewController = Ember.ObjectController.extend({
 //                return;
 //            }
 
+            // Reset website to null to pass server-side validation (only accept null, and not empty string)
+            if (host.get('webSite') === '')
+                host.set('webSite', null);
+
             // Validate and save
-            address.save()
+            host.save()
                 .then(function () {
-                    host.save()
+                    address.save()
                         .then(function () {
                             alertify.success('Host created!');
                         }).catch(function () {
-                            // Delete the address
-                            address.destroyRecord();
-                            alertify.error('Cannot create the host.');
+                            // TODO: redirect user to host edit page to complete the form
                         });
                 }).catch(function () {
-                    alertify.error('Cannot save the address.');
+                    alertify.error('Cannot save the host.');
                 });
         }
     }

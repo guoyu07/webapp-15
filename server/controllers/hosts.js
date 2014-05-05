@@ -4,7 +4,7 @@
 var passport = require('passport');
 var db = require('../models');
 var Sequelize = require('sequelize');
-var updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails'];
+var updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails', 'userId'];
 
 /**
  * Returns a paginated list of hosts.
@@ -99,6 +99,8 @@ exports.update = function (req, res) {
     // Validate input
     if (!req.body.host)
         res.send(400);
+    if (req.body.host.userId !== req.user.id)
+        res.send(400);
 
     // Find the original host
     db.Host.find({
@@ -108,17 +110,18 @@ exports.update = function (req, res) {
         }
     }).success(function (host) {
         if (host) {
+
             // Update the host
             host.updateAttributes(
                 req.body.host,
                 updatableAttributes
             ).success(function (host) {
-                res.send({
-                    host: host
+                    res.send({
+                        host: host
+                    })
+                }).error(function (error) {
+                    res.send(500, error);
                 })
-            }).error(function (error) {
-                res.send(500, error);
-            })
         } else {
             res.send(404);
         }
@@ -152,10 +155,10 @@ exports.create = function (req, res) {
                 req.body.host,
                 updatableAttributes
             ).success(function (host) {
-                res.send({ host: host });
-            }).error(function (error) {
-                res.send(500, error);
-            })
+                    res.send({ host: host });
+                }).error(function (error) {
+                    res.send(500, error);
+                })
         }
     }).error(function () {
         res.send(500, error);

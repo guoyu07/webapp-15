@@ -78,6 +78,10 @@
                 {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholder="http://www.ma-page-perso.fr"}}
             </div>
             <div {{bind-attr class=":form-group"}}>
+                <label for="shortDescription" class="control-label">Short description</label>
+                {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholder="Ferme biologique au coeur des Alpes"}}
+            </div>
+            <div {{bind-attr class=":form-group"}}>
                 <label for="travel" class="control-label">Travel</label>
                 {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
             </div>
@@ -86,7 +90,7 @@
     <div class="row">
         <div class="col-md-12">
             <div {{bind-attr class=":form-group"}}>
-                <label for="entry" class="control-label">Entry</label>
+                <label for="entry" class="control-label">Full description</label>
                 {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder=""}}
             </div>
         </div>

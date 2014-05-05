@@ -9,15 +9,16 @@ module.exports = function (sequelize, DataTypes) {
         shortDescription: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: { len: [5, 200] }
+            validate: { len: [5, 255] }
         }, // (location)
         fullDescription: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
-            validate: { len: [5, 500] }
+            validate: { len: [5, 1500] }
         }, // (entry)
         webSite: {
             type: DataTypes.STRING,
+            allowNull: true,
             validate: { isUrl: true }
         },
         travelDetails: DataTypes.STRING,
