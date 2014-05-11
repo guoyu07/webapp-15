@@ -1,6 +1,9 @@
 <div class="page-header">
     <h1>{{farmName}}
         <small>{{user.firstName}} {{user.lastName}}</small>
+        {{#if userCanEditHost}}
+            {{#link-to 'host.edit' class="btn btn-primary pull-right"}}Edit Your Profile{{/link-to}}
+        {{/if}}
     </h1>
 </div>
 
