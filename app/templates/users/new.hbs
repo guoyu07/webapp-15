@@ -1,3 +1,10 @@
+<div class="page-header">
+    {{#if isNew}}
+        <h1>Join Our Community Today!</h1>
+    {{else}}
+        <h1>My Account</h1>
+    {{/if}}
+</div>
 <form>
     <div class="row">
         <div class="col-md-6">
@@ -21,7 +28,5 @@
             </div>
         </div>
     </div>
-
     <button {{action "saveUser"}} class="btn btn-default">Save</button>
-
 </form>
