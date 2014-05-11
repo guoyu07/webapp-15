@@ -33,7 +33,7 @@ App.ApplicationController = Ember.Controller.extend({
             alertify.success("See you soon!");
 
             // Go to host list (refresh the page to get fresh data from the API)
-            window.location.replace('/app/login');
+            window.location.replace('/app');
         }
     }
 });

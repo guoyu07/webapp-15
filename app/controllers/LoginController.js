@@ -25,7 +25,7 @@ App.LoginController = Ember.Controller.extend({
                 alertify.success("Welcome back!");
 
                 // Go to host list (refresh the page to get fresh data from the API)
-                window.location.replace('/app/hosts');
+                window.location.replace('/app');
 
             }).fail(function (error) {
 

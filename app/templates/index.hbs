@@ -1,0 +1,47 @@
+{{#if currentUser}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Your Host Profile</div>
+                <div class="panel-body">
+                    {{#if hostProfile}}
+                        <p>You host profile <strong>{{hostProfile.farmName}}</strong> is currently online.
+                            You can preview it or edit it.</p>
+                        {{#link-to 'host.index' hostProfile.id class="btn btn-default"}}View Your Profile{{/link-to}}
+                        {{#link-to 'host.edit' hostProfile.id class="btn btn-primary"}}Edit Your Profile{{/link-to}}
+                    {{else}}
+                        <p>You do not have a host profile yet. But you can create one anytime!</p>
+                        {{#link-to 'hosts.new' class="btn btn-primary"}}Create Your Profile{{/link-to}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Your Wwoofer Profile</div>
+                <div class="panel-body">
+                    {{#if wwooferProfile}}
+                        <p>You wwoofer profile is currently online. You can preview it or edit it.</p>
+                        {{#link-to 'wwoofer.index' wwooferProfile.id class="btn btn-default"}}View Your
+                            Profile{{/link-to}}
+                        {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-primary"}}Edit Your
+                            Profile{{/link-to}}
+                    {{else}}
+                        <p>You do not have a wwoofer profile yet. But you can create one anytime!</p>
+                        {{#link-to 'wwoofers.new' class="btn btn-primary"}}Create Your Profile{{/link-to}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <div class="jumbotron">
+        <h1>Welcome to Wwoof France!</h1>
+
+        <p>You can browse the list of hosts in France, or jump into your account to be part of our community
+            :-)</p>
+
+        <p>{{#link-to 'login' class="btn btn-primary btn-lg" role="button"}}Login{{/link-to}}
+            {{#link-to 'users.new' class="btn btn-default btn-lg" role="button"}}Sign Up{{/link-to}}</p>
+    </div>
+{{/if}}

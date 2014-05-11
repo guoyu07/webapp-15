@@ -5,10 +5,8 @@
 </div>
 
 <form>
-
     <div class="row">
         <div class="col-md-6">
-
             <div {{bind-attr class=":form-group"}}>
                 <label for="farm-name" class="control-label">Farm Name</label>
                 {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholder="La Ferme de M. Seguin"}}
@@ -96,57 +94,52 @@
             </div>
         </div>
     </div>
-
     <button {{action "saveHost"}} class="btn btn-default">Save</button>
-
 </form>
 
-<hr/>
-
-<h3>Add a photo</h3>
-
-<form class="row" {{action "addPhoto" on="submit"}}>
-    <div class="form-group">
-        <label for="file_upload" class="control-label">Pick a file</label>
-        <input id="file_upload" type="file" name="files[]" data-url="/api/photos" multiple>
-    </div>
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-</form>
-
-<hr/>
-
-<h3>Edit or remove a photo</h3>
-
-{{#if photos}}
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <td>Photo</td>
-            <td>Caption</td>
-            <td>Actions</td>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each photos}}
+{{#unless isNew}}
+    <hr/>
+    <h3>Add a photo</h3>
+    <form class="row" {{action "addPhoto" on="submit"}}>
+        <div class="form-group">
+            <label for="file_upload" class="control-label">Pick a file</label>
+            <input id="file_upload" type="file" name="files[]" data-url="/api/photos" multiple>
+        </div>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </form>
+    <hr/>
+    <h3>Edit or remove a photo</h3>
+    {{#if photos}}
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <td>
-                    <div class="host-thumb-small">
-                        <img {{bind-attr src="completeUrl"}} />
-                    </div>
-                </td>
-                <td>
-                    {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
-                </td>
-                <td>
-                    <a href="#">Save</a> |
-                    <a href="#">Delete</a>
-                </td>
+                <td>Photo</td>
+                <td>Caption</td>
+                <td>Actions</td>
             </tr>
-        {{/each}}
-        </tbody>
-    </table>
-{{else}}
-    <p>No photo yet!</p>
-{{/if}}
+            </thead>
+            <tbody>
+            {{#each photos}}
+                <tr>
+                    <td>
+                        <div class="host-thumb-small">
+                            <img {{bind-attr src="completeUrl"}} />
+                        </div>
+                    </td>
+                    <td>
+                        {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
+                    </td>
+                    <td>
+                        <a href="#">Save</a> |
+                        <a href="#">Delete</a>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <p>No photo yet!</p>
+    {{/if}}
+{{/unless}}

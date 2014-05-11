@@ -19,16 +19,14 @@ exports.index = function (req, res) {
         var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
             offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
             dptCondition = req.query.dpt ? { id: req.query.dpt } : null,
+            userIdCondition = req.query.userId ? { userId: req.query.userId } : null,
             searchTerm = req.query.searchTerm || '';
 
         // Find all hosts matching parameters
         db.Host.findAndCountAll({
             limit: limit,
             offset: offset,
-//            where: Sequelize.and(
-//                ,
-//                dptCondition
-//            ),
+            where: userIdCondition,
             include: [
                 {
                     model: db.User,

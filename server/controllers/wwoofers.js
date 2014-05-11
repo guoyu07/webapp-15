@@ -10,13 +10,14 @@ exports.index = function (req, res) {
 
     // Extract query params
     var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
-        offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset);
-//        dpt = (req.query.dpt || '') + '%',
-//        searchTerm = req.query.searchTerm || '',
-//        where = ["contact like ? and zipCode like ?", '%' + searchTerm + '%', dpt + '%'];
+        offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
+        userIdCondition = req.query.userId ? { userId: req.query.userId } : null;
 
     // Find all wwofers matching parameters
     db.Wwoofer.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        where: userIdCondition,
         include: [
             { model: db.User, as: 'user' },
             { model: db.Address, as: 'address', include: [
@@ -24,10 +25,7 @@ exports.index = function (req, res) {
                 { model: db.Country }
             ]
             }
-        ],
-        limit: limit,
-        offset: offset
-        // where: where
+        ]
     }).success(function (wwoofers) {
         res.send({
             wwoofers: wwoofers.rows,

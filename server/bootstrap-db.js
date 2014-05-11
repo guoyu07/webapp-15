@@ -17,7 +17,7 @@ module.exports = function (db) {
                 db.User.bulkCreate([
                     { email: 'plop@plop.com', passwordHash: 'thisisnotarealhash', firstName: 'Bob', lastName: 'Dylan', birthDate: '1989-06-25 04:15:10', phone: '206-012-3465' },
                     { email: 'host@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Jean', lastName: 'Bon', birthDate: '1977-02-08 04:15:10', phone: '206-012-3465' },
-                    { email: 'woofer@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Helen', lastName: 'Polmino', birthDate: '1984-10-10 10:10:25', phone: '206-012-3465' }
+                    { email: 'wwoofer@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Helen', lastName: 'Polmino', birthDate: '1984-10-10 10:10:25', phone: '206-012-3465' }
                 ]).success(function () {
                     db.Host.bulkCreate([
                         { farmName: 'La Belle Ferme', shortDescription: 'Ferme Bio dans le marais', fullDescription: 'Une description complete prendrait trop de place.', webSite: 'http://pouet.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', addressId: 1, userId: 1 },
