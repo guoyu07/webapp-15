@@ -4,6 +4,8 @@
 
 App.HostsNewView = Ember.View.extend({
     didInsertElement: function () {
+        var self = this;
+
         $('#file_upload').fileupload({
             dataType: 'json',
             formData: {
@@ -11,6 +13,9 @@ App.HostsNewView = Ember.View.extend({
             },
             done: function (e, data) {
                 alertify.success("File uploaded!");
+
+                // Force a reload of the host so the photo get displayed in the list
+                self.get('controller.model').reload();
             },
             error: function (e, data) {
                 alertify.error("Unable tu upload files on the server.");
