@@ -97,10 +97,10 @@ exports.single = function (req, res) {
 exports.update = function (req, res) {
 
     // Validate input
-    if (!req.body.host)
+    if (!req.body.host) {
         res.send(400);
-    if (req.body.host.userId !== req.user.id)
-        res.send(400);
+        return;
+    }
 
     // Find the original host
     db.Host.find({
@@ -110,15 +110,12 @@ exports.update = function (req, res) {
         }
     }).success(function (host) {
         if (host) {
-
             // Update the host
             host.updateAttributes(
                 req.body.host,
                 updatableAttributes
             ).success(function (host) {
-                    res.send({
-                        host: host
-                    })
+                    res.send({ host: host });
                 }).error(function (error) {
                     res.send(500, error);
                 })
@@ -136,8 +133,10 @@ exports.update = function (req, res) {
 exports.create = function (req, res) {
 
     // Validate input
-    if (!req.body.host)
+    if (!req.body.host) {
         res.send(400);
+        return;
+    }
 
     // Make sure the current user does not have a host yet
     db.Host.find({
