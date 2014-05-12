@@ -6,10 +6,7 @@ App.IndexController = Ember.ObjectController.extend({
     needs: ['application'],
     hosts: [],
     wwoofers: [],
-
-    currentUser: function () {
-        return this.get('controllers.application.currentUser');
-    }.property(),
+    currentUserBinding: 'controllers.application.currentUser',
 
     hostProfile: function () {
         return this.get('hosts') ? this.get('hosts').objectAt(0) : null;
