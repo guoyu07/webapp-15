@@ -16,6 +16,10 @@
                 <label for="lastName" class="control-label">Last Name</label>
                 {{input type="text" id="lastName" name="lastName" value=lastName class="form-control" placeholder="Last name"}}
             </div>
+            <div {{bind-attr class=":form-group"}}>
+                <label for="birthDate" class="control-label">Birth date</label>
+                {{date-picker value=birthDate}}
+            </div>
         </div>
         <div class="col-md-6">
             <div {{bind-attr class=":form-group"}}>
@@ -28,5 +32,9 @@
             </div>
         </div>
     </div>
-    <button {{action "saveUser"}} class="btn btn-default">Save</button>
+    {{#if isNew}}
+        <button {{action "saveUser"}} class="btn btn-primary">Register</button>
+    {{else}}
+        <button {{action "saveUser"}} class="btn btn-primary">Save</button>
+    {{/if}}
 </form>
