@@ -1,78 +1,91 @@
 <div class="page-header">
-    <h1>{{firstName}} {{lastName}}</h1>
+    <h1>Your Wwoofer Profile</h1>
 </div>
 
 <form>
-
     <div class="row">
         <div class="col-md-6">
-
-            <h2>Wwoofer 1</h2>
+            <h2>Where are you from?</h2>
 
             <div {{bind-attr class=":form-group"}}>
-                <label for="firstName" class="control-label">First name</label>
-                {{input type="text" id="firstName" name="firstName" value=firstName class="form-control" placeholder="First name"}}
+                <label for="address1" class="control-label">Address 1</label>
+                {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
             </div>
-
             <div {{bind-attr class=":form-group"}}>
-                <label for="lastName" class="control-label">Last name</label>
-                {{input type="text" id="lastName" name="lastName" value=lastName class="form-control" placeholder="Last name"}}
+                <label for="address2" class="control-label">Address 2</label>
+                {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
             </div>
-
-            <div {{bind-attr class=":form-group"}}>
-                <label for="birthDate" class="control-label">Birth date</label>
-
-                <div class='input-group date' id='datetimepicker1'>
-                    {{input type="text" id="birthDate" name="birthDate" value=birthDate class="form-control" placeholder=""}}
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            <div class="row">
+                <div class="col-md-4">
+                    <div {{bind-attr class=":form-group"}}>
+                        <label for="zipCode" class="control-label">Zip Code</label>
+                        {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control" placeholder="Code postal"}}
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div {{bind-attr class=":form-group"}}>
+                        <label for="city" class="control-label">City</label>
+                        {{input type="text" id="city" name="city" value=address.city class="form-control" placeholder="Ville"}}
+                    </div>
                 </div>
             </div>
-
-            <div {{bind-attr class=":form-group"}}>
-                <label for="city" class="control-label">City</label>
-                {{input type="text" id="city" name="city" value=address.city class="form-control" placeholder=""}}
-            </div>
-
-            <div {{bind-attr class=":form-group"}}>
-                <label for="postalCode" class="control-label">Postal Code</label>
-                {{input type="text" id="postalCode" name="postalCode" value=address.zipCode class="form-control" placeholder=""}}
-            </div>
-
-            <div {{bind-attr class=":form-group"}}>
-                <label for="country" class="control-label">Country</label>
-                {{view Ember.Select
-                contentBinding="countries"
-                optionValuePath="content.id"
-                optionLabelPath="content.name"
-                valueBinding="address.country.code"
-                class="form-control"
-                name="country"}}
+            <div class="row">
+                <div class="col-md-6">
+                    <div {{bind-attr class=":form-group"}}>
+                        <label for="country" class="control-label">Country</label>
+                        {{view Ember.Select
+                        content=controllers.countries.content
+                        optionValuePath="content.id"
+                        optionLabelPath="content.name"
+                        selection=address.country
+                        class="form-control"
+                        name="country"
+                        prompt="Select a country"}}
+                    </div>
+                </div>
+                {{#if address.country.countryIsFrance}}
+                    <div class="col-md-6">
+                        <div {{bind-attr class=":form-group"}}>
+                            <label for="department" class="control-label">Department</label>
+                            {{view Ember.Select
+                            content=controllers.departments.content
+                            optionValuePath="content.id"
+                            optionLabelPath="content.name"
+                            selection=address.department
+                            class="form-control"
+                            name="department"}}
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="col-md-6">
+                        <div {{bind-attr class=":form-group"}}>
+                            <label for="state" class="control-label">State / Region</label>
+                            {{input type="text" id="state" name="state" value=address.state class="form-control" placeholder="State"}}
+                        </div>
+                    </div>
+                {{/if}}
             </div>
         </div>
         <div class="col-md-6">
-
-            <h2>Wwoofer 2</h2>
+            <h2>Are you wwoofing with someone?</h2>
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="firstName2" class="control-label">First name</label>
                 {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control" placeholder=""}}
             </div>
-
             <div {{bind-attr class=":form-group"}}>
                 <label for="lastName2" class="control-label">Last name</label>
-                {{input type="text" id="lastName2" name="lastName2" value=lastName class="form-control" placeholder=""}}
+                {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control" placeholder=""}}
             </div>
-
             <div {{bind-attr class=":form-group"}}>
                 <label for="birthDate2" class="control-label">Birth date</label>
-
-                <div class='input-group date' id='datetimepicker2'>
-                    {{input type="text" id="birthDate2" name="birthDate2" value=birthDate2 class="form-control" placeholder=""}}
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>
+                {{date-picker name="birthDate2" value=birthDate2}}
             </div>
-
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <button {{action "saveWwoofer"}} class="btn btn-primary">Next</button>
+        </div>
+    </div>
 </form>

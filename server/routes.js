@@ -42,4 +42,6 @@ module.exports = function (app) {
 
     app.get('/api/wwoofers', passport.authenticate('bearer', { session: false }), wwoofers.index);
     app.get('/api/wwoofers/:id', passport.authenticate('bearer', { session: false }), wwoofers.single);
+    app.put('/api/wwoofers/:id', passport.authenticate('bearer', { session: false }), wwoofers.update);
+    app.post('/api/wwoofers', passport.authenticate('bearer', { session: false }), wwoofers.create);
 };

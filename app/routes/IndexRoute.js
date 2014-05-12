@@ -4,8 +4,11 @@
 App.IndexRoute = Ember.Route.extend({
     setupController: function (controller, model) {
 
-        // Get the current user id (use -1 if user is not logged in)
-        var userId = this.controllerFor('application').get('currentUser.id') || -1;
+        // Get the current user id
+        var userId = this.controllerFor('application').get('currentUser.id');
+        if (!userId) {
+            return;
+        }
 
         // Retrieve the user's host profile
         this.store.find('host', { 'userId': userId }).then(function (hosts) {
