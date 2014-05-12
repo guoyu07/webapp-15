@@ -11,7 +11,7 @@ App.DatePickerComponent = Ember.Component.extend({
             pickTime: false,
             viewMode: 'years'
         }).on("dp.change", function () {
-            self.set('value', $('#datetimepicker').data("DateTimePicker").getDate());
+            self.set('value', $('#datetimepicker').data("DateTimePicker").getDate()._d);
         });
     }
 });
