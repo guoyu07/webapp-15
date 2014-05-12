@@ -7,7 +7,6 @@ App.Photo = DS.Model.extend({
     caption: DS.attr('string'),
     host: DS.belongsTo('host'),
     completeUrl: function () {
-        var baseUrl = 'http://localhost:3333/host_photos/'; // http://wwoof.fr/loggedon/images/
-        return this.get('fileName') ? baseUrl + encodeURIComponent(this.get('fileName')) : '';
+        return this.get('fileName') ? '/host_photos/' + encodeURIComponent(this.get('fileName')) : '';
     }.property('fileName')
 });
