@@ -20,7 +20,7 @@ App.WwoofersNewController = Ember.ObjectController.extend({
                 .then(function () {
                     address.save()
                         .then(function () {
-                            wwoofer.address = address;
+                            wwoofer.set('address', address);
                             wwoofer.save()
                                 .then(function () {
                                     alertify.success('Information updated!');

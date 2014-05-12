@@ -11,8 +11,6 @@ module.exports = function (sequelize, DataTypes) {
         //paymentStatus: DataTypes.INTEGER,
         //memId: DataTypes.STRING,
         //txnId: DataTypes.STRING,
-        itemCode: DataTypes.INTEGER, // Convert to enum
-        paymentType: DataTypes.ENUM('PPL', 'CHQ'),
         deletionDate: DataTypes.DATE
     }, {
         tableName: 'wwoofers',
