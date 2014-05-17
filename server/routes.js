@@ -1,4 +1,3 @@
-var passport = require('passport');
 var application = require('./controllers/application');
 var login = require('./controllers/login');
 var users = require('./controllers/users');
@@ -10,7 +9,7 @@ var wwoofers = require('./controllers/wwoofers');
 var countries = require('./controllers/countries');
 var paypal = require('./controllers/paypal');
 
-module.exports = function (app) {
+module.exports = function (app, passport) {
 
     app.get('/payment/start', paypal.start);
     app.get('/payment/execute', paypal.execute);

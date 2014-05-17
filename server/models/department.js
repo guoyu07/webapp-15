@@ -10,6 +10,6 @@ module.exports = function (sequelize, DataTypes) {
                 Department.hasMany(models.Address)
             }
         }
-    })
+    });
     return Department
-}
+};
