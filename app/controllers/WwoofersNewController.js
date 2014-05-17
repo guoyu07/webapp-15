@@ -11,29 +11,26 @@ App.WwoofersNewController = Ember.ObjectController.extend({
             var address = wwoofer.get('address');
 
             // Prevent multiple save attempts
-//            if (this.get('isSaving')) {
-//                return;
-//            }
+            if (this.get('isSaving')) {
+                return;
+            }
 
-            // Validate and save
+            // Save the wwoofer and its address
+            var self = this;
             wwoofer.save()
                 .then(function () {
-                    address.save()
-                        .then(function () {
-                            wwoofer.set('address', address);
-                            wwoofer.save()
-                                .then(function () {
-                                    alertify.success('Information updated!');
-                                    this.transitionToRoute('wwoofer.edit', wwoofer);
-                                }).catch(function () {
-                                    alertify.error('Cannot attach address to wwoofer.');
-                                });
-                        }).catch(function () {
-                            alertify.error('Cannot update the address.');
-                        });
-                }).catch(function () {
-                    alertify.error('Cannot update the wwoofer.');
+                    return address.save();
+                }).then(function () {
+                    wwoofer.set('address', address);
+                    return wwoofer.save();
+                }).then(function () {
+                    alertify.success('Information updated!');
+                    self.transitionToRoute('wwoofer.edit', wwoofer);
+                }).catch(function (error) {
+                    console.error(error);
+                    alertify.error('Cannot attach address to wwoofer.');
                 });
         }
     }
-});
+})
+;
