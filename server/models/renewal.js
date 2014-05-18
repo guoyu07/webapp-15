@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
         payerId: DataTypes.STRING,
         saleId: DataTypes.STRING,
         date: DataTypes.DATE,
-        itemCode: DataTypes.INTEGER, // Convert to enum
+        itemCode: DataTypes.ENUM('WO1', 'WO2', 'WOB1', 'WOB2', 'H', 'HR'),
         paymentType: DataTypes.ENUM('PPL', 'CHQ')
     }, {
         tableName: 'renewals',
