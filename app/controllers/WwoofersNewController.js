@@ -28,7 +28,7 @@ App.WwoofersNewController = Ember.ObjectController.extend({
                     self.transitionToRoute('wwoofer.edit', wwoofer);
                 }).catch(function (error) {
                     console.error(error);
-                    alertify.error('Cannot attach address to wwoofer.');
+                    alertify.error('Cannot create wwoofer.');
                 });
         }
     }
