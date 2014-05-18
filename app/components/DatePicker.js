@@ -7,12 +7,18 @@ App.DatePickerComponent = Ember.Component.extend({
 
     didInsertElement: function () {
         var self = this;
-        var dp = $('#datetimepicker').datetimepicker({
+        var dp = $('#datetimepicker');
+
+        // Initializes picker
+        dp.datetimepicker({
             pickTime: false,
             viewMode: 'years'
         }).on('dp.change', function () {
-            self.set('value', $('#datetimepicker').data('DateTimePicker').getDate()._d);
+            self.set('value', dp.data('DateTimePicker').getDate()._d);
         });
+
+        // Set max date (today)
+        dp.data('DateTimePicker').setMaxDate(new Date());
 
         // Set initial value on first load
         if (this.get('value')) {
