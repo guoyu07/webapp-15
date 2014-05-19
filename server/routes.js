@@ -1,5 +1,5 @@
 var application = require('./controllers/application');
-var login = require('./controllers/login');
+var auth = require('./controllers/auth');
 var users = require('./controllers/users');
 var hosts = require('./controllers/hosts');
 var addresses = require('./controllers/addresses');
@@ -9,38 +9,46 @@ var wwoofers = require('./controllers/wwoofers');
 var countries = require('./controllers/countries');
 var paypal = require('./controllers/paypal');
 
+/**
+ * Configures all routes.
+ * @param app The express application.
+ * @param passport The passport middleware.
+ */
 module.exports = function (app, passport) {
 
-    app.get('/payment/start', paypal.start);
-    app.get('/payment/execute', paypal.execute);
     app.get('/app*', application.index);
 
-    app.post('/api/request_token', passport.authenticate('local', { session: false }), login.successCallback);
+    app.post('/login', passport.authenticate('local'), auth.loginCallback);
+    app.get('/logout', auth.logout);
 
-    app.get('/api/users', passport.authenticate('bearer', { session: false }), users.index);
-    app.get('/api/users/:id', passport.authenticate('bearer', { session: false }), users.single);
+    app.get('/payment/start', auth.ensureAuthenticated, paypal.start);
+    app.get('/payment/execute', auth.ensureAuthenticated, paypal.execute);
+
+    app.get('/api/users', auth.ensureAuthenticated, users.index);
+    app.get('/api/users/:id', auth.ensureAuthenticated, users.single);
     app.post('/api/users', users.create);
 
     app.get('/api/hosts', hosts.index);
     app.get('/api/hosts/:id', hosts.single);
-    app.put('/api/hosts/:id', passport.authenticate('bearer', { session: false }), hosts.update);
-    app.post('/api/hosts', passport.authenticate('bearer', { session: false }), hosts.create);
+    app.put('/api/hosts/:id', auth.ensureAuthenticated, hosts.update);
+    app.post('/api/hosts', auth.ensureAuthenticated, hosts.create);
 
-    app.put('/api/addresses/:id', passport.authenticate('bearer', { session: false }), addresses.update);
-    app.post('/api/addresses', passport.authenticate('bearer', { session: false }), addresses.create);
-    app.delete('/api/addresses/:id', passport.authenticate('bearer', { session: false }), addresses.delete);
+    app.put('/api/addresses/:id', auth.ensureAuthenticated, addresses.update);
+    app.post('/api/addresses', auth.ensureAuthenticated, addresses.create);
+    app.delete('/api/addresses/:id', auth.ensureAuthenticated, addresses.delete);
 
     app.get('/api/photos', photos.index);
     app.get('/api/photos/:id', photos.single);
-    app.post('/api/photos', photos.create);
+    app.post('/api/photos', auth.ensureAuthenticated, photos.create);
 
     app.get('/api/departments', departments.index);
 
     app.get('/api/countries', countries.index);
     app.get('/api/countries/:id', countries.single);
 
-    app.get('/api/wwoofers', passport.authenticate('bearer', { session: false }), wwoofers.index);
-    app.get('/api/wwoofers/:id', passport.authenticate('bearer', { session: false }), wwoofers.single);
-    app.put('/api/wwoofers/:id', passport.authenticate('bearer', { session: false }), wwoofers.update);
-    app.post('/api/wwoofers', passport.authenticate('bearer', { session: false }), wwoofers.create);
+    app.get('/api/wwoofers', auth.ensureAuthenticated, wwoofers.index);
+    app.get('/api/wwoofers/:id', auth.ensureAuthenticated, wwoofers.single);
+    app.put('/api/wwoofers/:id', auth.ensureAuthenticated, wwoofers.update);
+    app.post('/api/wwoofers', auth.ensureAuthenticated, wwoofers.create);
 };
+

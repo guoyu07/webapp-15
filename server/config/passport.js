@@ -1,14 +1,21 @@
 var LocalStrategy = require('passport-local').Strategy,
-    BearerStrategy = require('passport-http-bearer').Strategy,
     db = require('../../server/models'),
-    crypto = require('crypto'),
-    config = require('../../config'),
-    moment = require('moment'),
-    jwt = require('jwt-simple');
+    crypto = require('crypto');
 
-module.exports = function (passport) {
+/**
+ * initializes and configure passport authentication.
+ * @param app The express application.
+ * @param passport The passport middleware.
+ */
+module.exports = function (app, passport) {
 
-    // Configure authentication middleware
+    // Init passport
+    app.use(passport.initialize());
+
+    // Enable session middleware
+    app.use(passport.session());
+
+    // Configure authentication
     passport.use(new LocalStrategy(
         function (username, password, done) {
 
@@ -27,81 +34,30 @@ module.exports = function (passport) {
                     return done(null, false, { message: 'Incorrect password.' });
                 }
 
-                db.Token
-                    .findOrCreate({id: user.id}, {id: user.id})
-                    .success(function (token) {
+                // Success: return user
+                return done(null, user);
 
-                        // Generate the token if not present
-                        if (!token.token) {
-                            var payload = {
-                                userId: user.id
-                            };
-                            token.token = jwt.encode(payload, config.jwt_secret);
-                        }
-
-                        // Set the token expiration date (one hour from now)
-                        var now = new Date();
-                        token.expireAt = now.setHours(now.getHours() + 1);
-
-                        // Save the token
-                        token
-                            .save()
-                            .success(function () {
-                                console.log('Authenticated user: ' + user.email);
-                                console.log('Token expires: ' + moment(token.expireAt).format('MMMM Do YYYY, h:mm:ss a'));
-                                return done(null, user);
-                            })
-                    })
-            })
+            }).error(function (error) {
+                done(error);
+            });
         }
     ));
-    passport.use(new BearerStrategy(
-        function (token, done) {
 
-            console.log('Validating user token...');
+    // Indicates what must be serialized in session
+    passport.serializeUser(function (user, done) {
+        done(null, user.id);
+    });
 
-            db.Token.find({
-                where: { token: token }
-            }).success(function (dbToken) {
-
-                // Failed authentication if token was not found
-                if (!dbToken)
-                    return done(null, false);
-
-                // Decode token
-                var decodedToken = jwt.decode(token, config.jwt_secret);
-
-                // Make sure the user id in the JWT token matches the id of the token
-                if (!decodedToken || !decodedToken.userId || (decodedToken.userId != dbToken.id))
-                    return done(null, false);
-
-                // Check whether the token is expired
-                var now = new Date();
-                if (dbToken.expireAt < now)
-                    return done(null, false);
-
-                // Delay the token expiration date to be in 1 hour from now
-                dbToken.expireAt = now.setHours(now.getHours() + 1);
-                console.log('Token expires: ' + moment(dbToken.expireAt).format('MMMM Do YYYY, h:mm:ss a'));
-
-                // Save the token
-                dbToken.save()
-                    .success(function () {
-
-                        // Find the user in the DB
-                        db.User
-                            .find(dbToken.id)
-                            .success(function (user) {
-                                return done(null, user);
-                            })
-                            .error(function (err) {
-                                return done(null, false);
-                            });
-
-                    }).error(function (err) {
-                        return done(null, false);
-                    });
-            })
-        }
-    ));
+    // Finds the authenticated user object from the id stored in session
+    passport.deserializeUser(function (id, done) {
+        db.User.find(id).success(function (user) {
+            if (user) {
+                done(null, user);
+            } else {
+                return done(null, false);
+            }
+        }).error(function (error) {
+            done(error, null);
+        });
+    });
 };

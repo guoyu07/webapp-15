@@ -1,10 +1,10 @@
 /**
- * Created by guillaumez on 3/30/2014.
+ * Ember controller for the application.
  */
 App.ApplicationController = Ember.Controller.extend({
 
     /**
-     * The currently logged in user.
+     * Gets or sets the authenticated user.
      */
     currentUser: function (key, value) {
 
@@ -25,15 +25,11 @@ App.ApplicationController = Ember.Controller.extend({
     actions: {
         logout: function () {
 
-            // Clear token and user
-            localStorage.removeItem("token");
+            // Clear the user
             this.set('currentUser', null);
 
-            // Notify user
-            alertify.success("See you soon!");
-
-            // Go to host list (refresh the page to get fresh data from the API)
-            window.location.replace('/app');
+            // Log the user out
+            window.location.replace('/logout');
         }
     }
 });

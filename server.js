@@ -55,8 +55,6 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.bodyParser());
 app.use(express.static('public'));
-app.use(passport.initialize());
-app.use(app.router);
 
 // Development only configuration
 app.configure('development', function () {
@@ -64,8 +62,11 @@ app.configure('development', function () {
     app.use(express.errorHandler());
 });
 
-// Config authentication with passport
-require('./server/config/passport')(passport);
+// Configure authentication with passport
+require('./server/config/passport')(app, passport);
+
+// Use router (must be declared after passport)
+app.use(app.router);
 
 // Init all routes
 require('./server/routes')(app, passport);

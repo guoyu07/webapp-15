@@ -1,7 +1,6 @@
 /**
- * Created by guillaumez on 3/22/14.
+ * Ember controller for login.
  */
-
 App.LoginController = Ember.Controller.extend({
 
     needs: 'application',
@@ -9,17 +8,13 @@ App.LoginController = Ember.Controller.extend({
     actions: {
         login: function () {
             var self = this;
-            $.post("/api/request_token", {
+            $.post("/login", {
                 username: this.get("username"),
                 password: this.get("password")
             }).done(function (data) {
 
                 // Store the token in the local storage
-                localStorage["token"] = data.token;
                 self.set('controllers.application.currentUser', data.user);
-
-                // TODO: Clear the host cache
-                // self.get('controllers.hosts.content').reload();
 
                 // Notify user
                 alertify.success("Welcome back!");
@@ -27,10 +22,10 @@ App.LoginController = Ember.Controller.extend({
                 // Go to host list (refresh the page to get fresh data from the API)
                 window.location.replace('/app');
 
-            }).fail(function (error) {
+            }).fail(function () {
 
                 // Notify user
-                alertify.error("Email address or password incorrect.");
+                alertify.error("The email address or password is incorrect.");
             });
         }
     }

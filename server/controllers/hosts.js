@@ -1,67 +1,62 @@
 /**
  * API controller for Hosts.
  */
-var passport = require('passport');
 var db = require('../models');
 var Sequelize = require('sequelize');
 var updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails', 'userId'];
 
 /**
  * Returns a paginated list of hosts.
- * This route can be accessed from non authenticated users, but returns additional data for members.
+ * This route can be accessed from non authenticated users, but returns additional data for members (TODO).
  */
 exports.index = function (req, res) {
 
-    // Manually call the authentication middleware
-    passport.authenticate('bearer', { session: false }, function (err, user, info) {
+    // Extract query params
+    var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
+        offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
+        dptCondition = req.query.dpt ? { id: req.query.dpt } : null,
+        userIdCondition = req.query.userId ? { userId: req.query.userId } : null,
+        searchTerm = req.query.searchTerm || '';
 
-        // Extract query params
-        var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
-            offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
-            dptCondition = req.query.dpt ? { id: req.query.dpt } : null,
-            userIdCondition = req.query.userId ? { userId: req.query.userId } : null,
-            searchTerm = req.query.searchTerm || '';
-
-        // Find all hosts matching parameters
-        db.Host.findAndCountAll({
-            limit: limit,
-            offset: offset,
-            where: userIdCondition,
-            include: [
-                {
-                    model: db.User,
-                    as: 'user',
-                    where: Sequelize.or(
-                        ['firstName like ?', '%' + searchTerm + '%'],
-                        ['lastName like ?', '%' + searchTerm + '%']
-                    )
-                },
-                {
-                    model: db.Address,
-                    as: 'address',
-                    include: [
-                        {
-                            model: db.Department,
-                            where: dptCondition
-                        }
-                    ]
-                },
-                {
-                    model: db.Photo,
-                    as: 'photos'
-                }
-            ]
-        }).success(function (hosts) {
-            res.send({
-                hosts: hosts.rows,
-                meta: {
-                    offset: offset,
-                    limit: limit,
-                    total: hosts.count
-                }
-            });
+    // Find all hosts matching parameters
+    db.Host.findAndCountAll({
+        limit: limit,
+        offset: offset,
+        where: userIdCondition,
+        include: [
+            {
+                model: db.User,
+                as: 'user',
+                where: Sequelize.or(
+                    ['firstName like ?', '%' + searchTerm + '%'],
+                    ['lastName like ?', '%' + searchTerm + '%']
+                )
+            },
+            {
+                model: db.Address,
+                as: 'address',
+                include: [
+                    {
+                        model: db.Department,
+                        where: dptCondition
+                    }
+                ]
+            },
+            {
+                model: db.Photo,
+                as: 'photos'
+            }
+        ]
+    }).success(function (hosts) {
+        res.send({
+            hosts: hosts.rows,
+            meta: {
+                offset: offset,
+                limit: limit,
+                total: hosts.count
+            }
         });
-    })(req, res);
+    });
 };
 
 /**
@@ -78,9 +73,7 @@ exports.single = function (req, res) {
     }).success(function (host) {
         // Returns host or 404 if not found
         if (host) {
-            res.send({
-                host: host
-            });
+            res.send({ host: host });
         } else {
             res.send(404);
         }
