@@ -1,0 +1,30 @@
+<div class="page-header">
+    <h1>Become A Member</h1>
+</div>
+
+<p>In order to have access to all farms contact information (email, phone, address), you must become a member of our
+    association.</p>
+
+<form>
+
+    <strong>
+        {{#if firstName2}}
+            1 Year Wwoofer Online Solo &bull; 25 &euro;
+        {{else}}
+            1 Year Wwoofer Online Duo &bull; 20 &euro;
+        {{/if}}
+    </strong>
+
+    <div class="checkbox">
+        <label>
+            {{input type="checkbox" name="withBooklet" checked=withBooklet}}
+            Send me the Wwoofer Printed Booklet (listing of all farms) &bull; +10 &euro;
+        </label>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button {{action "initPayment"}} class="btn btn-primary">Pay with Paypal</button>
+        </div>
+    </div>
+</form>

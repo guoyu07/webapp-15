@@ -25,7 +25,7 @@ App.WwoofersNewController = Ember.ObjectController.extend({
                     return wwoofer.save();
                 }).then(function () {
                     alertify.success('Information updated!');
-                    self.transitionToRoute('wwoofer.edit', wwoofer);
+                    self.transitionToRoute('wwoofer.membership', wwoofer);
                 }).catch(function (error) {
                     console.error(error);
                     alertify.error('Cannot create wwoofer.');

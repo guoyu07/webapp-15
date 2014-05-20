@@ -9,6 +9,7 @@ App.Router.map(function () {
             this.route("new");
             this.resource("wwoofer", { path: "/:wwoofer_id" }, function () {
                 this.route("edit");
+                this.route('membership');
             });
         }),
         this.resource('login', { path: '/login' }),

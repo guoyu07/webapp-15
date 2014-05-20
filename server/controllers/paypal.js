@@ -6,9 +6,19 @@ var db = require('../models');
 
 /**
  * Initiates a payment with PayPal.
- * TODO: authenticate with Bearer in order to get the user id + add query params (purchase data, ...)
+ * TODO: translate properly the item description once i18n is set up.
  */
 exports.start = function (req, res) {
+
+    // Get base price
+    var itemCode = req.query.itemCode;
+    var basePrice = getBasePrice(itemCode);
+
+    // Make sure base price was found
+    if (!basePrice || basePrice <= 0) {
+        res.send(500);
+        return;
+    }
 
     // Create a payment object
     var payment = {
@@ -23,8 +33,8 @@ exports.start = function (req, res) {
         transactions: [
             {
                 amount: {
-                    total: "5.00",
-                    currency: "USD"
+                    total: basePrice,
+                    currency: "EUR"
                 },
                 description: "My awesome payment"
             }
@@ -39,10 +49,8 @@ exports.start = function (req, res) {
         } else {
             if (payment.payer.payment_method === 'paypal') {
 
-                // Store payment values in session
-                // TODO: use user id from req.user when wired
+                // Store payment id in session
                 req.session.paymentId = payment.id;
-                req.session.userId = 1;
 
                 // Redirect to paypal
                 var redirectUrl;
@@ -69,8 +77,10 @@ exports.execute = function (req, res) {
     var payerId = req.param('PayerID');
 
     // Validate data
-    if (!paymentId || !payerId)
+    if (!paymentId || !payerId) {
         res.send(500);
+        return;
+    }
 
     // Execute payment
     var details = { "payer_id": payerId };
@@ -86,7 +96,7 @@ exports.execute = function (req, res) {
                 paymentId: payment.id,
                 payerId: payment.payer.payer_info.payer_id,
                 saleId: payment.transactions[0].related_resources[0].sale.id,
-                userId: req.session.userId,
+                userId: req.user.id,
                 date: new Date()
             }).success(function (renewal) {
                 res.redirect('/app/payment/done');
@@ -95,4 +105,28 @@ exports.execute = function (req, res) {
             });
         }
     });
+};
+
+/**
+ * Returns the base price of a membership based on the item code given in parameter.
+ * @param {String} itemCode The itemCode.
+ * @returns {Integer} The base price for the item or false if not found.
+ */
+var getBasePrice = function (itemCode) {
+    switch (itemCode) {
+        case "WO1":
+            return 20;
+        case "WO2":
+            return 25;
+        case "WOB1":
+            return 30;
+        case "WOB2":
+            return 35;
+        case "H":
+            return 35;
+        case "HR":
+            return 30;
+        default:
+            return false;
+    }
 };
