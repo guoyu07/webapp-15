@@ -28,7 +28,7 @@ exports.start = function (req, res) {
         },
         redirect_urls: {
             return_url: "http://localhost:3333/payment/execute",
-            cancel_url: "http://localhost:3333/payment/cancel"
+            cancel_url: "http://localhost:3333/app/payment/cancel"
         },
         transactions: [
             {
@@ -117,7 +117,7 @@ exports.execute = function (req, res) {
                 paymentType: 'PPL'
             });
         }).then(function (newMembership) {
-            res.redirect('/app/payment/done');
+            res.redirect('/app/payment/complete');
         }, function (error) {
             res.send(500);
         })
