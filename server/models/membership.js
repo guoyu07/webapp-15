@@ -1,19 +1,19 @@
 module.exports = function (sequelize, DataTypes) {
-    var Renewal = sequelize.define('Renewal', {
+    var Membership = sequelize.define('Membership', {
         type: DataTypes.ENUM('Host', 'Wwoofer'),
         paymentId: DataTypes.STRING,
         payerId: DataTypes.STRING,
         saleId: DataTypes.STRING,
-        date: DataTypes.DATE,
+        expireAt: DataTypes.DATE,
         itemCode: DataTypes.ENUM('WO1', 'WO2', 'WOB1', 'WOB2', 'H', 'HR'),
         paymentType: DataTypes.ENUM('PPL', 'CHQ')
     }, {
-        tableName: 'renewals',
+        tableName: 'memberships',
         classMethods: {
             associate: function (models) {
-                Renewal.belongsTo(models.User, { onDelete: 'cascade' })
+                Membership.belongsTo(models.User, { onDelete: 'cascade' })
             }
         }
     });
-    return Renewal
+    return Membership
 };

@@ -49,8 +49,9 @@ exports.start = function (req, res) {
         } else {
             if (payment.payer.payment_method === 'paypal') {
 
-                // Store payment id in session
+                // Store payment info in session
                 req.session.paymentId = payment.id;
+                req.session.itemCode = itemCode;
 
                 // Redirect to paypal
                 var redirectUrl;
@@ -67,7 +68,7 @@ exports.start = function (req, res) {
 };
 
 /**
- * Executes a payment (PayPal callback) then persists the renewal in the database.
+ * Executes a payment (PayPal callback) then persists the membership in the database.
  * TODO: handle errors and add confirmation page in Ember.
  */
 exports.execute = function (req, res) {
@@ -87,23 +88,39 @@ exports.execute = function (req, res) {
     paypal.payment.execute(paymentId, details, function (error, payment) {
 
         if (error) {
-            console.log(error);
             res.send(500);
-        } else {
-            // Persist renewal
-            db.Renewal.create({
+            return;
+        }
+
+        // Find the membership with the most recent expiration date
+        db.Membership.find({
+            where: {
+                userId: req.user.id,
+                type: 'Wwoofer'
+            },
+            order: 'expireAt DESC'
+        }).then(function (membership) {
+
+            // Determine the new membership expiration date
+            var startAt = membership ? membership.expireAt : new Date();
+            var expireAt = startAt.setFullYear(startAt.getFullYear() + 1);
+
+            // Persist the membership
+            return db.Membership.create({
                 type: 'Wwoofer',
                 paymentId: payment.id,
                 payerId: payment.payer.payer_info.payer_id,
                 saleId: payment.transactions[0].related_resources[0].sale.id,
                 userId: req.user.id,
-                date: new Date()
-            }).success(function (renewal) {
-                res.redirect('/app/payment/done');
-            }).error(function (error) {
-                res.send(500);
+                expireAt: expireAt,
+                itemCode: req.session.itemCode,
+                paymentType: 'PPL'
             });
-        }
+        }).then(function (newMembership) {
+            res.redirect('/app/payment/done');
+        }, function (error) {
+            res.send(500);
+        })
     });
 };
 
