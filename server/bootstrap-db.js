@@ -36,5 +36,9 @@ module.exports = function (db) {
         return db.Wwoofer.bulkCreate([
             { firstName2: 'Another', lastName2: 'Name', birthDate2: '1985-03-24 18:15:10', nationality: 'FR', tripMotivation: 'Je veux apprendre a faire du fromage!', addressId: 3, userId: 3 }
         ])
+    }).then(function () {
+        return db.Membership.bulkCreate([
+            { type: 'H', paymentId: '123', payerId: '456', saleId: '789', expireAt: '2015-06-25 04:15:10', itemCode: 'H', paymentType: 'PPL', userId: 2 }
+        ])
     });
 };

@@ -107,7 +107,7 @@ exports.execute = function (req, res) {
 
             // Persist the membership
             return db.Membership.create({
-                type: 'Wwoofer',
+                type: 'W',
                 paymentId: payment.id,
                 payerId: payment.payer.payer_info.payer_id,
                 saleId: payment.transactions[0].related_resources[0].sale.id,

@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     var Membership = sequelize.define('Membership', {
-        type: DataTypes.ENUM('Host', 'Wwoofer'),
+        type: DataTypes.ENUM('H', 'W'),
         paymentId: DataTypes.STRING,
         payerId: DataTypes.STRING,
         saleId: DataTypes.STRING,
