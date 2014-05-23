@@ -8,6 +8,7 @@ var departments = require('./controllers/departments');
 var wwoofers = require('./controllers/wwoofers');
 var countries = require('./controllers/countries');
 var paypal = require('./controllers/paypal');
+var memberships = require('./controllers/memberships');
 
 /**
  * Configures all routes.
@@ -50,5 +51,7 @@ module.exports = function (app, passport) {
     app.get('/api/wwoofers/:id', auth.ensureAuthenticated, wwoofers.single);
     app.put('/api/wwoofers/:id', auth.ensureAuthenticated, wwoofers.update);
     app.post('/api/wwoofers', auth.ensureAuthenticated, wwoofers.create);
+
+    app.get('/api/memberships', auth.ensureAuthenticated, memberships.index);
 };
 
