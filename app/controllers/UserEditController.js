@@ -1,4 +1,9 @@
 App.UserEditController = Ember.ObjectController.extend({
+
+    needs: ['memberships'],
+
+    membershipsBinding: 'controllers.memberships.content',
+
     actions: {
         saveUser: function () {
 

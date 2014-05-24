@@ -38,3 +38,27 @@
         <button {{action "saveUser"}} class="btn btn-primary">Save</button>
     {{/if}}
 </form>
+
+{{#unless isNew}}
+    <h1>My Membership Status</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Payment</th>
+            <th>Amount</th>
+            <th>Expire At</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each memberships}}
+            <tr>
+                <td>{{type}}</td>
+                <td>{{format-date createdAt}}</td>
+                <td>{{itemCode}}</td>
+                <td>{{format-date expireAt}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+{{/unless}}
