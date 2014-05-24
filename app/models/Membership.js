@@ -10,5 +10,6 @@ App.Membership = DS.Model.extend({
     expireAt: DS.attr('date'),
     itemCode: DS.attr('string'),
     paymentType: DS.attr('string'),
+    total: DS.attr('number'),
     user: DS.belongsTo('user')
 });

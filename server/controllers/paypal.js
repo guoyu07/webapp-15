@@ -10,11 +10,13 @@ var db = require('../models');
  */
 exports.start = function (req, res) {
 
-    // Get base price
-    var itemCode = req.query.itemCode;
-    var basePrice = getBasePrice(itemCode);
+    // Build a membership model
+    var membership = db.Membership.build({ itemCode: req.query.itemCode });
 
-    // Make sure base price was found
+    // Get base price
+    var basePrice = membership.getBasePrice();
+
+    // Make sure base price is valid
     if (!basePrice || basePrice <= 0) {
         res.send(500);
         return;
@@ -50,8 +52,8 @@ exports.start = function (req, res) {
             if (payment.payer.payment_method === 'paypal') {
 
                 // Store payment info in session
-                req.session.paymentId = payment.id;
-                req.session.itemCode = itemCode;
+                membership.paymentId = payment.id;
+                req.session.membership = membership;
 
                 // Redirect to paypal
                 var redirectUrl;
@@ -73,19 +75,19 @@ exports.start = function (req, res) {
  */
 exports.execute = function (req, res) {
 
-    // Retrieve the payment id from session and payer id query param
-    var paymentId = req.session.paymentId;
+    // Retrieve the payment info from session and payer id query param
+    var membership = req.session.membership;
     var payerId = req.param('PayerID');
 
     // Validate data
-    if (!paymentId || !payerId) {
+    if (!membership.paymentId || !payerId) {
         res.send(500);
         return;
     }
 
     // Execute payment
     var details = { "payer_id": payerId };
-    paypal.payment.execute(paymentId, details, function (error, payment) {
+    paypal.payment.execute(membership.paymentId, details, function (error, payment) {
 
         if (error) {
             res.send(500);
@@ -99,10 +101,10 @@ exports.execute = function (req, res) {
                 type: 'Wwoofer'
             },
             order: 'expireAt DESC'
-        }).then(function (membership) {
+        }).then(function (lastMembership) {
 
             // Determine the new membership expiration date
-            var startAt = membership ? membership.expireAt : new Date();
+            var startAt = lastMembership ? lastMembership.expireAt : new Date();
             var expireAt = startAt.setFullYear(startAt.getFullYear() + 1);
 
             // Persist the membership
@@ -113,8 +115,9 @@ exports.execute = function (req, res) {
                 saleId: payment.transactions[0].related_resources[0].sale.id,
                 userId: req.user.id,
                 expireAt: expireAt,
-                itemCode: req.session.itemCode,
-                paymentType: 'PPL'
+                itemCode: membership.itemCode,
+                paymentType: 'PPL',
+                total: membership.total
             });
         }).then(function (newMembership) {
             res.redirect('/app/payment/complete');
@@ -122,28 +125,4 @@ exports.execute = function (req, res) {
             res.send(500);
         })
     });
-};
-
-/**
- * Returns the base price of a membership based on the item code given in parameter.
- * @param {String} itemCode The itemCode.
- * @returns {Integer} The base price for the item or false if not found.
- */
-var getBasePrice = function (itemCode) {
-    switch (itemCode) {
-        case "WO1":
-            return 20;
-        case "WO2":
-            return 25;
-        case "WOB1":
-            return 30;
-        case "WOB2":
-            return 35;
-        case "H":
-            return 35;
-        case "HR":
-            return 30;
-        default:
-            return false;
-    }
 };
