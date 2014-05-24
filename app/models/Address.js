@@ -1,4 +1,7 @@
-App.Address = DS.Model.extend(Ember.Validations.Mixin, {
+/**
+ * Ember model for Address.
+ */
+App.Address = DS.Model.extend(App.Validations.Mixin, {
     address1: DS.attr('string'),
     address2: DS.attr('string'),
     zipCode: DS.attr('string'),
@@ -12,9 +15,19 @@ App.Address = DS.Model.extend(Ember.Validations.Mixin, {
             presence: true,
             length: { minimum: 5, maximum: 255 }
         },
+        address2: {
+            length: { maximum: 255 }
+        },
         zipCode: {
             presence: true,
             length: { minimum: 2, maximum: 10 }
+        },
+        city: {
+            presence: true,
+            length: { minimum: 2, maximum: 255 }
+        },
+        country: {
+            presence: true
         }
     }
 });

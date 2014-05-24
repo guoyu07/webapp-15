@@ -1,7 +1,7 @@
 /**
  * Ember model for Wwoofer.
  */
-App.Wwoofer = DS.Model.extend(Ember.Validations.Mixin, {
+App.Wwoofer = DS.Model.extend(App.Validations.Mixin, {
     firstName2: DS.attr('string'),
     lastName2: DS.attr('string'),
     birthDate2: DS.attr('date'),
@@ -13,7 +13,12 @@ App.Wwoofer = DS.Model.extend(Ember.Validations.Mixin, {
 
     validations: {
         intro: {
-            presence: true
+            presence: true,
+            length: { minimum: 5, maximum: 1500 }
+        },
+        tripMotivation: {
+            presence: true,
+            length: { minimum: 5, maximum: 1500 }
         }
     }
 });

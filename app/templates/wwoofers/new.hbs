@@ -4,41 +4,54 @@
 
 <form>
     <div class="row">
-        <div class="col-md-12">
-            <label for="intro" class="control-label">Tell us who you are:</label>
-            {{textarea id="intro" name="intro" value=intro class="form-control" placeholder=""}}
-            <span class="error">{{model.errors.intro.firstObject}}</span>
+        <div class="col-md-6">
+            <div {{bind-attr class=":form-group fieldErrors.intro.length:has-error"}}>
+                <label for="intro" class="control-label">A quick introduction about you...</label>
+                {{textarea id="intro" name="intro" value=intro class="form-control" placeholder=""}}
+                {{error-display fieldErrors.intro}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div {{bind-attr class=":form-group fieldErrors.tripMotivation.length:has-error"}}>
+                <label for="tripMotivation" class="control-label">What motivates you to do wwoofing?</label>
+                {{textarea id="tripMotivation" name="tripMotivation" value=tripMotivation class="form-control" placeholder=""}}
+                {{error-display fieldErrors.tripMotivation}}
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-        <h2>Where are you from?</h2>
+            <h2>Where are you from?</h2>
 
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
                 <label for="address1" class="control-label">Address 1</label>
                 {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+                {{error-display address.fieldErrors.address1}}
             </div>
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group address.fieldErrors.address2.length:has-error"}}>
                 <label for="address2" class="control-label">Address 2</label>
                 {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+                {{error-display address.fieldErrors.address2}}
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <div {{bind-attr class=":form-group"}}>
+                    <div {{bind-attr class=":form-group address.fieldErrors.zipCode.length:has-error"}}>
                         <label for="zipCode" class="control-label">Zip Code</label>
                         {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control" placeholder="Code postal"}}
+                        {{error-display address.fieldErrors.zipCode}}
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div {{bind-attr class=":form-group"}}>
+                    <div {{bind-attr class=":form-group address.fieldErrors.city.length:has-error"}}>
                         <label for="city" class="control-label">City</label>
                         {{input type="text" id="city" name="city" value=address.city class="form-control" placeholder="Ville"}}
+                        {{error-display address.fieldErrors.city}}
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div {{bind-attr class=":form-group"}}>
+                    <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
                         <label for="country" class="control-label">Country</label>
                         {{view Ember.Select
                         content=controllers.countries.content
@@ -48,6 +61,7 @@
                         class="form-control"
                         name="country"
                         prompt="Select a country"}}
+                        {{error-display address.fieldErrors.country}}
                     </div>
                 </div>
                 {{#if address.country.countryIsFrance}}

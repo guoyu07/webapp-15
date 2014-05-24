@@ -5,8 +5,16 @@ module.exports = function (sequelize, DataTypes) {
         birthDate2: DataTypes.DATE,
         nationality: DataTypes.STRING,
         tripDuration: DataTypes.STRING,
-        tripMotivation: DataTypes.TEXT,
-        intro: DataTypes.TEXT,
+        tripMotivation: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            validate: { len: [5, 1500] }
+        },
+        intro: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            validate: { len: [5, 1500] }
+        },
         comment: DataTypes.STRING
         //paymentStatus: DataTypes.INTEGER,
         //memId: DataTypes.STRING,

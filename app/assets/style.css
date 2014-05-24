@@ -34,3 +34,13 @@ body {
 .host-thumb-small img {
     width: 100%;
 }
+
+span.error {
+    display: block;
+    margin-top: 3px;
+    padding: 0 7px;
+    background: #b41b3b;
+    color: #fff !important;
+    font-size: 85%;
+    border-radius: 2px;
+}
