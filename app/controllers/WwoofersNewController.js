@@ -17,20 +17,26 @@ App.WwoofersNewController = Ember.ObjectController.extend({
 
             // Save the wwoofer and its address
             var self = this;
-            wwoofer.save()
+            wwoofer.validate()
                 .then(function () {
-                    return address.save();
+                    return address.validate();
                 }).then(function () {
-                    wwoofer.set('address', address);
-                    return wwoofer.save();
-                }).then(function () {
-                    alertify.success('Information updated!');
-                    self.transitionToRoute('wwoofer.membership', wwoofer);
-                }).catch(function (error) {
-                    console.error(error);
-                    alertify.error('Cannot create wwoofer.');
-                });
+                    wwoofer.save()
+                        .then(function () {
+                            return address.save();
+                        }).then(function () {
+                            wwoofer.set('address', address);
+                            return wwoofer.save();
+                        }).then(function () {
+                            alertify.success('Information updated!');
+                            self.transitionToRoute('wwoofer.membership', wwoofer);
+                        }).catch(function (error) {
+                            console.error(error);
+                            alertify.error('Cannot create wwoofer.');
+                        });
+                }).catch(function () {
+                    alertify.error("Your submission is invalid.");
+                })
         }
     }
-})
-;
+});

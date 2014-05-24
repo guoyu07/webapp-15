@@ -4,8 +4,15 @@
 
 <form>
     <div class="row">
+        <div class="col-md-12">
+            <label for="intro" class="control-label">Tell us who you are:</label>
+            {{textarea id="intro" name="intro" value=intro class="form-control" placeholder=""}}
+            <span class="error">{{model.errors.intro.firstObject}}</span>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
-            <h2>Where are you from?</h2>
+        <h2>Where are you from?</h2>
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="address1" class="control-label">Address 1</label>

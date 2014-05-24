@@ -5,13 +5,13 @@ module.exports = function (sequelize, DataTypes) {
         birthDate2: DataTypes.DATE,
         nationality: DataTypes.STRING,
         tripDuration: DataTypes.STRING,
-        tripMotivation: DataTypes.STRING,
-        intro: DataTypes.STRING,
-        comment: DataTypes.STRING,
+        tripMotivation: DataTypes.TEXT,
+        intro: DataTypes.TEXT,
+        comment: DataTypes.STRING
         //paymentStatus: DataTypes.INTEGER,
         //memId: DataTypes.STRING,
         //txnId: DataTypes.STRING,
-        deletionDate: DataTypes.DATE
+        //deletionDate: DataTypes.DATE
     }, {
         tableName: 'wwoofers',
         classMethods: {
