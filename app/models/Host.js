@@ -1,7 +1,6 @@
 /**
- * Created by BitTitanGuillaumeZ on 2/17/14.
+ * Ember model for hosts.
  */
-
 App.Host = DS.Model.extend({
     farmName: DS.attr('string'),
     shortDescription: DS.attr('string'),
