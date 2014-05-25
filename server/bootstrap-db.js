@@ -38,7 +38,8 @@ module.exports = function (db) {
         ])
     }).then(function () {
         return db.Membership.bulkCreate([
-            { type: 'H', paymentId: '123', payerId: '456', saleId: '789', expireAt: '2015-06-25 04:15:10', itemCode: 'H', paymentType: 'PPL', total: 25, userId: 2 }
+            { type: 'H', paymentId: '123', payerId: '456', saleId: '789', expireAt: '2015-06-25 04:15:10', itemCode: 'H', paymentType: 'PPL', total: 25, userId: 2 },
+            { type: 'H', paymentId: '123', payerId: '456', saleId: '789', expireAt: '2016-06-25 04:15:10', itemCode: 'HR', paymentType: 'PPL', total: 25, userId: 2 }
         ])
     });
 };

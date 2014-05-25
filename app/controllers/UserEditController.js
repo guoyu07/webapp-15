@@ -2,7 +2,30 @@ App.UserEditController = Ember.ObjectController.extend({
 
     needs: ['memberships'],
 
-    membershipsBinding: 'controllers.memberships.content',
+    wwoofMemberships: function () {
+        return this.get('controllers.memberships').filter(function (membership) {
+            return membership.get('type') === 'W';
+        })
+    }.property('controllers.memberships.@each'),
+
+    hostMemberships: function () {
+        return this.get('controllers.memberships').filter(function (membership) {
+            return membership.get('type') === 'H';
+        })
+    }.property('controllers.memberships.@each'),
+
+    wwoofCannotRenewMembership: function () {
+        return this.cannotRenewMembership(this.get('wwoofMemberships.firstObject.expireAt'));
+    }.property('wwoofMemberships.@each'),
+
+    hostCannotRenewMembership: function () {
+        return this.cannotRenewMembership(this.get('hostMemberships.firstObject.expireAt'));
+    }.property('hostMemberships.@each'),
+
+    cannotRenewMembership: function (lastMembershipEnd) {
+        var oneMonthBeforeLastMembershipEnds = lastMembershipEnd.setMonth(lastMembershipEnd.getMonth() - 1);
+        return new Date() < oneMonthBeforeLastMembershipEnds;
+    },
 
     actions: {
         saveUser: function () {
