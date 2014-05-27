@@ -1,9 +1,9 @@
 /**
- * Created by guillaumez on 4/5/2014.
+ * API controller for Users.
  */
-
 var db = require('../models');
 var crypto = require('crypto');
+var updatableAttributes = ['firstName', 'lastName', 'birthDate', 'email'];
 
 /**
  * Searches and returns a list of users.
@@ -68,7 +68,7 @@ exports.create = function (req, res) {
         where: { email: req.body.user.email }
     }).success(function (user) {
 
-        // User already exists
+        // Email address is already in use
         if (user) {
             res.send(409); // Conflict
         }
@@ -97,5 +97,45 @@ exports.create = function (req, res) {
                 res.send(201);
             });
         })
+    })
+};
+
+exports.update = function (req, res) {
+
+    // Make sure email address is not in use
+    db.User.count({
+        where: {
+            email: req.body.user.email,
+            id: { ne: req.user.id }
+        }
+    }).success(function (count) {
+
+        // Email address is already in use
+        if (count > 0) {
+            res.send(409); // Conflict
+        }
+
+        // Find the original user
+        db.User.find({
+            where: {
+                id: req.user.id
+            }
+        }).success(function (user) {
+            if (user) {
+                // Update the user
+                user.updateAttributes(
+                    req.body.user,
+                    updatableAttributes
+                ).success(function (user) {
+                        res.send({ user: user });
+                    }).error(function (error) {
+                        res.send(500, error);
+                    })
+            } else {
+                res.send(404);
+            }
+        }).error(function (error) {
+            res.send(500, error);
+        });
     })
 };

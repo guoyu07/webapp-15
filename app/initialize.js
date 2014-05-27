@@ -4,7 +4,7 @@ require('adapter');
 require('serializer');
 require('router');
 
-var folderOrder = [ 'routes', 'mixins', 'models', 'views', 'controllers', 'components', 'helpers', 'templates', 'serializers' ];
+var folderOrder = [ 'lib', 'routes', 'mixins', 'models', 'views', 'controllers', 'components', 'helpers', 'templates', 'serializers' ];
 
 folderOrder.forEach(function (folder) {
     window.require.list().filter(function (module) {
