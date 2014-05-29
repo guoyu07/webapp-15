@@ -1,16 +1,22 @@
 App.HostEditController = Ember.ObjectController.extend({
 
-    needs: ['countries', 'departments'],
+    needs: ['hosts', 'departments'],
 
     actions: {
         saveHost: function () {
-            var host = this.get('model');
-            var address = host.get('address');
 
             // Prevent multiple save attempts
             if (this.get('isSaving')) {
                 return;
             }
+
+            // Get host and address
+            var host = this.get('model');
+            var address = host.get('address');
+
+            // Reset website to null to pass server-side validation (only accept null, and not empty string)
+            if (host.get('webSite') === '')
+                host.set('webSite', null);
 
             // Initialize validations array
             var validations = Ember.makeArray(host.validate());
@@ -29,7 +35,7 @@ App.HostEditController = Ember.ObjectController.extend({
                     alertify.success('Information updated!');
                     self.transitionToRoute('host', host);
                 }).catch(function () {
-                    alertify.error('Cannot update the address.');
+                    alertify.error('Cannot update the host.');
                 })
             }).catch(function () {
                 alertify.error("Your submission is invalid.");

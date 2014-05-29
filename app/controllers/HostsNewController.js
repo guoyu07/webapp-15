@@ -3,35 +3,49 @@
  */
 App.HostsNewController = Ember.ObjectController.extend({
 
-    needs: ['countries', 'departments'],
+    needs: ['hosts', 'departments'],
 
     actions: {
         saveHost: function () {
 
+            // Prevent multiple save attempts
+            if (this.get('isSaving')) {
+                return;
+            }
+
+            // Get host and address
             var host = this.get('model');
             var address = host.get('address');
-
-            // Prevent multiple save attempts
-//            if (this.get('isSaving')) {
-//                return;
-//            }
 
             // Reset website to null to pass server-side validation (only accept null, and not empty string)
             if (host.get('webSite') === '')
                 host.set('webSite', null);
 
-            // Validate and save
-            host.save()
-                .then(function () {
-                    address.save()
-                        .then(function () {
-                            alertify.success('Host created!');
-                        }).catch(function () {
-                            // TODO: redirect user to host edit page to complete the form
-                        });
+            // Initialize validations array
+            var validations = Ember.makeArray(host.validate());
+            validations.push(address.validate());
+
+            // Validate host and address
+            var self = this;
+            Ember.RSVP.all(validations).then(function () {
+
+                // Create the host...
+                host.save().then(function () {
+                    // ... and the address
+                    return address.save();
+                }).then(function () {
+                    // Set the host's address (now that it has a valid id) and save the host again
+                    host.set('address', address);
+                    return host.save();
+                }).then(function () {
+                    alertify.success('Host created!');
+                    self.transitionToRoute('host.edit', host);
                 }).catch(function () {
-                    alertify.error('Cannot save the host.');
-                });
+                    alertify.error('Cannot create the host.');
+                })
+            }).catch(function () {
+                alertify.error("Your submission is invalid.");
+            });
         }
     }
 });

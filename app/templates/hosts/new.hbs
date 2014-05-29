@@ -43,48 +43,51 @@
                     <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
                         <label for="country" class="control-label">Country</label>
                         {{view Ember.Select
-                        content=controllers.countries.content
+                        content=controllers.hosts.countries
                         optionValuePath="content.id"
                         optionLabelPath="content.name"
                         selection=address.country
                         class="form-control"
                         name="country"
-                        prompt="Select a country"
-                        disabled=true}}
+                        prompt="Select a country"}}
                         {{error-display address.fieldErrors.country}}
                     </div>
                 </div>
-                {{#if address.country.countryIsFrance}}
-                    <div class="col-md-6">
-                        <div {{bind-attr class=":form-group"}}>
-                            <label for="department" class="control-label">Department</label>
-                            {{view Ember.Select
-                            content=controllers.departments.content
-                            optionValuePath="content.id"
-                            optionLabelPath="content.name"
-                            selection=address.department
-                            class="form-control"
-                            name="department"}}
+                {{#if address.country}}
+                    {{#if address.country.isFrance}}
+                        <div class="col-md-6">
+                            <div {{bind-attr class=":form-group"}}>
+                                <label for="department" class="control-label">Department</label>
+                                {{view Ember.Select
+                                content=controllers.departments.content
+                                optionValuePath="content.id"
+                                optionLabelPath="content.name"
+                                selection=address.department
+                                class="form-control"
+                                name="department"}}
+                            </div>
                         </div>
-                    </div>
-                {{else}}
-                    <div class="col-md-6">
-                        <div {{bind-attr class=":form-group"}}>
-                            <label for="state" class="control-label">State / Region</label>
-                            {{input type="text" id="state" name="state" value=address.state class="form-control" placeholder="State"}}
+                    {{else}}
+                        <div class="col-md-6">
+                            <div {{bind-attr class=":form-group"}}>
+                                <label for="state" class="control-label">State / Region</label>
+                                {{input type="text" id="state" name="state" value=address.state class="form-control" placeholder="State"}}
+                            </div>
                         </div>
-                    </div>
+                    {{/if}}
                 {{/if}}
             </div>
         </div>
         <div class="col-md-6">
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group fieldErrors.webSite.length:has-error"}}>
                 <label for="web" class="control-label">Website</label>
                 {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholder="http://www.ma-page-perso.fr"}}
+                {{error-display fieldErrors.webSite}}
             </div>
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
                 <label for="shortDescription" class="control-label">Short description</label>
                 {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholder="Ferme biologique au coeur des Alpes"}}
+                {{error-display fieldErrors.shortDescription}}
             </div>
             <div {{bind-attr class=":form-group"}}>
                 <label for="travel" class="control-label">Travel</label>
@@ -94,9 +97,10 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
                 <label for="entry" class="control-label">Full description</label>
                 {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder=""}}
+                {{error-display fieldErrors.fullDescription}}
             </div>
         </div>
     </div>

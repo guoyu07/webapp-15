@@ -3,7 +3,7 @@
  */
 var db = require('../models');
 var Sequelize = require('sequelize');
-var updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails', 'userId'];
+var updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails', 'userId', 'addressId'];
 
 /**
  * Returns a paginated list of hosts.

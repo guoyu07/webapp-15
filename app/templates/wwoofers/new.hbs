@@ -64,26 +64,28 @@
                         {{error-display address.fieldErrors.country}}
                     </div>
                 </div>
-                {{#if address.country.countryIsFrance}}
-                    <div class="col-md-6">
-                        <div {{bind-attr class=":form-group"}}>
-                            <label for="department" class="control-label">Department</label>
-                            {{view Ember.Select
-                            content=controllers.departments.content
-                            optionValuePath="content.id"
-                            optionLabelPath="content.name"
-                            selection=address.department
-                            class="form-control"
-                            name="department"}}
+                {{#if address.country}}
+                    {{#if address.country.isFrance}}
+                        <div class="col-md-6">
+                            <div {{bind-attr class=":form-group"}}>
+                                <label for="department" class="control-label">Department</label>
+                                {{view Ember.Select
+                                content=controllers.departments.content
+                                optionValuePath="content.id"
+                                optionLabelPath="content.name"
+                                selection=address.department
+                                class="form-control"
+                                name="department"}}
+                            </div>
                         </div>
-                    </div>
-                {{else}}
-                    <div class="col-md-6">
-                        <div {{bind-attr class=":form-group"}}>
-                            <label for="state" class="control-label">State / Region</label>
-                            {{input type="text" id="state" name="state" value=address.state class="form-control" placeholder="State"}}
+                    {{else}}
+                        <div class="col-md-6">
+                            <div {{bind-attr class=":form-group"}}>
+                                <label for="state" class="control-label">State / Region</label>
+                                {{input type="text" id="state" name="state" value=address.state class="form-control" placeholder="State"}}
+                            </div>
                         </div>
-                    </div>
+                    {{/if}}
                 {{/if}}
             </div>
         </div>
