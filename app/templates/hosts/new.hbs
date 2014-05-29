@@ -7,35 +7,40 @@
 <form>
     <div class="row">
         <div class="col-md-6">
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group fieldErrors.farmName.length:has-error"}}>
                 <label for="farm-name" class="control-label">Farm Name</label>
                 {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholder="La Ferme de M. Seguin"}}
+                {{error-display fieldErrors.farmName}}
             </div>
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
                 <label for="address1" class="control-label">Address 1</label>
                 {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+                {{error-display address.fieldErrors.address1}}
             </div>
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group address.fieldErrors.address2.length:has-error"}}>
                 <label for="address2" class="control-label">Address 2</label>
                 {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+                {{error-display address.fieldErrors.address2}}
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <div {{bind-attr class=":form-group"}}>
+                    <div {{bind-attr class=":form-group address.fieldErrors.zipCode.length:has-error"}}>
                         <label for="zipCode" class="control-label">Zip Code</label>
                         {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control" placeholder="Code postal"}}
+                        {{error-display address.fieldErrors.zipCode}}
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div {{bind-attr class=":form-group"}}>
+                    <div {{bind-attr class=":form-group address.fieldErrors.city.length:has-error"}}>
                         <label for="city" class="control-label">City</label>
                         {{input type="text" id="city" name="city" value=address.city class="form-control" placeholder="Ville"}}
+                        {{error-display address.fieldErrors.city}}
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div {{bind-attr class=":form-group"}}>
+                    <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
                         <label for="country" class="control-label">Country</label>
                         {{view Ember.Select
                         content=controllers.countries.content
@@ -46,6 +51,7 @@
                         name="country"
                         prompt="Select a country"
                         disabled=true}}
+                        {{error-display address.fieldErrors.country}}
                     </div>
                 </div>
                 {{#if address.country.countryIsFrance}}
@@ -94,7 +100,7 @@
             </div>
         </div>
     </div>
-    <button {{action "saveHost"}} class="btn btn-default">Save</button>
+    <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">Save</button>
 </form>
 
 {{#unless isNew}}
