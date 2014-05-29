@@ -44,6 +44,7 @@ module.exports = function (app, passport) {
     app.post('/api/photos', auth.ensureAuthenticated, photos.create);
 
     app.get('/api/departments', departments.index);
+    app.get('/api/departments/:id', departments.single);
 
     app.get('/api/countries', countries.index);
     app.get('/api/countries/:id', countries.single);
