@@ -39,8 +39,8 @@ module.exports = function (app, passport) {
     app.post('/api/addresses', auth.ensureAuthenticated, addresses.create);
     app.delete('/api/addresses/:id', auth.ensureAuthenticated, addresses.delete);
 
-    app.get('/api/photos', photos.index);
     app.get('/api/photos/:id', photos.single);
+    app.put('/api/photos/:id', auth.ensureAuthenticated, photos.update);
     app.post('/api/photos', auth.ensureAuthenticated, photos.create);
 
     app.get('/api/departments', departments.index);

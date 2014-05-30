@@ -6,9 +6,9 @@ module.exports = function (sequelize, DataTypes) {
         tableName: 'photos',
         classMethods: {
             associate: function (models) {
-                Photo.belongsTo(models.Host, { as: 'host' })
+                Photo.belongsTo(models.Host, { onDelete: 'cascade' })
             }
         }
-    })
+    });
     return Photo
-}
+};

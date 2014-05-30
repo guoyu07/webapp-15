@@ -6,32 +6,64 @@ var db = require('../models'),
     fs = require('fs'),
     appDir = path.dirname(require.main.filename),
     mimeTypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/tiff', 'image/png'],
-    photoFolder = '\\public\\host_photos\\';
+    photoFolder = '\\public\\host_photos\\',
+    updatableAttributes = ['caption'];
 
-exports.index = function (req, res) {
-    db.Photo.findAll({
-        include: [
-            {model: db.Host, as: 'host'}
-        ],
-        limit: 50
-    }).success(function (photos) {
-            res.send({
-                photos: photos
-            });
-        });
-};
-
+/**
+ * Searches and returns a single photo.
+ */
 exports.single = function (req, res) {
     db.Photo.find({
+        where: { id: req.params.id }
+    }).success(function (photo) {
+        if (!photo) {
+            res.send(404);
+        } else {
+            res.send({ photo: photo });
+        }
+    }).error(function (error) {
+        res.send(500, error);
+    });
+};
+
+/**
+ * Updates a photo.
+ */
+exports.update = function (req, res) {
+
+    // Validate input
+    if (!req.body.photo) {
+        res.send(400);
+        return;
+    }
+
+    // Find the photo (including the host to check ownership)
+    db.Photo.find({
+        where: { id: req.params.id },
         include: [
-            {model: db.Host, as: 'host'}
-        ],
-        where: {id: req.params.id}
-    }).on('success', function (photo) {
-            res.send({
-                photo: photo
-            });
-        })
+            {
+                model: db.Host,
+                where: { userId: req.user.id }
+            }
+        ]
+    }).then(function (photo) {
+        if (!photo) {
+            return null;
+        } else {
+            return photo.updateAttributes(
+                req.body.photo,
+                updatableAttributes
+            );
+        }
+    }).then(function (photo) {
+        if (!photo) {
+            res.send(404);
+        } else {
+            res.send({ photo: photo });
+        }
+    }, function (error) {
+        res.send(500, error);
+    });
 };
 
 /**
@@ -84,7 +116,7 @@ exports.create = function (req, res) {
                     hostId: req.body.hostId
                 }).success(function (photo) {
                     created++;
-                    console.log('Photo \'' + newFileName + '\' added in database.');
+                    console.log('Photo \'' + photo.fileName + '\' added in database.');
                 }).error(function (error) {
                     // Remove file
                     fs.unlink(newPath);
