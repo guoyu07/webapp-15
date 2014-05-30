@@ -3,10 +3,6 @@ var helper = require('../helper');
 
 describe('GET /api/wwoofers', function () {
 
-    before(function (done) {
-        helper.login(done);
-    });
-
     it('should return 401 if not authenticated', function (done) {
         request(helper.url)
             .get('/api/wwoofers')

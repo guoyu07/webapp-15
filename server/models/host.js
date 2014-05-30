@@ -1,6 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
     var Host = sequelize.define('Host', {
-        suspended: DataTypes.BOOLEAN,
         farmName: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -25,7 +24,8 @@ module.exports = function (sequelize, DataTypes) {
         noPhone: DataTypes.BOOLEAN,
         noEmail: DataTypes.BOOLEAN,
         note: DataTypes.STRING, // (legend)
-        deletionDate: DataTypes.DATE
+        isPending: DataTypes.BOOLEAN, // Whether the host is pending validation from an admin
+        isSuspended: DataTypes.BOOLEAN // Whether the host has been manually disabled by an admin
     }, {
         tableName: 'hosts',
         classMethods: {

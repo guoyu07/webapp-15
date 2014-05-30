@@ -132,25 +132,27 @@ exports.create = function (req, res) {
     // Make sure the current user does not have a host yet
     db.Host.find({
         where: { userId: req.user.id }
-    }).success(function (host) {
+    }).then(function (host) {
         if (host) {
             // Existing host found for this user
             res.send(409);
         } else {
             // Set the user id
             req.body.host.userId = req.user.id;
+            req.body.host.isPending = true;
+
+            // Make isPending updatable
+            var attributes = updatableAttributes.concat(['isPending']);
 
             // Create the host
-            db.Host.create(
+            return db.Host.create(
                 req.body.host,
-                updatableAttributes
-            ).success(function (host) {
-                    res.send({ host: host });
-                }).error(function (error) {
-                    res.send(500, error);
-                })
+                attributes
+            );
         }
-    }).error(function () {
+    }).then(function (host) {
+        res.send({ host: host });
+    }, function (error) {
         res.send(500, error);
     });
 };

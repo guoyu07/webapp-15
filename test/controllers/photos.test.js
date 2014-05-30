@@ -30,16 +30,6 @@ describe('GET /api/photos/:id', function () {
 
 describe('PUT /api/photos/:id', function () {
 
-    before(function (done) {
-        db.sequelize.options.logging = false;
-        helper.login(done);
-    });
-
-    after(function (done) {
-        db.sequelize.options.logging = true;
-        done();
-    });
-
     it('should return 404 if id not valid', function (done) {
         request(helper.url)
             .put('/api/photos/not-valid')
@@ -65,11 +55,13 @@ describe('PUT /api/photos/:id', function () {
     });
 
     it('should return 200 if photo was updated', function (done) {
-        db.Photo.create({
-            fileName: 'test.jpg',
-            hostId: 2,
-            caption: 'foo'
-        }).success(function (photo) {
+        var host = helper.host;
+        host.userId = helper.user.id;
+        db.Host.create(host).then(function (host) {
+            var photo = helper.photo;
+            photo.hostId = host.id;
+            return db.Photo.create(photo);
+        }).then(function (photo) {
             request(helper.url)
                 .put('/api/photos/' + photo.id)
                 .set('cookie', helper.authCookie)
@@ -83,11 +75,15 @@ describe('PUT /api/photos/:id', function () {
     });
 
     it('should update caption', function (done) {
-        db.Photo.create({
-            fileName: 'test.jpg',
-            hostId: 2,
-            caption: 'foo'
-        }).success(function (photo) {
+
+        var host = helper.host;
+        host.userId = helper.user.id;
+        db.Host.create(host).then(function (host) {
+            var photo = helper.photo;
+            photo.hostId = host.id;
+            return db.Photo.create(photo);
+        }).then(function (photo) {
+            photo.caption.should.equal('foo');
             request(helper.url)
                 .put('/api/photos/' + photo.id)
                 .set('cookie', helper.authCookie)

@@ -4,6 +4,15 @@
     </h1>
 </div>
 
+{{#if isPending}}
+    <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Your host profile was succesfully created.</strong>
+        We must validate your profile before it gets published.
+        You may now upload pictures of your farm at the bottom of the page.
+    </div>
+{{/if}}
+
 <form>
     <div class="row">
         <div class="col-md-6">

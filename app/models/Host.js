@@ -2,6 +2,8 @@
  * Ember model for hosts.
  */
 App.Host = DS.Model.extend(App.Validations.Mixin, {
+
+    // Attributes
     farmName: DS.attr('string'),
     shortDescription: DS.attr('string'),
     fullDescription: DS.attr('string'),
@@ -9,6 +11,10 @@ App.Host = DS.Model.extend(App.Validations.Mixin, {
     travelDetails: DS.attr('string'),
     noPhone: DS.attr('boolean'),
     noEmail: DS.attr('boolean'),
+    isPending: DS.attr('boolean'),
+    isSuspended: DS.attr('boolean'),
+
+    // Relationships
     user: DS.belongsTo('user', {embedded: 'load'}),
     address: DS.belongsTo('address', {embedded: 'load'}),
     photos: DS.hasMany('photo', {embedded: 'load'}),
@@ -16,6 +22,7 @@ App.Host = DS.Model.extend(App.Validations.Mixin, {
         return this.get('photos').objectAt(0);
     }.property('photos.@each'),
 
+    // Validations
     validations: {
         farmName: {
             presence: true,
