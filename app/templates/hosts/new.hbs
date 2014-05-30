@@ -109,7 +109,7 @@
 
 {{#unless isNew}}
     <hr/>
-    <h3>Add a photo</h3>
+    <h3>Upload a new photo</h3>
     <form class="row" {{action "addPhoto" on="submit"}}>
         <div class="form-group">
             <label for="file_upload" class="control-label">Pick a file</label>
@@ -120,7 +120,7 @@
         </div>
     </form>
     <hr/>
-    <h3>Edit or remove a photo</h3>
+    <h3>Edit or delete a photo</h3>
     {{#if photos}}
         <table class="table table-hover">
             <thead>
@@ -131,7 +131,7 @@
             </tr>
             </thead>
             <tbody>
-            {{#each photos}}
+            {{#each photos itemController="photo"}}
                 <tr>
                     <td>
                         <div class="host-thumb-small">
@@ -142,8 +142,10 @@
                         {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
                     </td>
                     <td>
-                        <a href="#">Save</a> |
-                        <a href="#">Delete</a>
+                        <button {{action "savePhoto" this}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary">
+                            Save
+                        </button>
+                        <button {{action "deletePhoto" this}} class="btn btn-default">Delete</button>
                     </td>
                 </tr>
             {{/each}}
