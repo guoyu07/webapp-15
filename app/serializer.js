@@ -1,18 +1,21 @@
+/**
+ * Custom REST Serializer.
+ */
 App.ApplicationSerializer = DS.RESTSerializer.extend({
     /**
-     The current ID index of generated IDs
-     @property
-     @private
+     * The current ID index of generated IDs
+     * @property
+     * @private
      */
     _generatedIds: 0,
 
     /**
-     Sideload a JSON object to the payload.
-
-     @method sideloadItem
-     @param {Object} payload   JSON object representing the payload
-     @param {subclass of DS.Model} type   The DS.Model class of the item to be sideloaded
-     @param {Object} item JSON object   representing the record to sideload to the payload
+     * Sideload a JSON object to the payload.
+     *
+     * @method sideloadItem
+     * @param {Object} payload   JSON object representing the payload
+     * @param {subclass of DS.Model} type   The DS.Model class of the item to be sideloaded
+     * @param {Object} item JSON object   representing the record to sideload to the payload
      */
     sideloadItem: function (payload, type, item) {
         var sideloadKey = type.typeKey.pluralize(),     // The key for the sideload array
@@ -38,13 +41,13 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
     },
 
     /**
-     Extract relationships from the payload and sideload them. This function recursively
-     walks down the JSON tree.
-
-     @method sideloadItem
-     @param {Object} payload   JSON object representing the payload
-     @paraam {Object} recordJSON   JSON object representing the current record in the payload to look for relationships
-     @param {Object} recordType   The DS.Model class of the record object
+     * Extract relationships from the payload and sideload them. This function recursively
+     * walks down the JSON tree.
+     *
+     * @method sideloadItem
+     * @param {Object} payload   JSON object representing the payload
+     * @paraam {Object} recordJSON   JSON object representing the current record in the payload to look for relationships
+     * @param {Object} recordType   The DS.Model class of the record object
      */
     extractRelationships: function (payload, recordJSON, recordType) {
         // Loop through each relationship in this record type
@@ -90,13 +93,12 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
     },
 
     /**
-     Overridden method.
+     * Overridden method: normalizes the payload.
      */
-    normalizePayload: function (type, payload) {
+    extract: function (store, type, payload, id, requestType) {
+
         var typeKey = type.typeKey,
             typeKeyPlural = typeKey.pluralize();
-
-        payload = this._super(type, payload);
 
         // Many items (findMany, findAll)
         if (typeof payload[typeKeyPlural] != "undefined") {
@@ -110,12 +112,12 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             this.extractRelationships(payload, payload[typeKey], type);
         }
 
-        return payload;
+        return this._super(store, type, payload, id, requestType);
     },
 
     /**
-     Overridden method.
-     Sequelize returns foreign keys with 'Id' at the end (ex: user => userId).
+     * Overridden method.
+     * Sequelize returns foreign keys with 'Id' at the end (ex: user => userId).
      */
     keyForRelationship: function (key, relationship) {
         return (relationship === 'belongsTo')

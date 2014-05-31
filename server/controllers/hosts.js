@@ -26,8 +26,6 @@ exports.index = function (req, res) {
         hostWhere.isPending = isPendingOnly(req);
     }
 
-    console.dir(hostWhere);
-
     // Find all hosts matching parameters
     db.Host.findAndCountAll({
         limit: limit,
