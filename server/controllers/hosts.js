@@ -15,14 +15,24 @@ exports.index = function (req, res) {
     var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
         offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
         dptCondition = req.query.dpt ? { id: req.query.dpt } : null,
-        userIdCondition = req.query.userId ? { userId: req.query.userId } : null,
         searchTerm = req.query.searchTerm || '';
+
+    // Prepare host where condition
+    var hostWhere = {};
+    if (req.query.userId) {
+        hostWhere.userId = req.query.userId;
+    }
+    if (/*notAdmin || */isPendingOnly(req)) {
+        hostWhere.isPending = isPendingOnly(req);
+    }
+
+    console.dir(hostWhere);
 
     // Find all hosts matching parameters
     db.Host.findAndCountAll({
         limit: limit,
         offset: offset,
-        where: userIdCondition,
+        where: hostWhere,
         include: [
             {
                 model: db.User,
@@ -57,6 +67,13 @@ exports.index = function (req, res) {
             }
         });
     });
+};
+
+/**
+ * Helper method: Indicates whether the client is retrieving only hosts that are pending validation.
+ */
+var isPendingOnly = function (req) {
+    return (req.query.pendingOnly === 'true') /* && isAdmin */;
 };
 
 /**
@@ -140,9 +157,10 @@ exports.create = function (req, res) {
             // Set the user id
             req.body.host.userId = req.user.id;
             req.body.host.isPending = true;
+            req.body.host.isSuspended = false;
 
             // Make isPending updatable
-            var attributes = updatableAttributes.concat(['isPending']);
+            var attributes = updatableAttributes.concat(['isPending', 'isSuspended']);
 
             // Create the host
             return db.Host.create(

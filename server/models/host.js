@@ -24,8 +24,16 @@ module.exports = function (sequelize, DataTypes) {
         noPhone: DataTypes.BOOLEAN,
         noEmail: DataTypes.BOOLEAN,
         note: DataTypes.STRING, // (legend)
-        isPending: DataTypes.BOOLEAN, // Whether the host is pending validation from an admin
-        isSuspended: DataTypes.BOOLEAN // Whether the host has been manually disabled by an admin
+        // Whether the host is pending validation from an admin
+        isPending: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
+        // Whether the host has been manually disabled by an admin
+        isSuspended: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        }
     }, {
         tableName: 'hosts',
         classMethods: {

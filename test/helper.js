@@ -51,7 +51,9 @@ beforeEach(function (done) {
 exports.host = {
     farmName: 'Test Farm',
     shortDescription: 'Short description of the farm',
-    fullDescription: 'Full description of the farm'
+    fullDescription: 'Full description of the farm',
+    isPending: false,
+    isSuspended: false
     // userId: helper.user.id
 };
 exports.photo = {

@@ -23,8 +23,8 @@ module.exports = function (db) {
         ])
     }).then(function () {
         return db.Host.bulkCreate([
-            { farmName: 'La Belle Ferme', shortDescription: 'Ferme Bio dans le marais', fullDescription: 'Une description complete prendrait trop de place.', webSite: 'http://pouet.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', addressId: 1, userId: 1 },
-            { farmName: 'La Grange Verte', shortDescription: 'Ferme de fromages bio!', fullDescription: 'Encore un fois, une description complete prendrait trop de place.', webSite: 'http://plop.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', addressId: 2, userId: 2 }
+            { farmName: 'La Belle Ferme', shortDescription: 'Ferme Bio dans le marais', fullDescription: 'Une description complete prendrait trop de place.', webSite: 'http://pouet.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', isPending: false, isSuspended: false, addressId: 1, userId: 1 },
+            { farmName: 'La Grange Verte', shortDescription: 'Ferme de fromages bio!', fullDescription: 'Encore un fois, une description complete prendrait trop de place.', webSite: 'http://plop.com', travelDetails: 'On vient vous prendre a la gare y\' pas sourcis!', isPending: false, isSuspended: false, addressId: 2, userId: 2 }
         ])
     }).then(function () {
         return db.Photo.bulkCreate([

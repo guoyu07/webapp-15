@@ -21,6 +21,22 @@
                 {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholder="La Ferme de M. Seguin"}}
                 {{error-display fieldErrors.farmName}}
             </div>
+            <div {{bind-attr class=":form-group fieldErrors.webSite.length:has-error"}}>
+                <label for="web" class="control-label">Website</label>
+                {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholder="http://www.ma-page-perso.fr"}}
+                {{error-display fieldErrors.webSite}}
+            </div>
+            <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
+                <label for="shortDescription" class="control-label">Short description</label>
+                {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholder="Ferme biologique au coeur des Alpes"}}
+                {{error-display fieldErrors.shortDescription}}
+            </div>
+            <div {{bind-attr class=":form-group"}}>
+                <label for="travel" class="control-label">Travel</label>
+                {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
+            </div>
+        </div>
+        <div class="col-md-6">
             <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
                 <label for="address1" class="control-label">Address 1</label>
                 {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
@@ -85,22 +101,6 @@
                         </div>
                     {{/if}}
                 {{/if}}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div {{bind-attr class=":form-group fieldErrors.webSite.length:has-error"}}>
-                <label for="web" class="control-label">Website</label>
-                {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholder="http://www.ma-page-perso.fr"}}
-                {{error-display fieldErrors.webSite}}
-            </div>
-            <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
-                <label for="shortDescription" class="control-label">Short description</label>
-                {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholder="Ferme biologique au coeur des Alpes"}}
-                {{error-display fieldErrors.shortDescription}}
-            </div>
-            <div {{bind-attr class=":form-group"}}>
-                <label for="travel" class="control-label">Travel</label>
-                {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
             </div>
         </div>
     </div>

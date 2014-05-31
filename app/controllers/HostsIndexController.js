@@ -1,9 +1,9 @@
 /**
- * Created by guillaumez on 2/24/14.
+ * Ember controller for hosts index.
  */
-
 App.HostsIndexController = Ember.ArrayController.extend({
 
+    pendingOnly: false,
     searchTerm: null,
     departmentFilter: null,
     departmentFilterOptionsBinding: 'departments',
@@ -15,9 +15,10 @@ App.HostsIndexController = Ember.ArrayController.extend({
     parameters: function () {
         return {
             'searchTerm': $.trim(this.get('searchTerm')) || null,
-            'dpt': this.get('departmentFilter.id')
+            'dpt': this.get('departmentFilter.id') || null,
+            'pendingOnly': this.get('pendingOnly') || null
         };
-    }.property('searchTerm', 'departmentFilter.id'),
+    }.property('searchTerm', 'departmentFilter.id', 'pendingOnly'),
 
     totalHosts: function () {
         return this.store.metadataFor('host').total;
@@ -35,13 +36,13 @@ App.HostsIndexController = Ember.ArrayController.extend({
         loadMoreHosts: function () {
             // Initialize variables
             var newOffset = this.store.metadataFor('host').offset + 20,
-                params = Ember.$.extend(true, this.get('parameters') || {}, {offset: newOffset});
+                params = Ember.$.extend(true, this.get('parameters') || {}, {offset: newOffset}),
+                self = this;
 
             // Find next page of content and update
             this.store.find('host', params).then(function (hosts) {
-                this.get('content').addObjects(hosts.get('content'));
+                self.get('content').addObjects(hosts.get('content'));
             });
-
         }
     }
 });
