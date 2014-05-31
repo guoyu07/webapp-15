@@ -1,3 +1,9 @@
+/**
+ * Sequelize model for Wwoofers.
+ * @param sequelize The Sequelize instance.
+ * @param DataTypes The data types.
+ * @returns {Object} The Sequelize model.
+ */
 module.exports = function (sequelize, DataTypes) {
     var Wwoofer = sequelize.define('Wwoofer', {
         firstName2: DataTypes.STRING,

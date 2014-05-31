@@ -1,3 +1,9 @@
+/**
+ * Sequelize model for Users.
+ * @param sequelize The Sequelize instance.
+ * @param DataTypes The data types.
+ * @returns {Object} The Sequelize model.
+ */
 module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define('User', {
         email: {
@@ -19,7 +25,11 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         birthDate: DataTypes.DATE,
-        phone: DataTypes.STRING
+        phone: DataTypes.STRING,
+        isAdmin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        }
     }, {
         tableName: 'users',
         classMethods: {

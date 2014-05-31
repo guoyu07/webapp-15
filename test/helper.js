@@ -16,7 +16,8 @@ login = exports.login = function login(done) {
         firstName: "Test",
         lastName: "User",
         email: email,
-        passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571'
+        passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571',
+        isAdmin: false
     }).then(function (user) {
         request(url)
             .post('/login')

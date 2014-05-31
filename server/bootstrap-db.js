@@ -17,9 +17,10 @@ module.exports = function (db) {
         ])
     }).then(function () {
         return db.User.bulkCreate([
-            { email: 'plop@plop.com', passwordHash: 'thisisnotarealhash', firstName: 'Bob', lastName: 'Dylan', birthDate: '1989-06-25 04:15:10', phone: '206-012-3465' },
-            { email: 'host@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Jean', lastName: 'Bon', birthDate: '1977-02-08 04:15:10', phone: '206-012-3465' },
-            { email: 'wwoofer@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Helen', lastName: 'Polmino', birthDate: '1984-10-10 10:10:25', phone: '206-012-3465' }
+            { email: 'plop@plop.com', passwordHash: 'thisisnotarealhash', firstName: 'Bob', lastName: 'Dylan', birthDate: '1989-06-25 04:15:10', phone: '206-012-3465', isAdmin: false },
+            { email: 'host@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Jean', lastName: 'Bon', birthDate: '1977-02-08 04:15:10', phone: '206-012-3465', isAdmin: false },
+            { email: 'wwoofer@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Helen', lastName: 'Polmino', birthDate: '1984-10-10 10:10:25', phone: '206-012-3465', isAdmin: false },
+            { email: 'admin@foo.com', passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571', firstName: 'Super', lastName: 'Admin', birthDate: '1974-08-03 02:45:25', phone: '206-012-3465', isAdmin: true }
         ])
     }).then(function () {
         return db.Host.bulkCreate([

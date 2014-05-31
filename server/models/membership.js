@@ -1,3 +1,9 @@
+/**
+ * Sequelize model for Memberships.
+ * @param sequelize The Sequelize instance.
+ * @param DataTypes The data types.
+ * @returns {Object} The Sequelize model.
+ */
 module.exports = function (sequelize, DataTypes) {
     var Membership = sequelize.define('Membership', {
         type: DataTypes.ENUM('H', 'W'),

@@ -1,3 +1,9 @@
+/**
+ * Sequelize model for Addresses.
+ * @param sequelize The Sequelize instance.
+ * @param DataTypes The data types.
+ * @returns {Object} The Sequelize model.
+ */
 module.exports = function (sequelize, DataTypes) {
     var Address = sequelize.define('Address', {
         address1: {
