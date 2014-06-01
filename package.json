@@ -37,6 +37,7 @@
     "devDependencies": {
         "should": "~3.3.2",
         "assert": "~1.1.1",
-        "supertest": "~0.13.0"
+        "supertest": "~0.13.0",
+        "supertest-as-promised": "~0.1.1"
     }
 }

@@ -22,8 +22,11 @@ exports.index = function (req, res) {
     if (req.query.userId) {
         hostWhere.userId = req.query.userId;
     }
-    if (/*notAdmin || */isPendingOnly(req)) {
-        hostWhere.isPending = isPendingOnly(req);
+    if (!req.user || !req.user.isAdmin) {
+        hostWhere.isPending = false;
+    } else if (req.query.pendingOnly === 'true') {
+        // Only admins can view pending hosts
+        hostWhere.isPending = true;
     }
 
     // Find all hosts matching parameters
@@ -65,13 +68,6 @@ exports.index = function (req, res) {
             }
         });
     });
-};
-
-/**
- * Helper method: Indicates whether the client is retrieving only hosts that are pending validation.
- */
-var isPendingOnly = function (req) {
-    return (req.query.pendingOnly === 'true') /* && isAdmin */;
 };
 
 /**

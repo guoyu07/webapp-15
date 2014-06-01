@@ -1,33 +1,33 @@
 /**
  * Mocha test helper.
  */
-var request = require('supertest');
+var request = require('supertest-as-promised');
 var url = exports.url = 'http://localhost:3333';
 var db = require('../server/models');
 
 /**
  * Logs user in and set the authentication cookie.
  */
-login = exports.login = function login(done) {
+login = exports.login = function login(isAdmin) {
 
     // Create a random user
     var email = Math.random().toString(36).substr(2, 5) + '@test.com';
-    db.User.create({
+    return db.User.create({
         firstName: "Test",
         lastName: "User",
         email: email,
         passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571',
-        isAdmin: false
+        isAdmin: isAdmin
     }).then(function (user) {
-        request(url)
+        // Set the test user
+        exports.user = user;
+        return request(url)
             .post('/login')
             .send({ username: email, password: 'plop' })
-            .end(function (err, res) {
-                res.should.have.status(200);
-                exports.authCookie = res.headers['set-cookie'];
-                exports.user = user;
-                done();
-            });
+            .expect(200);
+    }).then(function (res) {
+        // Set the auth cookie and exit
+        return exports.authCookie = res.headers['set-cookie'];
     });
 };
 
@@ -43,7 +43,9 @@ after(function (done) {
     done();
 });
 beforeEach(function (done) {
-    login(done);
+    login(false).then(function () {
+        done();
+    });
 });
 
 /**
