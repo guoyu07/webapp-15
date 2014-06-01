@@ -15,12 +15,14 @@
                     value=departmentFilter}}
                 </div>
             </div>
-            <div class="checkbox">
-                <label>
-                    {{input type="checkbox" name="pendingOnly" checked=pendingOnly}}
-                    Pending Only
-                </label>
-            </div>
+            {{#if currentUserIsAdmin}}
+                <div class="checkbox">
+                    <label>
+                        {{input type="checkbox" name="pendingOnly" checked=pendingOnly}}
+                        Pending Only
+                    </label>
+                </div>
+            {{/if}}
             <button {{action "searchHosts"}} class="btn btn-primary">Search</button>
         </form>
     </div>

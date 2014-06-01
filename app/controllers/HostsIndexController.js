@@ -3,14 +3,13 @@
  */
 App.HostsIndexController = Ember.ArrayController.extend({
 
+    needs: ['application', 'departments'],
+
     pendingOnly: false,
     searchTerm: null,
     departmentFilter: null,
-    departmentFilterOptionsBinding: 'departments',
-
-    departments: function () {
-        return this.store.find('department');
-    }.property(),
+    departmentFilterOptionsBinding: 'controllers.departments',
+    currentUserIsAdminBinding: 'controllers.application.currentUserIsAdmin',
 
     parameters: function () {
         return {

@@ -1,7 +1,6 @@
 /**
- * Created by guillaumez on 2/24/14.
+ * Ember route for hosts index.
  */
-
 App.HostsIndexRoute = Ember.Route.extend({
     setupController: function (controller) {
         this.store

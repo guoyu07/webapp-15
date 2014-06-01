@@ -22,6 +22,14 @@ App.ApplicationController = Ember.Controller.extend({
             : null;
     }.property(),
 
+    /**
+     * Indicates whether the current user is an administrator.
+     */
+    currentUserIsAdmin: function () {
+        var currentuser = this.get('currentUser');
+        return currentuser && currentuser.isAdmin;
+    }.property('currentUser'),
+
     actions: {
         logout: function () {
 
