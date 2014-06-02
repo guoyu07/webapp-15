@@ -1,7 +1,6 @@
 /**
- * Created by guillaumez on 4/5/2014.
+ * Ember route for user creation.
  */
-
 App.UsersNewRoute = Ember.Route.extend({
     model: function () {
         return this.store.createRecord('user');
