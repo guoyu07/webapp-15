@@ -26,6 +26,7 @@ login = exports.login = function login(isAdmin) {
             .send({ username: email, password: 'plop' })
             .expect(200);
     }).then(function (res) {
+        res.body.user.isAdmin.should.be.equal(isAdmin);
         // Set the auth cookie and exit
         return exports.authCookie = res.headers['set-cookie'];
     });
@@ -49,18 +50,47 @@ beforeEach(function (done) {
 });
 
 /**
- * Sample data.
+ * Gets a sample host.
+ * @param hostId The id of the user the host should belong to.
+ * @type {Object} A sample host.
  */
-exports.host = {
-    farmName: 'Test Farm',
-    shortDescription: 'Short description of the farm',
-    fullDescription: 'Full description of the farm',
-    isPending: false,
-    isSuspended: false
-    // userId: helper.user.id
+exports.getSampleHost = getSampleHost = function (userId) {
+    return {
+        farmName: 'Test Farm',
+        shortDescription: 'Short description of the farm',
+        fullDescription: 'Full description of the farm',
+        isPending: true,
+        isSuspended: false,
+        userId: userId
+    };
 };
-exports.photo = {
-    fileName: 'test.jpg',
-    // hostId: host.id,
-    caption: 'foo'
+/**
+ * Gets a sample photo.
+ * @param hostId The id of the host the photo should belong to.
+ * @type {Object} A sample photo.
+ */
+exports.getSamplePhoto = getSamplePhoto = function (hostId) {
+    return {
+        fileName: 'test.jpg',
+        hostId: hostId,
+        caption: 'foo'
+    };
+};
+
+/**
+ * Creates a host.
+ * @param userId The id of the user the host should belong to.
+ * @returns {Object} A promise of the created host.
+ */
+exports.createHost = function (userId) {
+    return db.Host.create(getSampleHost(userId));
+};
+
+/**
+ * Creates a photo.
+ * @param hostId The id of the host the photo should belong to.
+ * @returns {Object} A promise of the created photo.
+ */
+exports.createPhoto = function (hostId) {
+    return db.Photo.create(getSamplePhoto(hostId));
 };

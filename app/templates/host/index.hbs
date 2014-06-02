@@ -1,11 +1,24 @@
 <div class="page-header">
-    <h1>{{farmName}}
+    <h1>
+        {{farmName}}
         <small>{{user.firstName}} {{user.lastName}}</small>
         {{#if userCanEditHost}}
             {{#link-to 'host.edit' class="btn btn-primary pull-right"}}Edit Your Profile{{/link-to}}
         {{/if}}
     </h1>
 </div>
+
+{{#if isPending}}
+    <div class="alert alert-info">
+        <strong>This host profile is pending for validation.</strong> Review the host details then approve it by
+        clicking on
+        the button.
+        <span class="pull-right">
+            <button {{action "approveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-success">Approve Host
+            </button>
+        </span>
+    </div>
+{{/if}}
 
 <div class="row">
     <div class="col-md-6">

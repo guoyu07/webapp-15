@@ -14,20 +14,28 @@ exports.index = function (req, res) {
     // Extract query params
     var limit = isNaN(parseInt(req.query.limit)) ? 20 : parseInt(req.query.limit),
         offset = isNaN(parseInt(req.query.offset)) ? 0 : parseInt(req.query.offset),
-        dptCondition = req.query.dpt ? { id: req.query.dpt } : null,
-        searchTerm = req.query.searchTerm || '';
+        dptWhere = req.query.dpt ? { id: req.query.dpt } : null;
 
     // Prepare host where condition
-    var hostWhere = {};
-    if (req.query.userId) {
-        hostWhere.userId = req.query.userId;
-    }
+    var hostWhere = Sequelize.and();
+    req.query.userId ? hostWhere.args.push({ userId: req.query.userId }) : null;
     if (!req.user || !req.user.isAdmin) {
-        hostWhere.isPending = false;
+        hostWhere.args.push({ isPending: false });
     } else if (req.query.pendingOnly === 'true') {
         // Only admins can view pending hosts
-        hostWhere.isPending = true;
+        hostWhere.args.push({ isPending: true });
     }
+
+    // Keep the host where condition only if it contains at least one filter
+    hostWhere = hostWhere.args.length ? hostWhere : null;
+
+    // Prepare user where condition
+    var userWhere = req.query.searchTerm ?
+        Sequelize.or(
+            ['firstName like ?', '%' + searchTerm + '%'],
+            ['lastName like ?', '%' + searchTerm + '%']
+        )
+        : null;
 
     // Find all hosts matching parameters
     db.Host.findAndCountAll({
@@ -37,19 +45,14 @@ exports.index = function (req, res) {
         include: [
             {
                 model: db.User,
-                as: 'user',
-                where: Sequelize.or(
-                    ['firstName like ?', '%' + searchTerm + '%'],
-                    ['lastName like ?', '%' + searchTerm + '%']
-                )
+                where: userWhere
             },
             {
                 model: db.Address,
-                as: 'address',
                 include: [
                     {
                         model: db.Department,
-                        where: dptCondition
+                        where: dptWhere
                     }
                 ]
             },
@@ -58,7 +61,7 @@ exports.index = function (req, res) {
                 as: 'photos'
             }
         ]
-    }).success(function (hosts) {
+    }).then(function (hosts) {
         res.send({
             hosts: hosts.rows,
             meta: {
@@ -67,11 +70,14 @@ exports.index = function (req, res) {
                 total: hosts.count
             }
         });
+    }, function (error) {
+        res.send(500, error);
     });
 };
 
 /**
  * Returns a single host.
+ * TODO: add condition to exclude pending hosts if not admin or not owner.
  */
 exports.single = function (req, res) {
     db.Host.find({
@@ -104,27 +110,40 @@ exports.update = function (req, res) {
         return;
     }
 
+    // Only admins can update a host that does not belong to the current user
+    var userIdFilter = req.user.isAdmin ? null : { userId: req.user.id };
+
     // Find the original host
     db.Host.find({
-        where: {
-            id: req.params.id,
-            userId: req.user.id
-        }
-    }).success(function (host) {
+        where: Sequelize.and(
+            { id: req.params.id },
+            userIdFilter
+        )
+    }).then(function (host) {
         if (host) {
+            // Make isPending and isSuspended updatable if the user is admin
+            var attributes = req.user.isAdmin
+                ? updatableAttributes.concat(['isPending', 'isSuspended'])
+                : updatableAttributes;
+
             // Update the host
-            host.updateAttributes(
-                req.body.host,
-                updatableAttributes
-            ).success(function (host) {
-                    res.send({ host: host });
-                }).error(function (error) {
-                    res.send(500, error);
-                })
+            return host.updateAttributes(req.body.host, attributes);
+        } else {
+            return null;
+        }
+    }).then(function (host) {
+        // The updateAttributes method returns object containing all passed attributes: we must reload
+        // See: https://github.com/sequelize/sequelize/issues/1320
+        if (host) {
+            return host.reload();
+        }
+    }).then(function (host) {
+        if (host) {
+            res.send({ host: host });
         } else {
             res.send(404);
         }
-    }).error(function (error) {
+    }, function (error) {
         res.send(500, error);
     });
 };
@@ -148,12 +167,12 @@ exports.create = function (req, res) {
             // Existing host found for this user
             res.send(409);
         } else {
-            // Set the user id
+            // Set the user id + default values
             req.body.host.userId = req.user.id;
             req.body.host.isPending = true;
             req.body.host.isSuspended = false;
 
-            // Make isPending updatable
+            // Make isPending and isSuspended updatable
             var attributes = updatableAttributes.concat(['isPending', 'isSuspended']);
 
             // Create the host

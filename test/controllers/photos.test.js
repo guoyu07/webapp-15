@@ -55,12 +55,8 @@ describe('PUT /api/photos/:id', function () {
     });
 
     it('should return 200 if photo was updated', function (done) {
-        var host = helper.host;
-        host.userId = helper.user.id;
-        db.Host.create(host).then(function (host) {
-            var photo = helper.photo;
-            photo.hostId = host.id;
-            return db.Photo.create(photo);
+        helper.createHost(helper.user.id).then(function (host) {
+            return helper.createPhoto(host.id);
         }).then(function (photo) {
             request(helper.url)
                 .put('/api/photos/' + photo.id)
@@ -75,13 +71,8 @@ describe('PUT /api/photos/:id', function () {
     });
 
     it('should update caption', function (done) {
-
-        var host = helper.host;
-        host.userId = helper.user.id;
-        db.Host.create(host).then(function (host) {
-            var photo = helper.photo;
-            photo.hostId = host.id;
-            return db.Photo.create(photo);
+        helper.createHost(helper.user.id).then(function (host) {
+            return helper.createPhoto(host.id);
         }).then(function (photo) {
             photo.caption.should.equal('foo');
             request(helper.url)

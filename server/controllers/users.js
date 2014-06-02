@@ -61,6 +61,10 @@ exports.single = function (req, res) {
     })
 };
 
+/**
+ * Creates a new user and sends a confirmation email.
+ * TODO: validate the strenght of the password and make sure that no one can sign up as an admin.
+ */
 exports.create = function (req, res) {
 
     // Make sure email address is not in use
