@@ -24,7 +24,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        birthDate: DataTypes.DATE,
+        birthDate: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
         phone: DataTypes.STRING,
         isAdmin: {
             type: DataTypes.BOOLEAN,

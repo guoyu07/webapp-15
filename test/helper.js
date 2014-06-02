@@ -17,6 +17,7 @@ login = exports.login = function login(isAdmin) {
         lastName: "User",
         email: email,
         passwordHash: '64faf5d0b1dc311fd0f94af64f6c296a03045571',
+        birthDate: '1989-06-25 22:15:00',
         isAdmin: isAdmin
     }).then(function (user) {
         // Set the test user

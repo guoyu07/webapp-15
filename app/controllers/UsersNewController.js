@@ -1,11 +1,21 @@
 App.UsersNewController = Ember.ObjectController.extend({
     actions: {
         saveUser: function () {
-            var content = this.get('content');
+            var user = this.get('model');
 
-            content.save().then(null, function () {
-                content.rollback();
-                alertify.alert("We sent you an email with a confirmation link. See you in a bit :)");
+            // Prevent multiple save attempts
+            if (this.get('isSaving')) {
+                return;
+            }
+
+            user.validate().then(function () {
+                user.save().then(function () {
+                    alertify.alert("We sent you an email with a confirmation link. See you in a bit :)");
+                }, function () {
+                    alertify.error('Cannot create user.');
+                })
+            }, function () {
+                alertify.error("Your submission is invalid.");
             });
         }
     }

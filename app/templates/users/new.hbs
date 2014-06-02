@@ -18,9 +18,10 @@
                 {{input type="text" id="lastName" name="lastName" value=lastName class="form-control" placeholder="Last name"}}
                 {{error-display fieldErrors.lastName}}
             </div>
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group fieldErrors.birthDate.length:has-error"}}>
                 <label for="birthDate" class="control-label">Birth date</label>
                 {{date-picker value=birthDate}}
+                {{error-display fieldErrors.birthDate}}
             </div>
         </div>
         <div class="col-md-6">
@@ -29,16 +30,17 @@
                 {{input type="text" id="email" name="email" value=email class="form-control" placeholder=""}}
                 {{error-display fieldErrors.email}}
             </div>
-            <div {{bind-attr class=":form-group"}}>
+            <div {{bind-attr class=":form-group fieldErrors.password.length:has-error"}}>
                 <label for="password" class="control-label">Password</label>
                 {{input type="password" id="password" name="password" value=password class="form-control" placeholder=""}}
+                {{error-display fieldErrors.password}}
             </div>
         </div>
     </div>
     {{#if isNew}}
-        <button {{action "saveUser"}} class="btn btn-primary">Register</button>
+        <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">Register</button>
     {{else}}
-        <button {{action "saveUser"}} class="btn btn-primary">Save</button>
+        <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">Save</button>
     {{/if}}
 </form>
 
