@@ -3,7 +3,7 @@
  */
 var db = require('../models');
 var crypto = require('crypto');
-var updatableAttributes = ['firstName', 'lastName', 'birthDate', 'email'];
+var updatableAttributes = ['email', 'firstName', 'lastName', 'birthDate', 'phone'];
 
 /**
  * Searches and returns a list of users.
@@ -63,44 +63,53 @@ exports.single = function (req, res) {
 
 /**
  * Creates a new user and sends a confirmation email.
- * TODO: validate the strenght of the password and make sure that no one can sign up as an admin.
+ * TODO: add tests + send emails in a folder in dev mode.
  */
 exports.create = function (req, res) {
+
+    // Validate input
+    if (!req.body.user || req.body.user.password.length < 8) {
+        res.send(400);
+        return;
+    }
 
     // Make sure email address is not in use
     db.User.find({
         where: { email: req.body.user.email }
-    }).success(function (user) {
+    }).then(function (user) {
 
         // Email address is already in use
         if (user) {
             res.send(409); // Conflict
+        } else {
+            // Create a hash of the password
+            req.body.user.passwordHash = crypto.createHash('sha1').update(req.body.user.password).digest("hex");
+
+            // By default a user is not admin
+            req.body.user.isAdmin = false;
+
+            // Make passwordHash and isAdmin updatable
+            updatableAttributes = updatableAttributes.concat(['passwordHash', 'isAdmin']);
+
+            // Create the user
+            return db.User.create(req.body.user, updatableAttributes);
         }
-
-        // Create a hash of the password
-        var passwordHash = crypto.createHash('sha1').update(req.body.user.password).digest("hex");
-
-        // Create the user
-        db.User.create({
-            firstName: req.body.user.firstName,
-            lastName: req.body.user.lastName,
-            email: req.body.user.email,
-            passwordHash: passwordHash
-        }).success(function (user) {
-
+    }).then(function (user) {
+        if (user) {
             // Send email
             res.mailer.send('register', {
                 to: user.email,
                 subject: 'Welcome to Wwoof France!',
                 firstName: user.firstName
-            }, function (err) {
-                if (err) {
-                    console.log(err);
-                    res.send(500);
+            }, function (error) {
+                if (error) {
+                    res.send(500, error);
                 }
                 res.send(201);
             });
-        })
+        }
+    }, function (error) {
+        res.send(500, error);
     })
 };
 
