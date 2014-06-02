@@ -8,9 +8,12 @@ App.UsersNewController = Ember.ObjectController.extend({
                 return;
             }
 
+            // Save the user
+            var self = this;
             user.validate().then(function () {
                 user.save().then(function () {
                     alertify.alert("We sent you an email with a confirmation link. See you in a bit :)");
+                    self.transitionToRoute('login');
                 }, function () {
                     alertify.error('Cannot create user.');
                 })

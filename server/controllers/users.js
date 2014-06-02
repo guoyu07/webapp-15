@@ -104,8 +104,9 @@ exports.create = function (req, res) {
             }, function (error) {
                 if (error) {
                     res.send(500, error);
+                } else {
+                    res.send({ user: user });
                 }
-                res.send(201);
             });
         }
     }, function (error) {
