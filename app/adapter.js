@@ -12,7 +12,12 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
 
         // Redirect user to login page if authentication fails
         if (jqXHR && jqXHR.status === 401) {
-            window.location.replace('/app/login');
+
+            // Clear the user
+            this.set('currentUser', null);
+
+            // Redirect to login
+            window.location.replace('/logout');
         }
         return error;
     }

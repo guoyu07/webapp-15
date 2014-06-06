@@ -36,7 +36,7 @@ App.ApplicationController = Ember.Controller.extend({
             // Clear the user
             this.set('currentUser', null);
 
-            // Log the user out
+            // Redirect to login
             window.location.replace('/logout');
         }
     }
