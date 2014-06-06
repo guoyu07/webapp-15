@@ -18,6 +18,8 @@ App.Host = DS.Model.extend(App.Validations.Mixin, {
     user: DS.belongsTo('user', {embedded: 'load'}),
     address: DS.belongsTo('address', {embedded: 'load'}),
     photos: DS.hasMany('photo', {embedded: 'load'}),
+
+    // Computed properties
     mainPhoto: function () {
         return this.get('photos').objectAt(0);
     }.property('photos.@each'),

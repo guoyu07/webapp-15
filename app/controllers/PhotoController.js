@@ -21,6 +21,8 @@ App.PhotoController = Ember.ObjectController.extend({
             // Validate and save
             photo.validate().then(function () {
                 photo.save().then(function () {
+                    // $BUG: for some reason, the host needs to be reloaded, otherwise its photo list gets nuked
+                    photo.get('host').reload();
                     alertify.success('Information updated!');
                 }).catch(function () {
                     alertify.error('Cannot update the photo.');

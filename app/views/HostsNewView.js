@@ -1,7 +1,6 @@
 /**
- * Created by guillaumez on 3/12/14.
+ * Ember view for host creation.
  */
-
 App.HostsNewView = Ember.View.extend({
     didInsertElement: function () {
         var self = this;
