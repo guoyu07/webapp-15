@@ -4,6 +4,10 @@
  * @param DataTypes The data types.
  * @returns {Object} The Sequelize model.
  */
+var path = require('path'),
+    photoFolder = '\\public\\host_photos\\',
+    appDir = path.dirname(require.main.filename);
+
 module.exports = function (sequelize, DataTypes) {
     var Photo = sequelize.define('Photo', {
         fileName: DataTypes.STRING,
@@ -13,6 +17,9 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 Photo.belongsTo(models.Host, { onDelete: 'cascade' })
+            },
+            getFullPath: function (fileName) {
+                return appDir + photoFolder + fileName;
             }
         }
     });

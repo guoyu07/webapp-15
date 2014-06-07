@@ -89,3 +89,120 @@ describe('PUT /api/photos/:id', function () {
         });
     });
 });
+
+describe('POST /api/photos', function () {
+
+    it('should return 404 if host id not valid', function (done) {
+        request(helper.url)
+            .post('/api/photos?hostId=notValid')
+            .set('cookie', helper.authCookie)
+            .attach('file', 'test/arbre.jpg')
+            .send({ photo: {} })
+            .expect(404)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should return 404 if host belongs to another user', function (done) {
+        request(helper.url)
+            .post('/api/photos?hostId=2')
+            .set('cookie', helper.authCookie)
+            .attach('file', 'test/arbre.jpg')
+            .expect(404)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should return 415 if the photo does not have the right mime type', function (done) {
+        helper.createHost(helper.user.id).then(function (host) {
+            request(helper.url)
+                .post('/api/photos?hostId=' + host.id)
+                .set('cookie', helper.authCookie)
+                .attach('file', 'test/helper.js')
+                .expect(415)
+                .end(function (err, res) {
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+
+    it('should return photo', function (done) {
+        helper.createHost(helper.user.id).then(function (host) {
+            request(helper.url)
+                .post('/api/photos?hostId=' + host.id)
+                .set('cookie', helper.authCookie)
+                .attach('file', 'test/arbre.jpg')
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) return done(err);
+                    res.body.should.have.property('photo');
+                    res.body.photo.should.have.property('id');
+                    request(helper.url)
+                        .get('/host_photos/' + res.body.photo.fileName)
+                        .expect(200)
+                        .end(function (err) {
+                            if (err) return done(err);
+                            done();
+                        });
+                });
+        });
+    });
+});
+
+describe('DELETE /api/photos/:id', function () {
+
+    it('should return 404 if id not valid', function (done) {
+        request(helper.url)
+            .delete('/api/photos/not-valid')
+            .set('cookie', helper.authCookie)
+            .expect(404)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should return 404 if id has no photo associated', function (done) {
+        request(helper.url)
+            .put('/api/photos/156')
+            .set('cookie', helper.authCookie)
+            .send({ photo: {} })
+            .expect(404)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should return 404 if photo belongs to another user', function (done) {
+        request(helper.url)
+            .put('/api/photos/1')
+            .set('cookie', helper.authCookie)
+            .send({ photo: {} })
+            .expect(404)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should return 204 (even if the file does not exist on drive)', function (done) {
+        helper.createHost(helper.user.id).then(function (host) {
+            return helper.createPhoto(host.id);
+        }).then(function (photo) {
+            request(helper.url)
+                .delete('/api/photos/' + photo.id)
+                .set('cookie', helper.authCookie)
+                .expect(204)
+                .end(function (err, res) {
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+});

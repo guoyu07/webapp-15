@@ -38,15 +38,6 @@ exports.create = function (req, res) {
 };
 
 /**
- * Deletes an address.
- */
-exports.delete = function (req, res) {
-
-    // Make sure the current user "owns" the address, then delete it
-    testOwnership(req, res, deleteInternal);
-};
-
-/**
  * Makes sure that the address id given in route parameter is attached to an host/wwoofer that belongs to the
  * authenticated user.
  * @param callback The function to call if the user is allowed to update/delete the address.
@@ -111,26 +102,4 @@ var updateInternal = function (req, res) {
     }).error(function (error) {
         res.send(500, error);
     });
-};
-
-/**
- * Deletes an address after passing security checks (i.e. authenticated user is allowed to delete the object).
- */
-var deleteInternal = function (req, res) {
-
-    // Find the original address
-    db.Address.find({
-        where: { id: req.params.id }
-    }).success(function (address) {
-        if (address) {
-            // Delete the address
-            address.destroy().success(function () {
-                res.send(204);
-            }).error(function (error) {
-                res.send(500, error);
-            })
-        } else {
-            res.send(404);
-        }
-    })
 };

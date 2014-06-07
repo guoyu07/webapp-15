@@ -30,6 +30,18 @@ App.PhotoController = Ember.ObjectController.extend({
             }).catch(function () {
                 alertify.error("Your submission is invalid.");
             });
+        },
+        deletePhoto: function () {
+            // Get photo
+            var photo = this.get('model');
+            photo.destroyRecord().then(function () {
+                alertify.success('Photo deleted.');
+            }).catch(function () {
+                photo.rollback();
+                // BUG: for some reason, the host must be realoaded in order for the photo to stay in the list
+                photo.get('host').reload();
+                alertify.error('Cannot delete the photo.');
+            });
         }
     }
 });

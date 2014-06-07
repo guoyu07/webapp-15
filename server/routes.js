@@ -37,11 +37,11 @@ module.exports = function (app, passport) {
 
     app.put('/api/addresses/:id', auth.ensureAuthenticated, addresses.update);
     app.post('/api/addresses', auth.ensureAuthenticated, addresses.create);
-    app.delete('/api/addresses/:id', auth.ensureAuthenticated, addresses.delete);
 
     app.get('/api/photos/:id', photos.single);
     app.put('/api/photos/:id', auth.ensureAuthenticated, photos.update);
     app.post('/api/photos', auth.ensureAuthenticated, photos.create);
+    app.delete('/api/photos/:id', auth.ensureAuthenticated, photos.delete);
 
     app.get('/api/departments', departments.index);
     app.get('/api/departments/:id', departments.single);

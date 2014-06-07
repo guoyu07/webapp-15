@@ -15,6 +15,7 @@ App.HostsNewView = Ember.View.extend({
 
                 // Force a reload of the host so the photo get displayed in the list
                 self.get('controller.model').reload();
+                // self.get('controller.store').push('photo', data.result.photo);
             },
             error: function (e, data) {
                 alertify.error("Unable tu upload files on the server.");
@@ -37,6 +38,8 @@ App.HostsNewView = Ember.View.extend({
                     }
                 });
                 if (goUpload == true) {
+                    $('.progress-bar').css('width', 0 + '%');
+                    $('.progress-bar').html(0 + '%');
                     data.submit();
                 }
             }

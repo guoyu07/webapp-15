@@ -2,11 +2,10 @@
  * API controller for Photos.
  */
 var db = require('../models'),
+    Sequelize = require('sequelize'),
     path = require('path'),
     fs = require('fs'),
-    appDir = path.dirname(require.main.filename),
-    mimeTypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/tiff', 'image/png'],
-    photoFolder = '\\public\\host_photos\\',
+    allowedMimeTypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/tiff', 'image/png'],
     updatableAttributes = ['caption'];
 
 /**
@@ -71,64 +70,110 @@ exports.update = function (req, res) {
  */
 exports.create = function (req, res) {
 
-    // Declare variables
-    var created = 0;
-    var errors = 0;
-    var chainer = new db.Sequelize.Utils.QueryChainer;
+    // Data validation
+    if (!req.query.hostId || !req.files || !req.files.file) {
+        return res.send(400);
+    }
 
-    req.files.files.forEach(function (file) {
+    // Only admins can upload a photo for a host that does not belong to the current user
+    var userIdFilter = req.user.isAdmin ? null : { userId: req.user.id };
 
-        if (mimeTypes.indexOf(file.headers['content-type']) == -1) {
-            console.log('Unsupported file type: ' + file.headers['content-type'] + ' (' + file.name + ')');
-            fs.unlinkSync(file.path);
-            errors++;
-            return;
-            // res.send(415); // Unsupported Media Type
-        }
-        if (file.size > 5000000) { // 5mb
-            console.log('File is too big: ' + file.size + ' bytes (' + file.name + ')');
-            fs.unlinkSync(file.path);
-            errors++;
-            return;
-            // res.send(413); // Request Entity Too Large
-        }
+    // Find the host (including user id to check ownership)
+    db.Host.find({
+        where: Sequelize.and(
+            { id: req.query.hostId },
+            userIdFilter
+        )
+    }).then(function (host) {
 
-        var newFileName = path.basename(file.path);
-        var newPath = appDir + photoFolder + newFileName;
+        if (host) {
+            // Get file
+            var file = req.files.file;
 
-        // Move the photo from the temporary path to the new path
-        fs.rename(file.path, newPath, function (error) {
-
-            // Handle errror
-            if (error) {
-                console.error('Cannot move photo ' + file.originalFilename + ' to ' + newPath + '.');
-                console.error(error);
+            // Check format
+            if (allowedMimeTypes.indexOf(file.headers['content-type']) == -1) {
+                console.log('Unsupported file type: ' + file.headers['content-type'] + ' (' + file.name + ')');
+                fs.unlinkSync(file.path);
+                res.send(415); // Unsupported Media Type
                 return;
             }
 
-            // Log
-            console.log('Photo \'' + file.originalFilename + '\' moved to host_photo public folder (\'' + newFileName + '\').');
+            // Check size
+            if (file.size > 5000000) { // 5mb
+                console.log('File is too big: ' + file.size + ' bytes (' + file.name + ')');
+                fs.unlinkSync(file.path);
+                res.send(413); // Request Entity Too Large
+                return;
+            }
 
-            // Create the photo in the database
-            chainer.add(
+            // Build new file name
+            var newFileName = path.basename(file.path);
+            var newPath = db.Photo.getFullPath(newFileName);
+
+            // Move the photo from the temporary directory to the photo directory
+            fs.rename(file.path, newPath, function (error) {
+
+                // Handle error
+                if (error) {
+                    console.error('Cannot move photo ' + file.originalFilename + ' to ' + newPath + '.');
+                    console.error(error);
+                    fs.unlinkSync(file.path);
+                    return;
+                }
+
+                // Log
+                console.log('Photo \'' + file.originalFilename + '\' moved to ' + newPath + '.');
+
+                // Create the photo in the database
                 db.Photo.create({
                     fileName: newFileName,
                     hostId: req.body.hostId
                 }).success(function (photo) {
-                    created++;
-                    console.log('Photo \'' + photo.fileName + '\' added in database.');
+                    res.send({ photo: photo });
                 }).error(function (error) {
                     // Remove file
-                    fs.unlink(newPath);
+                    fs.unlinkSync(newPath);
+                    res.send(500, error);
                 })
-            );
-        });
+            });
+        } else {
+            res.send(404);
+        }
+    }).catch(function (error) {
+        res.send(500, error);
     });
+};
 
-    // Make sure all 'create' operations are complete before returning response
-    chainer
-        .run()
-        .success(function (result) {
-            res.send({ photo: 'test' });
-        })
+/**
+ * Deletes a photo in the photo folder and delete them in the database.
+ */
+exports.delete = function (req, res) {
+
+    // Find the original photo (including the host to check ownership)
+    db.Photo.find({
+        where: { id: req.params.id },
+        include: [
+            {
+                model: db.Host,
+                where: { userId: req.user.id }
+            }
+        ]
+    }).then(function (photo) {
+        if (photo) {
+            // Delete the photo on the file system
+            var fullPath = db.Photo.getFullPath(photo.fileName);
+            fs.unlink(fullPath, function () {
+                // Delete the photo in the database
+                photo.destroy().then(function () {
+                    res.send(204);
+                }).catch(function (error) {
+                    res.send(500, error);
+                });
+            });
+        } else {
+            res.send(404);
+        }
+    }).catch(function (error) {
+        res.send(500, error);
+    });
 };
