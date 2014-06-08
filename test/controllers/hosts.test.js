@@ -57,6 +57,20 @@ describe('GET /api/hosts', function () {
     });
 });
 
+describe('GET /api/hosts/:id', function () {
+
+    it('should return 200', function (done) {
+        request(helper.url)
+            .get('/api/hosts/1')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                res.body.should.have.property('host');
+                done();
+            });
+    });
+});
+
 describe('POST /api/hosts', function () {
 
     it('should return 401 if not authenticated', function (done) {

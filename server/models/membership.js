@@ -19,15 +19,13 @@ module.exports = function (sequelize, DataTypes) {
         classMethods: {
             associate: function (models) {
                 Membership.belongsTo(models.User, { onDelete: 'cascade' })
-            }
-        },
-        instanceMethods: {
+            },
             /**
-             * Returns the base price of a membership based on its item code.
-             * @returns {Number} The base price for the item or false if not found.
+             * Returns the base price in EUR of a membership based on the item code given in parameter.
+             * @returns {Number} The base price of the item.
              */
-            getBasePrice: function () {
-                switch (this.itemCode) {
+            getBasePrice: function (itemCode) {
+                switch (itemCode) {
                     case "WO1":
                         return 20;
                     case "WO2":
@@ -41,7 +39,25 @@ module.exports = function (sequelize, DataTypes) {
                     case "HR":
                         return 30;
                     default:
-                        return false;
+                        return null;
+                }
+            },
+            /**
+             * Returns the type of a membership based on the item code given in parameter.
+             * @returns {String} The type of the item.
+             */
+            getType: function (itemCode) {
+                switch (itemCode) {
+                    case "WO1":
+                    case "WO2":
+                    case "WOB1":
+                    case "WOB2":
+                        return "W";
+                    case "H":
+                    case "HR":
+                        return "H";
+                    default:
+                        return null;
                 }
             }
         }

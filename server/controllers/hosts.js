@@ -1,10 +1,9 @@
 /**
  * API controller for Hosts.
  */
-var db = require('../models');
-var Sequelize = require('sequelize');
-var updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails', 'userId', 'addressId'];
-
+var db = require('../models'),
+    Sequelize = require('sequelize'),
+    updatableAttributes = ['farmName', 'shortDescription', 'fullDescription', 'webSite', 'travelDetails', 'userId', 'addressId'];
 /**
  * Returns a paginated list of hosts.
  * This route can be accessed from non authenticated users, but returns additional data for members (TODO).
@@ -17,6 +16,7 @@ exports.index = function (req, res) {
         dptWhere = req.query.dpt ? { id: req.query.dpt } : null;
 
     // Prepare host where condition
+    // TODO: user should be able to get their own profile no matter what
     var hostWhere = Sequelize.and();
     req.query.userId ? hostWhere.args.push({ userId: req.query.userId }) : null;
     if (!req.user || !req.user.isAdmin) {
@@ -70,7 +70,7 @@ exports.index = function (req, res) {
                 total: hosts.count
             }
         });
-    }, function (error) {
+    }).catch(function (error) {
         res.send(500, error);
     });
 };
@@ -87,14 +87,14 @@ exports.single = function (req, res) {
             { model: db.Address, as: 'address' }
         ],
         where: { id: req.params.id }
-    }).success(function (host) {
+    }).then(function (host) {
         // Returns host or 404 if not found
         if (host) {
             res.send({ host: host });
         } else {
             res.send(404);
         }
-    }).error(function (error) {
+    }).catch(function (error) {
         res.send(500, error);
     });
 };
@@ -143,7 +143,7 @@ exports.update = function (req, res) {
         } else {
             res.send(404);
         }
-    }, function (error) {
+    }).catch(function (error) {
         res.send(500, error);
     });
 };

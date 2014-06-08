@@ -10,15 +10,13 @@
         {{#if mustRenewMembership}}
             <div class="alert alert-warning alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>
                     {{#if hasHostMemberships}}
-                        Your host profile has been validated by our team!
-                        To make it visible, you must take a membership.
-                    {{else}}
-                        Your host profile is currently hidden.
+                        <strong>Your host profile is currently hidden.</strong>
                         To make it visible, you must renew your membership.
+                    {{else}}
+                        <strong>Your host profile has been validated by our team!</strong>
+                        To make it visible, you must take a membership.
                     {{/if}}
-                </strong>
                 <button {{action "renewMembership"}} class="btn btn-default">Renew Membership</button>
             </div>
         {{/if}}

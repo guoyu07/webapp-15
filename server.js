@@ -10,7 +10,8 @@ var express = require('express'),
     domain = require('domain'),
     paypal = require('paypal-rest-sdk'),
     session = require('express-session'),
-    SessionStore = require('express-mysql-session');
+    SessionStore = require('express-mysql-session'),
+    i18n = require("i18n");
 
 // Configure express app
 app.set('port', process.env.PORT || config.port);
@@ -41,6 +42,12 @@ function domainWrapper() {
     }
 }
 
+// Configure i18n
+i18n.configure({
+    locales: ['en', 'fr'],
+    directory: __dirname + '/server/locales'
+});
+
 // Configure session
 app.use(express.cookieParser());
 app.use(session({
@@ -55,6 +62,7 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.bodyParser());
 app.use(express.static('public'));
+app.use(i18n.init);
 
 // Development only configuration
 app.configure('development', function () {

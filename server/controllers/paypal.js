@@ -1,8 +1,8 @@
 /**
  * PayPal controller.
  */
-var paypal = require('paypal-rest-sdk');
-var db = require('../models');
+var paypal = require('paypal-rest-sdk'),
+    db = require('../models');
 
 /**
  * Initiates a payment with PayPal.
@@ -10,19 +10,28 @@ var db = require('../models');
  */
 exports.start = function (req, res) {
 
-    // Build a membership model
-    var membership = db.Membership.build({ itemCode: req.query.itemCode });
+    // Get type and base price
+    var type = db.Membership.getType(req.query.itemCode);
+    var basePrice = db.Membership.getBasePrice(req.query.itemCode);
 
-    // Get base price
-    var basePrice = membership.getBasePrice();
-
-    // Make sure base price is valid
-    if (!basePrice || basePrice <= 0) {
-        res.send(500);
+    // Validate data
+    if (!basePrice || basePrice <= 0 || !type) {
+        res.send(500, "Base price or type is invalid.");
         return;
     }
 
-    // Create a payment object
+    // Process total
+    var total = basePrice; // TODO: add shipping cost to total
+
+    // Build a membership model
+    var membership = db.Membership.build({
+        userId: req.user.id,
+        itemCode: req.query.itemCode,
+        type: type,
+        total: total
+    });
+
+    // Create a Paypal payment object
     var payment = {
         intent: "sale",
         payer: {
@@ -35,10 +44,10 @@ exports.start = function (req, res) {
         transactions: [
             {
                 amount: {
-                    total: basePrice,
+                    total: total,
                     currency: "EUR"
                 },
-                description: "My awesome payment"
+                description: res.__(membership.itemCode)
             }
         ]
     };
@@ -80,7 +89,7 @@ exports.execute = function (req, res) {
     var payerId = req.param('PayerID');
 
     // Validate data
-    if (!membership.paymentId || !payerId) {
+    if (!membership.paymentId || !payerId || !membership.itemCode || !membership.type) {
         res.send(500);
         return;
     }
@@ -98,7 +107,7 @@ exports.execute = function (req, res) {
         db.Membership.find({
             where: {
                 userId: req.user.id,
-                type: 'Wwoofer'
+                type: membership.type
             },
             order: 'expireAt DESC'
         }).then(function (lastMembership) {
@@ -109,8 +118,8 @@ exports.execute = function (req, res) {
 
             // Persist the membership
             return db.Membership.create({
-                type: 'W',
-                paymentId: payment.id,
+                type: membership.type,
+                paymentId: membership.paymentId,
                 payerId: payment.payer.payer_info.payer_id,
                 saleId: payment.transactions[0].related_resources[0].sale.id,
                 userId: req.user.id,
@@ -121,8 +130,8 @@ exports.execute = function (req, res) {
             });
         }).then(function (newMembership) {
             res.redirect('/app/payment/complete');
-        }, function (error) {
-            res.send(500);
-        })
+        }).catch(function (error) {
+            res.send(500, error);
+        });
     });
 };
