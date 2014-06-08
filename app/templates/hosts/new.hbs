@@ -1,18 +1,35 @@
+{{#unless isNew}}
+    {{#if isPending}}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Your host profile was succesfully created.</strong>
+            We must validate your profile before it gets published.
+            You may now upload pictures of your farm at the bottom of the page.
+        </div>
+    {{else}}
+        {{#if mustRenewMembership}}
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>
+                    {{#if hasHostMemberships}}
+                        Your host profile has been validated by our team!
+                        To make it visible, you must take a membership.
+                    {{else}}
+                        Your host profile is currently hidden.
+                        To make it visible, you must renew your membership.
+                    {{/if}}
+                </strong>
+                <button {{action "renewMembership"}} class="btn btn-default">Renew Membership</button>
+            </div>
+        {{/if}}
+    {{/if}}
+{{/unless}}
+
 <div class="page-header">
     <h1>{{farmName}}
         <small>{{contact}}</small>
     </h1>
 </div>
-
-{{#if isPending}}
-    <div class="alert alert-success alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <strong>Your host profile was succesfully created.</strong>
-        We must validate your profile before it gets published.
-        You may now upload pictures of your farm at the bottom of the page.
-    </div>
-{{/if}}
-
 <form>
     <div class="row">
         <div class="col-md-6">

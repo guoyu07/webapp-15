@@ -1,6 +1,13 @@
 App.HostEditController = Ember.ObjectController.extend({
 
-    needs: ['hosts', 'departments'],
+    needs: ['hosts', 'departments', 'memberships'],
+
+    hostMembershipsBinding: 'controllers.memberships.hostMemberships',
+    hasHostMembershipsBinding: 'controllers.memberships.hasHostMemberships',
+
+    mustRenewMembership: function () {
+        return !this.get('hasHostMemberships') || this.get('hostMemberships.firstObject.expireAt') < new Date();
+    }.property('hasHostMemberships', 'hostMemberships.@each.expireAt'),
 
     actions: {
         saveHost: function () {
@@ -40,6 +47,13 @@ App.HostEditController = Ember.ObjectController.extend({
             }).catch(function () {
                 alertify.error("Your submission is invalid.");
             })
+        },
+        renewMembership: function () {
+            // Find the right item code
+            var itemCode = this.get('hasHostMemberships') ? "HR" : "H";
+
+            // Hit the payment route in order to get redirected to PayPal
+            window.location.replace('/payment/start?itemCode=' + itemCode);
         }
     }
 });
