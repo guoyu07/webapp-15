@@ -6,6 +6,7 @@
  */
 module.exports = function (sequelize, DataTypes) {
     var Host = sequelize.define('Host', {
+        oldHostId: DataTypes.STRING, // Host id from the old database
         farmName: {
             type: DataTypes.STRING,
             allowNull: false,

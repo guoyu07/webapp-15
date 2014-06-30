@@ -26,7 +26,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         birthDate: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         phone: DataTypes.STRING,
         isAdmin: {

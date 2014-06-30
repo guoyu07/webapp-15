@@ -169,7 +169,7 @@ describe('DELETE /api/photos/:id', function () {
 
     it('should return 404 if id has no photo associated', function (done) {
         request(helper.url)
-            .put('/api/photos/156')
+            .delete('/api/photos/156')
             .set('cookie', helper.authCookie)
             .send({ photo: {} })
             .expect(404)
@@ -181,7 +181,7 @@ describe('DELETE /api/photos/:id', function () {
 
     it('should return 404 if photo belongs to another user', function (done) {
         request(helper.url)
-            .put('/api/photos/1')
+            .delete('/api/photos/1')
             .set('cookie', helper.authCookie)
             .send({ photo: {} })
             .expect(404)
@@ -201,7 +201,11 @@ describe('DELETE /api/photos/:id', function () {
                 .expect(204)
                 .end(function (err, res) {
                     if (err) return done(err);
-                    done();
+
+                    db.Photo.find(photo.id).then(function (photo) {
+                        (photo === null).should.be.true;
+                        done();
+                    });
                 });
         });
     });
