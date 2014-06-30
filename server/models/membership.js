@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
         saleId: DataTypes.STRING,
         expireAt: DataTypes.DATE,
         itemCode: DataTypes.ENUM('WO1', 'WO2', 'WOB1', 'WOB2', 'H', 'HR'),
-        paymentType: DataTypes.ENUM('PPL', 'CHQ'),
+        paymentType: DataTypes.ENUM('PPL', 'CHQ', 'ESP', 'VIRT'),
         total: DataTypes.DECIMAL
     }, {
         tableName: 'memberships',
