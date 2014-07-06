@@ -7,5 +7,8 @@ App.MembershipsIndexRoute = Ember.Route.extend({
     },
     setupController: function (controller, model) {
         this.controllerFor('memberships').set('content', model);
+    },
+    renderTemplate: function () {
+        this.render('memberships/index', { controller: 'memberships' });
     }
 });

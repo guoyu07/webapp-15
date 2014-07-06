@@ -2,25 +2,6 @@
  * Ember controller for user edition.
  */
 App.UserEditController = Ember.ObjectController.extend({
-
-    needs: ['memberships'],
-
-    hostMembershipsBinding: 'controllers.memberships.hostMemberships',
-    wwoofMembershipsBinding: 'controllers.memberships.wwoofMemberships',
-
-    wwoofCannotRenewMembership: function () {
-        return this.cannotRenewMembership(this.get('wwoofMemberships.firstObject.expireAt'));
-    }.property('wwoofMemberships.@each'),
-
-    hostCannotRenewMembership: function () {
-        return this.cannotRenewMembership(this.get('hostMemberships.firstObject.expireAt'));
-    }.property('hostMemberships.@each'),
-
-    cannotRenewMembership: function (lastMembershipEnd) {
-        var oneMonthBeforeLastMembershipEnds = lastMembershipEnd.setMonth(lastMembershipEnd.getMonth() - 1);
-        return new Date() < oneMonthBeforeLastMembershipEnds;
-    },
-
     actions: {
         saveUser: function () {
 
