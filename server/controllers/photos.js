@@ -5,6 +5,7 @@ var db = require('../models'),
     Sequelize = require('sequelize'),
     path = require('path'),
     fs = require('fs'),
+    error = require('../utils/error'),
     allowedMimeTypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/tiff', 'image/png'],
     updatableAttributes = ['caption'];
 
@@ -159,20 +160,19 @@ exports.delete = function (req, res) {
             }
         ]
     }).then(function (photo) {
-        if (photo) {
-            // Delete the photo on the file system
-            var fullPath = db.Photo.getFullPath(photo.fileName);
-            fs.unlink(fullPath, function () {
-                // Delete the photo in the database
-                photo.destroy().then(function () {
-                    res.send(204);
-                }).catch(function (error) {
-                    res.send(500, error);
-                });
-            });
-        } else {
-            res.send(404);
-        }
+
+        if (!photo) throw new error.NotFoundError();
+
+        // Delete the photo on the file system (ignore errors)
+        var fullPath = db.Photo.getFullPath(photo.fileName);
+        fs.unlink(fullPath, function () {
+            // Delete the photo in the database
+            return photo.destroy();
+        });
+    }).then(function () {
+        res.send(204);
+    }).catch(error.NotFoundError, function (error) {
+        res.send(404);
     }).catch(function (error) {
         res.send(500, error);
     });

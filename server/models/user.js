@@ -26,7 +26,13 @@ module.exports = function (sequelize, DataTypes) {
         },
         birthDate: {
             type: DataTypes.DATE,
-            allowNull: true
+            allowNull: true,
+            get: function () {
+                // Return a date object without the time
+                // See: https://github.com/sequelize/sequelize/issues/1514
+                var date = new Date(this.getDataValue('birthDate'));
+                return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+            }
         },
         phone: DataTypes.STRING,
         isAdmin: {
