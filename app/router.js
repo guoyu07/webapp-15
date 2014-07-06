@@ -22,6 +22,8 @@ App.Router.map(function () {
         this.resource('payment', { path: '/payment' }, function () {
             this.route("complete");
             this.route("cancel");
+        }),
+        this.resource('memberships', { path: '/memberships' }, function () {
         })
 });
 
