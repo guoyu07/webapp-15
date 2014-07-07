@@ -35,6 +35,7 @@ module.exports = function (app, passport) {
     app.put('/api/hosts/:id', auth.ensureAuthenticated, hosts.update);
     app.post('/api/hosts', auth.ensureAuthenticated, hosts.create);
 
+    app.get('/api/addresses/:id', auth.ensureAuthenticated, addresses.single);
     app.put('/api/addresses/:id', auth.ensureAuthenticated, addresses.update);
     app.post('/api/addresses', auth.ensureAuthenticated, addresses.create);
 

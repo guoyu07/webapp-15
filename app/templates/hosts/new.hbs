@@ -1,33 +1,37 @@
+<div class="page-header">
+    <h1>{{farmName}}</h1>
+</div>
 {{#unless isNew}}
     {{#if isPending}}
-        <div class="alert alert-success alert-dismissable">
+        <div class="alert alert-success alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong>Your host profile was succesfully created.</strong>
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            Your host profile was succesfully created.
             We must validate your profile before it gets published.
-            You may now upload pictures of your farm at the bottom of the page.
+            In the meantime you can upload pictures of your farm at the bottom of the page.
         </div>
     {{else}}
-        {{#if mustRenewMembership}}
-            <div class="alert alert-warning alert-dismissable">
+        {{#if hasHostMemberships}}
+            {{#if latestHostMembership.isExpired}}
+                <div class="alert alert-warning alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    Your host profile is currently hidden.
+                    To make it visible again to the community, you must <a href="#" {{action "renewMembership"}}
+                                                                           class="alert-link">renew your membership</a>
+                </div>
+            {{/if}}
+        {{else}}
+            <div class="alert alert-info alert-dismissable" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{#if hasHostMemberships}}
-                        <strong>Your host profile is currently hidden.</strong>
-                        To make it visible, you must renew your membership.
-                    {{else}}
-                        <strong>Your host profile has been validated by our team!</strong>
-                        To make it visible, you must take a membership.
-                    {{/if}}
-                <button {{action "renewMembership"}} class="btn btn-default">Renew Membership</button>
+                <span class="glyphicon glyphicon-info-sign"></span>
+                Your host profile has been validated by our team!
+                To make it visible to the community, you must <a href="#" {{action "renewMembership"}}
+                                                                 class="alert-link">pay your membership fee</a>.
             </div>
         {{/if}}
     {{/if}}
 {{/unless}}
-
-<div class="page-header">
-    <h1>{{farmName}}
-        <small>{{contact}}</small>
-    </h1>
-</div>
 <form>
     <div class="row">
         <div class="col-md-6">

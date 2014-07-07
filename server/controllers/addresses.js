@@ -1,8 +1,27 @@
 /**
  * API controller for Addresses.
  */
-var db = require('../models');
-var updatableAttributes = ['address1', 'address2', 'zipCode', 'city', 'state', 'countryId', 'departmentId'];
+var db = require('../models'),
+    error = require('../utils/error'),
+    updatableAttributes = ['address1', 'address2', 'zipCode', 'city', 'state', 'countryId', 'departmentId'];
+
+/**
+ * Returns a single address.
+ */
+exports.single = function (req, res) {
+    db.Address.find({
+        where: { id: req.params.id }
+    }).then(function (address) {
+        if (!address) {
+            throw new error.NotFoundError();
+        }
+        res.send({ address: address });
+    }).catch(error.NotFoundError, function () {
+        res.send(404);
+    }).catch(function (error) {
+        res.send(500, error);
+    });
+};
 
 /**
  * Updates an address.

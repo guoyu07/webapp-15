@@ -3,9 +3,9 @@
     "version": "0.0.1",
     "main": "public/app.js",
     "dependencies": {
-        "ember": "~1.5.1",
+        "ember": "~1.6.0-beta.5",
         "ember-data": "~1.0.0-beta.8",
-        "bootstrap": "~3.1.1",
+        "bootstrap": "~3.2.0",
         "jquery": "~2.1.0",
         "swipeshow": "~0.10.5",
         "alertify.js": "~0.3.11",

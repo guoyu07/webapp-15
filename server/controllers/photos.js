@@ -171,7 +171,7 @@ exports.delete = function (req, res) {
         });
     }).then(function () {
         res.send(204);
-    }).catch(error.NotFoundError, function (error) {
+    }).catch(error.NotFoundError, function () {
         res.send(404);
     }).catch(function (error) {
         res.send(500, error);

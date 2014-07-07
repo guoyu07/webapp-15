@@ -45,20 +45,24 @@ exports.index = function (req, res) {
  */
 exports.single = function (req, res) {
     db.User.find({
-        where: {id: req.params.id}
-    }).success(function (user) {
+        where: { id: req.params.id },
+        include: [ db.Host, db.Wwoofer ]
+    }).then(function (user) {
         // Not found
-        if (!user)
+        if (!user) {
             res.send(404);
-
+            return;
+        }
         // Unauthorized
-        if (user.id != req.user.id)
+        if (user.id != req.user.id) {
             res.send(401);
-
-        res.send({
-            user: user
-        });
-    })
+            return;
+        }
+        // Success
+        res.send({ user: user });
+    }).catch(function (error) {
+        res.send(500, error);
+    });
 };
 
 /**

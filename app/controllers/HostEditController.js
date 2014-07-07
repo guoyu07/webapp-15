@@ -4,10 +4,7 @@ App.HostEditController = Ember.ObjectController.extend({
 
     hostMembershipsBinding: 'controllers.memberships.hostMemberships',
     hasHostMembershipsBinding: 'controllers.memberships.hasHostMemberships',
-
-    mustRenewMembership: function () {
-        return !this.get('hasHostMemberships') || this.get('hostMemberships.firstObject.expireAt') < new Date();
-    }.property('hasHostMemberships', 'hostMemberships.@each.expireAt'),
+    latestHostMembershipBinding: 'controllers.memberships.latestHostMembership',
 
     actions: {
         saveHost: function () {

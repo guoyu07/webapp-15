@@ -1,4 +1,5 @@
 var express = require('express'),
+    expressValidator = require('express-validator'),
     http = require('http'),
     app = express(),
     db = require('./server/models'),
@@ -61,6 +62,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.bodyParser());
+app.use(expressValidator());
 app.use(express.static('public'));
 app.use(i18n.init);
 
@@ -87,35 +89,23 @@ db
         return db.sequelize.sync({ force: true });
     })
     .then(function () {
-        return db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+        return db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
+    })
+    .then(function () {
+        return db.sequelize.query('ALTER TABLE users MODIFY birthDate DATE');
+    })
+    .then(function () {
+        return db.sequelize.query('ALTER TABLE wwoofers MODIFY birthDate2 DATE');
     })
     .then(function () {
         console.log('Database synchronised.');
 
         // Load sample data in the database
-        require('./server/bootstrap-db')(db);
+        // require('./server/bootstrap-db')(db);
 
         http.createServer(app).listen(app.get('port'), function () {
-            console.log('Express server listening on port ' + app.get('port'))
+            console.log('Express server listening on port ' + app.get('port'));
         })
-
-    }, function (err) {
+    }).catch(function (err) {
         console.log(err);
     });
-
-
-//db
-//    .sequelize
-//    .sync({ force: true })
-//    .complete(function (err) {
-//
-//
-//
-//        if (err) {
-//            throw err
-//        } else {
-//            http.createServer(app).listen(app.get('port'), function () {
-//                console.log('Express server listening on port ' + app.get('port'))
-//            })
-//        }
-//    });

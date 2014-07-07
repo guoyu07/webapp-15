@@ -4,7 +4,10 @@
 App.HostEditRoute = Ember.Route.extend({
     setupController: function (controller, model) {
         this._super(controller, model);
-        this.controllerFor('memberships').set('content', this.store.find('membership'));
+        var self = this;
+        this.store.find('membership', { userId: this.controllerFor('application').get('currentUser.id') }).then(function (memberships) {
+            self.controllerFor('memberships').set('content', memberships);
+        });
     },
     renderTemplate: function () {
         this.render('hosts/new', { controller: 'host.edit' })

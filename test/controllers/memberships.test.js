@@ -12,14 +12,46 @@ describe('GET /api/memberships', function () {
                 done();
             });
     });
-    it('should return 200 if authenticated', function (done) {
+    it('should return 400 if no user id was provided in query parameter', function (done) {
         request(helper.url)
             .get('/api/memberships')
+            .set('cookie', helper.authCookie)
+            .end(function (err, res) {
+                if (err) return done(err);
+                res.should.have.status(400);
+                done();
+            });
+    });
+    it('should return 400 if not an admin and requesting the memberships of another user', function (done) {
+        request(helper.url)
+            .get('/api/memberships?userId=' + 123)
+            .set('cookie', helper.authCookie)
+            .end(function (err, res) {
+                if (err) return done(err);
+                res.should.have.status(400);
+                done();
+            });
+    });
+    it('should return 200 if requesting my own memberships', function (done) {
+        request(helper.url)
+            .get('/api/memberships?userId=' + helper.user.id)
             .set('cookie', helper.authCookie)
             .end(function (err, res) {
                 if (err) return done(err);
                 res.should.have.status(200);
                 done();
             });
+    });
+    it('should return 200 if admin', function (done) {
+        return helper.login(true).then(function () {
+            request(helper.url)
+                .get('/api/memberships?userId=' + 123)
+                .set('cookie', helper.authCookie)
+                .end(function (err, res) {
+                    if (err) return done(err);
+                    res.should.have.status(200);
+                    done();
+                });
+        });
     });
 });

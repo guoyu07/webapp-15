@@ -10,7 +10,7 @@ exports.loginCallback = function (req, res) {
     if (req.isAuthenticated()) {
         res.send({ user: req.user })
     } else {
-        res.send(500)
+        res.send(500);
     }
 };
 

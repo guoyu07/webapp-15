@@ -30,11 +30,11 @@ exports.index = function (req, res) {
     hostWhere = hostWhere.args.length ? hostWhere : null;
 
     // Prepare user where condition
-    var userWhere = req.query.searchTerm ?
-        Sequelize.or(
-            ['firstName like ?', '%' + searchTerm + '%'],
-            ['lastName like ?', '%' + searchTerm + '%']
-        )
+    var userWhere = req.query.searchTerm
+        ? Sequelize.or(
+        ['firstName like ?', '%' + searchTerm + '%'],
+        ['lastName like ?', '%' + searchTerm + '%']
+    )
         : null;
 
     // Find all hosts matching parameters
