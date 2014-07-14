@@ -1,7 +1,8 @@
 /**
- * Created by guillaumez on 3/9/14.
+ * Ember controller for wwoofers.
  */
+import Ember from 'ember';
 
-App.WwoofersController = Ember.ArrayController.extend({
-    //content: []
+export default Ember.ArrayController.extend({
+    content: []
 });

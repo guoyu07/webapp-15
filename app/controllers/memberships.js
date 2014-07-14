@@ -1,7 +1,10 @@
 /**
  * Ember controller for memberships.
  */
-App.MembershipsController = Ember.ArrayController.extend({
+import Ember from 'ember';
+import MembershipController from '../controllers/membership';
+
+export default Ember.ArrayController.extend({
     sortProperties: ['expireAt'],
     sortAscending: false,
 
@@ -22,13 +25,13 @@ App.MembershipsController = Ember.ArrayController.extend({
     hasHostMemberships: Ember.computed.notEmpty('hostMemberships'),
 
     latestWwoofMembership: function () {
-        return App.MembershipController.create({
+        return MembershipController.create({
             content: this.get('wwoofMemberships.firstObject')
         });
     }.property('wwoofMemberships.@each'),
 
     latestHostMembership: function () {
-        return App.MembershipController.create({
+        return MembershipController.create({
             content: this.get('hostMemberships.firstObject')
         });
     }.property('hostMemberships.@each')

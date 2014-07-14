@@ -2,7 +2,6 @@
  * Ember controller to display a single host.
  */
 import Ember from 'ember';
-import Notify from 'ember-notify';
 
 export default Ember.ObjectController.extend({
 
@@ -24,9 +23,9 @@ export default Ember.ObjectController.extend({
             var host = this.get('model');
             host.set('isPending', false);
             host.save().then(function () {
-                Notify.success('Host was approved successfully.');
+                alertify.success('Host was approved successfully.');
             }).catch(function () {
-                Notify.error('Cannot approve host.');
+                alertify.error('Cannot approve host.');
             });
         }
     }

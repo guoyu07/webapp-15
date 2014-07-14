@@ -1,7 +1,9 @@
 /**
  * Ember controller for photo.
  */
-App.PhotoController = Ember.ObjectController.extend({
+import Ember from 'ember';
+
+export default Ember.ObjectController.extend({
 
     cannotSave: function () {
         return this.get('isSaving') || !this.get('isDirty');

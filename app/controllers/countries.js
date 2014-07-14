@@ -1,4 +1,8 @@
 /**
  * Ember controller for countries.
  */
-App.CountriesController = Ember.ArrayController.extend();
+import Ember from 'ember';
+
+export default Ember.ArrayController.extend({
+    content: []
+});

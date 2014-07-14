@@ -1,7 +1,9 @@
 /**
  * Ember route for the App's home page.
  */
-App.IndexRoute = Ember.Route.extend({
+import Ember from 'ember';
+
+export default Ember.Route.extend({
     model: function () {
 
         // Get the current user id

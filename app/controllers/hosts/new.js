@@ -2,7 +2,6 @@
  * Ember controller for host creation.
  */
 import Ember from 'ember';
-import Notify from 'ember-notify';
 
 export default Ember.ObjectController.extend({
 
@@ -42,13 +41,13 @@ export default Ember.ObjectController.extend({
                     host.set('address', address);
                     return host.save();
                 }).then(function () {
-                    Notify.success('Host created!');
+                    alertify.success('Host created!');
                     self.transitionToRoute('host.edit', host);
                 }).catch(function () {
-                    Notify.error('Cannot create the host.');
+                    alertify.error('Cannot create the host.');
                 });
             }).catch(function () {
-                Notify.error("Your submission is invalid.");
+                alertify.error("Your submission is invalid.");
             });
         }
     }

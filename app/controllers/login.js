@@ -1,7 +1,10 @@
 /**
  * Ember controller for login.
  */
-App.LoginController = Ember.ObjectController.extend(App.Validations.Mixin, {
+import Ember from 'ember';
+import ValidationsMixin from '../mixins/validations';
+
+export default Ember.ObjectController.extend(ValidationsMixin, {
 
     needs: 'application',
 
@@ -12,9 +15,17 @@ App.LoginController = Ember.ObjectController.extend(App.Validations.Mixin, {
             var loginData = this.get('content');
             var self = this;
             loginData.validate().then(function () {
-                $.post("/login", {
-                    username: loginData.get("username"),
-                    password: loginData.get("password")
+                Ember.$.ajax({
+                    type: 'POST',
+                    url: 'http://wwoof.fr:3333/login',
+                    data: {
+                        username: loginData.get('username'),
+                        password: loginData.get('password')
+                    },
+                    crossDomain: true,
+                    xhrFields: {
+                        withCredentials: true
+                    }
                 }).done(function (data) {
 
                     // Store the token in the local storage
@@ -24,7 +35,7 @@ App.LoginController = Ember.ObjectController.extend(App.Validations.Mixin, {
                     alertify.success("Welcome back!");
 
                     // Go to host list (refresh the page to get fresh data from the API)
-                    window.location.replace('/app');
+                    window.location.replace('/app/');
                 }).fail(function () {
                     // Notify user
                     alertify.error("The email address or password is incorrect.");

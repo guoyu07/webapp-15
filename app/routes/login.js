@@ -1,8 +1,11 @@
 /**
  * Ember route for the App's login page.
  */
-App.LoginRoute = Ember.Route.extend({
+import Ember from 'ember';
+import LoginData from '../models/login-data';
+
+export default Ember.Route.extend({
     setupController: function (controller) {
-        controller.set('content', App.LoginData.create());
+        controller.set('content', LoginData.create());
     }
 });

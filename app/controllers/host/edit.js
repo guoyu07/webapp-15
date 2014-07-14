@@ -2,7 +2,6 @@
  * Ember controller for host edition.
  */
 import Ember from 'ember';
-import Notify from 'ember-notify';
 
 export default Ember.ObjectController.extend({
 
@@ -43,13 +42,13 @@ export default Ember.ObjectController.extend({
 
                 // Update host and address
                 Ember.RSVP.all(updates).then(function () {
-                    Notify.success('Information updated!');
+                    alertify.success('Information updated!');
                     self.transitionToRoute('host', host);
                 }).catch(function () {
-                    Notify.error('Cannot update the host.');
+                    alertify.error('Cannot update the host.');
                 });
             }).catch(function () {
-                Notify.error("Your submission is invalid.");
+                alertify.error("Your submission is invalid.");
             });
         },
         renewMembership: function () {

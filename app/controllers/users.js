@@ -1,7 +1,8 @@
 /**
- * Created by guillaumez on 4/5/2014.
+ * Ember controller for users.
  */
+import Ember from 'ember';
 
-App.UsersController = Ember.ArrayController.extend({
+export default Ember.ArrayController.extend({
     content: []
 });

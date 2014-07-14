@@ -1,7 +1,9 @@
 /**
  * Ember controller for the application.
  */
-App.ApplicationController = Ember.Controller.extend({
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
 
     /**
      * Gets or sets the authenticated user.
@@ -10,16 +12,15 @@ App.ApplicationController = Ember.Controller.extend({
 
         // Set the connected user
         if (arguments.length > 1) {
-            if (value)
+            if (value) {
                 localStorage["user"] = JSON.stringify(value);
-            else
+            } else {
                 localStorage.removeItem("user");
+            }
         }
 
         // Get the connected user from local storage (if any)
-        return localStorage["user"]
-            ? JSON.parse(localStorage["user"])
-            : null;
+        return localStorage["user"] ? JSON.parse(localStorage["user"]) : null;
     }.property(),
 
     /**

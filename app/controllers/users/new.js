@@ -2,7 +2,6 @@
  * Ember controller for user creation.
  */
 import Ember from 'ember';
-import Notify from 'ember-notify';
 
 export default Ember.ObjectController.extend({
     actions: {
@@ -18,13 +17,13 @@ export default Ember.ObjectController.extend({
             var self = this;
             user.validate().then(function () {
                 user.save().then(function () {
-                    Notify.alert("We sent you an email with a confirmation link. See you in a bit :)");
+                    alertify.alert("We sent you an email with a confirmation link. See you in a bit :)");
                     self.transitionToRoute('login');
                 }, function () {
-                    Notify.error('Cannot create user.');
+                    alertify.error('Cannot create user.');
                 });
             }, function () {
-                Notify.error("Your submission is invalid.");
+                alertify.error("Your submission is invalid.");
             });
         }
     }

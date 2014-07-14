@@ -2,7 +2,6 @@
  * Ember controller for wwoofer edition.
  */
 import Ember from 'ember';
-import Notify from 'ember-notify';
 
 export default Ember.ObjectController.extend({
 
@@ -28,14 +27,14 @@ export default Ember.ObjectController.extend({
                         .then(function () {
                             return address.save();
                         }).then(function () {
-                            Notify.success('Information updated!');
+                            alertify.success('Information updated!');
                             self.transitionToRoute('application');
                         }).catch(function (error) {
                             console.error(error);
-                            Notify.error('Cannot update wwoofer.');
+                            alertify.error('Cannot update wwoofer.');
                         });
                 }).catch(function () {
-                    Notify.error("Your submission is invalid.");
+                    alertify.error("Your submission is invalid.");
                 });
         }
     }
