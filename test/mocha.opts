@@ -1,4 +1,0 @@
---recursive
---reporter spec
---require should
---require assert
