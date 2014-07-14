@@ -1,7 +1,10 @@
 /**
  * Ember model for Photo.
  */
-App.Photo = DS.Model.extend(App.Validations.Mixin, {
+import DS from 'ember-data';
+import ValidationsMixin from '../mixins/validations';
+
+export default DS.Model.extend(ValidationsMixin, {
 
     // Attributes
     fileName: DS.attr('string'),

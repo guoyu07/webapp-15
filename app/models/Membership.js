@@ -1,7 +1,10 @@
 /**
  * Ember model for memberships.
  */
-App.Membership = DS.Model.extend({
+import DS from 'ember-data';
+import ValidationsMixin from '../mixins/validations';
+
+export default DS.Model.extend(ValidationsMixin, {
     type: DS.attr('string'),
     paymentId: DS.attr('string'),
     payerId: DS.attr('string'),

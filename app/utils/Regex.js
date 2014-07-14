@@ -1,7 +1,7 @@
 /**
  * Collection of useful regular expressions.
  */
-App.Regex = {
+export default {
     CREDIT_CARD_NUMBER: /^[\d]{13,16}$/,
     CREDIT_CARD_CVM: /^[\d]{3,4}$/,
     DATE: /^(0[\d]{1,1}|10|11|12)\/([0-2]{1,1}[\d]{1,1}|30|31)\/[\d]{4,4}$/,

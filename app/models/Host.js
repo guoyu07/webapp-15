@@ -1,7 +1,10 @@
 /**
  * Ember model for hosts.
  */
-App.Host = DS.Model.extend(App.Validations.Mixin, {
+import DS from 'ember-data';
+import ValidationsMixin from '../mixins/validations';
+
+export default DS.Model.extend(ValidationsMixin, {
 
     // Attributes
     farmName: DS.attr('string'),

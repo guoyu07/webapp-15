@@ -1,7 +1,10 @@
 /**
  * Ember model for countries.
  */
-App.Country = DS.Model.extend({
+import DS from 'ember-data';
+import ValidationsMixin from '../mixins/validations';
+
+export default DS.Model.extend(ValidationsMixin, {
     code: DS.attr('string'),
     name: DS.attr('string'),
     isFrance: function () {

@@ -1,7 +1,10 @@
 /**
  * Custom REST Serializer.
  */
-App.ApplicationSerializer = DS.RESTSerializer.extend({
+import Ember from 'ember';
+import DS from 'ember-data';
+
+export default DS.RESTSerializer.extend({
     /**
      * The current ID index of generated IDs
      * @property
@@ -24,13 +27,13 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             id = item[primaryKey];
 
         // Missing an ID, generate one
-        if (typeof id == 'undefined') {
+        if (typeof id === 'undefined') {
             id = 'generated-' + (++this._generatedIds);
             item[primaryKey] = id;
         }
 
         // Don't add if already side loaded
-        if (sideloadArr.findBy("id", id) != undefined) {
+        if (sideloadArr.findBy("id", id) !== undefined) {
             return payload;
         }
 
@@ -58,7 +61,7 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             if (related) {
 
                 // One-to-one
-                if (relationship.kind == "belongsTo") {
+                if (relationship.kind === "belongsTo") {
                     // Sideload the object to the payload
                     this.sideloadItem(payload, type, related);
 
@@ -70,7 +73,7 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
                 }
 
                 // Many
-                else if (relationship.kind == "hasMany") {
+                else if (relationship.kind === "hasMany") {
 
                     // Loop through each object
                     related.forEach(function (item, index) {
@@ -101,14 +104,14 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             typeKeyPlural = typeKey.pluralize();
 
         // Many items (findMany, findAll)
-        if (typeof payload[typeKeyPlural] != "undefined") {
-            payload[typeKeyPlural].forEach(function (item, index) {
+        if (typeof payload[typeKeyPlural] !== "undefined") {
+            payload[typeKeyPlural].forEach(function (item) {
                 this.extractRelationships(payload, item, type);
             }, this);
         }
 
         // Single item (find)
-        else if (typeof payload[typeKey] != "undefined") {
+        else if (typeof payload[typeKey] !== "undefined") {
             this.extractRelationships(payload, payload[typeKey], type);
         }
 
@@ -120,8 +123,6 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
      * Sequelize returns foreign keys with 'Id' at the end (ex: user => userId).
      */
     keyForRelationship: function (key, relationship) {
-        return (relationship === 'belongsTo')
-            ? key + 'Id'
-            : key;
+        return (relationship === 'belongsTo') ? key + 'Id' : key;
     }
 });

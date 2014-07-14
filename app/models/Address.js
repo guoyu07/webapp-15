@@ -1,7 +1,10 @@
 /**
  * Ember model for Address.
  */
-App.Address = DS.Model.extend(App.Validations.Mixin, {
+import DS from 'ember-data';
+import ValidationsMixin from '../mixins/validations';
+
+export default DS.Model.extend(ValidationsMixin, {
     address1: DS.attr('string'),
     address2: DS.attr('string'),
     zipCode: DS.attr('string'),

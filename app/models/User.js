@@ -1,7 +1,11 @@
 /**
  * Ember model for users.
  */
-App.User = DS.Model.extend(App.Validations.Mixin, {
+import DS from 'ember-data';
+import ValidationsMixin from '../mixins/validations';
+import Regex from '../utils/regex';
+
+export default DS.Model.extend(ValidationsMixin, {
 
     // Attributes
     email: DS.attr('string'),
@@ -20,7 +24,7 @@ App.User = DS.Model.extend(App.Validations.Mixin, {
         email: {
             presence: true,
             format: {
-                with: App.Regex.EMAIL_ADDRESS
+                with: Regex.EMAIL_ADDRESS
             }
         },
         password: {

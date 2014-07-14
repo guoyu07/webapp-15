@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
     didInsertElement: function () {
         var self = this;
-        var dp = $('#datetimepicker');
+        var dp = Ember.$('#datetimepicker');
 
         // Initializes picker
         dp.datetimepicker({

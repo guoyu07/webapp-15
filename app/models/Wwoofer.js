@@ -1,7 +1,10 @@
 /**
  * Ember model for Wwoofer.
  */
-App.Wwoofer = DS.Model.extend(App.Validations.Mixin, {
+import DS from 'ember-data';
+import ValidationsMixin from '../mixins/validations';
+
+export default DS.Model.extend(ValidationsMixin, {
     firstName2: DS.attr('string'),
     lastName2: DS.attr('string'),
     birthDate2: DS.attr('date'),
