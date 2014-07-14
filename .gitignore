@@ -21,14 +21,18 @@ Thumbs.db
 .idea
 *.iml
 
-# NPM packages folder.
-node_modules/
+# Dependencies
+/node_modules
+/vendor/*
 
-# Brunch folder for temporary files.
-tmp/
+# Compiled output
+/dist
+/tmp
 
-# Brunch output folder.
-public/
-
-# Bower stuff.
-bower_components/
+# Misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log

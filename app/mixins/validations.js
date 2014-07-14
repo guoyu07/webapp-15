@@ -1,6 +1,9 @@
-App.Validations = App.Validations || {};
+/**
+ * Validation mixin to enhance ember-validations.
+ */
+import Ember from 'ember';
 
-App.Validations.Mixin = Ember.Mixin.create(Ember.Validations.Mixin, {
+export default Ember.Mixin.create(Ember.Validations.Mixin, {
     fieldErrors: function () {
         return this.get('_wwoof_hasBeenValidated') ? this.get('errors') : Ember.Validations.Errors.create({});
     }.property('_wwoof_hasBeenValidated'),
