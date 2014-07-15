@@ -1,8 +1,7 @@
 import Ember from 'ember';
 
 var Router = Ember.Router.extend({
-    location: WebappENV.locationType,
-    rootURL: WebappENV.baseURL
+    location: WebappENV.locationType
 });
 
 Router.map(function () {

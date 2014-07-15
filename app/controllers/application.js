@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
             this.set('currentUser', null);
 
             // Redirect to login
-            window.location.replace('/logout');
+            window.location.replace(WebappENV.SERVER_BASE_URL + '/logout');
         }
     }
 });

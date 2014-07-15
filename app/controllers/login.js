@@ -17,7 +17,7 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
             loginData.validate().then(function () {
                 Ember.$.ajax({
                     type: 'POST',
-                    url: 'http://wwoof.fr:3333/login',
+                    url: WebappENV.SERVER_BASE_URL + '/login',
                     data: {
                         username: loginData.get('username'),
                         password: loginData.get('password')
@@ -34,8 +34,8 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
                     // Notify user
                     alertify.success("Welcome back!");
 
-                    // Go to host list (refresh the page to get fresh data from the API)
-                    window.location.replace('/app/');
+                    // Go to home page (refresh the page to get fresh data from the API)
+                    window.location.replace('/');
                 }).fail(function () {
                     // Notify user
                     alertify.error("The email address or password is incorrect.");
