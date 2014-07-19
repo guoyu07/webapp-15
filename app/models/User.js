@@ -14,6 +14,7 @@ export default DS.Model.extend(ValidationsMixin, {
     lastName: DS.attr('string'),
     birthDate: DS.attr('date'),
     phone: DS.attr('string'),
+    isAdmin: DS.attr('boolean'),
 
     // Relationships
     host: DS.belongsTo('host', {embedded: 'load'}),
