@@ -24,6 +24,16 @@ export default Ember.Controller.extend({
     }.property(),
 
     /**
+     * Indicates whether the current user is authenticated.
+     */
+    isAuthenticated: Ember.computed.notEmpty('currentUser'),
+
+    /**
+     * Indicates whether the current user is anonymous.
+     */
+    isAnonymous: Ember.computed.not('isAuthenticated'),
+
+    /**
      * Indicates whether the current user is an administrator.
      */
     currentUserIsAdmin: function () {
