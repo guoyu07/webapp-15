@@ -5,11 +5,11 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['hosts', 'departments', 'memberships'],
+    needs: ['application', 'hosts', 'host', 'departments', 'memberships'],
 
-    hostMembershipsBinding: 'controllers.memberships.hostMemberships',
     hasHostMembershipsBinding: 'controllers.memberships.hasHostMemberships',
     latestHostMembershipBinding: 'controllers.memberships.latestHostMembership',
+    belongsToCurrentUserBinding: 'controllers.host.belongsToCurrentUser',
 
     actions: {
         saveHost: function () {
@@ -50,13 +50,6 @@ export default Ember.ObjectController.extend({
             }).catch(function () {
                 alertify.error("Your submission is invalid.");
             });
-        },
-        renewMembership: function () {
-            // Find the right item code
-            var itemCode = this.get('hasHostMemberships') ? "HR" : "H";
-
-            // Hit the payment route in order to get redirected to PayPal
-            window.location.replace('/payment/start?itemCode=' + itemCode);
         }
     }
 });

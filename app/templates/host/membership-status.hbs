@@ -1,0 +1,21 @@
+{{#if belongsToCurrentUser}}
+    {{#if hasHostMemberships}}
+        {{#if latestHostMembership.isExpired}}
+            <div class="alert alert-warning alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                Your host profile is currently hidden.
+                To make it visible again to the community, you must
+                <a href="#" {{action "renewMembership"}} class="alert-link">renew your membership</a>
+            </div>
+        {{/if}}
+    {{else}}
+        <div class="alert alert-info alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            Your host profile has been validated by our team!
+            To make it visible to the community, you must
+            <a href="#" {{action "renewMembership"}} class="alert-link">pay your membership fee</a>.
+        </div>
+    {{/if}}
+{{/if}}

@@ -9,15 +9,9 @@
 </div>
 
 {{#if isPending}}
-    <div class="alert alert-info">
-        <strong>This host profile is pending for validation.</strong> Review the host details then approve it by
-        clicking on
-        the button.
-        <span class="pull-right">
-            <button {{action "approveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-success">Approve Host
-            </button>
-        </span>
-    </div>
+    {{partial 'host/validation-status'}}
+{{else}}
+    {{partial 'host/membership-status'}}
 {{/if}}
 
 <div class="row">
