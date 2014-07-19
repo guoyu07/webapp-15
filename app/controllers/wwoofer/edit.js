@@ -5,7 +5,11 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['countries', 'departments'],
+    needs: ['application', 'wwoofer', 'countries', 'departments', 'memberships'],
+
+    hasWwoofMembershipsBinding: 'controllers.memberships.hasWwoofMemberships',
+    latestWwoofMembershipBinding: 'controllers.memberships.latestWwoofMembership',
+    belongsToCurrentUserBinding: 'controllers.wwoofer.belongsToCurrentUser',
 
     actions: {
         saveWwoofer: function () {
@@ -17,26 +21,28 @@ export default Ember.ObjectController.extend({
                 return;
             }
 
-            // Save the wwoofer and its address
+            // Initialize validations array
+            var validations = Ember.makeArray(wwoofer.validate());
+            validations.push(address.validate());
+
+            // Validate wwoofer and address
             var self = this;
-            wwoofer.validate()
-                .then(function () {
-                    return address.validate();
-                }).then(function () {
-                    wwoofer.save()
-                        .then(function () {
-                            return address.save();
-                        }).then(function () {
-                            alertify.success('Information updated!');
-                            self.transitionToRoute('application');
-                        }).catch(function (error) {
-                            console.error(error);
-                            alertify.error('Cannot update wwoofer.');
-                        });
+            Ember.RSVP.all(validations).then(function () {
+
+                // Prepare update promises
+                var updates = Ember.makeArray(wwoofer.save());
+                updates.push(address.save());
+
+                // Update wwoofer and address
+                Ember.RSVP.all(updates).then(function () {
+                    alertify.success('Information updated!');
+                    self.transitionToRoute('application');
                 }).catch(function () {
-                    alertify.error("Your submission is invalid.");
+                    alertify.error('Cannot update the wwoofer.');
                 });
+            }).catch(function () {
+                alertify.error("Your submission is invalid.");
+            });
         }
     }
-
 });
