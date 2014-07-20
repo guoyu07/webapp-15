@@ -35,7 +35,7 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
                     alertify.success("Welcome back!");
 
                     // Go to home page (refresh the page to get fresh data from the API)
-                    window.location.replace('/');
+                    window.location.replace(WebappENV.baseUrl);
                 }).fail(function () {
                     // Notify user
                     alertify.error("The email address or password is incorrect.");

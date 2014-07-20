@@ -32,7 +32,7 @@ module.exports = function (environment) {
     }
 
     if (environment === 'production') {
-
+        ENV.baseUrl = '/app/';
     }
 
     return ENV;
