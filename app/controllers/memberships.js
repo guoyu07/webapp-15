@@ -7,6 +7,7 @@ import MembershipController from '../controllers/membership';
 export default Ember.ArrayController.extend({
     sortProperties: ['expireAt'],
     sortAscending: false,
+    content: [],
 
     wwoofMemberships: function () {
         return this.get('content').filter(function (membership) {
