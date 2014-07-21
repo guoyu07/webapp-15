@@ -12,8 +12,8 @@ export default DS.RESTAdapter.extend({
             hash = hash || {}; // hash may be undefined
             hash.crossDomain = true;
             hash.xhrFields = { withCredentials: true };
-            return this._super(url, method, hash);
         }
+        return this._super(url, method, hash);
     },
     ajaxError: function (jqXHR) {
         var error = this._super(jqXHR);
