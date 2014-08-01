@@ -47,8 +47,16 @@ export default Ember.Controller.extend({
             // Clear the user
             this.set('currentUser', null);
 
-            // Redirect to login
-            window.location.replace(WebappENV.SERVER_BASE_URL + '/logout');
+            // Logs the user out and refresh the page
+            Ember.$.ajax({
+                type: 'POST',
+                url: '/api/users/logout'
+            }).done(function () {
+                location.reload();
+            }).fail(function () {
+                // Notify user
+                alertify.error("Something went wrong.");
+            });
         }
     }
 });

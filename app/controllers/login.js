@@ -17,14 +17,10 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
             loginData.validate().then(function () {
                 Ember.$.ajax({
                     type: 'POST',
-                    url: WebappENV.SERVER_BASE_URL + '/login',
+                    url: '/api/users/login',
                     data: {
                         username: loginData.get('username'),
                         password: loginData.get('password')
-                    },
-                    crossDomain: true,
-                    xhrFields: {
-                        withCredentials: true
                     }
                 }).done(function (data) {
 
