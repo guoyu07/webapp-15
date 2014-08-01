@@ -52,7 +52,8 @@ export default Ember.Controller.extend({
                 type: 'POST',
                 url: '/api/users/logout'
             }).done(function () {
-                location.reload();
+                // Go to home page (refresh the page to get fresh data from the API)
+                window.location.replace(WebappENV.baseUrl);
             }).fail(function () {
                 // Notify user
                 alertify.error("Something went wrong.");
