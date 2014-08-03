@@ -1,24 +1,29 @@
 # Wwoof France
 
-This application is aimed to allow french farmers and wwoofers to meet and prepare their wwoofing experience.
+This application is intended to facilitate the meeting of WWOOFers from all over the world with organic farmers in France.
 
-This application is beeing developed by volonteers and will eventually replace the current [french wwoofing](http://www.wwoof.fr) website.
+The development of this application is done by volunteers and intended to eventually replace the current [WWOOF France](http://www.wwoof.fr) website.
 
 ## Getting started
-* Install:
-    * [Node.js](http://nodejs.org): `brew install node` on OS X
-    * [Brunch](http://brunch.io): `npm install -g brunch`
-    * [Bower](http://bower.io): `npm install -g bower`
-    * Node.js and Bower packages: `npm install & bower install`
-    * MySql server and client
-* Configure:
-    * Edit the `config.json` file at the root of the project.
-    * Create the MySQL schema for the main database and the session database (see config file).
-* Run:
-    * Terminal 1: `brunch watch` — watches the project with continuous rebuild.
-    * Terminal 2: `node-dev server.js` — runs the Node.js server using Express.
-* Good to know:
-    * The `public/` dir is fully auto-generated and served by HTTP server.
-    * Place in `app/assets/` static files you want to be copied to `public/`.
-    * Write the Ember code in the `app/` dir.
-    * Write the Express code in the `server/` dir.
+
+This web application was developed with the javascript framework [Ember.js](http://emberjs.com/).
+In order to run this application, you do not need to setup a web server: the command line tool 
+[ember-cli](http://www.ember-cli.com) will bootstrap a simple web server and proxy all Ajax calls to a remote WWOOF server.
+Note that the actual back-end application is also hosted on GitHub, [over there](https://github.com/wwoof/server).
+
+### Install required software
+
+1. Download and install [Git](http://git-scm.com/). Your terminal should recognize the command `git`.
+2. Download and install [Node.js](http://nodejs.org). Your terminal should recognize the commands `node` and `npm`.
+3. From your terminal, install [Bower](http://bower.io) via npm: `npm install -g bower`
+4. From your terminal, install [ember-cli](http://www.ember-cli.com) via npm: `npm install -g ember-cli`
+
+### Download the source code
+
+1. From your terminal, download the source code: `git clone https://github.com/wwoof/webapp.git`
+2. Then move to the project directory: `cd webapp`
+
+### Run the application
+
+1. Install all Node.js and Bower packages: `npm install & bower install`
+2. Start the application: `npm start`
