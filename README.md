@@ -27,3 +27,4 @@ Note that the actual back-end application is also hosted on GitHub, [over there]
 
 1. Install all Node.js and Bower packages: `npm install & bower install`
 2. Start the application: `npm start`
+3. Browse to [http://localhost:4200](http://localhost:4200)
