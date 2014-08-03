@@ -20,6 +20,7 @@
         "moment": "~2.7.0",
         "ember-validations": "http://builds.dockyard.com.s3.amazonaws.com/ember-validations/ember-validations-latest.js",
         "jquery-file-upload": "~9.5.8",
-        "alertify.js": "~0.3.11"
+        "alertify.js": "~0.3.11",
+        "ember-i18n": "~2.0.0"
     }
 }
