@@ -10,6 +10,12 @@ var app = new EmberApp();
 app.import('vendor/bootstrap/dist/js/bootstrap.js');
 app.import('vendor/bootstrap/dist/css/bootstrap.css');
 
+// Put the bootstrap fonts in the place where the bootstrap css expects to find them
+var bootstrapFonts = pickFiles('vendor/bootstrap/fonts', {
+    srcDir: '/',
+    destDir: '/fonts'
+});
+
 // Ember validations
 app.import('vendor/ember-validations/index.js');
 
@@ -39,11 +45,12 @@ app.import('vendor/jquery-file-upload/js/jquery.fileupload.js');
 app.import('vendor/swipeshow/jquery.swipeshow.js');
 app.import('vendor/swipeshow/jquery.swipeshow.css');
 
-// Ember i18n
-app.import('vendor/ember-i18n/lib/i18n.js');
-// app.import('vendor/cldr/plurals.js');
+// Ember i18n (only in dev until pull request is merged)
+app.import({ development: 'vendor/ember-i18n/lib/i18n.js' });
+app.import({ development: 'vendor/cldr/plurals.js' });
 
 module.exports = mergeTrees([
     alertify,
+    bootstrapFonts,
     app.toTree()
 ]);
