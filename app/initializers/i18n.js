@@ -1,0 +1,20 @@
+import Ember from 'ember';
+
+export default {
+    name: 'i18n',
+
+    initialize: function () {
+
+        // Get locale file from server
+        var request = Ember.$.get('locales/en.json');
+
+        // Load translations
+        request.done(function (data) {
+            Ember.I18n.translations = data;
+        });
+
+        request.fail(function () {
+            Ember.Logger.error('Could not load localization files.');
+        });
+    }
+};
