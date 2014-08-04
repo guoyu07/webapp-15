@@ -41,7 +41,7 @@ app.import('vendor/swipeshow/jquery.swipeshow.css');
 
 // Ember i18n
 app.import('vendor/ember-i18n/lib/i18n.js');
-app.import('vendor/cldr/plurals.js');
+// app.import('vendor/cldr/plurals.js');
 
 module.exports = mergeTrees([
     alertify,
