@@ -15,7 +15,7 @@ Note that the actual back-end application is also hosted on GitHub, [over there]
 
 1. Download and install [Git](http://git-scm.com/). Your terminal should recognize the command `git`.
 2. Download and install [Node.js](http://nodejs.org). Your terminal should recognize the commands `node` and `npm`. 
-⋅⋅* If not, reboot Windows to refresh the environment variables.
+  * If not, reboot Windows to refresh the environment variables.
 3. From your terminal, install [Bower](http://bower.io) via npm: `npm install -g bower`
 4. From your terminal, install [ember-cli](http://www.ember-cli.com) via npm: `npm install -g ember-cli`
 
