@@ -108,6 +108,22 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="checkbox">
+                <label>
+                    {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
+                    Do not communicate my phone
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
+                    Do not communicate my email
+                </label>
+            </div>
+        </div>
+    </div>
     <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">Save</button>
 </form>
 
