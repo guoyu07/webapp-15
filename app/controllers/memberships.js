@@ -2,7 +2,6 @@
  * Ember controller for memberships.
  */
 import Ember from 'ember';
-import MembershipController from '../controllers/membership';
 
 export default Ember.ArrayController.extend({
     sortProperties: ['expireAt'],
@@ -31,29 +30,20 @@ export default Ember.ArrayController.extend({
      * Returns the user's most recent membership.
      */
     latestMembership: function() {
-        // Wrap the model into a controller to access its helpers from the template
-        return MembershipController.create({
-            content: this.get('content.firstObject')
-        });
+        return this.get('content.firstObject');
     }.property('content.@each'),
 
     /**
      * Returns the user's most recent Wwoof membership.
      */
     latestWwoofMembership: function () {
-        // Wrap the model into a controller to access its helpers from the template
-        return MembershipController.create({
-            content: this.get('wwoofMemberships.firstObject')
-        });
+        return this.get('wwoofMemberships.firstObject');
     }.property('wwoofMemberships.@each'),
 
     /**
      * Returns the user's most recent Host membership.
      */
     latestHostMembership: function () {
-        // Wrap the model into a controller to access its helpers from the template
-        return MembershipController.create({
-            content: this.get('hostMemberships.firstObject')
-        });
+        return this.get('hostMemberships.firstObject');
     }.property('hostMemberships.@each')
 });
