@@ -30,9 +30,16 @@
 
         <hr/>
 
-        <p>Email: {{user.email}}</p>
+        <p>
+            Email:
+            {{#if canShowContactInfo}}
+                {{mail-to displayedEmail displayedEmail}}
+            {{else}}
+                {{displayedEmail}}
+            {{/if}}
+        </p>
 
-        <p>Phone:  {{user.phone}}</p>
+        <p>Phone: {{displayedPhone}}</p>
 
         <p>Website: <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a></p>
 
