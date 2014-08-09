@@ -15,37 +15,15 @@ export default Ember.ObjectController.extend({
     /**
      * Indicates whether the host contact info can be shown to the current user.
      */
-    canShowContactInfo: function() {
+    canSeeContactInfo: function() {
         return this.get('controllers.memberships.hasMemberships') && !this.get('controllers.memberships.latestMembership.isExpired');
-    }.property('controllers.memberships.hasMemberships', 'controllers.memberships.latestMembership.isExpired'),
-
-    /**
-     * Returns the host's phone number that will be displayed to the current user.
-     */
-    displayedPhone: function() {
-        if (this.get('canShowContactInfo')) {
-            return this.get('user.phone');
-        } else {
-            return '*******';
-        }
-    }.property('user.phone', 'canShowContactInfo'),
-
-    /**
-     * Returns the host's email address that will be displayed to the current user.
-     */
-    displayedEmail: function() {
-        if (this.get('canShowContactInfo')) {
-            return this.get('user.email');
-        } else {
-            return '*******';
-        }
-    }.property('user.email', 'canShowContactInfo'),
+    }.property('controllers.memberships.hasMemberships', 'controllers.memberships.latestMembership'),
 
     /**
      * Indicates whether the current user can edit the host.
      * The user must either own the host or be an admin.
      */
-    userCanEditHost: function () {
+    canEditHost: function () {
         return this.get('belongsToCurrentUser') || this.get('controllers.application.currentUserIsAdmin');
     }.property('belongsToCurrentUser', 'controllers.application.currentUserIsAdmin')
 });

@@ -2,7 +2,7 @@
     <h1>
         {{farmName}}
         <small>{{user.firstName}} {{user.lastName}}</small>
-        {{#if userCanEditHost}}
+        {{#if canEditHost}}
             {{#link-to 'host.edit' class="btn btn-primary pull-right"}}Edit Your Profile{{/link-to}}
         {{/if}}
     </h1>
@@ -30,16 +30,27 @@
 
         <hr/>
 
-        <p>
-            Email:
-            {{#if canShowContactInfo}}
-                {{mail-to displayedEmail displayedEmail}}
-            {{else}}
-                {{displayedEmail}}
-            {{/if}}
-        </p>
+        {{#unless noEmail}}
+            <p>
+                Email:
+                {{#if canSeeContactInfo}}
+                    {{mail-to user.email}}
+                {{else}}
+                    *********
+                {{/if}}
+            </p>
+        {{/unless}}
 
-        <p>Phone: {{displayedPhone}}</p>
+        {{#unless noPhone}}
+            <p>
+                Phone:
+                {{#if canSeeContactInfo}}
+                    {{user.phone}}
+                {{else}}
+                    *********
+                {{/if}}
+            </p>
+        {{/unless}}
 
         <p>Website: <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a></p>
 
