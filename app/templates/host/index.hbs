@@ -1,7 +1,6 @@
 <div class="page-header">
     <h1>
         {{farmName}}
-        <small>{{user.firstName}} {{user.lastName}}</small>
         {{#if canEditHost}}
             {{#link-to 'host.edit' class="btn btn-primary pull-right"}}Edit Your Profile{{/link-to}}
         {{/if}}
@@ -15,52 +14,6 @@
 {{/if}}
 
 <div class="row">
-    <div class="col-md-6">
-
-        <p>Address:
-            {{address.address1}}
-            {{#if address.address2}}
-                / {{address.address2}}
-            {{/if}}
-        </p>
-
-        <p>Zip Code: {{address.zipCode}}</p>
-
-        <p>City: {{address.city}}</p>
-
-        <hr/>
-
-        {{#unless noEmail}}
-            <p>
-                Email:
-                {{#if canSeeContactInfo}}
-                    {{mail-to user.email}}
-                {{else}}
-                    *********
-                {{/if}}
-            </p>
-        {{/unless}}
-
-        {{#unless noPhone}}
-            <p>
-                Phone:
-                {{#if canSeeContactInfo}}
-                    {{user.phone}}
-                {{else}}
-                    *********
-                {{/if}}
-            </p>
-        {{/unless}}
-
-        <p>Website: <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a></p>
-
-        <hr/>
-
-        <p>Entry: {{fullDescription}}</p>
-
-        <p>Travel:  {{travelDetails}}</p>
-
-    </div>
     <div class="col-md-6">
         <div class="host-gallery swipeshow">
             <ul class="slides">
@@ -76,5 +29,70 @@
             </ul>
             <!--<div class='dots'></div>-->
         </div>
+
+        <div class="host-info">
+            <div class="host-address">
+                <div class="map-img">
+                    <img src="http://maps.googleapis.com/maps/api/staticmap?center=47.5977893,-0.1354721&zoom=6&size=300x300&sensor=false">
+                    <img class="marker" src="marker.png">
+                    <div class="mailing-address">
+                        <p>{{user.firstName}} {{user.lastName}}</p>
+                        <p>
+                            {{address.address1}}
+                            {{#if address.address2}}
+                                / {{address.address2}}
+                            {{/if}}
+                        </p>
+
+                        <p>{{address.zipCode}} {{address.city}}</p>
+                        <!--<p>France</p>-->
+                    </div>
+                </div>
+                <div class="info-box">
+                    {{#unless noEmail}}
+                        <div class="info-row"><div class="card-label">Email:</div>
+                            {{#if canSeeContactInfo}}
+                                {{mail-to user.email}}
+                            {{else}}
+                                <i>Available to members only</i>
+                            {{/if}}
+                        </div>
+                    {{/unless}}
+
+                    {{#unless noPhone}}
+                        <div class="info-row"><div class="card-label">Phone:</div>
+                                {{#if canSeeContactInfo}}
+                                    {{user.phone}}
+                                {{else}}
+                                    <i>Available to members only</i>
+                                {{/if}}
+                        </div>
+                    {{/unless}}
+
+                    <div class="info-row"><div class="card-label">Website:</div>
+                        {{#if canSeeContactInfo}}
+                            <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
+                        {{else}}
+                            <i>Available to members only</i>
+                        {{/if}}
+                    </div>
+                    <div class="info-row">
+                        <div class="card-label-wide">Travel Opportunities:</div>  {{travelDetails}}
+                    </div>
+                    <div class="info-row icons">
+                        <span class="glyphicon glyphicon-globe"></span> <span class="glyphicon glyphicon-plane"></span> <span class="glyphicon glyphicon-picture"></span> <span class="glyphicon glyphicon-home"></span> <span class="glyphicon glyphicon-film"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!--<hr/>-->
+
+        </div>
+
+        <!--<hr/>-->
+
+    </div>
+    <div class="col-md-6">
+        <p class="description">{{fullDescription}}</p>
     </div>
 </div>

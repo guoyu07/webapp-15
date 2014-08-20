@@ -30,7 +30,7 @@
         <div class="list-group">
             {{#each itemController="host.index"}}
                 {{#link-to "host" model title=farmName class="list-group-item"}}
-                    <div class="row">
+                    <div class="row farm">
                         <div class="col-md-3">
                             <div class="host-thumb">
                                 {{#if photos.length}}
@@ -40,16 +40,22 @@
                                 {{/if}}
                             </div>
                         </div>
-                        <div class="col-md-9">
-                            {{farmName}} - {{user.firstName}} {{user.lastName}}<br/>
-                            {{shortDescription}} ({{address.city}} - {{address.department.name}})
+                        <div class="col-md-9 farm-item">
+                            <div class="pull-right">
+                                <button class="btn btn-default btn-view">VIEW</button>
+                            </div>
+                            <h3>{{farmName}}</h3>
+                            <span class="host-name">{{user.firstName}} <span class="last-name">{{user.lastName}}</span></span>
+                            <br>{{shortDescription}}
+                            <br><span class="address"><i>{{address.city}}, {{address.department.name}}</i></span>
                         </div>
+
                     </div>
                 {{/link-to}}
             {{/each}}
-            <p>
+            <p class="load-more">
                 <button {{action "loadMoreHosts"}} class="btn btn-default">Load more!</button>
-                Total: {{totalHosts}}
+                <p class="load-more">Total: {{totalHosts}}</p>
             </p>
         </div>
     </div>
