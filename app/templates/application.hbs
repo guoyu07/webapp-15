@@ -1,13 +1,30 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            {{#link-to 'index' class="navbar-brand"}}Wwoof France{{/link-to}}
+            {{#link-to 'index' class="navbar-brand logo"}}<img src="wwoof-fr-logo.png">{{/link-to}}
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>{{#link-to 'hosts'}}<span class="glyphicon glyphicon-tree-conifer"></span> Hosts{{/link-to}}</li>
                 <li>{{#link-to 'wwoofers'}}Wwoofers{{/link-to}}</li>
             </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                        <div class="pop-out">
+                            <div class="arrow"></div>
+                            <span class="departments-list">DEPARTMENTS:</span>
+                            <br><span class="department">Ain</span>
+                                <span class="department">Aisne</span>
+                                <span class="department">Allier</span>
+                                <span class="department">Alpes-de-Haute-Provence</span>
+                                <span class="department">Alpes-Maritimes</span>
+                        </div>
+                        <script>$('.department').click(function(){$('.department').removeClass('envy');$(this).addClass('envy')})</script>
+                    </input>
+                </div>
+                <button type="submit" class="btn btn-primary btn-search"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
             <ul class="nav navbar-nav navbar-right">
                 {{#if currentUser}}
                     <li class="dropdown">
@@ -23,8 +40,8 @@
                         </ul>
                     </li>
                 {{else}}
-                    <li>{{#link-to 'login'}}Login{{/link-to}}</li>
-                    <li>{{#link-to 'users.new'}}Sign Up{{/link-to}}</li>
+                    <li>{{#link-to 'login' class="btn btn-default btn-navbar"}}Login{{/link-to}}</li>
+                    <li>{{#link-to 'users.new' class="btn btn-primary btn-navbar"}}Sign Up{{/link-to}}</li>
                 {{/if}}
             </ul>
         </div>
