@@ -126,16 +126,7 @@
         </div>
         <div class="col-md-6">
             <h4>Proposed activities to the woofers</h4>
-            {{#toggle-options values=allActivities selected=activities class="btn-group select-type"}}
-                {{#each option in view.options}}
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" {{bind-attr checked=option.isSelected}} {{action "select" option on="change" target="view"}}>
-                            {{option.value}}
-                        </label>
-                    </div>
-                {{/each}}
-            {{/toggle-options}}
+            {{toggle-options values=allActivities selected=activities}}
         </div>
     </div>
     <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">Save</button>

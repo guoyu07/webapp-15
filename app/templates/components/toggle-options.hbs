@@ -1,1 +1,8 @@
-{{yield}}
+{{#each option in options}}
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" {{bind-attr checked=option.isSelected}} {{action "select" option on="change"}}>
+            {{option.value}}
+        </label>
+    </div>
+{{/each}}
