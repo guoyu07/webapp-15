@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 search-box">
         <form class="form" role="form">
             <div class="form-group">
                 <label class="sr-only" for="searchTerm">Email address</label>
@@ -29,12 +29,12 @@
             <button {{action "searchHosts"}} class="btn btn-primary">Search</button>
         </form>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 results-box">
         <div class="list-group">
             {{#each itemController="host.index"}}
                 {{#link-to "host" model title=farmName class="list-group-item"}}
                     <div class="row farm">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="host-thumb">
                                 {{#if photos.length}}
                                     <img {{bind-attr src="mainPhoto.completeUrl"}} />
@@ -43,7 +43,7 @@
                                 {{/if}}
                             </div>
                         </div>
-                        <div class="col-md-9 farm-item">
+                        <div class="col-md-8 farm-item">
                             <div class="pull-right">
                                 <button class="btn btn-default btn-view">VIEW</button>
                             </div>
