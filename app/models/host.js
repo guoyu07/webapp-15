@@ -16,6 +16,7 @@ export default DS.Model.extend(ValidationsMixin, {
     noEmail: DS.attr('boolean'),
     isPending: DS.attr('boolean'),
     isSuspended: DS.attr('boolean'),
+    activities: DS.attr('array'),
 
     // Relationships
     user: DS.belongsTo('user', {embedded: 'load'}),

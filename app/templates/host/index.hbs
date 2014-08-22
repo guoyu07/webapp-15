@@ -94,5 +94,11 @@
     </div>
     <div class="col-md-6">
         <p class="description">{{fullDescription}}</p>
+        <h4>Proposed activities</h4>
+        <ul>
+            {{#each activity in activities}}
+                <li>{{activity}}</li>
+            {{/each}}
+        </ul>
     </div>
 </div>

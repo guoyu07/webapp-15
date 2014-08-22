@@ -5,11 +5,12 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'hosts', 'host', 'departments', 'memberships'],
+    needs: ['application', 'hosts', 'host', 'departments', 'memberships', 'activities'],
 
     hasHostMembershipsBinding: 'controllers.memberships.hasHostMemberships',
     latestHostMembershipBinding: 'controllers.memberships.latestHostMembership',
     belongsToCurrentUserBinding: 'controllers.host.belongsToCurrentUser',
+    allActivitiesBinding: 'controllers.activities.allActivities',
 
     actions: {
         saveHost: function () {
