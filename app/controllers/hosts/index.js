@@ -7,6 +7,9 @@ export default Ember.ArrayController.extend({
 
     needs: ['application', 'departments', 'activities'],
 
+    // Whether the controller is currently loading data
+    isLoading: false,
+
     // Search filters
     pendingOnly: false,
     searchTerm: null,
@@ -33,14 +36,30 @@ export default Ember.ArrayController.extend({
 
     actions: {
         searchHosts: function () {
+
+            // Return early if already loading
+            if (this.get('isLoading')) return;
+
+            // Set controller loading state
+            this.set('isLoading', true);
+
+            // Find hosts
             var self = this;
             this.store
                 .find('host', this.get('parameters'))
                 .then(function (hosts) {
                     self.set('content', hosts);
+                    self.set('isLoading', false);
                 });
         },
         loadMoreHosts: function () {
+
+            // Return early if already loading
+            if (this.get('isLoading')) return;
+
+            // Set controller loading state
+            this.set('isLoading', true);
+
             // Initialize variables
             var newOffset = this.store.metadataFor('host').offset + 20,
                 params = Ember.$.extend(true, this.get('parameters') || {}, {offset: newOffset}),
@@ -49,6 +68,7 @@ export default Ember.ArrayController.extend({
             // Find next page of content and update
             this.store.find('host', params).then(function (hosts) {
                 self.get('content').addObjects(hosts.get('content'));
+                self.set('isLoading', false);
             });
         }
     }

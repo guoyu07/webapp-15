@@ -26,7 +26,13 @@
                     </label>
                 </div>
             {{/if}}
-            <button {{action "searchHosts"}} class="btn btn-primary">Search</button>
+            <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary">
+                {{#if isLoading}}
+                    Searching...
+                {{else}}
+                    Search
+                {{/if}}
+            </button>
         </form>
     </div>
     <div class="col-md-9 results-box">
@@ -57,8 +63,10 @@
                 {{/link-to}}
             {{/each}}
             <p class="load-more">
-                <button {{action "loadMoreHosts"}} class="btn btn-default">Load more!</button>
-                <p class="load-more">Total: {{totalHosts}}</p>
+                <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-default">
+                    Load more
+                </button>
+            <p class="load-more">Total: {{totalHosts}}</p>
             </p>
         </div>
     </div>
