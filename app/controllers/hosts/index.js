@@ -5,21 +5,27 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
 
-    needs: ['application', 'departments'],
+    needs: ['application', 'departments', 'activities'],
 
+    // Search filters
     pendingOnly: false,
     searchTerm: null,
     departmentFilter: null,
+    selectedActivities: [],
+
+    // Bindings
     departmentFilterOptionsBinding: 'controllers.departments',
     currentUserIsAdminBinding: 'controllers.application.currentUserIsAdmin',
+    allActivitiesBinding: 'controllers.activities.allActivities',
 
     parameters: function () {
         return {
             'searchTerm': Ember.$.trim(this.get('searchTerm')) || null,
             'dpt': this.get('departmentFilter.id') || null,
-            'pendingOnly': this.get('pendingOnly') || null
+            'pendingOnly': this.get('pendingOnly') || null,
+            'selectedActivities': this.get('selectedActivities') || null
         };
-    }.property('searchTerm', 'departmentFilter.id', 'pendingOnly'),
+    }.property('searchTerm', 'departmentFilter.id', 'pendingOnly', 'selectedActivities'),
 
     totalHosts: function () {
         return this.store.metadataFor('host').total;

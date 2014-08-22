@@ -15,7 +15,10 @@
                     value=departmentFilter}}
                 </div>
             </div>
+            <h4>Activities</h4>
+            {{toggle-options values=allActivities selected=selectedActivities}}
             {{#if currentUserIsAdmin}}
+                <h4>Admin</h4>
                 <div class="checkbox">
                     <label>
                         {{input type="checkbox" name="pendingOnly" checked=pendingOnly}}
