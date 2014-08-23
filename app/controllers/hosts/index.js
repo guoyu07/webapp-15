@@ -38,7 +38,9 @@ export default Ember.ArrayController.extend({
         searchHosts: function () {
 
             // Return early if already loading
-            if (this.get('isLoading')) return;
+            if (this.get('isLoading')) {
+                return;
+            }
 
             // Set controller loading state
             this.set('isLoading', true);
@@ -55,7 +57,9 @@ export default Ember.ArrayController.extend({
         loadMoreHosts: function () {
 
             // Return early if already loading
-            if (this.get('isLoading')) return;
+            if (this.get('isLoading')) {
+                return;
+            }
 
             // Set controller loading state
             this.set('isLoading', true);
