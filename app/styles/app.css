@@ -2788,32 +2788,17 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: capitalize;
 }
 .farm-item h3 {
-    margin: 25px 0 10px;
+    margin: 50px 0 10px;
 }
 .host-thumb {
-    position: relative;
-    width: 200px;
-    height: 150px;
+    width: 250px;
+    height: 200px;
     overflow: hidden;
-    /*display: table-cell;*/
-    /*vertical-align: middle;*/
-    /*position: absolute;*/
-    /*top: -50px;*/
-    /*left: -50px;*/
-    /*right: -50px;*/
-    /*bottom: -50px;*/
+    background-color: #555;
+    text-align: center;
 }
 .host-thumb img {
-    /*min-width: 200px;*/
-    /*min-height: 150px;*/
-    /*max-height: 200px;*/
-    /*width: 100%;*/
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    min-width: 100%;
-    min-height: 100%;
+    height: 100%;
 }
 .load-more, .load-more p {
     margin: 10px;
@@ -2853,16 +2838,21 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 .card-label {
-    width: 64px;
+    /*width: 64px;*/
+    width: 24px;
     display: inline-block;
     font-family: Oswald;
     text-transform: uppercase;
 }
 .card-label-wide {
-    width: 160px;
+    /*width: 160px;*/
+    width: 24px;
     display: inline-block;
     font-family: Oswald;
     text-transform: uppercase;
+}
+.card-label .glyphicon, .card-label-wide .glyphicon {
+    margin-left: 4px;
 }
 .info-box {
     vertical-align: top;
@@ -2871,13 +2861,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 .info-row {
     background-color: #FFFEFA;
-    border-bottom: 2px solid #242422;
+    border-bottom: 2px solid #3e3f3a;
     padding: 10px 5px 5px;
+    color: #3e3f3a;
 }
 .info-box .icons {
     text-align: center;
 }
-.info-row .glyphicon {
+.icons .glyphicon {
     font-size: 1.25em;
     padding: 10px;
     background-color: #eee;
@@ -2887,11 +2878,11 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 10px;
     /*transition: all 0.3s ease-in-out;*/
 }
-.info-row .glyphicon:hover {
+.icons .glyphicon:hover {
     color: #000;
 }
 .btn-view {
-    margin-top: 55px;
+    margin-top: 82px;
     margin-right: 28px;
 }
 .btn-navbar {
@@ -3098,4 +3089,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .results-box {
     margin-left: 314px;
+}
+.dropdown-menu {
+    width: 100%;
+}
+.btn-profile {
+    font-size: 0.5em;
 }
