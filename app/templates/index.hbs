@@ -8,7 +8,7 @@
                 <div class="panel-heading">Your Host Profile</div>
                 <div class="panel-body">
                     {{#if hostProfile}}
-                        <p>You host profile <strong>{{hostProfile.farmName}}</strong> is currently online.
+                        <p>Your host profile <strong>{{hostProfile.farmName}}</strong> is currently online.
                             You can preview it or edit it.</p>
                         {{#link-to 'host.index' hostProfile.id class="btn btn-default"}}View Your Profile{{/link-to}}
                         {{#link-to 'host.edit' hostProfile.id class="btn btn-primary"}}Edit Your Profile{{/link-to}}
@@ -24,7 +24,7 @@
                 <div class="panel-heading">Your Wwoofer Profile</div>
                 <div class="panel-body">
                     {{#if wwooferProfile}}
-                        <p>You wwoofer profile is currently online. You can preview it or edit it.</p>
+                        <p>Your wwoofer profile is currently online. You can preview it or edit it.</p>
                         {{#link-to 'wwoofer.index' wwooferProfile.id class="btn btn-default"}}View Your
                             Profile{{/link-to}}
                         {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-primary"}}Edit Your

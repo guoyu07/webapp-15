@@ -34,14 +34,16 @@ export default Ember.ObjectController.extend({
             });
         },
         deletePhoto: function () {
-            // Get photo
-            var photo = this.get('model');
+            // Get photo and host
+            var photo = this.get('model'),
+                host = photo.get('host');
+
             photo.destroyRecord().then(function () {
                 alertify.success('Photo deleted.');
             }).catch(function () {
-                photo.rollback();
                 // BUG: for some reason, the host must be realoaded in order for the photo to stay in the list
-                photo.get('host').reload();
+                photo.rollback();
+                host.reload();
                 alertify.error('Cannot delete the photo.');
             });
         }

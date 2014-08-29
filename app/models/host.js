@@ -19,9 +19,9 @@ export default DS.Model.extend(ValidationsMixin, {
     activities: DS.attr('array'),
 
     // Relationships
-    user: DS.belongsTo('user', {embedded: 'load'}),
-    address: DS.belongsTo('address', {embedded: 'load'}),
-    photos: DS.hasMany('photo', {embedded: 'load'}),
+    user: DS.belongsTo('user'),
+    address: DS.belongsTo('address'),
+    photos: DS.hasMany('photo'),
 
     // Computed properties
     mainPhoto: function () {

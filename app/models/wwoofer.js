@@ -11,8 +11,8 @@ export default DS.Model.extend(ValidationsMixin, {
 
     intro: DS.attr('string'),
     tripMotivation: DS.attr('string'),
-    user: DS.belongsTo('user', {embedded: 'load'}),
-    address: DS.belongsTo('address', {embedded: 'load'}),
+    user: DS.belongsTo('user'),
+    address: DS.belongsTo('address'),
 
     validations: {
         intro: {

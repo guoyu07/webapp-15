@@ -12,12 +12,13 @@ export default Ember.View.extend({
             formData: {
                 hostId: this.get('controller.model.id')
             },
-            done: function () {
+            done: function (e, data) {
                 alertify.success("File uploaded!");
 
-                // Force a reload of the host so the photo get displayed in the list
-                self.get('controller.model').reload();
-                // self.get('controller.store').push('photo', data.result.photo);
+                // Push the created photo in the store, then add the photo in the host
+                var controller = self.get('controller');
+                var photo = controller.get('store').push('photo', data.result.photo);
+                controller.get('model').get('photos').addObject(photo);
             },
             error: function () {
                 alertify.error("Unable tu upload files on the server.");

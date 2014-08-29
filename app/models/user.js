@@ -17,8 +17,8 @@ export default DS.Model.extend(ValidationsMixin, {
     isAdmin: DS.attr('boolean'),
 
     // Relationships
-    host: DS.belongsTo('host', {embedded: 'load'}),
-    wwoofer: DS.belongsTo('wwoofer', {embedded: 'load'}),
+    host: DS.belongsTo('host'),
+    wwoofer: DS.belongsTo('wwoofer'),
 
     // Validations
     validations: {

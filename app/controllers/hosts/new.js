@@ -5,7 +5,9 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['hosts', 'departments'],
+    needs: ['hosts', 'departments', 'activities', 'application'],
+
+    allActivitiesBinding: 'controllers.activities.allActivities',
 
     actions: {
         saveHost: function () {
