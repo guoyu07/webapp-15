@@ -18,7 +18,8 @@ Router.map(function () {
             this.route('membership');
         });
     });
-    this.resource('login', { path: '/login' });
+    this.route('login');
+    this.route('reset-password');
     this.resource('users', { path: '/users' }, function () {
         this.route("new");
         this.resource("user", { path: "/:user_id" }, function () {

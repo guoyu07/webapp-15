@@ -4,7 +4,7 @@
 <form autocomplete="on" method="POST" {{action "login" on="submit"}}>
     <div {{bind-attr class=":form-group content.fieldErrors.username.length:has-error"}}>
         <label for="username" class="control-label">Email</label>
-        {{input value=username name="username" type="text" class="form-control"}}
+        {{input value=username name="username" type="email" class="form-control"}}
         {{error-display content.fieldErrors.username}}
     </div>
     <div {{bind-attr class=":form-group content.fieldErrors.password.length:has-error"}}>
@@ -13,4 +13,5 @@
         {{error-display content.fieldErrors.password}}
     </div>
     <button type="submit" class="btn btn-primary">Log in</button>
+    {{#link-to 'reset-password'}}I forgot my password{{/link-to}}
 </form>
