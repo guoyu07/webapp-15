@@ -17,12 +17,16 @@ export default Ember.ObjectController.extend({
             var self = this;
             user.validate().then(function () {
                 user.save().then(function () {
-                    alertify.alert("We sent you an email with a confirmation link. See you in a bit :)");
+                    alertify.alert("Your account has been created! You can now log into your account :)");
                     self.transitionToRoute('login');
-                }, function () {
-                    alertify.error('Cannot create user.');
+                }).catch(function (error) {
+                    if (error && error.status && error.status === 409) {
+                        alertify.error('This email address is already associated to an account.');
+                    } else {
+                        alertify.error('Cannot create user.');
+                    }
                 });
-            }, function () {
+            }).catch(function () {
                 alertify.error("Your submission is invalid.");
             });
         }
