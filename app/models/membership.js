@@ -17,9 +17,13 @@ export default DS.Model.extend(ValidationsMixin, {
     itemCode: DS.attr('string'),
     paymentType: DS.attr('string'),
     total: DS.attr('number'),
+    reminderSentAt: DS.attr('date'),
+
+    // Relationships
     user: DS.belongsTo('user'),
 
     // Computed properties
     isExpired: Ember.computed.lt('expireAt', moment()),
-    isStillValidInAMonth: Ember.computed.gt('expireAt', moment().add('months', 1))
+    isStillValidInAMonth: Ember.computed.gt('expireAt', moment().add(1, 'months')),
+    reminderAlreadySent: Ember.computed.notEmpty('reminderSentAt')
 });

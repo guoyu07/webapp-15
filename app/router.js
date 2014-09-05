@@ -27,6 +27,7 @@ Router.map(function () {
         });
     });
     this.resource('memberships', { path: '/memberships' }, function () {
+        this.route('reminders');
     });
     this.resource('payment', { path: '/payment' }, function () {
         this.route("complete");
