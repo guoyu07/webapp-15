@@ -10,7 +10,7 @@ export default Ember.Route.extend({
         }
     },
     setupController: function (controller, model) {
-        this.controllerFor('memberships').set('content', model || []);
+        this.controllerFor('memberships').set('model', model || []);
     },
     actions: {
         error: function(err) {

@@ -8,7 +8,7 @@ export default Ember.Route.extend({
         return this.store.find('membership', { userId: this.controllerFor('application').get('currentUser.id') });
     },
     setupController: function (controller, model) {
-        this.controllerFor('memberships').set('content', model);
+        this.controllerFor('memberships').set('model', model);
     },
     renderTemplate: function () {
         this.render('memberships/index', { controller: 'memberships' });

@@ -23,7 +23,7 @@ Thumbs.db
 
 # Dependencies
 /node_modules
-/vendor/*
+/bower_components/*
 
 # Compiled output
 /dist

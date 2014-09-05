@@ -32,7 +32,7 @@ export default Ember.ArrayController.extend({
 
     totalHosts: function () {
         return this.store.metadataFor('host').total;
-    }.property('content', 'content.@each', 'content.length'),
+    }.property('model', 'model.@each', 'model.length'),
 
     actions: {
         searchHosts: function () {
@@ -50,7 +50,7 @@ export default Ember.ArrayController.extend({
             this.store
                 .find('host', this.get('parameters'))
                 .then(function (hosts) {
-                    self.set('content', hosts);
+                    self.set('model', hosts);
                     self.set('isLoading', false);
                 });
         },
@@ -71,7 +71,7 @@ export default Ember.ArrayController.extend({
 
             // Find next page of content and update
             this.store.find('host', params).then(function (hosts) {
-                self.get('content').addObjects(hosts.get('content'));
+                self.get('model').addObjects(hosts.get('content'));
                 self.set('isLoading', false);
             });
         }

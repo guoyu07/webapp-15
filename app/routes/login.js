@@ -6,6 +6,6 @@ import LoginData from '../models/login-data';
 
 export default Ember.Route.extend({
     setupController: function (controller) {
-        controller.set('content', LoginData.create());
+        controller.set('model', LoginData.create());
     }
 });
