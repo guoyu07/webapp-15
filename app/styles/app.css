@@ -3090,9 +3090,12 @@ h1, h2, h3, h4, h5, h6 {
 .results-box {
     margin-left: 314px;
 }
-.dropdown-menu {
+.nav .dropdown-menu {
     width: 100%;
 }
 .btn-profile {
     font-size: 0.5em;
+}
+.btn[disabled] {
+    background-color: #757575 !important;
 }
