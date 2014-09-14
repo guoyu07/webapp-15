@@ -10,8 +10,8 @@
                     {{#if hostProfile}}
                         <p>Your host profile <strong>{{hostProfile.farmName}}</strong> is currently online.
                             You can preview it or edit it.</p>
-                        {{#link-to 'host.index' hostProfile.id class="btn btn-default"}}View Your Profile{{/link-to}}
-                        {{#link-to 'host.edit' hostProfile.id class="btn btn-primary"}}Edit Your Profile{{/link-to}}
+                        {{#link-to 'host.index' hostProfile.id class="btn btn-primary"}}View Your Profile{{/link-to}}
+                        {{#link-to 'host.edit' hostProfile.id class="btn btn-default"}}Edit Your Profile{{/link-to}}
                     {{else}}
                         <p>You do not have a host profile yet. But you can create one anytime!</p>
                         {{#link-to 'hosts.new' class="btn btn-primary"}}Create Your Profile{{/link-to}}
@@ -25,9 +25,9 @@
                 <div class="panel-body">
                     {{#if wwooferProfile}}
                         <p>Your wwoofer profile is currently online. You can preview it or edit it.</p>
-                        {{#link-to 'wwoofer.index' wwooferProfile.id class="btn btn-default"}}View Your
+                        {{#link-to 'wwoofer.index' wwooferProfile.id class="btn btn-primary"}}View Your
                             Profile{{/link-to}}
-                        {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-primary"}}Edit Your
+                        {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-default"}}Edit Your
                             Profile{{/link-to}}
                     {{else}}
                         <p>You do not have a wwoofer profile yet. But you can create one anytime!</p>
