@@ -1,8 +1,10 @@
 <div class="page-header">
-    {{#if canEditHost}}
-        {{#link-to 'host.edit' class="btn btn-primary pull-right"}}Edit Your Profile{{/link-to}}
-    {{/if}}
-    <h1>{{farmName}}</h1>
+    <h1>
+        {{farmName}}
+        {{#if canEditHost}}
+            {{#link-to 'host.edit' class="btn btn-primary pull-right"}}Edit Your Profile{{/link-to}}
+        {{/if}}
+    </h1>
 </div>
 
 {{#if isPending}}
@@ -31,43 +33,24 @@
         <div class="host-info">
             <div class="host-address">
                 <div class="map-img">
-                    <img id="map" src="http://maps.googleapis.com/maps/api/staticmap?center=47.5977893,-0.1354721&zoom=6&size=300x300">
-                    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
-                    <script>
-                        var addToCoords = function(address) {
-                            console.log(address);
-                            var geocoder = new google.maps.Geocoder();
-                            geocoder.geocode({ 'address': address }, function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    latitude = results[0].geometry.location.lat();
-                                    longitude = results[0].geometry.location.lng();
-                                    img = "http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=16&size=300x300&sensor=false";
-                                    console.log("http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=16&size=300x300&sensor=false");
-                                    $('#map').attr('src', img);
-                                } else {
-                                    console.log("Geocode Request failed. "+status)
-                                }
-                            });
-                        };
-                        addToCoords(addr);
-                    </script>
+                    <img src="http://maps.googleapis.com/maps/api/staticmap?center=47.5977893,-0.1354721&zoom=6&size=300x300&sensor=false">
                     <img class="marker" src="marker.png">
                     <div class="mailing-address">
                         <p>{{user.firstName}} {{user.lastName}}</p>
-                        <p id="addr">
+                        <p>
                             {{address.address1}}
                             {{#if address.address2}}
                                 / {{address.address2}}
                             {{/if}}
                         </p>
 
-                        <p id="addr2">{{address.zipCode}} {{address.city}}</p>
+                        <p>{{address.zipCode}} {{address.city}}</p>
                         <!--<p>France</p>-->
                     </div>
                 </div>
                 <div class="info-box">
                     {{#unless noEmail}}
-                        <div class="info-row"><div class="card-label"><span class="glyphicon glyphicon-envelope"></span></div>
+                        <div class="info-row"><div class="card-label">Email:</div>
                             {{#if canSeeContactInfo}}
                                 {{mail-to user.email}}
                             {{else}}
@@ -77,7 +60,7 @@
                     {{/unless}}
 
                     {{#unless noPhone}}
-                        <div class="info-row"><div class="card-label"><span class="glyphicon glyphicon-earphone"></span></div>
+                        <div class="info-row"><div class="card-label">Phone:</div>
                                 {{#if canSeeContactInfo}}
                                     {{user.phone}}
                                 {{else}}
@@ -86,7 +69,7 @@
                         </div>
                     {{/unless}}
 
-                    <div class="info-row"><div class="card-label"><span class="glyphicon glyphicon-globe"></span></div>
+                    <div class="info-row"><div class="card-label">Website:</div>
                         {{#if canSeeContactInfo}}
                             <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
                         {{else}}
@@ -94,7 +77,7 @@
                         {{/if}}
                     </div>
                     <div class="info-row">
-                        <div class="card-label-wide"><span class="glyphicon glyphicon-plane"></span></div>  {{travelDetails}}
+                        <div class="card-label-wide">Travel Opportunities:</div>  {{travelDetails}}
                     </div>
                     <div class="info-row icons">
                         <span class="glyphicon glyphicon-globe"></span> <span class="glyphicon glyphicon-plane"></span> <span class="glyphicon glyphicon-picture"></span> <span class="glyphicon glyphicon-home"></span> <span class="glyphicon glyphicon-film"></span>
@@ -110,8 +93,7 @@
 
     </div>
     <div class="col-md-6">
-        <p class="description">{{{fullDescription}}}</p>
-        <br>
+        <p class="description">{{convert-breaklines fullDescription}}</p>
         <h4>Proposed activities</h4>
         <ul>
             {{#each activity in activities}}
@@ -120,4 +102,3 @@
         </ul>
     </div>
 </div>
-
