@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Handlebars.registerBoundHelper('substr', function(value, options) {
+export default Ember.Handlebars.makeBoundHelper(function(value, options) {
     var opts = options.hash;
     var start = opts.start || 0;
     var len = opts.max;
