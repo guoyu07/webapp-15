@@ -129,12 +129,12 @@
             {{toggle-options values=allActivities selected=activities}}
         </div>
     </div>
-    <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">Save</button>
+    <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary pull-right">Save</button>
 </form>
 
 {{#unless isNew}}
-    <hr/>
-    <h3>Upload a new photo</h3>
+    <hr>
+    <h3 class="leftSpace">Upload a new photo</h3>
     <form class="row" {{action "addPhoto" on="submit"}}>
         <div class="form-group">
             <label for="file_upload" class="control-label">Pick a file</label>
@@ -167,10 +167,10 @@
                         {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
                     </td>
                     <td>
-                        <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary">
+                        <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary pull-right" style="margin-left:10px">
                             Save
                         </button>
-                        <button {{action "deletePhoto"}} class="btn btn-default">Delete</button>
+                        <button {{action "deletePhoto"}} class="btn btn-default pull-right">Delete</button>
                     </td>
                 </tr>
             {{/each}}

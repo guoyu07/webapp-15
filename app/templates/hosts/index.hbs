@@ -55,7 +55,7 @@
                             </div>
                             <h3>{{farmName}}</h3>
                             <span class="host-name">{{user.firstName}} <span class="last-name">{{user.lastName}}</span></span>
-                            <br>{{shortDescription}}
+                            <br>{{substr fullDescription start=0 max=100}}
                             <br><span class="address"><i>{{address.city}}, {{address.department.name}}</i></span>
                         </div>
 
