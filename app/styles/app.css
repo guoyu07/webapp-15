@@ -2921,6 +2921,13 @@ h1, h2, h3, h4, h5, h6 {
 .departments-list {
     color: #000;
 }
+.pop-out .dropdown-item {
+    display: inline;
+    /*padding-left: 10px;*/
+}
+.pop-out .dropdown-item select {
+
+}
 .navbar form:hover .pop-out {
     display: block;
 }
@@ -3098,4 +3105,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 .btn[disabled] {
     background-color: #757575 !important;
+}
+.host-thumb-small img {
+    height: 160px;
+}
+.table .td {
+    vertical-align: middle;
+}
+.leftSpace {
+    position: relative;
+    left: -16px;
 }
