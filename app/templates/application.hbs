@@ -14,11 +14,17 @@
                         <div class="pop-out">
                             <div class="arrow"></div>
                             <span class="departments-list">DEPARTMENTS:</span>
-                            <br><span class="department">Ain</span>
-                                <span class="department">Aisne</span>
-                                <span class="department">Allier</span>
-                                <span class="department">Alpes-de-Haute-Provence</span>
-                                <span class="department">Alpes-Maritimes</span>
+                            <br>
+                                <div class="dropdown-item">
+                                    {{view Ember.Select
+                                    class="form-control"
+                                    prompt="Department"
+                                    optionLabelPath="content.name"
+                                    content=departmentFilterOptions
+                                    value=departmentFilter}}
+                                </div>
+                            <h4>Activities</h4>
+                            {{!--{{toggle-options values=allActivities selected=selectedActivities}}--}}
                         </div>
                         <script>$('.department').click(function(){$('.department').not(this).removeClass('envy');$(this).toggleClass('envy')})</script>
                     </input>
