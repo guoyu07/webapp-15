@@ -6,6 +6,7 @@ module.exports = function (environment) {
         locationType: 'hash',
         baseUrl: '/',
         SERVER_BASE_URL: '',
+        apiHost: '',
         EmberENV: {
             FEATURES: {
                 I18N_TRANSLATE_HELPER_SPAN: false
@@ -31,6 +32,7 @@ module.exports = function (environment) {
 
     if (environment === 'production') {
         ENV.baseUrl = '/app/';
+        ENV.apiHost = 'http://api.wwoof.fr';
     }
 
     return ENV;
