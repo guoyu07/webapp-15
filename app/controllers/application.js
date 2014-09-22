@@ -2,6 +2,7 @@
  * Ember controller for the application.
  */
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.Controller.extend({
 
@@ -57,7 +58,7 @@ export default Ember.Controller.extend({
                 url: url
             }).done(function () {
                 // Go to home page (refresh the page to get fresh data from the API)
-                window.location.replace(WebappENV.baseUrl);
+                window.location.replace(config.baseUrl);
             }).fail(function () {
                 // Notify user
                 alertify.error("Something went wrong.");

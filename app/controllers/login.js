@@ -3,6 +3,7 @@
  */
 import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
+import config from '../config/environment';
 
 export default Ember.ObjectController.extend(ValidationsMixin, {
 
@@ -36,7 +37,7 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
                     alertify.success("Welcome back!");
 
                     // Go to home page (refresh the page to get fresh data from the API)
-                    window.location.replace(WebappENV.baseUrl);
+                    window.location.replace(config.baseUrl);
                 }).fail(function () {
                     // Notify user
                     alertify.error("The email address or password is incorrect.");
