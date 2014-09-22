@@ -15,7 +15,7 @@ export default DS.Model.extend(ValidationsMixin, {
 
     // Computed properties
     completeUrl: function () {
-        return this.get('fileName') ? 'http://107.170.27.205/host_photos/' + encodeURIComponent(this.get('fileName')) : '';
+        return this.get('fileName') ? 'http://app.wwoof.fr/public/host_photos/' + encodeURIComponent(this.get('fileName')) : '';
     }.property('fileName'),
 
     // Validations

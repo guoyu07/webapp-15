@@ -6,7 +6,7 @@ export default {
     initialize: function () {
 
         // Get locale file from server
-        var request = Ember.$.get('/locales/en.json');
+        var request = Ember.$.get('/public/locales/en.json');
 
         // Load translations
         request.done(function (data) {
