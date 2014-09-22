@@ -32,7 +32,6 @@ module.exports = function (environment) {
 
     if (environment === 'production') {
         ENV.baseUrl = '/app/';
-        ENV.apiHost = 'http://api.wwoof.fr';
     }
 
     return ENV;
