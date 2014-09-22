@@ -11,10 +11,15 @@ export default Ember.Route.extend({
 
     actions: {
         sendReminder: function(membership) {
+
+            // Prepare URL
+            var adapter = this.store.adapterFor('application'),
+                url = [ adapter.get('host'), adapter.get('namespace'), 'memberships', membership.get('id'), 'send-reminder' ].join('/');
+
             // Send reminder
             Ember.$.ajax({
                 type: 'POST',
-                url: '/api/memberships/' + membership.get('id') + '/send-reminder'
+                url: url
             }).done(function (data) {
                 // Update reminder sent date so the button get greyed out
                 membership.set('reminderSentAt', data.membership.reminderSentAt);

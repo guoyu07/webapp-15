@@ -47,10 +47,14 @@ export default Ember.Controller.extend({
             // Clear the user
             this.set('currentUser', null);
 
+            // Prepare URL
+            var adapter = this.store.adapterFor('application'),
+                url = [ adapter.get('host'), adapter.get('namespace'), 'users/logout' ].join('/');
+
             // Logs the user out and refresh the page
             Ember.$.ajax({
                 type: 'POST',
-                url: '/api/users/logout'
+                url: url
             }).done(function () {
                 // Go to home page (refresh the page to get fresh data from the API)
                 window.location.replace(WebappENV.baseUrl);

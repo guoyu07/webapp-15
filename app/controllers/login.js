@@ -15,9 +15,14 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
             var loginData = this.get('content');
             var self = this;
             loginData.validate().then(function () {
+
+                // Prepare URL
+                var adapter = self.store.adapterFor('application'),
+                    url = [ adapter.get('host'), adapter.get('namespace'), 'users/login' ].join('/');
+
                 Ember.$.ajax({
                     type: 'POST',
-                    url: '/api/users/login',
+                    url: url,
                     data: {
                         username: loginData.get('username'),
                         password: loginData.get('password')

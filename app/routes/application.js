@@ -23,11 +23,15 @@ export default Ember.Route.extend({
                 // Clear the user (just in case)
                 localStorage.removeItem("user");
 
+                // Prepare URL
+                var adapter = this.store.adapterFor('application'),
+                    url = [ adapter.get('host'), adapter.get('namespace'), 'users/logout' ].join('/');
+
                 // Log the user out (just in case) and redirect to login
                 var self = this;
                 Ember.$.ajax({
                     type: 'POST',
-                    url: '/api/users/logout'
+                    url: url
                 }).done(function () {
                     self.transitionTo('login');
                 });

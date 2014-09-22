@@ -26,10 +26,14 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 // Set controller in loading state
                 self.set('isLoading', true);
 
+                // Prepare URL
+                var adapter = self.store.adapterFor('application'),
+                    url = [ adapter.get('host'), adapter.get('namespace'), 'users/reset-password' ].join('/');
+
                 // Send email
                 Ember.$.ajax({
                     type: 'POST',
-                    url: '/api/users/reset-password',
+                    url: url,
                     data: {
                         email: self.get('emailAddress')
                     }
