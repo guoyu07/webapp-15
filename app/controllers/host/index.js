@@ -7,6 +7,8 @@ export default Ember.ObjectController.extend({
 
     needs: ['application', 'host', 'memberships'],
 
+    coordinates: null,
+
     // Setup bindings used in partial
     hasHostMembershipsBinding: 'controllers.memberships.hasHostMemberships',
     latestHostMembershipBinding: 'controllers.memberships.latestHostMembership',
@@ -25,5 +27,16 @@ export default Ember.ObjectController.extend({
      */
     canEditHost: function () {
         return this.get('belongsToCurrentUser') || this.get('controllers.application.currentUserIsAdmin');
-    }.property('belongsToCurrentUser', 'controllers.application.currentUserIsAdmin')
+    }.property('belongsToCurrentUser', 'controllers.application.currentUserIsAdmin'),
+
+    /**
+     * URL of the map showing where the farm is located.
+     */
+    mapUrl: function () {
+        var coordinates = this.get('coordinates');
+        if (!coordinates) {
+            return;
+        }
+        return 'http://maps.googleapis.com/maps/api/staticmap?center=' + coordinates.lat + ','+ coordinates.lng +'&zoom=6&size=300x300';
+    }.property('coordinates')
 });

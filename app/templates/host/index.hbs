@@ -31,26 +31,7 @@
         <div class="host-info">
             <div class="host-address">
                 <div class="map-img">
-                    <img id="map" src="http://maps.googleapis.com/maps/api/staticmap?center=47.5977893,-0.1354721&zoom=6&size=300x300">
-                    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
-                    <script>
-                        var addToCoords = function(address) {
-                            console.log(address);
-                            var geocoder = new google.maps.Geocoder();
-                            geocoder.geocode({ 'address': address }, function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    latitude = results[0].geometry.location.lat();
-                                    longitude = results[0].geometry.location.lng();
-                                    img = "http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=16&size=300x300&sensor=false";
-                                    console.log("http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=16&size=300x300&sensor=false");
-                                    $('#map').attr('src', img);
-                                } else {
-                                    console.log("Geocode Request failed. "+status)
-                                }
-                            });
-                        };
-                        addToCoords(addr);
-                    </script>
+                    <img id="map" {{bind-attr src=mapUrl}}>
                     <img class="marker" src="marker.png">
                     <div class="mailing-address">
                         <p>{{user.firstName}} {{user.lastName}}</p>
@@ -62,7 +43,6 @@
                         </p>
 
                         <p id="addr2">{{address.zipCode}} {{address.city}}</p>
-                        <!--<p>France</p>-->
                     </div>
                 </div>
                 <div class="info-box">
