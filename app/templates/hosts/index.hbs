@@ -43,9 +43,9 @@
                         <div class="col-md-5">
                             <div class="host-thumb">
                                 {{#if photos.length}}
-                                    <img {{bind-attr src="mainPhoto.completeUrl"}} />
+                                    {{host-thumb url=mainPhoto.completeUrl}}
                                 {{else}}
-                                    <img src="wwoof-no-photo.png"/>
+                                    {{host-thumb url="wwoof-no-photo.png"}}
                                 {{/if}}
                             </div>
                         </div>
