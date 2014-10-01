@@ -954,7 +954,7 @@ ul {
     margin-left: -15px;
 }
 
-.col-md-3,
+/*.col-md-3,
 .col-md-6,
 .col-md-9 {
     position: relative;
@@ -981,7 +981,7 @@ ul {
     .col-md-3 {
         width: 25%;
     }
-}
+}*/
 
 table {
     background-color: transparent;
@@ -2105,16 +2105,16 @@ ul {
     margin-right: -15px;
 }
 
-.col-md-3,
+/*.col-md-3,
 .col-md-6,
 .col-md-9 {
     position: relative;
     min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
-}
+}*/
 
-@media (min-width: 992px) {
+/*@media (min-width: 992px) {
     .col-md-3,
     .col-md-6,
     .col-md-9 {
@@ -2132,7 +2132,7 @@ ul {
     .col-md-3 {
         width: 25%;
     }
-}
+}*/
 
 table {
     background-color: transparent;
@@ -2737,7 +2737,7 @@ body {
 }
 
 .host-gallery {
-    width: 500px;
+    width:100%;
     height: 281px;
     /*box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.4);*/
     background-color: #f8f5f0;
@@ -2783,6 +2783,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .farm-item .address {
     font-family: 'Libre Baskerville', serif;
+    margin-top: 10px;
+    display: block;
 }
 .farm-item .last-name {
     text-transform: capitalize;
@@ -2791,8 +2793,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 38px 0 10px;
 }
 .host-thumb {
-    width: 250px;
-    height: 200px;
+    /*width: 250px;*/
+    /*height: 200px;*/
     overflow: hidden;
     background-color: #555;
     text-align: center;
@@ -2805,10 +2807,11 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 .map-img {
+    width:100%;
     position: relative;
 }
 .map-img img:first-of-type {
-    height: 180px;
+    width:100%;
     vertical-align: initial;
 }
 .map-img .marker {
@@ -2856,8 +2859,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .info-box {
     vertical-align: top;
-    padding: 0 0 0 10px;
-    width: 304px;
+    width: 100%;
 }
 .info-row {
     background-color: #FFFEFA;
@@ -2881,10 +2883,7 @@ h1, h2, h3, h4, h5, h6 {
 .icons .glyphicon:hover {
     color: #000;
 }
-.btn-view {
-    margin-top: 82px;
-    margin-right: 28px;
-}
+
 .btn-navbar {
     padding: 7px 20px !important;
     margin: 13px !important;
@@ -2970,11 +2969,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 10px;
     box-shadow: 7px 5px 18px rgba(0,0,0,0.18);
     border-radius: 3px;
-}
-.block > img {
-    min-width: 316px;
-    max-width: 320px;
-    min-height: 200px;
+    background-size: cover;
+    background-position: center;
 }
 .overlay {
     width: 100%;
@@ -3090,13 +3086,13 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: -64px;
 }
 .search-box {
-    position: fixed;
-    width: 320px;
+    /*position: fixed;*/
+    /*width: 100%;*/
     margin-top: 20px;
 }
-.results-box {
+/*.results-box {
     margin-left: 314px;
-}
+}*/
 .nav .dropdown-menu {
     width: 100%;
 }
@@ -3115,4 +3111,90 @@ h1, h2, h3, h4, h5, h6 {
 .leftSpace {
     position: relative;
     left: -16px;
+}
+.view-btn {
+    float: right;
+}
+
+
+@media all and (max-width: 768px) {
+    .navbar .nav > li > a {
+        text-align: center;
+    }
+
+    .navbar-form .form-group,
+    .navbar-form .btn-search {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+@media all and (max-width: 440px) {
+    .block  {
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .border, .tagline, .otherline {
+        width: 90%;
+        margin: 4.5%;
+    }
+
+    .tagline {
+        margin-top: 70px;
+    }
+
+    .tagline, .otherline {
+        bottom: inherit;
+        position: relative;
+        display:block;
+        padding: 1em;
+    }
+
+    .host-thumb {
+        width: 100%;
+    }
+
+    .farm-item h3 {
+        margin: 0 0 20px 0;
+    }
+
+    .farm-item .address {
+        margin: 20px 0 0 0;
+        display: block;
+    }
+
+    .farm-item {
+        margin: 30px 0;
+    }
+
+    .host-thumb {
+        width: 100%; 
+        height: 200px; 
+    }
+
+/*    .host-info .map-img img:first-of-type {
+        width: 100%;
+        height: 100%;
+    }*/
+
+    .host-info .mailing-address {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        display: block;
+        margin: 0 0 10px 0;
+    }
+
+    .description,
+    .proposed-activities {
+        margin: 30px 0 0 0;
+        text-align: justify;
+    }
+
+    .view-btn {
+        float: none;
+        padding: 0 18px 0 0;
+        margin-top: 30px;
+    }
 }

@@ -36,7 +36,7 @@
                         <img class="marker" src="marker.png">
                     </div>
                     <div class="mailing-address">
-                        <span class="glyphicon glyphicon-home"></span>
+                        <span class="glyphicon glyphicon-home">
                         {{#if canSeeContactInfo}}
                             <p>{{user.firstName}} {{user.lastName}}</p>
                             <p id="addr">
@@ -49,6 +49,7 @@
                         {{else}}
                             <i>Available to members only</i>
                         {{/if}}
+                        </span>
                     </div>
                 </div>
                 <div class="info-box">
@@ -91,13 +92,14 @@
     </div>
     <div class="col-md-6">
         <p class="description">{{convert-breaklines fullDescription}}</p>
-        <br>
-        <h4>Proposed activities</h4>
-        <ul>
-            {{#each activity in activities}}
-                <li>{{activity}}</li>
-            {{/each}}
-        </ul>
+        <div class="proposed-activities">
+            <h4>Proposed activities</h4>
+            <ul>
+                {{#each activity in activities}}
+                    <li>{{activity}}</li>
+                {{/each}}
+            </ul>
+        </div>
     </div>
 </div>
 

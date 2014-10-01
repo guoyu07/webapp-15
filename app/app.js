@@ -11,4 +11,5 @@ var App = Ember.Application.extend({
 
 loadInitializers(App, 'webapp');
 
+
 export default App;

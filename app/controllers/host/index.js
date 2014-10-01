@@ -37,6 +37,6 @@ export default Ember.ObjectController.extend({
         if (!coordinates) {
             return;
         }
-        return 'http://maps.googleapis.com/maps/api/staticmap?center=' + coordinates.lat + ','+ coordinates.lng +'&zoom=6&size=300x300';
+        return 'http://maps.googleapis.com/maps/api/staticmap?center=' + coordinates.lat + ','+ coordinates.lng +'&zoom=7&size=500x500';
     }.property('coordinates')
 });
