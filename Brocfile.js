@@ -9,6 +9,11 @@ var app = new EmberApp();
 // Bootstrap
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+var bootstrapCssMap = pickFiles('bower_components/bootstrap/dist/css', {
+    srcDir: '/',
+    files: ['bootstrap.css.map'],
+    destDir: '/assets'
+});
 
 // Put the bootstrap fonts in the place where the bootstrap css expects to find them
 var bootstrapFonts = pickFiles('bower_components/bootstrap/fonts', {
@@ -55,5 +60,6 @@ app.import('bower_components/ember-i18n/lib/i18n.js');
 module.exports = mergeTrees([
     alertify,
     bootstrapFonts,
+    bootstrapCssMap,
     app.toTree()
 ]);
