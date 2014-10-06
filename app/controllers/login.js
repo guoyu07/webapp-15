@@ -30,7 +30,7 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
                     }
                 }).done(function (data) {
 
-                    // Store the token in the local storage
+                    // Store the user in the local storage
                     self.set('controllers.application.currentUser', data.user);
 
                     // Notify user

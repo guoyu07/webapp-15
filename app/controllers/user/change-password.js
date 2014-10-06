@@ -3,7 +3,6 @@
  */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
-import Regex from '../../utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
