@@ -6,31 +6,23 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>{{#link-to 'hosts'}}<span class="glyphicon glyphicon-tree-conifer"></span> Hosts{{/link-to}}</li>
-                <li>{{#link-to 'wwoofers'}}Wwoofers{{/link-to}}</li>
+                {{#if currentUserIsAdmin}}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>{{#link-to 'wwoofers'}}Wwoofers{{/link-to}}</li>
+                            <li>{{#link-to 'memberships.reminders'}}Reminders{{/link-to}}</li>
+                            <li><a href="#" data-toggle="modal" data-target="#impersonationModal">Impersonate User</a></li>
+                        </ul>
+                    </li>
+                {{/if}}
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search Hosts">
-                        <div class="pop-out">
-                            <div class="arrow"></div>
-                            <!--<span class="departments-list">DEPARTMENTS:</span>-->
-                                <div class="dropdown-item">
-                                    {{view Ember.Select
-                                    class="form-control"
-                                    prompt="Department"
-                                    optionLabelPath="content.name"
-                                    content=departmentFilterOptions
-                                    value=departmentFilter}}
-                                </div>
-                            <!--<h4>Activities</h4>-->
-                            {{!--{{toggle-options values=allActivities selected=selectedActivities}}--}}
-                        </div>
-                        <script>$('.department').click(function(){$('.department').not(this).removeClass('envy');$(this).toggleClass('envy')})</script>
-                    </input>
+                    <input type="text" class="form-control" placeholder="Search Hosts" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-search"><span class="glyphicon glyphicon-search"></span></button>
             </form>
-
             <ul class="nav navbar-nav navbar-right">
                 {{#if currentUser}}
                     <li class="dropdown">
@@ -55,4 +47,27 @@
 </nav>
 <div class="container">
     {{outlet}}
+</div>
+
+<!-- Impersonation modal box (admins only) -->
+<div class="modal fade" id="impersonationModal" tabindex="-1" role="dialog" aria-labelledby="impersonationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="impersonationModalLabel">Impersonate User</h4>
+            </div>
+            <div class="modal-body">
+                <div {{bind-attr class=":form-group fieldErrors.impersonatedUserEmail.length:has-error"}}>
+                    <label for="impersonatedUserEmail" class="control-label">Enter the email address of the user you want to impersonate</label>
+                        {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control"}}
+                    {{error-display fieldErrors.impersonatedUserEmail}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" {{action "impersonateUser"}} {{bind-attr disabled="isLoading"}}>Impersonate</button>
+            </div>
+        </div>
+    </div>
 </div>

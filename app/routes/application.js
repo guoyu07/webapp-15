@@ -36,6 +36,9 @@ export default Ember.Route.extend({
                     self.transitionTo('login');
                 });
             }
+        },
+        userImpersonated: function() {
+            this.refresh();
         }
     }
 });
