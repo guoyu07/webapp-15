@@ -28,12 +28,6 @@ export default DS.Model.extend(ValidationsMixin, {
         return this.get('photos').objectAt(0);
     }.property('photos.@each'),
 
-    // needed to display background image
-    // mainPhotoBackgroundCss: function() {
-    //     debugger
-    //     return "background-image: url(" + this.get('mainPhoto').completeUrl + ")";
-    // }.property('completeUrl'),
-
     // Validations
     validations: {
         farmName: {
