@@ -21,5 +21,9 @@ export default Ember.Route.extend({
         get.done(function (data) {
             controller.set('coordinates', data.coordinates);
         });
+        get.fail(function () {
+            // Unable to get coordinates: display random location in France
+            controller.set('coordinates', { lat: 46, lng: 3 });
+        });
     }
 });
