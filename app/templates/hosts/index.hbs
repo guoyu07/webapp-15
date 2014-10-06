@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-3 search-box">
+    <div class="col-md-4 col-sm-12 search-box">
         <form class="form" role="form">
             <div class="form-group">
                 <label class="sr-only" for="searchTerm">Email address</label>
@@ -26,21 +26,23 @@
                     </label>
                 </div>
             {{/if}}
-            <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary">
-                {{#if isLoading}}
-                    Searching...
-                {{else}}
-                    Search
-                {{/if}}
-            </button>
+            <div class="col-md-4 col-sm-12">
+                <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block">
+                    {{#if isLoading}}
+                        Searching...
+                    {{else}}
+                        Search
+                    {{/if}}
+                </button>
+            </div>
         </form>
     </div>
-    <div class="col-md-9 results-box">
+    <div class="col-md-8 col-sm-12 results-box">
         <div class="list-group">
             {{#each itemController="host.index"}}
                 {{#link-to "host" model title=farmName class="list-group-item"}}
                     <div class="row farm">
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <div class="host-thumb">
                                 {{#if photos.length}}
                                     {{host-thumb url=mainPhoto.completeUrl}}
@@ -49,14 +51,15 @@
                                 {{/if}}
                             </div>
                         </div>
-                        <div class="col-md-8 farm-item">
-                            <div class="pull-right">
-                                <button class="btn btn-default btn-view">VIEW</button>
-                            </div>
+                        <div class="col-md-7 farm-item">
                             <h3>{{farmName}}</h3>
                             <span class="host-name">{{user.firstName}} <span class="last-name">{{user.lastName}}</span></span>
                             <br>{{trim-string fullDescription start=0 max=100}}
                             <br><span class="address"><i>{{address.city}}, {{address.department.name}}</i></span>
+
+                            <div class="col-md-6 col-sm-12 view-btn">
+                                <button class="btn btn-default btn-block">VIEW</button>
+                            </div> 
                         </div>
                     </div>
                 {{/link-to}}

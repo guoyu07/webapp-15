@@ -10,7 +10,8 @@
 {{/unless}}
 <form>
     <div class="row">
-        <div class="col-md-6">
+        <fieldset class="col-md-6">
+            <legend class="h4">General Information</legend>
             <div {{bind-attr class=":form-group fieldErrors.farmName.length:has-error"}}>
                 <label for="farm-name" class="control-label">Farm Name</label>
                 {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholder="La Ferme de M. Seguin"}}
@@ -30,8 +31,10 @@
                 <label for="travel" class="control-label">Travel</label>
                 {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
             </div>
-        </div>
-        <div class="col-md-6">
+        </fieldset>
+
+        <fieldset class="col-md-6">
+            <legend class="h4">Address Information</legend>
             <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
                 <label for="address1" class="control-label">Address 1</label>
                 {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
@@ -98,38 +101,41 @@
                 {{/if}}
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
-                <label for="entry" class="control-label">Full description</label>
-                {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder=""}}
-                {{error-display fieldErrors.fullDescription}}
-            </div>
+        <div class="row">
+            <fieldset class="col-md-12">
+                <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
+                    <label for="entry" class="control-label">Full description</label>
+                    {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder="" rows="8"}}
+                    {{error-display fieldErrors.fullDescription}}
+                </div>
+            </fieldset>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Communication preferences</h4>
-            <div class="checkbox">
-                <label>
-                    {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
-                    Do not communicate my phone
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
-                    Do not communicate my email
-                </label>
-            </div>
+        <div class="row">
+            <fieldset class="col-md-6">
+                <legend class="h4">Communication preferences</legend>
+                <div class="checkbox">
+                    <label>
+                        {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
+                        Do not communicate my phone
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
+                        Do not communicate my email
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="col-md-6">
+                <legend class="h4">Proposed activities to the woofers</legend>
+                {{toggle-options values=allActivities selected=activities}}
+            </fieldset>
         </div>
-        <div class="col-md-6">
-            <h4>Proposed activities to the woofers</h4>
-            {{toggle-options values=allActivities selected=activities}}
-        </div>
+    </fieldset>
+
+    <div class="col-md-3 col-sm-6 col-xs-12 col-md-offset-9 col-sm-offset-6">
+        <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block">Save</button>
     </div>
-    <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary pull-right">Save</button>
 </form>
 
 {{#unless isNew}}

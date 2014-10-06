@@ -9,21 +9,37 @@
         <div class="col-md-6">
             <div {{bind-attr class=":form-group fieldErrors.intro.length:has-error"}}>
                 <label for="intro" class="control-label">A quick introduction about you...</label>
-                {{textarea id="intro" name="intro" value=intro class="form-control" placeholder=""}}
+                {{textarea id="intro" name="intro" value=intro class="form-control" placeholder="" rows="10"}}
                 {{error-display fieldErrors.intro}}
             </div>
         </div>
         <div class="col-md-6">
             <div {{bind-attr class=":form-group fieldErrors.tripMotivation.length:has-error"}}>
                 <label for="tripMotivation" class="control-label">What motivates you to do wwoofing?</label>
-                {{textarea id="tripMotivation" name="tripMotivation" value=tripMotivation class="form-control" placeholder=""}}
+                {{textarea id="tripMotivation" name="tripMotivation" value=tripMotivation class="form-control" placeholder="" rows="10"}}
                 {{error-display fieldErrors.tripMotivation}}
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <h2>Where are you from?</h2>
+        <fieldset class="col-md-6">
+            <legend class="h4">Are you wwoofing with someone?</legend>
+
+            <div {{bind-attr class=":form-group"}}>
+                <label for="firstName2" class="control-label">First name</label>
+                {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control" placeholder=""}}
+            </div>
+            <div {{bind-attr class=":form-group"}}>
+                <label for="lastName2" class="control-label">Last name</label>
+                {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control" placeholder=""}}
+            </div>
+            <div {{bind-attr class=":form-group"}}>
+                <label for="birthDate2" class="control-label">Birth date</label>
+                {{date-picker value=birthDate2}}
+            </div>
+        </fieldset>
+        <fieldset class="col-md-6">
+            <legend class="h4">Where are you from?</legend>
 
             <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
                 <label for="address1" class="control-label">Address 1</label>
@@ -90,27 +106,11 @@
                     {{/if}}
                 {{/if}}
             </div>
-        </div>
-        <div class="col-md-6">
-            <h2>Are you wwoofing with someone?</h2>
-
-            <div {{bind-attr class=":form-group"}}>
-                <label for="firstName2" class="control-label">First name</label>
-                {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control" placeholder=""}}
-            </div>
-            <div {{bind-attr class=":form-group"}}>
-                <label for="lastName2" class="control-label">Last name</label>
-                {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control" placeholder=""}}
-            </div>
-            <div {{bind-attr class=":form-group"}}>
-                <label for="birthDate2" class="control-label">Birth date</label>
-                {{date-picker value=birthDate2}}
-            </div>
-        </div>
+        </fieldset>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary pull-right">
+        <div class="col-md-3 col-sm-6 col-xs-12 col-md-offset-9 col-sm-offset-6">
+            <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block">
                 {{#if isNew}}
                     Next
                 {{else}}
