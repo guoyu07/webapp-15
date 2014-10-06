@@ -654,6 +654,11 @@ html {
 
 body {
     margin: 0;
+    padding-bottom: 20px;
+}
+
+fieldset {
+    margin-bottom: 35px;
 }
 
 nav {
@@ -952,6 +957,21 @@ ul {
 .row {
     margin-right: -15px;
     margin-left: -15px;
+}
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+@media all and (max-width: 768px) {
+    .col-centered {
+        display: block;
+    }
 }
 
 /*.col-md-3,
@@ -1417,6 +1437,7 @@ label {
 
 .jumbotron h1 {
     color: inherit;
+    text-align: center;
     font-family: 'Oswald', sans-serif;
 }
 
@@ -1424,6 +1445,7 @@ label {
     margin-bottom: 15px;
     font-size: 21px;
     font-weight: 200;
+    text-align: center;
 }
 
 .container .jumbotron {
@@ -2774,10 +2796,20 @@ body {
 .bootstrap-datetimepicker-widget td.active, .bootstrap-datetimepicker-widget td.active:hover {
     background-color: #8dc153;
 }
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, legend {
     font-family: 'Oswald', sans-serif !important;
     text-transform: uppercase !important;
 }
+
+legend {
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #f8f5f0;
+}
+
+.farm.row {
+    cursor: pointer;
+}
+
 .farm-item {
     padding-left: 32px;
 }
@@ -2793,11 +2825,13 @@ h1, h2, h3, h4, h5, h6 {
     margin: 38px 0 10px;
 }
 .host-thumb {
-    /*width: 250px;*/
-    /*height: 200px;*/
+    width: 250px;
+    height: 280px;
     overflow: hidden;
     background-color: #555;
     text-align: center;
+    background-size: cover;
+    background-position: center;
 }
 .host-thumb img {
     height: 100%;
@@ -2827,8 +2861,6 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 500px;
     padding: 16px;
     background-color: #f8f5f0;
-    /*margin: 0 auto;*/
-    /*margin-top: 20px;*/
 }
 .mailing-address {
     display: table-cell;
@@ -3036,12 +3068,16 @@ h1, h2, h3, h4, h5, h6 {
     /*height: 340px;*/
     opacity: 1;
 }
-.block:hover .tagline {
-    bottom: 83px;
+
+@media (max-width: 768px) and (max-width: 1600px) {
+    .block:hover .tagline {
+        bottom: 83px;
+
+    .block:hover .otherline {
+        bottom: 66px
+    }
 }
-.block:hover .otherline {
-    bottom: 66px
-}
+
 .block:hover .overlay {
     opacity: 0.45;
 }
@@ -3114,6 +3150,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 .view-btn {
     float: right;
+    margin-top: 10px;
+}
+
+@media all and (max-width: 991px) {
+    .stacked-btn {
+        margin-top: 10px;
+    }
 }
 
 
@@ -3137,18 +3180,11 @@ h1, h2, h3, h4, h5, h6 {
 
     .border, .tagline, .otherline {
         width: 90%;
-        margin: 4.5%;
+        margin: 12px;
     }
 
-    .tagline {
-        margin-top: 70px;
-    }
-
-    .tagline, .otherline {
-        bottom: inherit;
-        position: relative;
-        display:block;
-        padding: 1em;
+    .otherline {
+        bottom: 18px
     }
 
     .host-thumb {
@@ -3173,11 +3209,6 @@ h1, h2, h3, h4, h5, h6 {
         height: 200px; 
     }
 
-/*    .host-info .map-img img:first-of-type {
-        width: 100%;
-        height: 100%;
-    }*/
-
     .host-info .mailing-address {
         width: 100%;
         max-width: 100%;
@@ -3195,6 +3226,170 @@ h1, h2, h3, h4, h5, h6 {
     .view-btn {
         float: none;
         padding: 0 18px 0 0;
-        margin-top: 30px;
+        margin: 30px 0 0 0;
+    }
+}
+
+
+@media all and (max-width: 440px) {
+    .col-tn-1, .col-tn-2, .col-tn-3, .col-tn-4, .col-tn-5, .col-tn-6, .col-tn-7, .col-tn-8, .col-tn-9, .col-tn-10, .col-tn-11, .col-tn-12 {
+      position: relative;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+      float: left;
+    }
+    .col-tn-12 {
+      width: 100%;
+    }
+    .col-tn-11 {
+      width: 91.66666667%;
+    }
+    .col-tn-10 {
+      width: 83.33333333%;
+    }
+    .col-tn-9 {
+      width: 75%;
+    }
+    .col-tn-8 {
+      width: 66.66666667%;
+    }
+    .col-tn-7 {
+      width: 58.33333333%;
+    }
+    .col-tn-6 {
+      width: 50%;
+    }
+    .col-tn-5 {
+      width: 41.66666667%;
+    }
+    .col-tn-4 {
+      width: 33.33333333%;
+    }
+    .col-tn-3 {
+      width: 25%;
+    }
+    .col-tn-2 {
+      width: 16.66666667%;
+    }
+    .col-tn-1 {
+      width: 8.33333333%;
+    }
+    .col-tn-pull-12 {
+      right: 100%;
+    }
+    .col-tn-pull-11 {
+      right: 91.66666667%;
+    }
+    .col-tn-pull-10 {
+      right: 83.33333333%;
+    }
+    .col-tn-pull-9 {
+      right: 75%;
+    }
+    .col-tn-pull-8 {
+      right: 66.66666667%;
+    }
+    .col-tn-pull-7 {
+      right: 58.33333333%;
+    }
+    .col-tn-pull-6 {
+      right: 50%;
+    }
+    .col-tn-pull-5 {
+      right: 41.66666667%;
+    }
+    .col-tn-pull-4 {
+      right: 33.33333333%;
+    }
+    .col-tn-pull-3 {
+      right: 25%;
+    }
+    .col-tn-pull-2 {
+      right: 16.66666667%;
+    }
+    .col-tn-pull-1 {
+      right: 8.33333333%;
+    }
+    .col-tn-pull-0 {
+      right: auto;
+    }
+    .col-tn-push-12 {
+      left: 100%;
+    }
+    .col-tn-push-11 {
+      left: 91.66666667%;
+    }
+    .col-tn-push-10 {
+      left: 83.33333333%;
+    }
+    .col-tn-push-9 {
+      left: 75%;
+    }
+    .col-tn-push-8 {
+      left: 66.66666667%;
+    }
+    .col-tn-push-7 {
+      left: 58.33333333%;
+    }
+    .col-tn-push-6 {
+      left: 50%;
+    }
+    .col-tn-push-5 {
+      left: 41.66666667%;
+    }
+    .col-tn-push-4 {
+      left: 33.33333333%;
+    }
+    .col-tn-push-3 {
+      left: 25%;
+    }
+    .col-tn-push-2 {
+      left: 16.66666667%;
+    }
+    .col-tn-push-1 {
+      left: 8.33333333%;
+    }
+    .col-tn-push-0 {
+      left: auto;
+    }
+    .col-tn-offset-12 {
+      margin-left: 100%;
+    }
+    .col-tn-offset-11 {
+      margin-left: 91.66666667%;
+    }
+    .col-tn-offset-10 {
+      margin-left: 83.33333333%;
+    }
+    .col-tn-offset-9 {
+      margin-left: 75%;
+    }
+    .col-tn-offset-8 {
+      margin-left: 66.66666667%;
+    }
+    .col-tn-offset-7 {
+      margin-left: 58.33333333%;
+    }
+    .col-tn-offset-6 {
+      margin-left: 50%;
+    }
+    .col-tn-offset-5 {
+      margin-left: 41.66666667%;
+    }
+    .col-tn-offset-4 {
+      margin-left: 33.33333333%;
+    }
+    .col-tn-offset-3 {
+      margin-left: 25%;
+    }
+    .col-tn-offset-2 {
+      margin-left: 16.66666667%;
+    }
+    .col-tn-offset-1 {
+      margin-left: 8.33333333%;
+    }
+    .col-tn-offset-0 {
+      margin-left: 0;
     }
 }

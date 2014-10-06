@@ -3,35 +3,47 @@
 
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Your Host Profile</div>
                 <div class="panel-body">
                     {{#if hostProfile}}
                         <p>Your host profile <strong>{{hostProfile.farmName}}</strong> is currently online.
                             You can preview it or edit it.</p>
-                        {{#link-to 'host.index' hostProfile.id class="btn btn-primary"}}View Your Profile{{/link-to}}
-                        {{#link-to 'host.edit' hostProfile.id class="btn btn-default"}}Edit Your Profile{{/link-to}}
+                        <div class="col-md-6 col-sm-12">
+                            {{#link-to 'host.index' hostProfile.id class="btn btn-primary btn-block"}}View Your Profile{{/link-to}}
+                        </div>
+                        <div class="col-md-6 col-sm-12 stacked-btn">
+                            {{#link-to 'host.edit' hostProfile.id class="btn btn-default btn-block"}}Edit Your Profile{{/link-to}}
+                        </div>
                     {{else}}
                         <p>You do not have a host profile yet. But you can create one anytime!</p>
-                        {{#link-to 'hosts.new' class="btn btn-primary"}}Create Your Profile{{/link-to}}
+                        <div class="col-md-6 col-sm-12">
+                            {{#link-to 'hosts.new' class="btn btn-primary btn-block"}}Create Your Profile{{/link-to}}
+                        </div>
                     {{/if}}
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Your Wwoofer Profile</div>
                 <div class="panel-body">
                     {{#if wwooferProfile}}
                         <p>Your wwoofer profile is currently online. You can preview it or edit it.</p>
-                        {{#link-to 'wwoofer.index' wwooferProfile.id class="btn btn-primary"}}View Your
+                        <div class="col-md-6 col-sm-12">
+                            {{#link-to 'wwoofer.index' wwooferProfile.id class="btn btn-primary btn-block"}}View Your
                             Profile{{/link-to}}
-                        {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-default"}}Edit Your
+                        </div>
+                        <div class="col-md-6 col-sm-12 stacked-btn">
+                            {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-default btn-block"}}Edit Your
                             Profile{{/link-to}}
+                        </div>
                     {{else}}
                         <p>You do not have a wwoofer profile yet. But you can create one anytime!</p>
-                        {{#link-to 'wwoofers.new' class="btn btn-primary"}}Create Your Profile{{/link-to}}
+                        <div class="col-md-6 col-sm-12">
+                            {{#link-to 'wwoofers.new' class="btn btn-primary btn-block"}}Create Your Profile{{/link-to}}
+                        </div>
                     {{/if}}
                 </div>
             </div>
@@ -43,9 +55,15 @@
 
         <p>You can browse the list of hosts in France, or jump into your account to be part of our community
             :-)</p>
-        <p>{{#link-to 'login' class="btn btn-default btn-lg" role="button"}}Login{{/link-to}}
-            {{#link-to 'users.new' class="btn btn-primary btn-lg" role="button"}}Sign Up{{/link-to}}</p>
-        <hr>
+        <div class="col-md-12 col-tn-12 col-tn-push-0 col-xs-push-1 col-md-push-3 clearfix">
+            <div class="col-md-3 col-sm-4 col-xs-5 col-tn-12">
+                {{#link-to 'login' class="btn btn-default btn-block" role="button"}}Login{{/link-to}}
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-5 col-tn-12">
+                {{#link-to 'users.new' class="btn btn-primary btn-block" role="button"}}Sign Up{{/link-to}}
+            </div>
+        </div>
+        <hr class="col-md-12 col-tn-12">
         <p>
             <div class="block" style="background-image: url(http://www.wwoof.fr/loggedon/images/PICT3184.JPG);">
                 <div class="overlay"></div>

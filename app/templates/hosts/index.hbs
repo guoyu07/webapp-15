@@ -26,13 +26,15 @@
                     </label>
                 </div>
             {{/if}}
-            <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary">
-                {{#if isLoading}}
-                    Searching...
-                {{else}}
-                    Search
-                {{/if}}
-            </button>
+            <div class="col-md-4 col-sm-12">
+                <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block">
+                    {{#if isLoading}}
+                        Searching...
+                    {{else}}
+                        Search
+                    {{/if}}
+                </button>
+            </div>
         </form>
     </div>
     <div class="col-md-8 col-sm-12 results-box">
