@@ -1,4 +1,4 @@
-// /* global require, module */
+/* global require, module */
 
 var mergeTrees = require('broccoli-merge-trees');
 var pickFiles = require('broccoli-static-compiler');
@@ -6,22 +6,20 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp();
 
-// debugger
-
-// // Bootstrap
+// Bootstrap
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 
-// // Put the bootstrap fonts in the place where the bootstrap css expects to find them
+// Put the bootstrap fonts in the place where the bootstrap css expects to find them
 var bootstrapFonts = pickFiles('bower_components/bootstrap/fonts', {
     srcDir: '/',
     destDir: '/fonts'
 });
 
-// // Ember validations
+// Ember validations
 app.import('bower_components/ember-validations/index.js');
 
-// // Moment
+// Moment
 app.import('bower_components/moment/moment.js');
 
 // Alertify
@@ -48,14 +46,14 @@ app.import('bower_components/swipeshow/jquery.swipeshow.js');
 app.import('bower_components/swipeshow/jquery.swipeshow.css');
 
 // Ember i18n (only in dev until pull request is merged)
-//app.import('bower_components/cldr/plurals.js');
-//app.import('bower_components/ember-i18n/lib/i18n.js');
+// app.import('bower_components/cldr/plurals.js');
+app.import('bower_components/ember-i18n/lib/i18n.js');
 
 // Set default language for pluralization (can't find a better place for now)
 // CLDR.defaultLanguage = "en";
 
 module.exports = mergeTrees([
-    app.toTree(),
     alertify,
-    bootstrapFonts
+    bootstrapFonts,
+    app.toTree()
 ]);
