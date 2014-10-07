@@ -3087,7 +3087,7 @@ legend {
 @media (max-width: 768px) and (max-width: 1600px) {
     .block:hover .tagline {
         bottom: 83px;
-
+    }
     .block:hover .otherline {
         bottom: 66px
     }
@@ -3267,7 +3267,7 @@ legend {
     }
 
     .stacked-btn {
-        margin": 5px 0;
+        margin: 5px 0;
     }
 
     .btn-block-tn {
