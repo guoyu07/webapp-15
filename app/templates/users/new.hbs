@@ -41,11 +41,11 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-sm-12">
+    <div class="row col-sm-1 col-tn-12 col-sm-push-10">
         {{#if isNew}}
-            <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block">Register</button>
+            <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">Register</button>
         {{else}}
-            <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block">Save</button>
+            <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">Save</button>
         {{/if}}
     </div>
 </form>
