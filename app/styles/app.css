@@ -811,6 +811,31 @@ th {
     content: "\e199";
 }
 
+.dairy { background-image: url('/dairy.png'); }
+.forestry { background-image: url('/forestry.png'); }
+.grains { background-image: url('/grains.png'); }
+.marker { background-image: url('/marker.png'); }
+.orachard { background-image: url('/orachard.png'); }
+.permaculture { background-image: url('/permaculture.png'); }
+.ranching { background-image: url('/ranching.png'); }
+.vegetables { background-image: url('/vegetables.png'); }
+.vineyard { background-image: url('/vineyard.png'); }
+
+
+input[type=checkbox]{display: none;}
+input[type=checkbox]:checked+.farm-icon{opacity: 1;}
+input[type=checkbox]:checked+.farm-icon+label{color: #7bb03f;}
+
+.farm-icon {
+    float: left;
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    opacity:0.5;
+}
+
+
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1021,6 +1046,11 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
     font-weight: bold;
+}
+
+.checkbox label,
+.radio label {
+    padding-left: 10px;
 }
 
 .form-control {
