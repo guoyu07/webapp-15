@@ -50,12 +50,9 @@ app.import('bower_components/jquery-file-upload/js/jquery.fileupload.js');
 app.import('bower_components/swipeshow/jquery.swipeshow.js');
 app.import('bower_components/swipeshow/jquery.swipeshow.css');
 
-// Ember i18n (only in dev until pull request is merged)
-// app.import('bower_components/cldr/plurals.js');
+// Ember i18n
+app.import('bower_components/cldr/plurals.js');
 app.import('bower_components/ember-i18n/lib/i18n.js');
-
-// Set default language for pluralization (can't find a better place for now)
-// CLDR.defaultLanguage = "en";
 
 module.exports = mergeTrees([
     alertify,
