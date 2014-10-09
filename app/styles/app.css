@@ -811,6 +811,31 @@ th {
     content: "\e199";
 }
 
+.dairy { background-image: url('/dairy.png'); }
+.forestry { background-image: url('/forestry.png'); }
+.grains { background-image: url('/grains.png'); }
+.marker { background-image: url('/marker.png'); }
+.orachard { background-image: url('/orachard.png'); }
+.permaculture { background-image: url('/permaculture.png'); }
+.ranching { background-image: url('/ranching.png'); }
+.vegetables { background-image: url('/vegetables.png'); }
+.vineyard { background-image: url('/vineyard.png'); }
+
+
+input[type=checkbox]{display: none;}
+input[type=checkbox]:checked+.farm-icon{opacity: 1;}
+input[type=checkbox]:checked+.farm-icon+label{color: #7bb03f;}
+
+.farm-icon {
+    float: left;
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    opacity:0.5;
+}
+
+
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1021,6 +1046,11 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
     font-weight: bold;
+}
+
+.checkbox label,
+.radio label {
+    padding-left: 10px;
 }
 
 .form-control {
@@ -1506,12 +1536,10 @@ label {
 .list-group-item {
     position: relative;
     display: block;
-    /*padding: 10px 15px;*/
-    /*margin-bottom: -1px;*/
-    margin: 20px;
     padding: 0;
     background-color: #fff;
     border: 1px solid #ddd;
+    margin: 20px 0;
 }
 
 a.list-group-item {
@@ -2774,12 +2802,13 @@ body {
     /*box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.4);*/
     background-color: #f8f5f0;
     text-align: center;
-    /*margin: 0 auto;*/
+
     margin-top: 6px;
 }
 
 .host-gallery .slide img {
-    max-width: 500px;
+    width: 100%;
+    padding: 0 15px;
 }
 
 
@@ -2820,9 +2849,6 @@ legend {
     cursor: pointer;
 }
 
-.farm-item {
-    padding-left: 32px;
-}
 .farm-item .address {
     font-family: 'Libre Baskerville', serif;
     margin-top: 10px;
@@ -2834,24 +2860,34 @@ legend {
 .farm-item h3 {
     margin: 38px 0 10px;
 }
+
+.farm-item {
+    margin-bottom: 20px;
+}
+
+.farm-item-btn {
+    margin-top: 30px;
+}
+
+.search-box {
+    margin-top: 20px;
+}
+
 .host-thumb {
-    width: 250px;
-    height: 280px;
+    height: 220px;
     overflow: hidden;
     background-color: #555;
     text-align: center;
     background-size: cover;
     background-position: center;
 }
-.host-thumb img {
-    height: 100%;
-}
+
 .load-more, .load-more p {
     margin: 10px;
     text-align: center;
 }
 .map-img {
-    width:100%;
+    /*width:100%;*/
     position: relative;
 }
 .map-img img:first-of-type {
@@ -2868,16 +2904,15 @@ legend {
     display: inline-block;
 }
 .host-info {
-    max-width: 500px;
     padding: 16px;
     background-color: #f8f5f0;
 }
 .mailing-address {
-    display: table-cell;
+    display: block;
     vertical-align: middle;
     line-height: 1.25em;
     padding-top: 10px;
-    max-width: 180px;
+    margin-bottom: 10px;
 }
 .mailing-address p {
     margin: 0;
@@ -3082,10 +3117,11 @@ legend {
 @media (max-width: 768px) and (max-width: 1600px) {
     .block:hover .tagline {
         bottom: 83px;
-
+    }
     .block:hover .otherline {
         bottom: 66px
     }
+
 }
 
 .block:hover .overlay {
@@ -3131,11 +3167,7 @@ legend {
     margin-top: -64px;
     margin-left: -64px;
 }
-.search-box {
-    /*position: fixed;*/
-    /*width: 100%;*/
-    margin-top: 20px;
-}
+
 /*.results-box {
     margin-left: 314px;
 }*/
@@ -3167,6 +3199,12 @@ legend {
     .stacked-btn {
         margin-top: 10px;
     }
+
+    .host-thumb {
+        width: 100%; 
+        height: 200px; 
+    }
+
 }
 
 
@@ -3182,10 +3220,44 @@ legend {
     }
 }
 
+@media all and (min-width: 440px) and (max-width: 991px) {
+    .farm-item {
+        width: 50%;
+    }
+
+    .farm-item-btn {
+        width: 2%;
+    }
+
+    .host-gallery {
+        height: 500px;
+    }
+
+    .host-thumb {
+        height: 220px;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .description,
+    .proposed-activities {
+        margin: 30px 0 0 0;
+        text-align: justify;
+    }
+
+    .host-gallery {
+        height: 400px;
+    }
+}
+
 @media all and (max-width: 440px) {
     .block  {
       width: 100%;
       margin: 10px 0;
+    }
+
+    .host-gallery {
+        height: 200px;
     }
 
     .border, .tagline, .otherline {
@@ -3214,11 +3286,6 @@ legend {
         margin: 30px 0;
     }
 
-    .host-thumb {
-        width: 100%; 
-        height: 200px; 
-    }
-
     .host-info .mailing-address {
         width: 100%;
         max-width: 100%;
@@ -3227,19 +3294,21 @@ legend {
         margin: 0 0 10px 0;
     }
 
-    .description,
-    .proposed-activities {
-        margin: 30px 0 0 0;
-        text-align: justify;
-    }
-
     .view-btn {
         float: none;
         padding: 0 18px 0 0;
         margin: 30px 0 0 0;
     }
-}
 
+    .stacked-btn {
+        margin: 5px 0;
+    }
+
+    .btn-block-tn {
+        display: block;
+        width: 100%;
+    }
+}
 
 @media all and (max-width: 440px) {
     .col-tn-1, .col-tn-2, .col-tn-3, .col-tn-4, .col-tn-5, .col-tn-6, .col-tn-7, .col-tn-8, .col-tn-9, .col-tn-10, .col-tn-11, .col-tn-12 {
