@@ -101,40 +101,42 @@
                 {{/if}}
             </div>
         </fieldset>
-        <div class="row">
-            <fieldset class="col-md-12">
-                <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
-                    <label for="entry" class="control-label">Full description</label>
-                    {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder="" rows="8"}}
-                    {{error-display fieldErrors.fullDescription}}
-                </div>
-            </fieldset>
-        </div>
-        <div class="row">
-            <fieldset class="col-md-6">
-                <legend class="h4">Communication preferences</legend>
-                <div class="checkbox">
-                    <label>
-                        {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
-                        Do not communicate my phone
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
-                        Do not communicate my email
-                    </label>
-                </div>
-            </fieldset>
-            <fieldset class="col-md-6">
-                <legend class="h4">Proposed activities to the woofers</legend>
-                {{toggle-options values=allActivities selected=activities}}
-            </fieldset>
-        </div>
+    </div>
+    <div class="row">
+        <fieldset class="col-md-12">
+            <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
+                <label for="entry" class="control-label">Full description</label>
+                {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder="" rows="8"}}
+                {{error-display fieldErrors.fullDescription}}
+            </div>
+        </fieldset>
+    </div>
+    <div class="row">
+        <fieldset class="col-md-6">
+            <legend class="h4">Communication preferences</legend>
+            <div class="checkbox">
+                <label>
+                    {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
+                    Do not communicate my phone
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
+                    Do not communicate my email
+                </label>
+            </div>
+        </fieldset>
+        <fieldset class="col-md-6">
+            <legend class="h4">Proposed activities to the woofers</legend>
+            {{toggle-options values=allActivities selected=activities}}
+        </fieldset>
     </div>
 
-    <div class="col-xs-push-10 col-xs-1 col-tn-12">
-        <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">Save</button>
+    <div class="row">
+        <div class="col-tn-12 float-r-xs">
+            <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">Save</button>
+        </div>
     </div>
 </form>
 
@@ -157,28 +159,26 @@
         <div class="col-md-12">
             <legend class="h4">Edit or delete a photo</legend>
             {{#if photos}}
-                <table class="table table-hover">
-                    <tbody>
+                <div class="table table-hover col-sm-12 col-tn-12">
                     {{#each photos itemController="photo"}}
-                        <tr>
-                            <td>
-                                <div class="host-thumb-small">
-                                    <img {{bind-attr src="completeUrl"}} />
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
+                                <div class="host-thumb">
+                                    {{host-thumb url=completeUrl}}
                                 </div>
-                            </td>
-                            <td>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
                                 {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
-                            </td>
-                            <td>
-                                <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary pull-right" style="margin-left:10px">
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
+                                <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary pull-right btn-block-tn margin-bottom-tn" style="margin-left:10px">
                                     Save
                                 </button>
-                                <button {{action "deletePhoto"}} class="btn btn-default pull-right">Delete</button>
-                            </td>
-                        </tr>
+                                <button {{action "deletePhoto"}} class="btn btn-default pull-right btn-block-tn">Delete</button>
+                            </div>
+                        </div>
                     {{/each}}
-                    </tbody>
-                </table>
+                </div>
             {{else}}
                 <p>No photo yet!</p>
             {{/if}}
