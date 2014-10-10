@@ -128,11 +128,10 @@
             </div>
         </fieldset>
         <fieldset class="col-md-6">
-            <legend class="h4">Proposed activities to the woofers</legend>
+            <legend class="h4">Proposed activities to the wwoofers</legend>
             {{toggle-options values=allActivities selected=activities optionValuePath='id'}}
         </fieldset>
     </div>
-
     <div class="row">
         <div class="col-tn-12 float-r-xs">
             <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">Save</button>
@@ -141,7 +140,6 @@
 </form>
 
 {{#unless isNew}}
-
     <form {{action "addPhoto" on="submit"}}>
         <div class="row">
             <div class="col-md-12">
@@ -155,10 +153,10 @@
             </div>
         </div>
     </form>
-    <div class="row">
-        <div class="col-md-12">
-            <legend class="h4">Edit or delete a photo</legend>
-            {{#if photos}}
+    {{#if photos}}
+        <div class="row">
+            <div class="col-md-12">
+                <legend class="h4">Edit or delete a photo</legend>
                 <div class="table table-hover col-sm-12 col-tn-12">
                     {{#each photos itemController="photo"}}
                         <div class="row">
@@ -179,9 +177,7 @@
                         </div>
                     {{/each}}
                 </div>
-            {{else}}
-                <p>No photo yet!</p>
-            {{/if}}
+            </div>
         </div>
-    </div>
+    {{/if}}
 {{/unless}}
