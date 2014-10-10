@@ -82,7 +82,8 @@ export default Ember.Component.extend({
             return Ember.ObjectProxy.create({
                 content: value,
                 isSelected: (selectedProperties.contains(Ember.get(selectionValue, compareProperty)) || selected.contains(selectionValue)),
-                value: selectionValue
+                value: selectionValue,
+                label: Ember.I18n.t('activities.' + selectionValue)
             });
         });
     }.property('values.length', 'values', 'selected.length', 'selected'),

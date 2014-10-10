@@ -5,9 +5,9 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
     /**
-     * List of all activities proposed by the hosts.
+     * Activity ids.
      */
-    allActivities: [
+    activityIds: [
         'ranching',
         'dairy',
         'vineyard',
@@ -16,5 +16,19 @@ export default Ember.ArrayController.extend({
         'forestry',
         'grain-farming',
         'permaculture'
-    ]
+    ],
+
+    /**
+     * List of all activities proposed by the hosts.
+     */
+    allActivities: function () {
+        var activities = [];
+        this.get('activityIds').forEach(function (item) {
+            activities.push(Ember.Object.create({
+                id: item,
+                label: Ember.I18n.t('activities.' + item)
+            }));
+        });
+        return activities;
+    }.property()
 });

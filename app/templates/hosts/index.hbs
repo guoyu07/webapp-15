@@ -16,7 +16,7 @@
                 </div>
             </div>
             <h4>Activities</h4>
-            {{toggle-options values=allActivities selected=selectedActivities}}
+            {{toggle-options values=allActivities selected=selectedActivities optionValuePath='id'}}
             {{#if currentUserIsAdmin}}
                 <h4>Admin</h4>
                 <div class="checkbox">
