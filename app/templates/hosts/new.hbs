@@ -100,7 +100,7 @@
                     {{/if}}
                 {{/if}}
             </div>
-        </div>
+        </fieldset>
         <div class="row">
             <fieldset class="col-md-12">
                 <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
@@ -131,7 +131,7 @@
                 {{toggle-options values=allActivities selected=activities}}
             </fieldset>
         </div>
-    </fieldset>
+    </div>
 
     <div class="col-xs-push-10 col-xs-1 col-tn-12">
         <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">Save</button>
@@ -139,50 +139,49 @@
 </form>
 
 {{#unless isNew}}
-    <hr>
-    <h3 class="leftSpace">Upload a new photo</h3>
-    <form class="row" {{action "addPhoto" on="submit"}}>
-        <div class="form-group">
-            <label for="file_upload" class="control-label">Pick a file</label>
-            <input id="file_upload" type="file" name="file" data-url="api/photos">
-        </div>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+
+    <form {{action "addPhoto" on="submit"}}>
+        <div class="row">
+            <div class="col-md-12">
+                <legend class="h4">Upload a new photo of your farm</legend>
+                <div class="form-group">
+                    <input id="file_upload" type="file" name="file" data-url="api/photos">
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
         </div>
     </form>
-    <hr/>
-    <h3>Edit or delete a photo</h3>
-    {{#if photos}}
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <td>Photo</td>
-                <td>Caption</td>
-                <td>Actions</td>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each photos itemController="photo"}}
-                <tr>
-                    <td>
-                        <div class="host-thumb-small">
-                            <img {{bind-attr src="completeUrl"}} />
-                        </div>
-                    </td>
-                    <td>
-                        {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
-                    </td>
-                    <td>
-                        <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary pull-right" style="margin-left:10px">
-                            Save
-                        </button>
-                        <button {{action "deletePhoto"}} class="btn btn-default pull-right">Delete</button>
-                    </td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    {{else}}
-        <p>No photo yet!</p>
-    {{/if}}
+    <div class="row">
+        <div class="col-md-12">
+            <legend class="h4">Edit or delete a photo</legend>
+            {{#if photos}}
+                <table class="table table-hover">
+                    <tbody>
+                    {{#each photos itemController="photo"}}
+                        <tr>
+                            <td>
+                                <div class="host-thumb-small">
+                                    <img {{bind-attr src="completeUrl"}} />
+                                </div>
+                            </td>
+                            <td>
+                                {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
+                            </td>
+                            <td>
+                                <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary pull-right" style="margin-left:10px">
+                                    Save
+                                </button>
+                                <button {{action "deletePhoto"}} class="btn btn-default pull-right">Delete</button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <p>No photo yet!</p>
+            {{/if}}
+        </div>
+    </div>
 {{/unless}}
