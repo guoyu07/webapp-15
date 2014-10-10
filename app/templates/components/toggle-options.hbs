@@ -1,7 +1,8 @@
 {{#each option in options}}
     <div class="checkbox">
-        <input type="checkbox" {{bind-attr checked=option.isSelected}} {{action "select" option on="change"}} {{bind-attr id=option.value}}>
-        <div class="farm-icon vineyard"></div>
-        <label {{bind-attr for=option.value}}>{{option.value}}</label>
+        <label {{bind-attr for=option.value}}>
+            <input type="checkbox" {{bind-attr id=option.value}} {{bind-attr checked=option.isSelected}} {{action "select" option on="change"}}>
+            {{option.value}}
+        </label>
     </div>
 {{/each}}

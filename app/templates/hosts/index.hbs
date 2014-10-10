@@ -63,11 +63,9 @@
                                 </span>
                             </div>
                         </div>
-
                         <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
                             <button class="btn btn-default btn-block-tn">VIEW</button>
                         </div> 
-
                     </div>
                 {{/link-to}}
             {{/each}}
@@ -76,7 +74,7 @@
                     <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-default">
                         Load more
                     </button>
-                <p class="load-more">Total: {{totalHosts}}</p>
+                <p class="load-more">
             </div>
         </div>
     </div>

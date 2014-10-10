@@ -11,5 +11,7 @@ var App = Ember.Application.extend({
 
 loadInitializers(App, 'webapp');
 
+// Set default language for pluralization
+window.CLDR.defaultLanguage = "en";
 
 export default App;
