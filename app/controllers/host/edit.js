@@ -21,8 +21,9 @@ export default Ember.ObjectController.extend({
             }
 
             // Get host and address
-            var host = this.get('model');
-            var address = host.get('address');
+            var host = this.get('model'),
+                address = host.get('address'),
+                user = host.get('user');
 
             // Reset website to null to pass server-side validation (only accept null, and not empty string)
             if (Ember.isEmpty(host.get('webSite'))) {
@@ -32,6 +33,7 @@ export default Ember.ObjectController.extend({
             // Initialize validations array
             var validations = Ember.makeArray(host.validate());
             validations.push(address.validate());
+            validations.push(user.validate());
 
             // Validate host and address
             var self = this;
@@ -40,6 +42,7 @@ export default Ember.ObjectController.extend({
                 // Prepare update promises
                 var updates = Ember.makeArray(host.save());
                 updates.push(address.save());
+                updates.push(user.save());
 
                 // Update host and address
                 Ember.RSVP.all(updates).then(function () {

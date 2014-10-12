@@ -28,6 +28,9 @@ export default DS.Model.extend(ValidationsMixin, {
         return this.get('photos').objectAt(0);
     }.property('photos.@each'),
 
+    // Phone is mandatory for hosts, this binding is used for validation
+    phoneBinding: 'user.phone',
+
     // Validations
     validations: {
         farmName: {
@@ -44,6 +47,9 @@ export default DS.Model.extend(ValidationsMixin, {
         },
         webSite: {
             url: { allowBlank: true }
+        },
+        phone: {
+            presence: true
         }
     }
 });

@@ -18,14 +18,14 @@
                 {{error-display fieldErrors.farmName}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.webSite.length:has-error"}}>
-                <label for="web" class="control-label">Website</label>
+                <label for="webSite" class="control-label">Website</label>
                 {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholder="http://www.ma-page-perso.fr"}}
                 {{error-display fieldErrors.webSite}}
             </div>
-            <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
-                <label for="shortDescription" class="control-label">Short description</label>
-                {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholder="Ferme biologique au coeur des Alpes"}}
-                {{error-display fieldErrors.shortDescription}}
+            <div {{bind-attr class=":form-group fieldErrors.phone.length:has-error"}}>
+                <label for="phone" class="control-label">Phone</label>
+                {{input type="text" id="phone" name="phone" value=user.phone class="form-control" placeholder="+33 611 22 33 44"}}
+                {{error-display fieldErrors.phone}}
             </div>
             <div {{bind-attr class=":form-group"}}>
                 <label for="travel" class="control-label">Travel</label>
@@ -104,6 +104,12 @@
     </div>
     <div class="row">
         <fieldset class="col-md-12">
+            <legend class="h4">Farm's description</legend>
+            <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
+                <label for="shortDescription" class="control-label">Short description</label>
+                {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholder="Ferme biologique au coeur des Alpes"}}
+                {{error-display fieldErrors.shortDescription}}
+            </div>
             <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
                 <label for="entry" class="control-label">Full description</label>
                 {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder="" rows="8"}}
