@@ -4,29 +4,43 @@
 import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
 import config from '../config/environment';
+import Regex from '../utils/regex';
 
-export default Ember.ObjectController.extend(ValidationsMixin, {
+export default Ember.Controller.extend(ValidationsMixin, {
 
-    needs: 'application',
+    needs: ['application'],
+
+    username: null,
+    password: null,
+    isLoading: false,
 
     actions: {
+        /**
+         * Logs a user in.
+         */
         login: function () {
 
+            // Prevent multiple login attempts
+            if (this.get('isLoading')) {
+                return;
+            }
+
             // Validate form then login
-            var loginData = this.get('content');
             var self = this;
-            loginData.validate().then(function () {
+            this.validate().then(function () {
+
+                // Set controller in loading state
+                self.set('isLoading', true);
 
                 // Prepare URL
-                var adapter = self.store.adapterFor('application'),
-                    url = [ adapter.get('host'), adapter.get('namespace'), 'users/login' ].join('/');
+                var url = [ config.apiHost, config.apiNamespace, 'users/login' ].join('/');
 
                 Ember.$.ajax({
                     type: 'POST',
                     url: url,
                     data: {
-                        username: loginData.get('username'),
-                        password: loginData.get('password')
+                        username: self.get('username'),
+                        password: self.get('password')
                     }
                 }).done(function (data) {
 
@@ -41,10 +55,24 @@ export default Ember.ObjectController.extend(ValidationsMixin, {
                 }).fail(function () {
                     // Notify user
                     alertify.error("The email address or password is incorrect.");
+                }).always(function () {
+                    self.set('isLoading', false);
                 });
             }).catch(function () {
                 alertify.error("Your submission is invalid.");
             });
+        }
+    },
+
+    validations: {
+        username: {
+            presence: true,
+            format: {
+                with: Regex.EMAIL_ADDRESS
+            }
+        },
+        password: {
+            presence: true
         }
     }
 });
