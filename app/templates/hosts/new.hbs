@@ -143,7 +143,7 @@
     <form {{action "addPhoto" on="submit"}}>
         <div class="row">
             <div class="col-md-12">
-                <legend class="h4">Upload a new photo of your farm</legend>
+                <h4>Upload a new photo of your farm</h4>
                 <div class="form-group">
                     <input id="file_upload" type="file" name="file" data-url="api/photos">
                 </div>
@@ -156,7 +156,7 @@
     {{#if photos}}
         <div class="row">
             <div class="col-md-12">
-                <legend class="h4">Edit or delete a photo</legend>
+                <h4>Edit or delete a photo</h4>
                 <div class="table table-hover col-sm-12 col-tn-12">
                     {{#each photos itemController="photo"}}
                         <div class="row">

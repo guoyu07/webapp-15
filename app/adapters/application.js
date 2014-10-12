@@ -5,6 +5,6 @@ import DS from 'ember-data';
 import config from '../config/environment';
 
 export default DS.RESTAdapter.extend({
-    namespace: 'api',
+    namespace: config.apiNamespace,
     host: config.apiHost
 });

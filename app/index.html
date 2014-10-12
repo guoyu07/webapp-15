@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Webapp</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Webapp</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{BASE_TAG}}
+        {{content-for 'head'}}
 
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/webapp.css">
-    <script src="assets/alertify.js"></script>
-</head>
-<body>
-<script>
-    window.WebappENV = {{ENV}};
-    window.EmberENV = window.WebappENV.EmberENV;
-</script>
-<script src="assets/vendor.js"></script>
-<script src="assets/webapp.js"></script>
-
-<script>
-    window.Webapp = require('webapp/app')['default'].create(WebappENV.APP);
-</script>
-</body>
+        <link rel="stylesheet" href="assets/vendor.css">
+        <link rel="stylesheet" href="assets/webapp.css">
+    </head>
+    <body>
+        <script src="assets/alertify.js"></script>
+        <script src="assets/vendor.js"></script>
+        <script src="assets/webapp.js"></script>
+    </body>
 </html>

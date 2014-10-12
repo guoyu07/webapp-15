@@ -30,10 +30,7 @@
         <div class="host-info">
             <div class="host-address">
                 <div class="map-img">
-                    <div>
-                        <img id="map" {{bind-attr src=mapUrl}}>
-                        <img class="marker" src="marker.png">
-                    </div>
+                    {{google-map addressId=address.id}}
                     <div class="mailing-address">
                         <span class="glyphicon glyphicon-home">
                         {{#if canSeeContactInfo}}

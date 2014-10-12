@@ -2,11 +2,13 @@
 
 module.exports = function (environment) {
     var ENV = {
+        modulePrefix: 'webapp',
         environment: environment,
         locationType: 'hash',
         baseUrl: '/',
         SERVER_BASE_URL: '',
         apiHost: '',
+        apiNamespace: 'api',
         EmberENV: {
             FEATURES: {
                 I18N_TRANSLATE_HELPER_SPAN: false
@@ -17,6 +19,16 @@ module.exports = function (environment) {
         APP: {
             // Here you can pass flags/options to your application instance
             // when it is created
+        },
+
+        // Fix content security policy warnings
+        contentSecurityPolicy: {
+            'default-src': "'none' plop",
+            'font-src': "'self' fonts.gstatic.com",
+            'connect-src': "'self'",
+            'img-src': "'self' data: app.wwoof.fr maps.googleapis.com",
+            'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
+            'media-src': "'self'"
         }
     };
 
@@ -28,6 +40,18 @@ module.exports = function (environment) {
         ENV.APP.LOG_VIEW_LOOKUPS = true;
 
         ENV.SERVER_BASE_URL = 'http://localhost:3333';
+    }
+
+    if (environment === 'test') {
+        // Testem prefers this...
+        ENV.baseURL = '/';
+        ENV.locationType = 'auto';
+
+        // keep test console output quieter
+        ENV.APP.LOG_ACTIVE_GENERATION = false;
+        ENV.APP.LOG_VIEW_LOOKUPS = false;
+
+        ENV.APP.rootElement = '#ember-testing';
     }
 
     if (environment === 'production') {
