@@ -47,12 +47,13 @@ export default Ember.ArrayController.extend({
 
             // Find hosts
             var self = this;
-            this.store
-                .find('host', this.get('parameters'))
-                .then(function (hosts) {
-                    self.set('model', hosts);
-                    self.set('isLoading', false);
-                });
+            this.store.find('host', this.get('parameters')).then(function (hosts) {
+                self.set('model', hosts);
+            }).catch(function () {
+                alertify.error('Something went wrong, try again later :(');
+            }).finally(function () {
+                self.set('isLoading', false);
+            });
         },
         loadMoreHosts: function () {
 
@@ -66,12 +67,15 @@ export default Ember.ArrayController.extend({
 
             // Initialize variables
             var newOffset = this.store.metadataFor('host').offset + 20,
-                params = Ember.$.extend(true, this.get('parameters') || {}, {offset: newOffset}),
+                params = Ember.$.extend(true, this.get('parameters') || {}, { offset: newOffset }),
                 self = this;
 
             // Find next page of content and update
             this.store.find('host', params).then(function (hosts) {
-                self.get('model').addObjects(hosts.get('content'));
+                self.get('content').addObjects(hosts.get('content'));
+            }).catch(function () {
+                alertify.error('Something went wrong, try again later :(');
+            }).finally(function () {
                 self.set('isLoading', false);
             });
         }
