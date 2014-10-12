@@ -25,7 +25,7 @@ export default Ember.ObjectController.extend({
             var address = host.get('address');
 
             // Reset website to null to pass server-side validation (only accept null, and not empty string)
-            if (host.get('webSite') === '') {
+            if (Ember.isEmpty(host.get('webSite'))) {
                 host.set('webSite', null);
             }
 
