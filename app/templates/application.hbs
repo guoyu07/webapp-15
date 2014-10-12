@@ -37,7 +37,7 @@
                             {{currentUser.firstName}} {{currentUser.lastName}} <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>{{#link-to 'user.edit' currentUser}}My Account{{/link-to}}</li>
+                            <li>{{#link-to 'user.edit' currentUser.id}}My Account{{/link-to}}</li>
                             <li>{{#link-to 'memberships'}}My Memberships{{/link-to}}</li>
                             <li class="divider"></li>
                             <li><a href="#" {{action "logout"}}>Logout</a></li>
