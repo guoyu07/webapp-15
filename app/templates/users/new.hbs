@@ -36,7 +36,10 @@
             </div>
             <div {{bind-attr class=":form-group fieldErrors.password.length:has-error"}}>
                 <label for="password" class="control-label">Password</label>
-                {{input type="password" id="password" name="password" value=password class="form-control"}}
+                {{#unless isNew}}
+                    ({{#link-to 'user.change-password' id}}change my password{{/link-to}})
+                {{/unless}}
+                {{input type="password" id="password" name="password" value=password disabled=disablePasswordField class="form-control"}}
                 {{error-display fieldErrors.password}}
             </div>
         </div>

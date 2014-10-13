@@ -4,6 +4,9 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
+
+    disablePasswordField: true,
+
     actions: {
         saveUser: function () {
 
@@ -21,8 +24,7 @@ export default Ember.ObjectController.extend({
                 }).catch(function () {
                     alertify.error('Something went wrong.');
                 });
-            }).catch(function (error) {
-                console.log(error);
+            }).catch(function () {
                 alertify.error("Your submission is invalid.");
             });
         }
