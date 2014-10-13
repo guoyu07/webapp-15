@@ -21,9 +21,10 @@ module.exports = function (environment) {
             // when it is created
         },
 
-        // Fix content security policy warnings
+        // Configure content security policy headers
+        contentSecurityPolicyHeader: 'Content-Security-Policy',
         contentSecurityPolicy: {
-            'default-src': "'none' plop",
+            'default-src': "'none'",
             'font-src': "'self' fonts.gstatic.com",
             'connect-src': "'self'",
             'img-src': "'self' data: app.wwoof.fr maps.googleapis.com",
