@@ -8,6 +8,6 @@ export default Ember.ObjectController.extend({
     belongsToCurrentUser: function() {
         var currentUserId = this.get('controllers.application.currentUser.id');
         var hostUserId = this.get('user.id');
-        return currentUserId == hostUserId;
+        return currentUserId === parseInt(hostUserId);
     }.property('controllers.application.currentUser.id', 'user.id')
 });
