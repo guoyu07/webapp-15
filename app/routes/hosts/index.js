@@ -4,7 +4,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    model: function () {
-        return this.store.find('host', this.controllerFor('hosts.index').get('parameters'));
+    model: function (params) {
+        return this.store.find('host', params);
     }
 });

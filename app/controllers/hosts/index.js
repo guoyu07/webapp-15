@@ -10,11 +10,14 @@ export default Ember.ArrayController.extend({
     // Whether the controller is currently loading data
     isLoading: false,
 
+    // Query parameters bound with the URL
+    queryParams: ['searchTerm', 'department'],
+
     // Search filters
-    pendingOnly: false,
     searchTerm: null,
-    departmentFilter: null,
+    department: null,
     selectedActivities: [],
+    pendingOnly: false,
 
     // Bindings
     departmentFilterOptionsBinding: 'controllers.departments',
@@ -24,11 +27,11 @@ export default Ember.ArrayController.extend({
     parameters: function () {
         return {
             'searchTerm': Ember.$.trim(this.get('searchTerm')) || null,
-            'dpt': this.get('departmentFilter.id') || null,
+            'department': this.get('department') || null,
             'pendingOnly': this.get('pendingOnly') || null,
             'selectedActivities': this.get('selectedActivities') || null
         };
-    }.property('searchTerm', 'departmentFilter.id', 'pendingOnly', 'selectedActivities'),
+    }.property('searchTerm', 'department', 'pendingOnly', 'selectedActivities'),
 
     totalHosts: function () {
         return this.store.metadataFor('host').total;

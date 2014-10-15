@@ -4,13 +4,24 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    model: function () {
+    beforeModel: function () {
+        // All departments are required in most routes and must be loaded BEFORE the models so the
+        // binding of department query parameters with the department select works properly
+        var promises = {};
+        promises.departments = this.store.find('department');
+
+        // The memberships of the current user (if any) are required in most pages
         if (this.controllerFor('application').get('isAuthenticated')) {
-            return this.store.find('membership', { userId: this.controllerFor('application').get('currentUser.id') });
+            var currentUserId = this.controllerFor('application').get('currentUser.id');
+            promises.userMemberships = this.store.find('membership', { userId: currentUserId });
         }
-    },
-    setupController: function (controller, model) {
-        this.controllerFor('memberships').set('model', model || []);
+
+        // Resolve all promises and set data into controllers
+        var self = this;
+        return Ember.RSVP.hash(promises).then(function (result) {
+            self.controllerFor('departments').set('model', result.departments);
+            self.controllerFor('memberships').set('model', result.userMemberships || []);
+        });
     },
     actions: {
         error: function(err) {
