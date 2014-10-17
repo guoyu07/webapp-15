@@ -11,12 +11,12 @@ export default Ember.ArrayController.extend({
     isLoading: false,
 
     // Query parameters bound with the URL
-    queryParams: ['searchTerm', 'department'],
+    queryParams: ['searchTerm', 'department', 'activities'],
 
     // Search filters
     searchTerm: null,
     department: null,
-    selectedActivities: [],
+    activities: [],
     pendingOnly: false,
 
     // Bindings
@@ -28,10 +28,10 @@ export default Ember.ArrayController.extend({
         return {
             'searchTerm': Ember.$.trim(this.get('searchTerm')) || null,
             'department': this.get('department') || null,
-            'pendingOnly': this.get('pendingOnly') || null,
-            'selectedActivities': this.get('selectedActivities') || null
+            'pendingOnly': this.get('pendingOnly'),
+            'activities': this.get('activities') || null
         };
-    }.property('searchTerm', 'department', 'pendingOnly', 'selectedActivities'),
+    }.property('searchTerm', 'department', 'pendingOnly', 'activities'),
 
     totalHosts: function () {
         return this.store.metadataFor('host').total;
