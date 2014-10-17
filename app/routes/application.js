@@ -10,6 +10,9 @@ export default Ember.Route.extend({
         var promises = {};
         promises.departments = this.store.find('department');
 
+        // Countries are required in most routes
+        promises.countries = this.store.find('country');
+
         // The memberships of the current user (if any) are required in most pages
         if (this.controllerFor('application').get('isAuthenticated')) {
             var currentUserId = this.controllerFor('application').get('currentUser.id');
@@ -20,6 +23,7 @@ export default Ember.Route.extend({
         var self = this;
         return Ember.RSVP.hash(promises).then(function (result) {
             self.controllerFor('departments').set('model', result.departments);
+            self.controllerFor('countries').set('model', result.countries);
             self.controllerFor('memberships').set('model', result.userMemberships || []);
         });
     },
