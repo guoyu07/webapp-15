@@ -2,6 +2,7 @@
  * Ember route for host.
  */
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.Route.extend({
     actions: {
@@ -28,7 +29,7 @@ export default Ember.Route.extend({
             var itemCode = this.controller.get('hasHostMemberships') ? "HR" : "H";
 
             // Hit the payment route in order to get redirected to PayPal
-            window.location.replace(WebappENV.SERVER_BASE_URL + '/payment/start?itemCode=' + itemCode);
+            window.location.replace(config.SERVER_BASE_URL + '/payment/start?itemCode=' + itemCode);
         }
     }
 });
