@@ -11,7 +11,7 @@ export default Ember.ArrayController.extend({
     isLoading: false,
 
     // Query parameters bound with the URL
-    queryParams: ['searchTerm', 'department', 'activities'],
+    queryParams: ['searchTerm', 'department', 'pendingOnly', 'activities'],
 
     // Search filters
     searchTerm: null,
