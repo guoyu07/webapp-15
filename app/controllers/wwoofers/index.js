@@ -7,6 +7,9 @@ export default Ember.ArrayController.extend({
 
     needs: ['countries'],
 
+    // Whether the controller is in loading state
+    isLoading: false,
+
     // Query parameters bound with the URL
     queryParams: ['searchTerm', 'country'],
 

@@ -29,51 +29,55 @@
                 </div>
             {{/if}}
             <div class="row col-md-3 col-sm-12">
-                <button {{action "searchHosts"}} class="btn btn-primary btn-block-tn">Search</button>
+                <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block-tn">Search</button>
             </div>
         </form>
     </div>
     <div class="col-md-9 col-sm-12">
-        <div class="results-box">
-            <div class="list-group">
-                {{#each itemController="host.index"}}
-                    {{#link-to "host" model title=farmName class="list-group-item col-md-12"}}
-                        <div class="row farm">
-                            <div class="col-md-4 col-sm-4">
-                                <div class="host-thumb">
-                                    {{#if photos.length}}
-                                        {{host-thumb url=mainPhoto.completeUrl}}
-                                    {{else}}
-                                        {{host-thumb url="wwoof-no-photo.png"}}
-                                    {{/if}}
+        {{#if isLoading}}
+            {{partial 'loading'}}
+        {{else}}
+            <div class="results-box">
+                <div class="list-group">
+                    {{#each itemController="host.index"}}
+                        {{#link-to "host" model title=farmName class="list-group-item col-md-12"}}
+                            <div class="row farm">
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="host-thumb">
+                                        {{#if photos.length}}
+                                            {{host-thumb url=mainPhoto.completeUrl}}
+                                        {{else}}
+                                            {{host-thumb url="wwoof-no-photo.png"}}
+                                        {{/if}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 farm-item">
+                                    <div class="col-md-12">
+                                        <h3>{{farmName}}</h3>
+                                <span class="host-name">{{user.firstName}}
+                                    <span class="last-name">{{user.lastName}}</span>
+                                </span>
+                                        <p>{{trim-string fullDescription start=0 max=75}}</p>
+                                <span class="address">
+                                    <i>{{address.city}}, {{address.department.name}}</i>
+                                </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
+                                    <button class="btn btn-default btn-block-tn">VIEW</button>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12 farm-item">
-                                <div class="col-md-12">
-                                    <h3>{{farmName}}</h3>
-                            <span class="host-name">{{user.firstName}}
-                                <span class="last-name">{{user.lastName}}</span>
-                            </span>
-                                    <p>{{trim-string fullDescription start=0 max=75}}</p>
-                            <span class="address">
-                                <i>{{address.city}}, {{address.department.name}}</i>
-                            </span>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
-                                <button class="btn btn-default btn-block-tn">VIEW</button>
-                            </div>
-                        </div>
-                    {{/link-to}}
-                {{/each}}
-                <div class="row col-md-12">
-                    <p class="load-more">
-                        <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-default">
-                            Load more
-                        </button>
-                    <p class="load-more">
+                        {{/link-to}}
+                    {{/each}}
+                    <div class="row col-md-12">
+                        <p class="load-more">
+                            <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-default">
+                                Load more
+                            </button>
+                        <p class="load-more">
+                    </div>
                 </div>
             </div>
-        </div>
+        {{/if}}
     </div>
 </div>
