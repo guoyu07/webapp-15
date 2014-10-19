@@ -5,10 +5,7 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
 
-    needs: ['application', 'departments', 'activities'],
-
-    // Whether the controller is currently loading data
-    isLoading: false,
+    needs: ['countries', 'application', 'departments', 'activities'],
 
     // Query parameters bound with the URL
     queryParams: ['searchTerm', 'department', 'pendingOnly', 'activities'],
@@ -20,10 +17,11 @@ export default Ember.ArrayController.extend({
     pendingOnly: false,
 
     // Bindings
-    departmentFilterOptionsBinding: 'controllers.departments',
-    currentUserIsAdminBinding: 'controllers.application.currentUserIsAdmin',
-    allActivitiesBinding: 'controllers.activities.allActivities',
+    departmentFilterOptions: Ember.computed.alias('controllers.departments'),
+    currentUserIsAdmin: Ember.computed.alias('controllers.application.currentUserIsAdmin'),
+    allActivities: Ember.computed.alias('controllers.activities.allActivities'),
 
+    // Query parameters
     parameters: function () {
         return {
             'searchTerm': Ember.$.trim(this.get('searchTerm')) || null,
@@ -33,31 +31,7 @@ export default Ember.ArrayController.extend({
         };
     }.property('searchTerm', 'department', 'pendingOnly', 'activities'),
 
-    totalHosts: function () {
-        return this.store.metadataFor('host').total;
-    }.property('model', 'model.@each', 'model.length'),
-
     actions: {
-        searchHosts: function () {
-
-            // Return early if already loading
-            if (this.get('isLoading')) {
-                return;
-            }
-
-            // Set controller loading state
-            this.set('isLoading', true);
-
-            // Find hosts
-            var self = this;
-            this.store.find('host', this.get('parameters')).then(function (hosts) {
-                self.set('model', hosts);
-            }).catch(function () {
-                alertify.error('Something went wrong, try again later :(');
-            }).finally(function () {
-                self.set('isLoading', false);
-            });
-        },
         loadMoreHosts: function () {
 
             // Return early if already loading
@@ -69,7 +43,7 @@ export default Ember.ArrayController.extend({
             this.set('isLoading', true);
 
             // Initialize variables
-            var newOffset = this.store.metadataFor('host').offset + 20,
+            var newOffset = this.store.metadataFor('host').offset + 10,
                 params = Ember.$.extend(true, this.get('parameters') || {}, { offset: newOffset }),
                 self = this;
 

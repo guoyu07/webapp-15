@@ -21,5 +21,8 @@ export default Ember.Route.extend({
                 address: address
             });
         });
+    },
+    renderTemplate: function () {
+        this.render('wwoofer/form', { controller: 'wwoofers.new' });
     }
 });

@@ -66,7 +66,7 @@
                     <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
                         <label for="country" class="control-label">Country</label>
                         {{view Ember.Select
-                        content=controllers.hosts.countries
+                        content=controllers.countries.hostCountries
                         optionValuePath="content.id"
                         optionLabelPath="content.name"
                         selection=address.country

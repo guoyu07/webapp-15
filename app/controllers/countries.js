@@ -4,5 +4,10 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-    model: []
+    model: [],
+
+    /**
+     * Countries that hosts can be attached to.
+     */
+    hostCountries:  Ember.computed.filterBy('model', 'isFrance', true)
 });

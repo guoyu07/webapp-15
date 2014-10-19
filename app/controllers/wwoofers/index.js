@@ -4,6 +4,14 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-    needs: ['wwoofers'],
-    contentBinding: 'controllers.wwoofers.arrangedContent'
+
+    needs: ['countries'],
+
+    // Query parameters bound with the URL
+    queryParams: ['searchTerm', 'country'],
+
+    // Search filters
+    searchTerm: null,
+    country: null
+
 });

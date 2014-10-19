@@ -5,7 +5,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'hosts', 'host', 'departments', 'memberships', 'activities'],
+    needs: ['application', 'host', 'departments', 'countries', 'memberships', 'activities'],
 
     hasHostMembershipsBinding: 'controllers.memberships.hasHostMemberships',
     latestHostMembershipBinding: 'controllers.memberships.latestHostMembership',

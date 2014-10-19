@@ -3470,3 +3470,11 @@ div.table .row {
         width: 100%;
     }
 }
+
+.spinkit-three-bounce-spinner div {
+    background-color: #7bb03f;
+}
+
+.checkbox-inline {
+    margin-right: 10px;
+}
