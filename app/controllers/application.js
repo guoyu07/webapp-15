@@ -58,18 +58,21 @@ export default Ember.Controller.extend(ValidationsMixin, {
             this.set('currentUser', null);
 
             // Prepare URL
-            var adapter = this.store.adapterFor('application'),
-                url = [ adapter.get('host'), adapter.get('namespace'), 'users/logout' ].join('/');
+            var url = [ config.apiHost, config.apiNamespace, 'users/logout' ].join('/');
 
             // Logs the user out and refresh the page
-            Ember.$.ajax({
+            var post = Ember.$.ajax({
                 type: 'POST',
                 url: url
-            }).done(function () {
-                // Go to home page (refresh the page to get fresh data from the API)
-                window.location.replace(config.baseUrl);
-            }).fail(function () {
-                // Notify user
+            });
+
+            // Go to home page (refresh the page to get fresh data from the API)
+            post.done(function () {
+                window.location.replace(config.baseURL);
+            });
+
+            // Notify user
+            post.fail(function () {
                 alertify.error("Something went wrong.");
             });
         },
@@ -82,8 +85,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 self.set('isLoading', true);
 
                 // Prepare URL
-                var adapter = self.store.adapterFor('application'),
-                    url = [ adapter.get('host'), adapter.get('namespace'), 'users/impersonate' ].join('/');
+                var url = [ config.apiHost, config.apiNamespace, 'users/impersonate' ].join('/');
 
                 // Impersonate the user
                 Ember.$.ajax({

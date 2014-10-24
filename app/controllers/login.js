@@ -55,7 +55,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
                     self.set('controllers.application.currentUser', data.user);
 
                     // Go to home page (refresh the page to get fresh data from the API)
-                    window.location.replace(config.baseUrl);
+                    window.location.replace(config.baseURL);
                 });
 
                 // Handle failure
