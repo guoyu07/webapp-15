@@ -5,6 +5,9 @@ export default {
 
     initialize: function () {
 
+        // Set default language
+        Ember.I18n.locale = "en";
+
         // Get locale file from server
         var request = Ember.$.get('/public/locales/en.json');
 
