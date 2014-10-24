@@ -4,8 +4,8 @@ module.exports = function (environment) {
     var ENV = {
         modulePrefix: 'webapp',
         environment: environment,
-        locationType: 'hash',
-        baseUrl: '/',
+        baseURL: '/',
+        locationType: 'auto',
         SERVER_BASE_URL: '',
         apiHost: '',
         apiNamespace: 'api',
