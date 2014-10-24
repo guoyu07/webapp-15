@@ -1,4 +1,53 @@
 <div class="page-header">
     <h1>{{user.firstName}} {{user.lastName}}</h1>
 </div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">General Information</h4>
+            </div>
+            <div class="panel-body">
+                Member since {{format-date user.createdAt}}<br/>
+                Born {{format-date user.birthDate}} ({{birthdate-to-age user.birthDate}} years old)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Address</h4>
+            </div>
+            <div class="panel-body">
+                {{address.address1}}<br/>
+                {{address.address2}}<br/>
+                {{address.zipCode}} {{address.city}} {{address.state}}<br/>
+                {{address.country.name}}<br/>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Memberships</h4>
+            </div>
+            <div class="panel-body">
+                {{#link-to 'user.memberships' user}}View memberships{{/link-to}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Contact</h4>
+            </div>
+            <div class="panel-body">
+                {{user.phone}}<br/>
+                {{user.email}}
+            </div>
+        </div>
+    </div>
+</div>
+
 {{partial 'wwoofer/membership-status'}}

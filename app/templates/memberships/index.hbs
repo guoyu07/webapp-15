@@ -1,89 +1,36 @@
-<h1>My Memberships</h1>
-<div class="row">
-    <div class="col-md-6">
-        <h4>Wwoofer Memberships</h4>
-        {{#if hasWwoofMemberships}}
-            {{#if latestWwoofMembership.isExpired}}
-                <div class="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                    </button>
-                    <strong><span class="glyphicon glyphicon-exclamation-sign"></span></strong>
-                    Your wwoofer membership is expired since {{format-date latestWwoofMembership.expireAt}}.
-                    Renew your membership to access full host details.
-                </div>
-            {{/if}}
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Payment</th>
-                    <th>Amount</th>
-                    <th>Expire At</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each wwoofMemberships}}
-                    <tr>
-                        <td>{{itemCode}}</td>
-                        <td>{{format-date createdAt}}</td>
-                        <td>{{total}} Euro</td>
-                        <td>{{format-date expireAt}}</td>
-                    </tr>
-                {{/each}}
-                </tbody>
-            </table>
-            <p>
-                <button {{action "renewWwoofMembership"}} {{bind-attr disabled="latestWwoofMembership.isStillValidInAMonth"}}
-                        class="btn btn-primary">Renew Membership
-                </button>
-                <i>You may renew your membership 30 days before it expires.</i>
-            </p>
-        {{else}}
-            You've never taken a membership as a Wwoofer.
-        {{/if}}
-    </div>
-    <div class="col-md-6">
-        <h4>Host Memberships</h4>
-        {{#if hasHostMemberships}}
-            {{#if latestHostMembership.isExpired}}
-                <div class="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                    </button>
-                    <strong><span class="glyphicon glyphicon-exclamation-sign"></span></strong>
-                    Your host membership is expired since {{format-date latestHostMembership.expireAt}}.
-                    Renew your membership to appear in the host listing.
-                </div>
-            {{/if}}
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Payment</th>
-                    <th>Amount</th>
-                    <th>Expire At</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each hostMemberships}}
-                    <tr>
-                        <td>{{itemCode}}</td>
-                        <td>{{format-date createdAt}}</td>
-                        <td>{{total}} Euro</td>
-                        <td>{{format-date expireAt}}</td>
-                    </tr>
-                {{/each}}
-                </tbody>
-            </table>
-            <p>
-                <button {{action "renewHostMembership"}} {{bind-attr disabled="latestHostMembership.isStillValidInAMonth"}}
-                        class="btn btn-primary">Renew Membership
-                </button>
-                <i>You may renew your membership 30 days before it expires.</i>
-            </p>
-        {{else}}
-            You've never taken a membership as a Host.
-        {{/if}}
-    </div>
+<div class="page-header">
+    <h1>
+        Memberships Expiring In The Next 30 Days
+    </h1>
 </div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Type</th>
+        <th>Expires At</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each}}
+        <tr>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{type}}</td>
+            <td>{{format-date expireAt}}</td>
+            <td>
+                <button {{action 'sendReminder' this}} {{bind-attr disabled="reminderAlreadySent"}} class="btn btn-primary">
+                    Send Reminder
+                </button>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<button {{action "loadMore"}} {{bind-attr disabled=isLoading}} class="btn btn-default">
+    Load More
+</button>

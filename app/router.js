@@ -27,9 +27,9 @@ Router.map(function () {
     this.resource('user', { path: '/user/:user_id' }, function () {
         this.route('edit');
         this.route('change-password');
+        this.route('memberships');
     });
     this.resource('memberships', function () {
-        this.route('reminders');
     });
     this.route('payment', function () {
         this.route('complete');

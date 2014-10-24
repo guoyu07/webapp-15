@@ -23,7 +23,12 @@ export default Ember.Controller.extend(ValidationsMixin, {
         }
 
         // Get the connected user from local storage (if any)
-        return localStorage["user"] ? JSON.parse(localStorage["user"]) : null;
+        if (localStorage["user"]) {
+            var user = JSON.parse(localStorage["user"]);
+            return this.store.find('user', user.id);
+        } else {
+            return null;
+        }
     }.property(),
 
     /**
@@ -39,10 +44,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Indicates whether the current user is an administrator.
      */
-    currentUserIsAdmin: function () {
-        var currentuser = this.get('currentUser');
-        return currentuser && currentuser.isAdmin;
-    }.property('currentUser'),
+    currentUserIsAdmin: Ember.computed.and('isAuthenticated', 'currentUser.isAdmin'),
 
     /**
      * Email address of the user to impersonate (admins only).

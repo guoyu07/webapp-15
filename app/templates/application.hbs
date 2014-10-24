@@ -17,7 +17,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li>{{#link-to 'wwoofers'}}Wwoofers{{/link-to}}</li>
-                            <li>{{#link-to 'memberships.reminders'}}Reminders{{/link-to}}</li>
+                            <li>{{#link-to 'memberships'}}Memberships{{/link-to}}</li>
                             <li><a href="#" data-toggle="modal" data-target="#impersonationModal">Impersonate User</a></li>
                         </ul>
                     </li>
@@ -38,7 +38,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>{{#link-to 'user.edit' currentUser.id}}My Account{{/link-to}}</li>
-                            <li>{{#link-to 'memberships'}}My Memberships{{/link-to}}</li>
+                            <li>{{#link-to 'user.memberships' currentUser.id}}My Memberships{{/link-to}}</li>
                             <li class="divider"></li>
                             <li><a href="#" {{action "logout"}}>Logout</a></li>
                         </ul>

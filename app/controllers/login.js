@@ -35,27 +35,35 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 // Prepare URL
                 var url = [ config.apiHost, config.apiNamespace, 'users/login' ].join('/');
 
-                Ember.$.ajax({
+                // Logs user in
+                var post = Ember.$.ajax({
                     type: 'POST',
                     url: url,
                     data: {
                         username: self.get('username'),
                         password: self.get('password')
                     }
-                }).done(function (data) {
+                });
 
-                    // Store the user in the local storage
-                    self.set('controllers.application.currentUser', data.user);
+                // Handle success
+                post.done(function (data) {
 
                     // Notify user
                     alertify.success("Welcome back!");
 
+                    // Store the user in the local storage
+                    self.set('controllers.application.currentUser', data.user);
+
                     // Go to home page (refresh the page to get fresh data from the API)
                     window.location.replace(config.baseUrl);
-                }).fail(function () {
-                    // Notify user
+                });
+
+                // Handle failure
+                post.fail(function () {
                     alertify.error("The email address or password is incorrect.");
-                }).always(function () {
+                });
+
+                post.always(function () {
                     self.set('isLoading', false);
                 });
             }).catch(function () {

@@ -9,5 +9,5 @@ export default Ember.ArrayController.extend({
     /**
      * Countries that hosts can be attached to.
      */
-    hostCountries:  Ember.computed.filterBy('model', 'isFrance', true)
+    hostCountries: Ember.computed.filterBy('model', 'isFrance', true)
 });

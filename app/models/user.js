@@ -15,10 +15,12 @@ export default DS.Model.extend(ValidationsMixin, {
     birthDate: DS.attr('date'),
     phone: DS.attr('string'),
     isAdmin: DS.attr('boolean'),
+    createdAt: DS.attr('date'),
 
     // Relationships
     host: DS.belongsTo('host'),
     wwoofer: DS.belongsTo('wwoofer'),
+    memberships: DS.hasMany('membership', { async: true }),
 
     // Validations
     validations: {
