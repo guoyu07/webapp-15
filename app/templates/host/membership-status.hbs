@@ -1,5 +1,5 @@
 {{#if hasHostMemberships}}
-    {{#if latestHostMembership.isStillValidInAMonth}}
+    {{#unless latestHostMembership.isStillValidInAMonth}}
         <div class="alert alert-warning alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-exclamation-sign"></span>
@@ -13,7 +13,7 @@
              to the community, you must
             {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="alert-link"}}renew your membership{{/link-to}}.
         </div>
-    {{/if}}
+    {{/unless}}
 {{else}}
     <div class="alert alert-info alert-dismissable" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

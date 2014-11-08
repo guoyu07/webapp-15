@@ -58,12 +58,7 @@
                 {{/each}}
                 </tbody>
             </table>
-            <p>
-                <button {{action "renewHostMembership"}} {{bind-attr disabled="latestHostMembership.isStillValidInAMonth"}}
-                        class="btn btn-primary">Renew Membership
-                </button>
-                <i>You may renew your membership 30 days before it expires.</i>
-            </p>
+            <i>You may renew your membership 30 days before it expires.</i>
         {{else}}
             You've never taken a membership as a Host.
         {{/if}}
