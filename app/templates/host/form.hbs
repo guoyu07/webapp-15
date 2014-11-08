@@ -5,7 +5,9 @@
     {{#if isPending}}
         {{partial 'host/validation-status'}}
     {{else}}
-        {{partial 'host/membership-status'}}
+        {{#if belongsToCurrentUser}}
+            {{partial 'host/membership-status'}}
+        {{/if}}
     {{/if}}
 {{/unless}}
 <form>

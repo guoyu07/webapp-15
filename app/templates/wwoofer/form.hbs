@@ -2,7 +2,9 @@
     <h1>Your Wwoofer Profile</h1>
 </div>
 {{#unless isNew}}
-    {{partial 'wwoofer/membership-status'}}
+    {{#if belongsToCurrentUser}}
+        {{partial 'wwoofer/membership-status'}}
+    {{/if}}
 {{/unless}}
 <form>
     <div class="row">

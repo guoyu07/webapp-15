@@ -11,9 +11,9 @@ export default Ember.ArrayController.extend({
     sortProperties: ['expireAt'],
     sortAscending: false,
 
-    wwoofMemberships: Ember.computed.filterBy('model', 'type', 'W'),
+    wwoofMemberships: Ember.computed.filterBy('arrangedContent', 'type', 'W'),
 
-    hostMemberships: Ember.computed.filterBy('model', 'type', 'H'),
+    hostMemberships: Ember.computed.filterBy('arrangedContent', 'type', 'H'),
 
     hasMemberships: Ember.computed.notEmpty('model'),
 
@@ -24,7 +24,7 @@ export default Ember.ArrayController.extend({
     /**
      * Returns the user's most recent membership.
      */
-    latestMembership: Ember.computed.alias('content.firstObject'),
+    latestMembership: Ember.computed.alias('arrangedContent.firstObject'),
 
     /**
      * Returns the user's most recent Wwoof membership.

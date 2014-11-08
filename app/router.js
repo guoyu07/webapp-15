@@ -19,7 +19,6 @@ Router.map(function () {
     });
     this.resource('wwoofer', { path: '/wwoofer/:wwoofer_id' }, function () {
         this.route('edit');
-        this.route('membership');
     });
     this.resource('users', function () {
         this.route('new');
@@ -30,6 +29,7 @@ Router.map(function () {
         this.route('memberships');
     });
     this.resource('memberships', function () {
+        this.route('new');
     });
     this.route('payment', function () {
         this.route('complete');
