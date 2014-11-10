@@ -2,6 +2,7 @@
  * Ember route for the application.
  */
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.Route.extend({
     beforeModel: function () {
@@ -41,19 +42,18 @@ export default Ember.Route.extend({
                 alertify.error("You must be logged into your account to access that page.");
 
                 // Clear the user (just in case)
-                localStorage.removeItem("user");
+                this.controllerFor('application').set('currentUser', null);
 
                 // Prepare URL
-                var adapter = this.store.adapterFor('application'),
-                    url = [ adapter.get('host'), adapter.get('namespace'), 'users/logout' ].join('/');
+                var url = [ config.apiHost, config.apiNamespace, 'users/logout' ].join('/');
 
                 // Log the user out (just in case) and redirect to login
                 var self = this;
-                Ember.$.ajax({
+                return Ember.$.ajax({
                     type: 'POST',
                     url: url
                 }).done(function () {
-                    self.transitionTo('login');
+                    window.location.replace(config.baseURL + 'login');
                 });
             }
         },
