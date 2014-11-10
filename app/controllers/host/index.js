@@ -23,5 +23,5 @@ export default Ember.ObjectController.extend({
      * Indicates whether the current user can edit the host.
      * The user must either own the host or be an admin.
      */
-    canEditHost: Ember.computed.and('belongsToCurrentUser', 'controllers.application.currentUserIsAdmin')
+    canEditHost: Ember.computed.or('belongsToCurrentUser', 'controllers.application.currentUserIsAdmin')
 });
