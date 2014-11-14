@@ -48,7 +48,6 @@ export default Ember.Route.extend({
                 var url = [ config.apiHost, config.apiNamespace, 'users/logout' ].join('/');
 
                 // Log the user out (just in case) and redirect to login
-                var self = this;
                 return Ember.$.ajax({
                     type: 'POST',
                     url: url
