@@ -1,6 +1,7 @@
 /**
  * Ember model for hosts.
  */
+import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
@@ -24,10 +25,13 @@ export default DS.Model.extend(ValidationsMixin, {
     address: DS.belongsTo('address'),
     photos: DS.hasMany('photo'),
 
-    // Computed properties
-    mainPhoto: function () {
-        return this.get('photos').objectAt(0);
-    }.property('photos.@each'),
+    // First photo
+    mainPhoto: Ember.computed.readOnly('photos.firstObject'),
+
+    // Translated activities
+    activityNames: Ember.computed.map('activities', function(activity) {
+        return Ember.I18n.t('activities.' + activity);
+    }),
 
     // Phone is mandatory for hosts, this binding is used for validation
     phoneBinding: 'user.phone',
