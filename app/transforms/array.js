@@ -30,9 +30,9 @@ export default DS.Transform.extend({
             case 'array':
                 return deserialized;
             case 'string':
-                return deserialized.split(',').map(function (item) {
+                return deserialized ? deserialized.split(',').map(function (item) {
                     return Ember.$.trim(item);
-                });
+                }) : [];
             default:
                 return [];
         }
