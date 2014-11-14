@@ -21,9 +21,6 @@ var bootstrapFonts = pickFiles('bower_components/bootstrap/fonts', {
     destDir: '/fonts'
 });
 
-// Ember validations
-app.import('bower_components/ember-validations/index.js');
-
 // Moment
 app.import('bower_components/moment/moment.js');
 

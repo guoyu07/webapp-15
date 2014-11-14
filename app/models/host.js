@@ -3,6 +3,7 @@
  */
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
+import Regex from '../utils/regex';
 
 export default DS.Model.extend(ValidationsMixin, {
 
@@ -46,7 +47,10 @@ export default DS.Model.extend(ValidationsMixin, {
             length: { minimum: 5, maximum: 3000 }
         },
         webSite: {
-            url: { allowBlank: true }
+            format: {
+                with: Regex.URL,
+                allowBlank: true
+            }
         },
         phone: {
             presence: true
