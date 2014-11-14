@@ -1,5 +1,11 @@
 {{#if hasWwoofMemberships}}
-    {{#unless latestWwoofMembership.isStillValidInAMonth}}
+    {{#if latestWwoofMembership.isStillValidInAMonth}}
+        <div class="alert alert-success alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            Your wwoofer membership is valid, you have access to all farms contact information.
+        </div>
+    {{else}}
         <div class="alert alert-warning alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-exclamation-sign"></span>
@@ -15,7 +21,7 @@
             To keep your access to all farms contact information, you must
             {{#link-to 'memberships.new' (query-params type='W') class="alert-link"}}renew your membership{{/link-to}}.
         </div>
-    {{/unless}}
+    {{/if}}
 {{else}}
     <div class="alert alert-info alert-dismissable" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
