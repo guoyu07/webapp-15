@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">{{t 'index.hostProfile.title'}}</div>
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{t 'index.hostProfile.title'}}</h4>
+                </div>
                 <div class="panel-body">
                     {{#if hostProfile}}
                         <p>{{t 'index.hostProfile.instructions' farmNameBinding='hostProfile.farmName'}}</p>
@@ -20,7 +22,9 @@
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">{{t 'index.wwooferProfile.title'}}</div>
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{t 'index.wwooferProfile.title'}}</h4>
+                </div>
                 <div class="panel-body">
                     {{#if wwooferProfile}}
                         <p>{{t 'index.wwooferProfile.instructions'}}</p>

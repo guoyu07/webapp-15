@@ -1,4 +1,7 @@
-<p>Your payment is complete.
-    You are now a member of Wwoof France and gained complete access to the list of hosts and wwoofers.</p>
+<div class="page-header">
+    <h1>{{t 'payment.complete.title'}}</h1>
+</div>
 
-{{#link-to 'index' class="btn btn-primary"}}Continue{{/link-to}}
+<p>{{t 'payment.complete.instructions'}}</p>
+
+{{#link-to 'index' class="btn btn-primary pull-right"}}{{t 'literal.continue'}}{{/link-to}}

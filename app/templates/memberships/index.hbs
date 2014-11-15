@@ -1,17 +1,17 @@
 <div class="page-header">
     <h1>
-        Memberships Expiring In The Next 30 Days
+        {{t 'memberships.index.title'}}
     </h1>
 </div>
 
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Type</th>
-        <th>Expires At</th>
-        <th>Actions</th>
+        <th>{{t 'memberships.index.firstName'}}</th>
+        <th>{{t 'memberships.index.lastName'}}</th>
+        <th>{{t 'memberships.index.type'}}</th>
+        <th>{{t 'memberships.index.expireAt'}}</th>
+        <th>{{t 'memberships.index.actions'}}</th>
     </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
             <td>{{format-date expireAt}}</td>
             <td>
                 <button {{action 'sendReminder' this}} {{bind-attr disabled="reminderAlreadySent"}} class="btn btn-primary">
-                    Send Reminder
+                    {{t 'memberships.index.sendReminder'}}
                 </button>
             </td>
         </tr>
@@ -32,5 +32,5 @@
 </table>
 
 <button {{action "loadMore"}} {{bind-attr disabled=isLoading}} class="btn btn-default">
-    Load More
+    {{t 'literal.loadMore'}}
 </button>

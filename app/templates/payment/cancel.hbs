@@ -1,3 +1,7 @@
-<p>Your payment was cancelled.</p>
+<div class="page-header">
+    <h1>{{t 'payment.cancel.title'}}</h1>
+</div>
 
-{{#link-to 'index' class="btn btn-primary"}}Go back home{{/link-to}}
+<p>{{t 'payment.cancel.instructions'}}</p>
+
+{{#link-to 'index' class="btn btn-primary pull-right"}}{{t 'literal.continue'}}{{/link-to}}

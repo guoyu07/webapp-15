@@ -1,35 +1,35 @@
 <div class="row">
     <div class="col-md-3 col-sm-12 search-box">
         <form class="form" role="form">
-            <h4>Find Hosts</h4>
+            <h4>{{t 'hosts.index.find'}}</h4>
             <div class="form-group">
-                <label class="sr-only" for="searchTerm">Search</label>
-                {{input type="search" class="form-control" id="searchTerm" placeholder="Farm name or host name" value=searchTerm action="searchHosts"}}
+                <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
+                {{input type="search" class="form-control" id="searchTerm" placeholderTranslation="hosts.index.searchTerm.placeholder" value=searchTerm action="searchHosts"}}
             </div>
             <div class="form-group">
                 <div class="dropdown-item">
                     {{view Ember.Select
                     class="form-control"
-                    prompt="Department"
+                    promptTranslation="address.department.prompt"
                     optionLabelPath="content.name"
                     optionValuePath="content.id"
                     content=departmentFilterOptions
                     value=department}}
                 </div>
             </div>
-            <h4>Proposed Activities</h4>
+            <h4>{{t 'hosts.index.activities'}}</h4>
             {{toggle-options values=allActivities selected=activities optionValuePath='id'}}
             {{#if currentUserIsAdmin}}
-                <h4>Admin</h4>
+                <h4>{{t 'hosts.index.admin'}}</h4>
                 <div class="checkbox">
                     <label>
-                        {{input type="checkbox" name="pendingOnly" checked=pendingOnly}}
-                        Pending Only
+                        {{input type="checkbox" checked=pendingOnly}}
+                        {{t 'hosts.index.pending.label'}}
                     </label>
                 </div>
             {{/if}}
             <div class="row col-md-3 col-sm-12">
-                <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block-tn">Search</button>
+                <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block-tn">{{t 'literal.search'}}</button>
             </div>
         </form>
     </div>
@@ -64,15 +64,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
-                                    <button class="btn btn-default btn-block-tn">VIEW</button>
+                                    <button class="btn btn-default btn-block-tn">{{t 'literal.view'}}</button>
                                 </div>
                             </div>
                         {{/link-to}}
                     {{/each}}
                     <div class="row col-md-12">
                         <p class="load-more">
-                            <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-default">
-                                Load more
+                            <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoadingMore}} class="btn btn-default">
+                                {{t 'literal.loadMore'}}
                             </button>
                         <p class="load-more">
                     </div>

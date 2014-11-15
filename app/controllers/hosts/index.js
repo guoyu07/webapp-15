@@ -12,6 +12,7 @@ export default Ember.ArrayController.extend({
 
     // Whether the controller is in loading state
     isLoading: false,
+    isLoadingMore: false,
 
     // Search filters
     searchTerm: null,
@@ -38,12 +39,12 @@ export default Ember.ArrayController.extend({
         loadMoreHosts: function () {
 
             // Return early if already loading
-            if (this.get('isLoading')) {
+            if (this.get('isLoadingMore')) {
                 return;
             }
 
             // Set controller loading state
-            this.set('isLoading', true);
+            this.set('isLoadingMore', true);
 
             // Initialize variables
             var newOffset = this.store.metadataFor('host').offset + 10,
@@ -56,7 +57,7 @@ export default Ember.ArrayController.extend({
             }).catch(function () {
                 alertify.error('Something went wrong, try again later :(');
             }).finally(function () {
-                self.set('isLoading', false);
+                self.set('isLoadingMore', false);
             });
         }
     }

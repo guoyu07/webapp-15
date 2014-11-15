@@ -1,15 +1,14 @@
 <div class="page-header">
-    <h1>Take Or Renew Your Membership</h1>
+    <h1>{{t 'memberships.new.title'}}</h1>
 </div>
 
-<p>In order to have access to all farms contact information (email, phone, address),
-    you must pay your membership fee.</p>
+<p>{{t 'memberships.new.instructions'}}</p>
 
 <form>
     <div class="row">
         {{#if showWwoofMemberships}}
             <div class="form-group col-md-12">
-                <label for="wwoofMembership" class="control-label">Wwoofer Membership</label>
+                <label for="wwoofMembership" class="control-label">{{t 'memberships.new.wwoofer.label'}}</label>
                 {{view Ember.Select
                 content=wwoofMembershipOptions
                 optionValuePath="content.id"
@@ -21,7 +20,7 @@
         {{/if}}
         {{#if showShippingFees}}
             <div class="form-group col-md-12">
-                <label for="wwoofMembership" class="control-label">Shipping Fees</label>
+                <label for="wwoofMembership" class="control-label">{{t 'memberships.new.shipping.label'}}</label>
                 {{view Ember.Select
                 content=shippingFees
                 optionValuePath="content.id"
@@ -33,7 +32,7 @@
         {{/if}}
         {{#if showHostMemberships}}
             <div class="form-group col-md-12">
-                <label for="hostMembership" class="control-label">Host Membership</label>
+                <label for="hostMembership" class="control-label">{{t 'memberships.new.host.label'}}</label>
                 {{view Ember.Select
                 content=hostMembershipOptions
                 optionValuePath="content.id"
@@ -44,30 +43,34 @@
             </div>
         {{/if}}
     </div>
+    <hr>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Pay via Paypal</h4>
+                    <h4 class="panel-title">{{t 'memberships.new.paypal'}}</h4>
                 </div>
                 <div class="panel-body">
-                    <p>The easiest way to go!</p>
-                    <button {{action "initPayment" itemCode shippingFee}} class="btn btn-primary">Pay with Paypal</button>
+                    <p>{{t 'memberships.new.easiestWay'}}</p>
+                    <button {{action "initPayment" itemCode shippingFee}} class="btn btn-primary">{{t 'memberships.new.pay'}}</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-2 text-center">
+            <h4>— {{t 'memberships.new.or'}} —</h4>
+        </div>
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Pay via Check or Cash</h4>
+                    <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>
                 </div>
                 <div class="panel-body">
-                    <p>Send your payment with your contact information at:</p>
+                    <p>{{t 'memberships.new.address'}}</p>
 
                     Virginie LOPEZ<br/>
                     WWOOF France<br/>
-                    86 bis, rue Principale<br/>33460 LAMARQUE<br/>
-                    FRANCE
+                    86 bis rue Principale<br/>
+                    33460 LAMARQUE (FRANCE)<br/>
                 </div>
             </div>
         </div>
