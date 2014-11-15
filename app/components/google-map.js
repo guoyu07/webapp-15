@@ -19,7 +19,7 @@ export default Ember.Component.extend({
         var url = 'http://maps.googleapis.com/maps/api/staticmap?' +
             'center=' + coordinates.lat + ','+ coordinates.lng +
             '&zoom=6' +
-            '&size=300x300' +
+            '&size=523x300' +
             '&markers=color:red|' + coordinates.lat + ','+ coordinates.lng;
         return encodeURI(url);
     }.property('coordinates'),
