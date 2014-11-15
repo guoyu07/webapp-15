@@ -6,18 +6,18 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">General Information</h4>
+                <h4 class="panel-title">{{t 'wwoofer.index.general'}}</h4>
             </div>
             <div class="panel-body">
-                Member since {{format-date user.createdAt}}<br/>
-                Born {{format-date user.birthDate}} ({{birthdate-to-age user.birthDate}} years old)
+                {{t 'wwoofer.index.memberSince'}} {{format-date user.createdAt}}<br/>
+                {{t 'wwoofer.index.born'}} {{format-date user.birthDate}} ({{birthdate-to-age user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">Address</h4>
+                <h4 class="panel-title">{{t 'wwoofer.index.address'}}</h4>
             </div>
             <div class="panel-body">
                 {{address.address1}}<br/>
@@ -30,17 +30,17 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">Memberships</h4>
+                <h4 class="panel-title">{{t 'wwoofer.index.memberships'}}</h4>
             </div>
             <div class="panel-body">
-                {{#link-to 'user.memberships' user}}View memberships{{/link-to}}
+                {{#link-to 'user.memberships' user}}{{t 'wwoofer.index.viewMemberships'}}{{/link-to}}
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">Contact</h4>
+                <h4 class="panel-title">{{t 'wwoofer.index.contact'}}</h4>
             </div>
             <div class="panel-body">
                 {{user.phone}}<br/>

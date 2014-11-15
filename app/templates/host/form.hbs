@@ -38,26 +38,26 @@
         <fieldset class="col-md-6">
             <legend class="h4">{{t 'host.form.addressInformation'}}</legend>
             <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
-                <label for="address1" class="control-label">{{t 'address.address1.label'}}</label>
-                {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.address1.placeholder'}}
+                <label for="address1" class="control-label">{{t 'address.form.address1.label'}}</label>
+                {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
                 {{error-display address.fieldErrors.address1}}
             </div>
             <div {{bind-attr class=":form-group address.fieldErrors.address2.length:has-error"}}>
-                <label for="address2" class="control-label">{{t 'address.address2.label'}}</label>
-                {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholderTranslation='address.address2.placeholder'}}
+                <label for="address2" class="control-label">{{t 'address.form.address2.label'}}</label>
+                {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
                 {{error-display address.fieldErrors.address2}}
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div {{bind-attr class=":form-group address.fieldErrors.zipCode.length:has-error"}}>
-                        <label for="zipCode" class="control-label">{{t 'address.zipCode.label'}}</label>
+                        <label for="zipCode" class="control-label">{{t 'address.form.zipCode.label'}}</label>
                         {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control"}}
                         {{error-display address.fieldErrors.zipCode}}
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div {{bind-attr class=":form-group address.fieldErrors.city.length:has-error"}}>
-                        <label for="city" class="control-label">{{t 'address.city.label'}}</label>
+                        <label for="city" class="control-label">{{t 'address.form.city.label'}}</label>
                         {{input type="text" id="city" name="city" value=address.city class="form-control"}}
                         {{error-display address.fieldErrors.city}}
                     </div>
@@ -66,7 +66,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
-                        <label for="country" class="control-label">{{t 'address.country.label'}}</label>
+                        <label for="country" class="control-label">{{t 'address.form.country.label'}}</label>
                         {{view Ember.Select
                         content=controllers.countries.hostCountries
                         optionValuePath="content.id"
@@ -74,7 +74,7 @@
                         selection=address.country
                         class="form-control"
                         name="country"
-                        promptTranslation='address.country.prompt'}}
+                        promptTranslation='address.form.country.prompt'}}
                         {{error-display address.fieldErrors.country}}
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                     {{#if address.country.isFrance}}
                         <div class="col-md-6">
                             <div {{bind-attr class=":form-group"}}>
-                                <label for="department" class="control-label">{{t 'address.department.label'}}</label>
+                                <label for="department" class="control-label">{{t 'address.form.department.label'}}</label>
                                 {{view Ember.Select
                                 content=controllers.departments.content
                                 optionValuePath="content.id"
@@ -95,7 +95,7 @@
                     {{else}}
                         <div class="col-md-6">
                             <div {{bind-attr class=":form-group"}}>
-                                <label for="state" class="control-label">{{t 'address.state.label'}}</label>
+                                <label for="state" class="control-label">{{t 'address.form.state.label'}}</label>
                                 {{input type="text" id="state" name="state" value=address.state class="form-control"}}
                             </div>
                         </div>
@@ -142,6 +142,7 @@
     </div>
     <div class="row">
         <div class="col-tn-12 float-r-xs">
+            {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
             <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">{{t 'literal.save'}}</button>
         </div>
     </div>

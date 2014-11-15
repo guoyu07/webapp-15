@@ -10,11 +10,11 @@
                 <div class="dropdown-item">
                     {{view Ember.Select
                     class="form-control"
-                    promptTranslation="address.department.prompt"
                     optionLabelPath="content.name"
                     optionValuePath="content.id"
                     content=departmentFilterOptions
-                    value=department}}
+                    value=department
+                    promptTranslation="address.form.department.prompt"}}
                 </div>
             </div>
             <h4>{{t 'hosts.index.activities'}}</h4>

@@ -1,19 +1,19 @@
 <div class="page-header">
     <h1>
-        Wwoofers
+        {{t 'wwoofers.index.title'}}
     </h1>
 </div>
 
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
-            <label for="searchTerm" class="sr-only">Search</label>
-            {{input type="text" class="form-control" id="searchTerm" placeholder="Enter name or email" value=searchTerm action="searchWwoofers"}}
+            <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
+            {{input type="text" class="form-control" id="searchTerm" placeholderTranslation="wwoofers.index.search.placeholder" value=searchTerm action="searchWwoofers"}}
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label for="country" class="sr-only">Country</label>
+            <label for="country" class="sr-only">{{t 'address.form.country.label'}}</label>
             {{view Ember.Select
             content=controllers.countries.content
             optionValuePath="content.id"
@@ -21,12 +21,12 @@
             value=country
             class="form-control"
             name="country"
-            prompt="Select a country"}}
+            promptTranslation='address.form.country.prompt'}}
         </div>
     </div>
     <div class="col-md-3">
         <button {{action "searchWwoofers"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-lg">
-            Search
+            {{t 'literal.search'}}
         </button>
     </div>
 </div>
@@ -37,12 +37,12 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>City</th>
-            <th>Country</th>
-            <th>Actions</th>
+            <th>{{t 'wwoofers.index.firstName'}}</th>
+            <th>{{t 'wwoofers.index.lastName'}}</th>
+            <th>{{t 'literal.email'}}</th>
+            <th>{{t 'wwoofers.index.city'}}</th>
+            <th>{{t 'wwoofers.index.country'}}</th>
+            <th>{{t 'wwoofers.index.actions'}}</th>
         </tr>
         </thead>
         <tbody>
@@ -54,8 +54,8 @@
                 <td>{{address.city}}</td>
                 <td>{{address.country.name}}</td>
                 <td>
-                    {{#link-to "wwoofer" id}}View{{/link-to}} |
-                    {{#link-to "wwoofer.edit" id}}Edit{{/link-to}}
+                    {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}} |
+                    {{#link-to "wwoofer.edit" id}}{{t 'literal.edit'}}{{/link-to}}
                 </td>
             </tr>
         {{/each}}
