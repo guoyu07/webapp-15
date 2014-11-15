@@ -3,29 +3,33 @@
         <div class="alert alert-success alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-ok-sign"></span>
-            Your host membership is valid. Your profile is now visible to the community.
+            {{t 'host.membership-status.valid'}}
         </div>
     {{else}}
         <div class="alert alert-warning alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-exclamation-sign"></span>
 
-            Your host profile
+            {{t 'host.membership-status.yourHostProfile'}}
             {{#if latestHostMembership.isExpired}}
-                is disabled since {{format-date latestHostMembership.expireAt}}. To make it visible again
+                {{t 'host.membership-status.isDisabledSince'}}
+                {{format-date latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
             {{else}}
-                will be disabled {{format-date latestHostMembership.expireAt}}. To keep it visible
+                {{t 'host.membership-status.willBeDisabled'}}
+                {{format-date latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
             {{/if}}
-             to the community, you must
-            {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="alert-link"}}renew your membership{{/link-to}}.
+            {{t 'host.membership-status.community'}}
+            {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="alert-link"}}
+                {{t 'host.membership-status.renewMembership'}}
+            {{/link-to}}.
         </div>
     {{/if}}
 {{else}}
     <div class="alert alert-info alert-dismissable" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span class="glyphicon glyphicon-info-sign"></span>
-        Your host profile has been validated by our team!
-        To make it visible to the community, you must
-        {{#link-to 'memberships.new' (query-params type='H' itemCode='H') class="alert-link"}}pay your membership fee{{/link-to}}.
+        {{t 'host.membership-status.wasValidated'}}
+        {{t 'host.membership-status.makeVisible'}}
+        {{#link-to 'memberships.new' (query-params type='H' itemCode='H') class="alert-link"}}{{t 'host.membership-status.payMembership'}}{{/link-to}}.
     </div>
 {{/if}}

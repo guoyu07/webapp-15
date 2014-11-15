@@ -11,14 +11,14 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>{{#link-to 'hosts'}}<span class="glyphicon glyphicon-tree-conifer"></span> Hosts{{/link-to}}</li>
+                <li>{{#link-to 'hosts'}}<span class="glyphicon glyphicon-tree-conifer"></span> {{t 'literal.hosts'}}{{/link-to}}</li>
                 {{#if currentUserIsAdmin}}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>{{#link-to 'wwoofers'}}Wwoofers{{/link-to}}</li>
-                            <li>{{#link-to 'memberships'}}Memberships{{/link-to}}</li>
-                            <li><a href="#" data-toggle="modal" data-target="#impersonationModal">Impersonate User</a></li>
+                            <li>{{#link-to 'wwoofers'}}{{t 'literal.wwoofers'}}{{/link-to}}</li>
+                            <li>{{#link-to 'memberships'}}{{t 'literal.memberships'}}{{/link-to}}</li>
+                            <li><a href="#" data-toggle="modal" data-target="#impersonationModal">{{t 'menu.impersonateUser'}}</a></li>
                         </ul>
                     </li>
                 {{/if}}
@@ -31,15 +31,15 @@
                             {{currentUser.firstName}} {{currentUser.lastName}} <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>{{#link-to 'user.edit' currentUser.id}}My Account{{/link-to}}</li>
-                            <li>{{#link-to 'user.memberships' currentUser.id}}My Memberships{{/link-to}}</li>
+                            <li>{{#link-to 'user.edit' currentUser.id}}{{t 'menu.myAccount'}}{{/link-to}}</li>
+                            <li>{{#link-to 'user.memberships' currentUser.id}}{{t 'menu.myMemberships'}}{{/link-to}}</li>
                             <li class="divider"></li>
-                            <li><a href="#" {{action "logout"}}>Logout</a></li>
+                            <li><a href="#" {{action "logout"}}>{{t 'menu.logout'}}</a></li>
                         </ul>
                     </li>
                 {{else}}
-                    <li>{{#link-to 'login' class="btn btn-default btn-navbar"}}Login{{/link-to}}</li>
-                    <li>{{#link-to 'users.new' class="btn btn-primary btn-navbar"}}Sign Up{{/link-to}}</li>
+                    <li>{{#link-to 'login' class="btn btn-default btn-navbar"}}{{t 'menu.login'}}{{/link-to}}</li>
+                    <li>{{#link-to 'users.new' class="btn btn-primary btn-navbar"}}{{t 'menu.signUp'}}{{/link-to}}</li>
                 {{/if}}
             </ul>
         </div>
@@ -55,18 +55,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="impersonationModalLabel">Impersonate User</h4>
+                <h4 class="modal-title" id="impersonationModalLabel">{{t 'impersonate.title'}}</h4>
             </div>
             <div class="modal-body">
                 <div {{bind-attr class=":form-group fieldErrors.impersonatedUserEmail.length:has-error"}}>
-                    <label for="impersonatedUserEmail" class="control-label">Enter the email address of the user you want to impersonate</label>
-                    {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control"}}
+                    <label for="impersonatedUserEmail" class="control-label">{{t 'impersonate.email.label'}}</label>
+                    {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control" placeholder="someone@domain.com"}}
                     {{error-display fieldErrors.impersonatedUserEmail}}
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" {{action "impersonateUser"}} {{bind-attr disabled="isLoading"}}>Impersonate</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{t 'literal.cancel'}}</button>
+                <button type="button" class="btn btn-primary" {{action "impersonateUser"}} {{bind-attr disabled="isLoading"}}>{{t 'impersonate.button'}}</button>
             </div>
         </div>
     </div>

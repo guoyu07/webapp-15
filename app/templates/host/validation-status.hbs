@@ -2,17 +2,17 @@
     {{#if controllers.application.currentUserIsAdmin}}
         <div class="alert alert-info">
             <span class="glyphicon glyphicon-info-sign"></span>
-            This host profile is pending for validation.
-            Review its details below then
-            <a href="#" {{action "approveHost"}} class="alert-link">approve it</a>.
+            {{t 'host.validation-status.adminPending'}}
+            {{t 'host.validation-status.adminReviewDetails'}}
+            <a href="#" {{action "approveHost"}} class="alert-link">{{t 'host.validation-status.adminApprove'}}</a>.
         </div>
     {{else}}
         <div class="alert alert-success alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-ok-sign"></span>
-            Your host profile was succesfully created.
-            We must validate your profile before it gets published.
-            In the meantime you can upload pictures of your farm at the bottom of the page.
+            {{t 'host.validation-status.profileCreated'}}
+            {{t 'host.validation-status.mustValidate'}}
+            {{t 'host.validation-status.uploadPictures'}}
         </div>
     {{/if}}
 {{/if}}

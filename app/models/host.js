@@ -29,7 +29,7 @@ export default DS.Model.extend(ValidationsMixin, {
     mainPhoto: Ember.computed.readOnly('photos.firstObject'),
 
     // Translated activities
-    activityNames: Ember.computed.map('activities', function(activity) {
+    displayedActivities: Ember.computed.map('activities', function(activity) {
         return Ember.I18n.t('activities.' + activity);
     }),
 

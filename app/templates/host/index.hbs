@@ -1,9 +1,9 @@
 <div class="page-header">
     {{#if canEditHost}}
-        {{#link-to 'host.edit' class="btn btn-primary pull-right"}}Edit Your Profile{{/link-to}}
+        {{#link-to 'host.edit' class="btn btn-primary pull-right btn-inline-margin"}}{{t 'host.index.editProfile'}}{{/link-to}}
     {{/if}}
+    {{#link-to 'hosts' class="btn btn-default pull-right"}}{{t 'literal.back'}}{{/link-to}}
     <h1>{{farmName}}</h1>
-    {{#link-to 'hosts'}}<< Back to host list{{/link-to}}
 </div>
 
 {{#if isPending}}
@@ -31,74 +31,78 @@
         </div>
 
         <div class="host-info">
-            <div class="host-address">
-                <div class="map-img">
-                    {{google-map addressId=address.id}}
-                    <div class="mailing-address">
-                        <span class="glyphicon glyphicon-home">
-                        {{#if canSeeContactInfo}}
-                            <p>{{user.firstName}} {{user.lastName}}</p>
-                            <p id="addr">
-                                {{address.address1}}
-                                {{#if address.address2}}
-                                    / {{address.address2}}
-                                {{/if}}
-                            </p>
-                            <p id="addr2">{{address.zipCode}} {{address.city}}</p>
-                        {{else}}
-                            <i>Available to members only</i>
-                        {{/if}}
+            <div class="map-img">
+                {{google-map addressId=address.id}}
+            </div>
+            <div class="info-box">
+                <div class="info-row">
+                    <div class="mailing-address"><span class="glyphicon glyphicon-home"></span></div>
+                    {{#if canSeeContactInfo}}
+                        {{user.firstName}} {{user.lastName}} /
+                        <span>
+                            {{address.address1}} /
+                            {{#if address.address2}}
+                                {{address.address2}} /
+                            {{/if}}
                         </span>
-                    </div>
+                        <span>
+                            {{address.zipCode}} {{address.city}}
+                        </span>
+                    {{else}}
+                        <i>{{t 'host.index.membersOnly'}}</i>
+                    {{/if}}
                 </div>
-                <div class="info-box">
 
-                    {{#unless noEmail}}
-                        <div class="info-row"><div class="card-label"><span class="glyphicon glyphicon-envelope"></span></div>
-                            {{#if canSeeContactInfo}}
-                                {{mail-to user.email}}
-                            {{else}}
-                                <i>Available to members only</i>
-                            {{/if}}
-                        </div>
-                    {{/unless}}
-
-                    {{#unless noPhone}}
-                        <div class="info-row"><div class="card-label"><span class="glyphicon glyphicon-earphone"></span></div>
-                            {{#if canSeeContactInfo}}
-                                {{user.phone}}
-                            {{else}}
-                                <i>Available to members only</i>
-                            {{/if}}
-                        </div>
-                    {{/unless}}
-
-                    <div class="info-row"><div class="card-label"><span class="glyphicon glyphicon-globe"></span></div>
+                {{#unless noEmail}}
+                    <div class="info-row">
+                        <div class="card-label"><span class="glyphicon glyphicon-envelope"></span></div>
                         {{#if canSeeContactInfo}}
-                            <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
+                            {{mail-to user.email}}
                         {{else}}
-                            <i>Available to members only</i>
+                            <i>{{t 'host.index.membersOnly'}}</i>
                         {{/if}}
                     </div>
+                {{/unless}}
 
+                {{#unless noPhone}}
                     <div class="info-row">
-                        <div class="card-label-wide"><span class="glyphicon glyphicon-plane"></span></div>
-                        {{travelDetails}}
+                        <div class="card-label"><span class="glyphicon glyphicon-earphone"></span></div>
+                        {{#if canSeeContactInfo}}
+                            {{user.phone}}
+                        {{else}}
+                            <i>{{t 'host.index.membersOnly'}}</i>
+                        {{/if}}
                     </div>
+                {{/unless}}
+
+                <div class="info-row">
+                    <div class="card-label"><span class="glyphicon glyphicon-globe"></span></div>
+                    {{#if canSeeContactInfo}}
+                        <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
+                    {{else}}
+                        <i>{{t 'host.index.membersOnly'}}</i>
+                    {{/if}}
+                </div>
+
+                <div class="info-row">
+                    <div class="card-label-wide"><span class="glyphicon glyphicon-plane"></span></div>
+                    {{travelDetails}}
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <p class="description">{{convert-breaklines fullDescription}}</p>
-        <div class="proposed-activities">
-            <h4>Proposed activities</h4>
-            <ul>
-                {{#each activity in activities}}
-                    <li>{{activity}}</li>
-                {{/each}}
-            </ul>
-        </div>
+        {{#if activities}}
+            <div class="proposed-activities">
+                <h4>{{t 'host.index.activities'}}</h4>
+                <ul>
+                    {{#each activity in displayedActivities}}
+                        <li>{{activity}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/if}}
     </div>
 </div>
 

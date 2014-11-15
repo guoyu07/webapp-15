@@ -1,37 +1,33 @@
 {{#if currentUser}}
     <div class="page-header">
-        <h1>{{t 'index.dashboard'}}</h1>
+        <h1>{{t 'index.title' firstNameBinding='currentUser.firstName'}}</h1>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Your Host Profile</div>
+                <div class="panel-heading">{{t 'index.hostProfile.title'}}</div>
                 <div class="panel-body">
                     {{#if hostProfile}}
-                        <p>Your host profile <strong>{{hostProfile.farmName}}</strong> is currently online.
-                            You can preview it or edit it.</p>
-                        {{#link-to 'host.index' hostProfile.id class="btn btn-primary"}}View Your Profile{{/link-to}}
-                        {{#link-to 'host.edit' hostProfile.id class="btn btn-default"}}Edit Your Profile{{/link-to}}
+                        <p>{{t 'index.hostProfile.instructions' farmNameBinding='hostProfile.farmName'}}</p>
+                        {{#link-to 'host.index' hostProfile.id class="btn btn-primary"}}{{t 'index.viewProfile'}}{{/link-to}}
+                        {{#link-to 'host.edit' hostProfile.id class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
                     {{else}}
-                        <p>You do not have a host profile yet. But you can create one anytime!</p>
-                        {{#link-to 'hosts.new' class="btn btn-primary"}}Create Your Profile{{/link-to}}
+                        <p>{{t 'index.noHostProfile'}}</p>
+                        {{#link-to 'hosts.new' class="btn btn-primary"}}{{t 'index.createProfile'}}{{/link-to}}
                     {{/if}}
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Your Wwoofer Profile</div>
+                <div class="panel-heading">{{t 'index.wwooferProfile.title'}}</div>
                 <div class="panel-body">
                     {{#if wwooferProfile}}
-                        <p>Your wwoofer profile is currently online. You can preview it or edit it.</p>
-                        {{#link-to 'wwoofer.index' wwooferProfile.id class="btn btn-primary"}}View Your
-                            Profile{{/link-to}}
-                        {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-default"}}Edit Your
-                            Profile{{/link-to}}
+                        <p>{{t 'index.wwooferProfile.instructions'}}</p>
+                        {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
                     {{else}}
-                        <p>You do not have a wwoofer profile yet. But you can create one anytime!</p>
-                        {{#link-to 'wwoofers.new' class="btn btn-primary"}}Create Your Profile{{/link-to}}
+                        <p>{{t 'index.noWwooferProfile'}}</p>
+                        {{#link-to 'wwoofers.new' class="btn btn-primary"}}{{t 'index.createProfile'}}{{/link-to}}
                     {{/if}}
                 </div>
             </div>
@@ -39,12 +35,12 @@
     </div>
 {{else}}
     <div class="jumbotron">
-        <h1>Welcome to Wwoof France!</h1>
-
-        <p>You can browse the list of hosts in France, or jump into your account to be part of our community
-            :-)</p>
-        <p>{{#link-to 'login' class="btn btn-default btn-lg" role="button"}}Login{{/link-to}}
-            {{#link-to 'users.new' class="btn btn-primary btn-lg" role="button"}}Sign Up{{/link-to}}</p>
+        <h1>{{t 'index.anonymousTitle'}}</h1>
+        <p>{{t 'index.anonymousHeadline'}}</p>
+        <p>
+            {{#link-to 'login' class="btn btn-default btn-lg" role="button"}}{{t 'menu.login'}}{{/link-to}}
+            {{#link-to 'users.new' class="btn btn-primary btn-lg" role="button"}}{{t 'menu.signUp'}}{{/link-to}}
+        </p>
         <hr>
         <div class="showcase">
             <div class="block" style="background-image: url(http://www.wwoof.fr/loggedon/images/PICT3184.JPG);">

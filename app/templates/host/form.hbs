@@ -13,52 +13,52 @@
 <form>
     <div class="row">
         <fieldset class="col-md-6">
-            <legend class="h4">General Information</legend>
+            <legend class="h4">{{t 'host.form.generalInformation'}}</legend>
             <div {{bind-attr class=":form-group fieldErrors.farmName.length:has-error"}}>
-                <label for="farm-name" class="control-label">Farm Name</label>
-                {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholder="La Ferme de M. Seguin"}}
+                <label for="farm-name" class="control-label">{{t 'host.form.farmName.label'}}</label>
+                {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholderTranslation='host.form.farmName.placeholder'}}
                 {{error-display fieldErrors.farmName}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.webSite.length:has-error"}}>
-                <label for="webSite" class="control-label">Website</label>
-                {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholder="http://www.ma-page-perso.fr"}}
+                <label for="webSite" class="control-label">{{t 'host.form.website.label'}}</label>
+                {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholderTranslation='host.form.website.placeholder'}}
                 {{error-display fieldErrors.webSite}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.phone.length:has-error"}}>
-                <label for="phone" class="control-label">Phone</label>
-                {{input type="text" id="phone" name="phone" value=user.phone class="form-control" placeholder="+33 611 22 33 44"}}
+                <label for="phone" class="control-label">{{t 'host.form.phone.label'}}</label>
+                {{input type="text" id="phone" name="phone" value=user.phone class="form-control" placeholderTranslation='host.form.phone.placeholder'}}
                 {{error-display fieldErrors.phone}}
             </div>
             <div {{bind-attr class=":form-group"}}>
-                <label for="travel" class="control-label">Travel</label>
-                {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholder="Peut aller chercher à la gare de ..."}}
+                <label for="travel" class="control-label">{{t 'host.form.travel.label'}}</label>
+                {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholderTranslation='host.form.travel.placeholder'}}
             </div>
         </fieldset>
 
         <fieldset class="col-md-6">
-            <legend class="h4">Address Information</legend>
+            <legend class="h4">{{t 'host.form.addressInformation'}}</legend>
             <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
-                <label for="address1" class="control-label">Address 1</label>
-                {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+                <label for="address1" class="control-label">{{t 'address.address1.label'}}</label>
+                {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.address1.placeholder'}}
                 {{error-display address.fieldErrors.address1}}
             </div>
             <div {{bind-attr class=":form-group address.fieldErrors.address2.length:has-error"}}>
-                <label for="address2" class="control-label">Address 2</label>
-                {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder="Numéro et nom de rue, chemin, hameau"}}
+                <label for="address2" class="control-label">{{t 'address.address2.label'}}</label>
+                {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholderTranslation='address.address2.placeholder'}}
                 {{error-display address.fieldErrors.address2}}
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div {{bind-attr class=":form-group address.fieldErrors.zipCode.length:has-error"}}>
-                        <label for="zipCode" class="control-label">Zip Code</label>
-                        {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control" placeholder="Code postal"}}
+                        <label for="zipCode" class="control-label">{{t 'address.zipCode.label'}}</label>
+                        {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control"}}
                         {{error-display address.fieldErrors.zipCode}}
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div {{bind-attr class=":form-group address.fieldErrors.city.length:has-error"}}>
-                        <label for="city" class="control-label">City</label>
-                        {{input type="text" id="city" name="city" value=address.city class="form-control" placeholder="Ville"}}
+                        <label for="city" class="control-label">{{t 'address.city.label'}}</label>
+                        {{input type="text" id="city" name="city" value=address.city class="form-control"}}
                         {{error-display address.fieldErrors.city}}
                     </div>
                 </div>
@@ -66,7 +66,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
-                        <label for="country" class="control-label">Country</label>
+                        <label for="country" class="control-label">{{t 'address.country.label'}}</label>
                         {{view Ember.Select
                         content=controllers.countries.hostCountries
                         optionValuePath="content.id"
@@ -74,7 +74,7 @@
                         selection=address.country
                         class="form-control"
                         name="country"
-                        prompt="Select a country"}}
+                        promptTranslation='address.country.prompt'}}
                         {{error-display address.fieldErrors.country}}
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                     {{#if address.country.isFrance}}
                         <div class="col-md-6">
                             <div {{bind-attr class=":form-group"}}>
-                                <label for="department" class="control-label">Department</label>
+                                <label for="department" class="control-label">{{t 'address.department.label'}}</label>
                                 {{view Ember.Select
                                 content=controllers.departments.content
                                 optionValuePath="content.id"
@@ -95,8 +95,8 @@
                     {{else}}
                         <div class="col-md-6">
                             <div {{bind-attr class=":form-group"}}>
-                                <label for="state" class="control-label">State / Region</label>
-                                {{input type="text" id="state" name="state" value=address.state class="form-control" placeholder="State"}}
+                                <label for="state" class="control-label">{{t 'address.state.label'}}</label>
+                                {{input type="text" id="state" name="state" value=address.state class="form-control"}}
                             </div>
                         </div>
                     {{/if}}
@@ -106,52 +106,53 @@
     </div>
     <div class="row">
         <fieldset class="col-md-12">
-            <legend class="h4">Farm's description</legend>
+            <legend class="h4">{{t 'host.form.farmDescription'}}</legend>
             <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
-                <label for="shortDescription" class="control-label">Short description</label>
-                {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholder="Ferme biologique au coeur des Alpes"}}
+                <label for="shortDescription" class="control-label">{{t 'host.form.shortDescription.label'}}</label>
+                {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholderTranslation='host.form.shortDescription.placeholder'}}
                 {{error-display fieldErrors.shortDescription}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
-                <label for="entry" class="control-label">Full description</label>
-                {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholder="" rows="8"}}
+                <label for="entry" class="control-label">{{t 'host.form.fullDescription.label'}}</label>
+                {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholderTranslation='host.form.fullDescription.placeholder' rows="8"}}
                 {{error-display fieldErrors.fullDescription}}
             </div>
         </fieldset>
     </div>
     <div class="row">
         <fieldset class="col-md-6">
-            <legend class="h4">Communication preferences</legend>
+            <legend class="h4">{{t 'host.form.communicationPreferences'}}</legend>
             <div class="checkbox">
                 <label>
                     {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
-                    Do not communicate my phone
+                    {{t 'host.form.noPhone.label'}}
                 </label>
             </div>
             <div class="checkbox">
                 <label>
                     {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
-                    Do not communicate my email
+                    {{t 'host.form.noEmail.label'}}
                 </label>
             </div>
         </fieldset>
         <fieldset class="col-md-6">
-            <legend class="h4">Proposed activities to the wwoofers</legend>
+            <legend class="h4">{{t 'host.form.activities'}}</legend>
             {{toggle-options values=allActivities selected=activities optionValuePath='id'}}
         </fieldset>
     </div>
     <div class="row">
         <div class="col-tn-12 float-r-xs">
-            <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">Save</button>
+            <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">{{t 'literal.save'}}</button>
         </div>
     </div>
 </form>
 
 {{#unless isNew}}
-    <form {{action "addPhoto" on="submit"}}>
+    <hr>
+    <form>
         <div class="row">
             <div class="col-md-12">
-                <h4>Upload a new photo of your farm</h4>
+                <h4>{{t 'host.form.newPhoto'}}</h4>
                 <div class="form-group">
                     <input id="file_upload" type="file" name="file" data-url="api/photos">
                 </div>
@@ -164,7 +165,7 @@
     {{#if photos}}
         <div class="row">
             <div class="col-md-12">
-                <h4>Edit or delete a photo</h4>
+                <h4>{{t 'host.form.editDeletePhoto'}}</h4>
                 <div class="table table-hover col-sm-12 col-tn-12">
                     {{#each photos itemController="photo"}}
                         <div class="row">
@@ -174,13 +175,15 @@
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
-                                {{input type="text" name="caption" value=caption class="form-control" placeholder="That is such a great photo!"}}
+                                {{input type="text" name="caption" value=caption class="form-control" placeholderTranslation='host.form.caption.placeholder'}}
                             </div>
                             <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
                                 <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary pull-right btn-block-tn margin-bottom-tn" style="margin-left:10px">
-                                    Save
+                                    {{t 'literal.save'}}
                                 </button>
-                                <button {{action "deletePhoto"}} class="btn btn-default pull-right btn-block-tn">Delete</button>
+                                <button {{action "deletePhoto"}} class="btn btn-default pull-right btn-block-tn">
+                                    {{t 'literal.delete'}}
+                                </button>
                             </div>
                         </div>
                     {{/each}}
