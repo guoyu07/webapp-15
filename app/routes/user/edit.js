@@ -5,6 +5,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     renderTemplate: function () {
-        this.render('users/new', { controller: 'user.edit' });
+        this.render('user/form', { controller: 'user.edit' });
     }
 });

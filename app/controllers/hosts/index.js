@@ -22,8 +22,8 @@ export default Ember.ArrayController.extend({
 
     // Bindings
     departmentFilterOptions: Ember.computed.alias('controllers.departments'),
-    currentUserIsAdmin: Ember.computed.alias('controllers.application.currentUserIsAdmin'),
-    allActivities: Ember.computed.alias('controllers.activities.allActivities'),
+    currentUserIsAdmin: Ember.computed.readOnly('controllers.application.currentUserIsAdmin'),
+    allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
     // Query parameters
     parameters: function () {

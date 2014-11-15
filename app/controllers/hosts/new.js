@@ -7,7 +7,7 @@ export default Ember.ObjectController.extend({
 
     needs: ['hosts', 'departments', 'countries', 'activities', 'application'],
 
-    allActivitiesBinding: 'controllers.activities.allActivities',
+    allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
     actions: {
         saveHost: function () {

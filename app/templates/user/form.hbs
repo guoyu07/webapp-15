@@ -1,0 +1,84 @@
+<div class="page-header">
+    <h1>
+        {{#if isNew}}
+            {{t 'user.form.titleNew'}}
+        {{else}}
+            {{t 'user.form.titleEdit'}}
+        {{/if}}
+    </h1>
+</div>
+
+{{#if isNew}}
+    <p>
+        {{t 'user.form.instructionsNew'}}
+        {{t 'user.form.haveAccount'}}
+        {{#link-to 'login'}}{{t 'user.form.logIn'}}{{/link-to}}
+    </p>
+{{/if}}
+
+<form>
+    <div class="row">
+        <div class="col-md-6">
+            <div {{bind-attr class=":form-group fieldErrors.firstName.length:has-error"}}>
+                <label for="firstName" class="control-label">{{t 'user.form.firstName.label'}}</label>
+                {{input type="text" id="firstName" name="firstName" value=firstName class="form-control"}}
+                {{error-display fieldErrors.firstName}}
+            </div>
+            <div {{bind-attr class=":form-group fieldErrors.lastName.length:has-error"}}>
+                <label for="lastName" class="control-label">{{t 'user.form.lastName.label'}}</label>
+                {{input type="text" id="lastName" name="lastName" value=lastName class="form-control"}}
+                {{error-display fieldErrors.lastName}}
+            </div>
+            <div {{bind-attr class=":form-group fieldErrors.birthDate.length:has-error"}}>
+                <label for="birthDate" class="control-label">{{t 'user.form.birthDate.label'}}</label>
+                {{date-picker value=birthDate}}
+                {{error-display fieldErrors.birthDate}}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div {{bind-attr class=":form-group fieldErrors.email.length:has-error"}}>
+                <label for="email" class="control-label">{{t 'literal.email'}}</label>
+                {{input type="email" id="email" name="email" value=email class="form-control"}}
+                {{error-display fieldErrors.email}}
+            </div>
+            <div {{bind-attr class=":form-group fieldErrors.password.length:has-error"}}>
+                <label for="password" class="control-label">{{t 'literal.password'}}</label>
+                {{#unless isNew}}
+                    ({{#link-to 'user.change-password' id}}{{t 'user.form.changePassword'}}{{/link-to}})
+                {{/unless}}
+                {{input type="password" id="password" name="password" value=password disabled=disablePasswordField class="form-control"}}
+                {{error-display fieldErrors.password}}
+            </div>
+        </div>
+    </div>
+    {{#if isNew}}
+        <div class="row">
+            <fieldset class="col-md-12">
+                <div class="checkbox">
+                    <label>
+                        {{input type="checkbox" id="termsOk" checked=termsOk}}
+                        {{t 'user.form.termsOk.label'}}
+                    </label>
+                    {{error-display fieldErrors.termsOk}}
+                </div>
+                <div class="checkbox">
+                    <label>
+                        {{input type="checkbox" id="insuranceOk" checked=insuranceOk}}
+                        {{t 'user.form.insuranceOk.label'}}
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+    {{/if}}
+    <div class="row">
+        <div class="col-tn-12 float-r-xs">
+            <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">
+                {{#if isNew}}
+                    {{t 'user.form.register'}}
+                {{else}}
+                    {{t 'literal.save'}}
+                {{/if}}
+            </button>
+        </div>
+    </div>
+</form>
