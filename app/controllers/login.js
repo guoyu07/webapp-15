@@ -49,7 +49,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 post.done(function (data) {
 
                     // Notify user
-                    alertify.success("Welcome back!");
+                    alertify.success(Ember.I18n.t('notify.userAuthenticated'));
 
                     // Store the user in the local storage
                     self.set('controllers.application.currentUser', data.user);
@@ -60,14 +60,14 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
                 // Handle failure
                 post.fail(function () {
-                    alertify.error("The email address or password is incorrect.");
+                    alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
                 });
 
                 post.always(function () {
                     self.set('isLoading', false);
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     },

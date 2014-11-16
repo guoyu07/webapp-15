@@ -55,7 +55,7 @@ export default Ember.ArrayController.extend({
             this.store.find('host', params).then(function (hosts) {
                 self.get('content').addObjects(hosts.get('content'));
             }).catch(function () {
-                alertify.error('Something went wrong, try again later :(');
+                alertify.error(Ember.I18n.t('notify.submissionError'));
             }).finally(function () {
                 self.set('isLoadingMore', false);
             });

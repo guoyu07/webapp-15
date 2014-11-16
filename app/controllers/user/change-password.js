@@ -45,19 +45,15 @@ export default Ember.Controller.extend(ValidationsMixin, {
                         newPassword: self.get('password')
                     }
                 }).done(function () {
-                    // Notify user
-                    alertify.success("Your password has been updated.");
-
-                    // Go to login page
-                    self.transitionToRoute('user.edit', currentUserId);
+                    alertify.success(Ember.I18n.t('notify.informationUpdated'));
+                    self.transitionToRoute('index');
                 }).fail(function () {
-                    // Notify user
-                    alertify.error("An error occurred.");
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 }).always(function () {
                     self.set('isLoading', false);
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     },

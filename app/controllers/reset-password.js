@@ -39,19 +39,17 @@ export default Ember.Controller.extend(ValidationsMixin, {
                     }
                 }).done(function () {
                     // Notify user
-                    alertify.alert("We sent you an email with a temporary password. " +
-                        "Use it log in, then update your password.");
+                    alertify.alert(Ember.I18n.t('notify.temporaryPassword'));
 
                     // Go to login page
                     self.transitionToRoute('login');
                 }).fail(function () {
-                    // Notify user
-                    alertify.error("An error occurred.");
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 }).always(function () {
                     self.set('isLoading', false);
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     },

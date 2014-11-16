@@ -43,13 +43,13 @@ export default Ember.ObjectController.extend({
                     host.set('address', address);
                     return host.save();
                 }).then(function () {
-                    alertify.success('Host created!');
+                    alertify.success(Ember.I18n.t('notify.hostCreated'));
                     self.transitionToRoute('host.edit', host);
                 }).catch(function () {
-                    alertify.error('Cannot create the host.');
+                    self.alerts.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     }

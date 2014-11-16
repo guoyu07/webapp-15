@@ -17,28 +17,34 @@ export default Ember.ObjectController.extend({
                 return;
             }
 
-            // Save the wwoofer and its address
+            // Initialize validations array
+            var validations = Ember.makeArray(wwoofer.validate());
+            validations.push(address.validate());
+
+            // Validate wwoofer and address
             var self = this;
-            wwoofer.validate()
-                .then(function () {
-                    return address.validate();
+            Ember.RSVP.all(validations).then(function () {
+
+                // Create the wwoofer...
+                wwoofer.save().then(function () {
+                    // ... and the address
+                    return address.save();
                 }).then(function () {
-                    wwoofer.save()
-                        .then(function () {
-                            return address.save();
-                        }).then(function () {
-                            wwoofer.set('address', address);
-                            return wwoofer.save();
-                        }).then(function () {
-                            alertify.success('Information updated!');
-                            self.transitionToRoute('wwoofer.membership', wwoofer);
-                        }).catch(function (error) {
-                            console.error(error);
-                            alertify.error('Cannot create wwoofer.');
-                        });
+                    // Set the wwoofer's address (now that it has a valid id) and save the wwoofer again
+                    wwoofer.set('address', address);
+                    return wwoofer.save();
+                }).then(function () {
+                    alertify.success(Ember.I18n.t('notify.wwooferCreated'));
+
+                    // Redirect user to new membership page
+                    var itemCode = wwoofer.firstName2 ? 'WO1': 'WO2';
+                    self.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
                 }).catch(function () {
-                    alertify.error("Your submission is invalid.");
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
+            }).catch(function () {
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+            });
         }
     }
 });

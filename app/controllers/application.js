@@ -73,7 +73,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
             // Notify user
             post.fail(function () {
-                alertify.error("Something went wrong.");
+                alertify.error(Ember.I18n.t('notify.submissionError'));
             });
         },
         impersonateUser: function () {
@@ -97,7 +97,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 }).done(function (data) {
 
                     // Notify user
-                    alertify.success("You are now authenticated as " + self.get('impersonatedUserEmail') + ".");
+                    alertify.success(Ember.I18n.t('notify.userImpersonated', { email: self.get('impersonatedUserEmail') }));
 
                     // Go to home page (refresh the page to get user data from the API)
                     self.send('userImpersonated');
@@ -107,13 +107,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
                     self.set('currentUser', data.user);
                 }).fail(function () {
                     // Notify user
-                    alertify.error("Something went wrong.");
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 }).always(function () {
                     self.set('isLoading', false);
                     Ember.$('#impersonationModal').modal('hide');
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     },

@@ -36,13 +36,13 @@ export default Ember.ObjectController.extend({
 
                 // Update wwoofer and address
                 Ember.RSVP.all(updates).then(function () {
-                    alertify.success('Information updated!');
-                    self.transitionToRoute('application');
+                    alertify.success(Ember.I18n.t('notify.informationUpdated'));
+                    self.transitionToRoute('index');
                 }).catch(function () {
-                    alertify.error('Cannot update the wwoofer.');
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     }

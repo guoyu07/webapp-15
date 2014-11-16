@@ -14,9 +14,9 @@ export default Ember.Route.extend({
             var host = this.controller.get('model');
             host.set('isPending', false);
             host.save().then(function () {
-                alertify.success('Host was approved successfully.');
+                alertify.success(Ember.I18n.t('notify.hostApproved'));
             }).catch(function () {
-                alertify.error('Cannot approve host.');
+                alertify.error(Ember.I18n.t('notify.submissionError'));
             });
         }
     }

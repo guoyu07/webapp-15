@@ -19,7 +19,7 @@ export default Ember.ObjectController.extend({
 
             // Make sure all checkboxes are checked
             if (!this.get('termsOk') || !this.get('insuranceOk')) {
-                alertify.error('You must agree to the terms and undertake that you are 18 years old or more.');
+                alertify.error(Ember.I18n.t('notify.mustAgreeTerms'));
                 return;
             }
 
@@ -27,17 +27,17 @@ export default Ember.ObjectController.extend({
             var self = this;
             user.validate().then(function () {
                 user.save().then(function () {
-                    alertify.alert("Your account has been created! You can now log into your account :)");
+                    alertify.alert(Ember.I18n.t('notify.accountCreated'));
                     self.transitionToRoute('login');
                 }).catch(function (error) {
                     if (error && error.status === 409) {
-                        alertify.error('This email address is already associated to an account.');
+                        alertify.error(Ember.I18n.t('notify.emailAddressInUse'));
                     } else {
-                        alertify.error('Cannot create user.');
+                        alertify.error(Ember.I18n.t('notify.submissionError'));
                     }
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     }

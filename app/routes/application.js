@@ -39,7 +39,7 @@ export default Ember.Route.extend({
             if (err && err.status === 401) {
 
                 // Notify user
-                alertify.error("You must be logged into your account to access that page.");
+                alertify.error(Ember.I18n.t('notify.unauthorizedError'));
 
                 // Clear the user (just in case)
                 this.controllerFor('application').set('currentUser', null);

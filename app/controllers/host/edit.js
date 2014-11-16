@@ -7,10 +7,10 @@ export default Ember.ObjectController.extend({
 
     needs: ['application', 'host', 'departments', 'countries', 'user/memberships', 'activities'],
 
-    hasHostMemberships: Ember.computed.oneWay('controllers.user/memberships.hasHostMemberships'),
-    latestHostMembership: Ember.computed.oneWay('controllers.user/memberships.latestHostMembership'),
-    belongsToCurrentUser: Ember.computed.oneWay('controllers.host.belongsToCurrentUser'),
-    allActivities: Ember.computed.oneWay('controllers.activities.allActivities'),
+    hasHostMemberships: Ember.computed.readOnly('controllers.user/memberships.hasHostMemberships'),
+    latestHostMembership: Ember.computed.readOnly('controllers.user/memberships.latestHostMembership'),
+    belongsToCurrentUser: Ember.computed.readOnly('controllers.host.belongsToCurrentUser'),
+    allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
     actions: {
         saveHost: function () {
@@ -46,13 +46,13 @@ export default Ember.ObjectController.extend({
 
                 // Update host and address
                 Ember.RSVP.all(updates).then(function () {
-                    alertify.success('Information updated!');
-                    self.transitionToRoute('host', host);
+                    alertify.success(Ember.I18n.t('notify.informationUpdated'));
+                    self.transitionToRoute('host.index', host);
                 }).catch(function () {
-                    alertify.error('Cannot update the host.');
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     }

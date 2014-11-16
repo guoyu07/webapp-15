@@ -18,14 +18,16 @@ export default Ember.ObjectController.extend({
             }
 
             // Validate and save
+            var self = this;
             user.validate().then(function () {
                 user.save().then(function () {
-                    alertify.success('Information updated!');
+                    alertify.success(Ember.I18n.t('notify.informationUpdated'));
+                    self.transitionToRoute('index');
                 }).catch(function () {
-                    alertify.error('Something went wrong.');
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
-                alertify.error("Your submission is invalid.");
+                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
     }

@@ -13,7 +13,7 @@ export default Ember.View.extend({
                 hostId: this.get('controller.model.id')
             },
             done: function (e, data) {
-                alertify.success("File uploaded!");
+                alertify.success(Ember.I18n.t('notify.fileUploaded'));
 
                 // Push the created photo in the store, then add the photo in the host
                 var controller = self.get('controller');
@@ -21,7 +21,7 @@ export default Ember.View.extend({
                 controller.get('model').get('photos').addObject(photo);
             },
             error: function () {
-                alertify.error("Unable tu upload files on the server.");
+                alertify.error(Ember.I18n.t('notify.submissionError'));
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -32,11 +32,11 @@ export default Ember.View.extend({
                 var goUpload = true;
                 Ember.$.each(data.files, function (index, file) {
                     if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(file.name)) {
-                        alertify.error(file.name + " is not a valid image.");
+                        alertify.error(Ember.I18n.t('notify.imageFormatError', { fileName: file.name }));
                         goUpload = false;
                     }
                     if (file.size > 5000000) { // 5mb
-                        alertify.error(file.name + " is too large. Max size: 5 MB.");
+                        alertify.error(Ember.I18n.t('notify.imageSizeError', { fileName: file.name }));
                         goUpload = false;
                     }
                 });

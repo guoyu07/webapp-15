@@ -31,13 +31,12 @@ export default Ember.Route.extend({
                 membership.set('reminderSentAt', data.membership.reminderSentAt);
 
                 // Notify user
-                alertify.success("Reminder sent to " + membership.get('user.email'));
+                alertify.success(Ember.I18n.t('notify.reminderSent', { email: membership.get('user.email') }));
             });
 
             // Handle failure
             post.fail(function () {
-                // Notify user
-                alertify.error("An error occurred.");
+                alertify.error(Ember.I18n.t('notify.submissionError'));
             });
         },
         loadMore: function () {
