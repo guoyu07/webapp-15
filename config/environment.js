@@ -29,7 +29,8 @@ module.exports = function (environment) {
             'connect-src': "'self'",
             'img-src': "'self' data: app.wwoof.fr maps.googleapis.com",
             'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
-            'media-src': "'self'"
+            'media-src': "'self'",
+            'script-src': "'self' 'unsafe-eval'"
         }
     };
 
