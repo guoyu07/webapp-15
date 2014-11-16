@@ -12,23 +12,23 @@ export default Ember.ObjectController.extend({
     shippingFee: null,
 
     wwoofMembershipOptions: [
-        { id: 'WO1', name: 'WWOOF Book Online - Individual (20 Euro)' },
-        { id: 'WO2', name: 'WWOOF Book Online - Two People (25 Euro)' },
-        { id: 'WOB1', name: 'Printed & Online WWOOF Book - Individual (30 Euro)' },
-        { id: 'WOB2', name: 'Printed & Online WWOOF Book - Two people (35 Euro)' }
+        { id: 'WO1', name: Ember.I18n.t('memberships.itemCodes.WO1') },
+        { id: 'WO2', name: Ember.I18n.t('memberships.itemCodes.WO2') },
+        { id: 'WOB1', name: Ember.I18n.t('memberships.itemCodes.WOB1') },
+        { id: 'WOB2', name: Ember.I18n.t('memberships.itemCodes.WOB2') }
     ],
 
     hostMembershipOptions: [
-        { id: 'H', name: 'Host First Membership (35 Euro)' },
-        { id: 'HR', name: 'Host Renewal (30 Euro)' }
+        { id: 'H', name: Ember.I18n.t('memberships.itemCodes.H') },
+        { id: 'HR', name: Ember.I18n.t('memberships.itemCodes.HR') }
     ],
 
     shippingFees: [
-        { id: 'FR', name: 'France (+ 3.13 Euro)' },
-        { id: 'OM1', name: 'Guyane, Guadeloupe, Martinique, Mayotte, Reunion, St. Pierre et Miquelon (+ 5.52 Euro)' },
-        { id: 'OM2', name: 'Antarctique, Polynésie Française, Nouvelle Calédonie, Wallis et Futuna (+ 8.52 Euro)' },
-        { id: 'EU', name: 'European Union and Switzerland (+ 4.00 Euro)' },
-        { id: 'WD', name: 'Rest of the World (+ 4.35 Euro)' }
+        { id: 'FR', name: Ember.I18n.t('memberships.shipping.FR') },
+        { id: 'OM1', name: Ember.I18n.t('memberships.shipping.OM1') },
+        { id: 'OM2', name: Ember.I18n.t('memberships.shipping.OM2') },
+        { id: 'EU', name: Ember.I18n.t('memberships.shipping.EU') },
+        { id: 'WD', name: Ember.I18n.t('memberships.shipping.WD') }
     ],
 
     showWwoofMemberships: Ember.computed.equal('type', 'W'),

@@ -8,9 +8,9 @@ export default Ember.Route.extend({
     actions: {
         initPayment: function (itemCode, shippingFee) {
 
-            // Do not continue if no item code specified
+            // Do not continue if no item code was specified
             if (!itemCode) {
-                alertify.error('No item code specified.');
+                alertify.error(Ember.I18n.t('notify.noItemCode'));
                 return;
             }
 
