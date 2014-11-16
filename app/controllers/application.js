@@ -60,7 +60,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
             // Prepare URL
             var url = [ config.apiHost, config.apiNamespace, 'users/logout' ].join('/');
 
-            // Logs the user out and refresh the page
+            // Log the user out and refresh the page
             var post = Ember.$.ajax({
                 type: 'POST',
                 url: url
