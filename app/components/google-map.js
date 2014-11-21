@@ -16,7 +16,7 @@ export default Ember.Component.extend({
      */
     mapUrl: function () {
         var coordinates = this.get('coordinates') || { lat: 46, lng: 3 };
-        var url = 'http://maps.googleapis.com/maps/api/staticmap?' +
+        var url = '//maps.googleapis.com/maps/api/staticmap?' +
             'center=' + coordinates.lat + ','+ coordinates.lng +
             '&zoom=6' +
             '&size=523x300' +
