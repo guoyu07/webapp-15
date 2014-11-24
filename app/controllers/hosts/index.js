@@ -53,7 +53,11 @@ export default Ember.ArrayController.extend({
 
             // Find next page of content and update
             this.store.find('host', params).then(function (hosts) {
-                self.get('content').addObjects(hosts.get('content'));
+                if (hosts.get('content').length) {
+                    self.get('content').addObjects(hosts.get('content'));
+                } else {
+                    alertify.log(Ember.I18n.t('notify.noMoreHosts'));
+                }
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionError'));
             }).finally(function () {
