@@ -18,7 +18,9 @@
                 </div>
             </div>
             <h4>{{t 'hosts.index.activities'}}</h4>
-            {{toggle-options values=allActivities selected=activities optionValuePath='id'}}
+            <div class="form-group">
+                {{toggle-options values=allActivities selected=activities optionValuePath='id'}}
+            </div>
             {{#if currentUserIsAdmin}}
                 <h4>{{t 'hosts.index.admin'}}</h4>
                 <div class="checkbox">
