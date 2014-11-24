@@ -15,7 +15,7 @@ export default Ember.Route.extend({
             }
 
             // Build the base URL
-            var url = config.SERVER_BASE_URL + '/payment/start?itemCode=' + itemCode;
+            var url = config.SERVER_BASE_URL + '/api/payment/start?itemCode=' + itemCode;
 
             // Add shipping fee code if present
             if (shippingFee) {
