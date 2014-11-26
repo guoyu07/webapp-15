@@ -3077,8 +3077,7 @@ legend {
     width: 100%;
 }
 .info-row {
-    background-color: #FFFEFA;
-    border-bottom: 2px solid #3e3f3a;
+    border-bottom: 1px solid #3e3f3a;
     padding: 10px 5px 5px;
     color: #3e3f3a;
 }
