@@ -54,9 +54,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
     actions: {
         logout: function () {
 
-            // Clear the user
-            this.set('currentUser', null);
-
             // Prepare URL
             var url = [ config.apiHost, config.apiNamespace, 'users/logout' ].join('/');
 
@@ -66,12 +63,19 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 url: url
             });
 
-            // Go to home page (refresh the page to get fresh data from the API)
+            // Handle success
+            var self = this;
             post.done(function () {
-                window.location.replace(config.baseURL);
+
+                // Clear the user
+                self.set('currentUser', null);
+
+                // Redirect user (refresh the page to clear all data in the store)
+                var redirectUrl = (document.location.hostname === "localhost") ? config.baseURL : "http://wwoof.fr";
+                window.location.replace(redirectUrl);
             });
 
-            // Notify user
+            // Handle failure
             post.fail(function () {
                 alertify.error(Ember.I18n.t('notify.submissionError'));
             });
