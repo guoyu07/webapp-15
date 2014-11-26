@@ -92,27 +92,34 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 var url = [ config.apiHost, config.apiNamespace, 'users/impersonate' ].join('/');
 
                 // Impersonate the user
-                Ember.$.ajax({
+                var post = Ember.$.ajax({
                     type: 'POST',
                     url: url,
                     data: {
                         email: self.get('impersonatedUserEmail')
                     }
-                }).done(function (data) {
+                });
+
+                // Handle success
+                post.done(function (data) {
 
                     // Notify user
                     alertify.success(Ember.I18n.t('notify.userImpersonated', { email: self.get('impersonatedUserEmail') }));
 
-                    // Go to home page (refresh the page to get user data from the API)
+                    // Go to home page
                     self.send('userImpersonated');
                     self.transitionToRoute('index');
 
                     // Store the user in the local storage
                     self.set('currentUser', data.user);
-                }).fail(function () {
-                    // Notify user
+                });
+
+                // Handle failure
+                post.fail(function () {
                     alertify.error(Ember.I18n.t('notify.submissionError'));
-                }).always(function () {
+                });
+
+                post.always(function () {
                     self.set('isLoading', false);
                     Ember.$('#impersonationModal').modal('hide');
                 });
