@@ -5,14 +5,14 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    queryParams: ['type', 'itemCode', 'shippingFee'],
+    queryParams: ['type', 'itemCode', 'shippingRegion'],
 
     type: null,
     itemCode: null,
-    shippingFee: null,
+    shippingRegion: null,
 
     selectedItem: null,
-    selectedShipping: null,
+    selectedShippingRegion: null,
 
     wwoofMembershipOptions: [
         { id: 'WO1', name: Ember.I18n.t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
@@ -26,7 +26,7 @@ export default Ember.ObjectController.extend({
         { id: 'HR', name: Ember.I18n.t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
     ],
 
-    shippingFees: [
+    shippingRegionOptions: [
         { id: 'FR', name: Ember.I18n.t('memberships.shipping.FR', { price: 3.13 }), price: 3.13 },
         { id: 'OM1', name: Ember.I18n.t('memberships.shipping.OM1', { price: 5.52 }), price: 5.52 },
         { id: 'OM2', name: Ember.I18n.t('memberships.shipping.OM2', { price: 8.52 }), price: 8.52 },
@@ -42,7 +42,7 @@ export default Ember.ObjectController.extend({
      */
     resetShippingFees: function() {
         if (!this.get('showShippingFees')) {
-            this.set('shippingFee', null);
+            this.set('shippingRegion', null);
         }
     }.observes('showShippingFees'),
 
@@ -63,7 +63,7 @@ export default Ember.ObjectController.extend({
      */
     total: function() {
         var itemPrice = this.get('selectedItem.price') || 0;
-        var shippingFee = this.get('selectedShipping.price') || 0;
+        var shippingFee = this.get('selectedShippingRegion.price') || 0;
         return (itemPrice + shippingFee).toFixed(2);
-    }.property('selectedItem.price', 'selectedShipping.price')
+    }.property('selectedItem.price', 'selectedShippingRegion.price')
 });
