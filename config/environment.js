@@ -27,10 +27,10 @@ module.exports = function (environment) {
             'default-src': "'none'",
             'font-src': "'self' fonts.gstatic.com",
             'connect-src': "'self'",
-            'img-src': "'self' data: app.wwoof.fr maps.googleapis.com",
+            'img-src': "'self' data: app.wwoof.fr maps.googleapis.com www.google-analytics.com",
             'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
             'media-src': "'self'",
-            'script-src': "'self' 'unsafe-eval'"
+            'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com"
         }
     };
 
@@ -57,7 +57,9 @@ module.exports = function (environment) {
     }
 
     if (environment === 'production') {
-
+        ENV.googleAnalytics = {
+            webPropertyId: 'UA-19885009-2'
+        };
     }
 
     return ENV;
