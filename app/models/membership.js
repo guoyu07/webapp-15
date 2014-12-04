@@ -24,6 +24,7 @@ export default DS.Model.extend(ValidationsMixin, {
 
     // Computed properties
     isExpired: Ember.computed.lt('expireAt', moment()),
+    isNotExpired: Ember.computed.not('isExpired'),
     isStillValidInAMonth: Ember.computed.gt('expireAt', moment().add(1, 'months')),
     reminderAlreadySent: Ember.computed.notEmpty('reminderSentAt')
 });

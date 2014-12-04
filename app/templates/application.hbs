@@ -12,11 +12,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>{{#link-to 'hosts'}}<span class="glyphicon glyphicon-tree-conifer"></span> {{t 'literal.hosts'}}{{/link-to}}</li>
+                {{#if canSeeWwoofersLink}}
+                    <li>{{#link-to 'wwoofers'}}<span class="glyphicon glyphicon-search"></span> {{t 'literal.wwoofers'}}{{/link-to}}</li>
+                {{/if}}
                 {{#if currentUserIsAdmin}}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>{{#link-to 'wwoofers'}}{{t 'literal.wwoofers'}}{{/link-to}}</li>
                             <li>{{#link-to 'memberships'}}{{t 'literal.memberships'}}{{/link-to}}</li>
                             <li><a href="#" data-toggle="modal" data-target="#impersonationModal">{{t 'menu.impersonateUser'}}</a></li>
                         </ul>

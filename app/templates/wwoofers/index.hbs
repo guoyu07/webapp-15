@@ -54,8 +54,11 @@
                 <td>{{address.city}}</td>
                 <td>{{address.country.name}}</td>
                 <td>
-                    {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}} |
-                    {{#link-to "wwoofer.edit" id}}{{t 'literal.edit'}}{{/link-to}}
+                    {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}}
+                    {{#if controllers.application.currentUserIsAdmin}}
+                        |
+                        {{#link-to "wwoofer.edit" id}}{{t 'literal.edit'}}{{/link-to}}
+                    {{/if}}
                 </td>
             </tr>
         {{/each}}

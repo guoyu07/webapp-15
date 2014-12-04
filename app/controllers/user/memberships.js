@@ -5,8 +5,6 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
 
-    needs: ['application'],
-
     // Ordering
     sortProperties: ['expireAt'],
     sortAscending: false,
@@ -34,5 +32,15 @@ export default Ember.ArrayController.extend({
     /**
      * Returns the user's most recent Host membership.
      */
-    latestHostMembership: Ember.computed.alias('hostMemberships.firstObject')
+    latestHostMembership: Ember.computed.alias('hostMemberships.firstObject'),
+
+    /**
+     * Indicates whether the user's most recent Host membership is not expired.
+     */
+    hasNonExpiredHostMembership: Ember.computed.and('latestHostMembership', 'latestHostMembership.isNotExpired'),
+
+    /**
+     * Indicates whether the user's most recent Wwoof membership is not expired.
+     */
+    hasNonExpiredWwoofMembership: Ember.computed.and('latestWwoofMembership', 'latestWwoofMembership.isNotExpired')
 });

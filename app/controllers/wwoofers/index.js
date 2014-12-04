@@ -5,7 +5,7 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
 
-    needs: ['countries'],
+    needs: ['countries', 'application'],
 
     // Whether the controller is in loading state
     isLoading: false,
@@ -16,5 +16,4 @@ export default Ember.ArrayController.extend({
     // Search filters
     searchTerm: null,
     country: null
-
 });

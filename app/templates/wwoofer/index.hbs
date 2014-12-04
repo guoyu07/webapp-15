@@ -30,10 +30,28 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">{{t 'wwoofer.index.memberships'}}</h4>
+                <h4 class="panel-title">{{t 'wwoofer.form.intro.label'}}</h4>
             </div>
             <div class="panel-body">
-                {{#link-to 'user.memberships' user}}{{t 'wwoofer.index.viewMemberships'}}{{/link-to}}
+                {{#if intro}}
+                    {{intro}}
+                {{else}}
+                    <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">{{t 'wwoofer.form.tripMotivation.label'}}</h4>
+            </div>
+            <div class="panel-body">
+                {{#if tripMotivation}}
+                    {{tripMotivation}}
+                {{else}}
+                    <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
+                {{/if}}
             </div>
         </div>
     </div>
@@ -48,4 +66,16 @@
             </div>
         </div>
     </div>
+    {{#if controllers.application.currentUserIsAdmin}}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{t 'wwoofer.index.memberships'}}</h4>
+                </div>
+                <div class="panel-body">
+                    {{#link-to 'user.memberships' user}}{{t 'wwoofer.index.viewMemberships'}}{{/link-to}}
+                </div>
+            </div>
+        </div>
+    {{/if}}
 </div>
