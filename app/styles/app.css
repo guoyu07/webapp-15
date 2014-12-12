@@ -3305,9 +3305,9 @@ legend {
     margin-left: -64px;
 }
 
-/*.results-box {
-    margin-left: 314px;
-}*/
+.results-box {
+    margin-top: 20px;
+}
 .nav .dropdown-menu {
     width: 100%;
 }

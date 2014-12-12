@@ -40,8 +40,8 @@
             {{partial 'loading'}}
         {{else}}
             <div class="results-box">
-                <div class="list-group">
-                    {{#if content}}
+                {{#if content}}
+                    <div class="list-group">
                         {{#each itemController="host.index"}}
                             {{#link-to "host" model title=farmName class="list-group-item col-md-12"}}
                                 <div class="row farm">
@@ -79,8 +79,10 @@
                                 </button>
                             <p class="load-more">
                         </div>
-                    {{/if}}
-                </div>
+                    </div>
+                {{else}}
+                    <p class="text-center"><strong>{{t 'hosts.index.noResults'}}</strong></p>
+                {{/if}}
             </div>
         {{/if}}
     </div>
