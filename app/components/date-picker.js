@@ -18,6 +18,11 @@ export default Ember.Component.extend({
             self.set('value', dp.data('DateTimePicker').getDate()._d);
         });
 
+        // Disable picker
+        if (this.get('disabled')) {
+            dp.data('DateTimePicker').disable();
+        }
+
         // Set max date (today)
         dp.data('DateTimePicker').setMaxDate(new Date());
 

@@ -29,15 +29,15 @@
 
             <div {{bind-attr class=":form-group"}}>
                 <label for="firstName2" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control"}}
+                {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control" disabled=editMode}}
             </div>
             <div {{bind-attr class=":form-group"}}>
                 <label for="lastName2" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control"}}
+                {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control" disabled=editMode}}
             </div>
             <div {{bind-attr class=":form-group"}}>
                 <label for="birthDate2" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                {{date-picker value=birthDate2}}
+                {{date-picker value=birthDate2 disabled=editMode}}
             </div>
         </fieldset>
         <fieldset class="col-md-6">

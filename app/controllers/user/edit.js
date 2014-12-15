@@ -5,7 +5,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    disablePasswordField: true,
+    editMode: true,
 
     actions: {
         saveUser: function () {

@@ -21,17 +21,17 @@
         <div class="col-md-6">
             <div {{bind-attr class=":form-group fieldErrors.firstName.length:has-error"}}>
                 <label for="firstName" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                {{input type="text" id="firstName" name="firstName" value=firstName class="form-control"}}
+                {{input type="text" id="firstName" name="firstName" value=firstName class="form-control" disabled=editMode}}
                 {{error-display fieldErrors.firstName}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.lastName.length:has-error"}}>
                 <label for="lastName" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                {{input type="text" id="lastName" name="lastName" value=lastName class="form-control"}}
+                {{input type="text" id="lastName" name="lastName" value=lastName class="form-control" disabled=editMode}}
                 {{error-display fieldErrors.lastName}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.birthDate.length:has-error"}}>
                 <label for="birthDate" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                {{date-picker value=birthDate}}
+                {{date-picker value=birthDate disabled=editMode}}
                 {{error-display fieldErrors.birthDate}}
             </div>
         </div>
@@ -46,7 +46,7 @@
                 {{#unless isNew}}
                     ({{#link-to 'user.change-password' id}}{{t 'user.form.changePassword'}}{{/link-to}})
                 {{/unless}}
-                {{input type="password" id="password" name="password" value=password disabled=disablePasswordField class="form-control"}}
+                {{input type="password" id="password" name="password" value=password disabled=editMode class="form-control"}}
                 {{error-display fieldErrors.password}}
             </div>
         </div>
