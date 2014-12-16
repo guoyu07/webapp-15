@@ -17,11 +17,11 @@ export default DS.Model.extend(ValidationsMixin, {
     validations: {
         intro: {
             presence: true,
-            length: { minimum: 5, maximum: 1500 }
+            length: { minimum: 100, maximum: 2000 }
         },
         tripMotivation: {
             presence: true,
-            length: { minimum: 5, maximum: 1500 }
+            length: { minimum: 100, maximum: 2000 }
         }
     }
 });
