@@ -13,6 +13,7 @@
                         <p>{{t 'index.hostProfile.instructions' farmNameBinding='hostProfile.farmName'}}</p>
                         {{#link-to 'host.index' hostProfile.id class="btn btn-primary"}}{{t 'index.viewProfile'}}{{/link-to}}
                         {{#link-to 'host.edit' hostProfile.id class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
+                        {{#link-to 'wwoofers.index' class="btn btn-default"}}{{t 'index.searchWwoofers'}}{{/link-to}}
                     {{else}}
                         <p>{{t 'index.noHostProfile'}}</p>
                         {{#link-to 'hosts.new' class="btn btn-primary"}}{{t 'index.createProfile'}}{{/link-to}}
@@ -29,6 +30,7 @@
                     {{#if wwooferProfile}}
                         <p>{{t 'index.wwooferProfile.instructions'}}</p>
                         {{#link-to 'wwoofer.edit' wwooferProfile.id class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
+                        {{#link-to 'hosts.index' class="btn btn-primary"}}{{t 'index.viewHosts'}}{{/link-to}}
                     {{else}}
                         <p>{{t 'index.noWwooferProfile'}}</p>
                         {{#link-to 'wwoofers.new' class="btn btn-primary"}}{{t 'index.createProfile'}}{{/link-to}}
