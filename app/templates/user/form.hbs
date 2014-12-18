@@ -31,7 +31,7 @@
             </div>
             <div {{bind-attr class=":form-group fieldErrors.birthDate.length:has-error"}}>
                 <label for="birthDate" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                {{date-picker value=birthDate disabled=editMode}}
+                {{date-picker value=birthDate disabled=editMode maxDate=maxDate}}
                 {{error-display fieldErrors.birthDate}}
             </div>
         </div>
