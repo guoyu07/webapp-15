@@ -7,6 +7,9 @@ export default Ember.ObjectController.extend({
 
     needs: ['countries', 'departments'],
 
+    // Default the max date of the birth date datepicker to 18 years old
+    maxDate: moment().subtract(18, 'year'),
+
     actions: {
         saveWwoofer: function () {
             var wwoofer = this.get('model');
@@ -14,6 +17,12 @@ export default Ember.ObjectController.extend({
 
             // Prevent multiple save attempts
             if (this.get('isSaving')) {
+                return;
+            }
+
+            // Make sure the wwoofer is 18 years old
+            if (moment(this.get('birthDate')).isAfter(this.get('maxDate'))) {
+                alertify.error(Ember.I18n.t('notify.mustBe18'));
                 return;
             }
 
