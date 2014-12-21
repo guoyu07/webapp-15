@@ -21,7 +21,7 @@ export default Ember.ObjectController.extend({
             }
 
             // Make sure the wwoofer is 18 years old
-            if (moment(this.get('birthDate')).isAfter(this.get('maxDate'))) {
+            if (wwoofer.get('birthDate2') && moment(wwoofer.get('birthDate2')).isAfter(this.get('maxDate'))) {
                 alertify.error(Ember.I18n.t('notify.mustBe18'));
                 return;
             }
