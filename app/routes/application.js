@@ -2,10 +2,13 @@
  * Ember route for the application.
  */
 import Ember from 'ember';
-import config from '../config/environment';
+import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
-export default Ember.Route.extend({
-    beforeModel: function () {
+export default Ember.Route.extend(ApplicationRouteMixin, {
+    beforeModel: function (transition, queryParams) {
+
+        // Call base class
+        this._super(transition, queryParams);
 
         var self = this;
         function getUserMemberships() {
@@ -34,6 +37,9 @@ export default Ember.Route.extend({
         });
     },
     actions: {
+        sessionInvalidationFailed: function() {
+            alertify.error(Ember.I18n.t('notify.submissionError'));
+        },
         error: function(err) {
             // Redirect to login if we get a 401 from the API
             if (err && err.status === 401) {
@@ -41,23 +47,9 @@ export default Ember.Route.extend({
                 // Notify user
                 alertify.error(Ember.I18n.t('notify.unauthorizedError'));
 
-                // Clear the user (just in case)
-                this.controllerFor('application').set('currentUser', null);
-
-                // Prepare URL
-                var url = [ config.apiHost, config.apiNamespace, 'users/logout' ].join('/');
-
-                // Log the user out (just in case) and redirect to login
-                return Ember.$.ajax({
-                    type: 'POST',
-                    url: url
-                }).done(function () {
-                    window.location.replace(config.baseURL + 'login');
-                });
+                // Invalidate session
+                this.get('session').invalidate();
             }
-        },
-        userImpersonated: function() {
-            this.refresh();
         }
     }
 });

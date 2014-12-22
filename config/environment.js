@@ -34,6 +34,12 @@ module.exports = function (environment) {
         }
     };
 
+    // Ember simple auth configuration
+    ENV['simple-auth'] = {
+        store: 'simple-auth-session-store:local-storage',
+        routeAfterAuthentication: 'index'
+    };
+
     if (environment === 'development') {
         // ENV.APP.LOG_RESOLVER = true;
         ENV.APP.LOG_ACTIVE_GENERATION = true;

@@ -3,7 +3,6 @@
  */
 import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
-import config from '../config/environment';
 import Regex from '../utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
@@ -32,40 +31,26 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 // Set controller in loading state
                 self.set('isLoading', true);
 
-                // Prepare URL
-                var url = [ config.apiHost, config.apiNamespace, 'users/login' ].join('/');
-
-                // Logs user in
-                var post = Ember.$.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: {
-                        username: self.get('username'),
-                        password: self.get('password')
-                    }
+                // Authenticate user
+                var auth = self.get('session').authenticate('authenticator:passport', {
+                    username: self.get('username'),
+                    password: self.get('password')
                 });
 
                 // Handle success
-                post.done(function (data) {
-
-                    // Notify user
+                auth.then(function () {
                     alertify.success(Ember.I18n.t('notify.userAuthenticated'));
-
-                    // Store the user in the local storage
-                    self.set('controllers.application.currentUser', data.user);
-
-                    // Go to home page (refresh the page to get fresh data from the API)
-                    window.location.replace(config.baseURL);
                 });
 
                 // Handle failure
-                post.fail(function () {
+                auth.catch(function () {
                     alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
                 });
 
-                post.always(function () {
+                auth.finally(function () {
                     self.set('isLoading', false);
                 });
+
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });

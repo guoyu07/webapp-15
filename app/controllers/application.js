@@ -2,7 +2,6 @@
  * Ember controller for the application.
  */
 import Ember from 'ember';
-import config from '../config/environment';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
 
@@ -16,30 +15,16 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Gets or sets the authenticated user.
      */
-    currentUser: function (key, value) {
-
-        // Set the connected user
-        if (arguments.length > 1) {
-            if (value) {
-                localStorage["user"] = JSON.stringify(value);
-            } else {
-                localStorage.removeItem("user");
-            }
-        }
-
-        // Get the connected user from local storage (if any)
-        if (localStorage["user"]) {
-            var user = JSON.parse(localStorage["user"]);
-            return this.store.find('user', user.id);
-        } else {
-            return null;
-        }
-    }.property(),
+    currentUser: function () {
+        // Get the connected user from session
+        var user = this.get('session.user');
+        return user ? this.store.find('user', user.id) : null;
+    }.property('session.user'),
 
     /**
      * Indicates whether the current user is authenticated.
      */
-    isAuthenticated: Ember.computed.notEmpty('currentUser'),
+    isAuthenticated: Ember.computed.readOnly('session.isAuthenticated'),
 
     /**
      * Indicates whether the current user is anonymous.
@@ -62,34 +47,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
     impersonatedUserEmail: null,
 
     actions: {
-        logout: function () {
-
-            // Prepare URL
-            var url = [ config.apiHost, config.apiNamespace, 'users/logout' ].join('/');
-
-            // Log the user out and refresh the page
-            var post = Ember.$.ajax({
-                type: 'POST',
-                url: url
-            });
-
-            // Handle success
-            var self = this;
-            post.done(function () {
-
-                // Clear the user
-                self.set('currentUser', null);
-
-                // Redirect user (refresh the page to clear all data in the store)
-                var redirectUrl = (document.location.hostname === "localhost") ? config.baseURL : "http://wwoof.fr";
-                window.location.replace(redirectUrl);
-            });
-
-            // Handle failure
-            post.fail(function () {
-                alertify.error(Ember.I18n.t('notify.submissionError'));
-            });
-        },
         impersonateUser: function () {
 
             var self = this;
@@ -98,38 +55,22 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 // Set controller in loading state
                 self.set('isLoading', true);
 
-                // Prepare URL
-                var url = [ config.apiHost, config.apiNamespace, 'users/impersonate' ].join('/');
-
-                // Impersonate the user
-                var post = Ember.$.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: {
-                        email: self.get('impersonatedUserEmail')
-                    }
+                // Authenticate user
+                var auth = self.get('session').authenticate('authenticator:impersonation', {
+                    impersonatedUserEmail: self.get('impersonatedUserEmail')
                 });
 
                 // Handle success
-                post.done(function (data) {
-
-                    // Notify user
+                auth.then(function () {
                     alertify.success(Ember.I18n.t('notify.userImpersonated', { email: self.get('impersonatedUserEmail') }));
-
-                    // Go to home page
-                    self.send('userImpersonated');
-                    self.transitionToRoute('index');
-
-                    // Store the user in the local storage
-                    self.set('currentUser', data.user);
                 });
 
                 // Handle failure
-                post.fail(function () {
+                auth.catch(function () {
                     alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
 
-                post.always(function () {
+                auth.finally(function () {
                     self.set('isLoading', false);
                     Ember.$('#impersonationModal').modal('hide');
                 });
