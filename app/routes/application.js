@@ -3,6 +3,7 @@
  */
 import Ember from 'ember';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
+import config from '../config/environment';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
     beforeModel: function (transition, queryParams) {
@@ -37,6 +38,15 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
     },
     actions: {
+        sessionAuthenticationSucceeded: function () {
+            // Go to home page (refresh the page to reset app state)
+            window.location.replace(config.baseURL);
+        },
+        sessionInvalidationSucceeded: function () {
+            // Redirect user (refresh the page to reset app state)
+            var redirectUrl = (document.location.hostname === "localhost") ? config.baseURL : "http://wwoof.fr";
+            window.location.replace(redirectUrl);
+        },
         sessionInvalidationFailed: function() {
             alertify.error(Ember.I18n.t('notify.submissionError'));
         },
@@ -47,8 +57,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
                 // Notify user
                 alertify.error(Ember.I18n.t('notify.unauthorizedError'));
 
-                // Invalidate session
-                this.get('session').invalidate();
+                // Invalidate session or redirect
+                if (this.get('session.isAuthenticated')) {
+                    this.get('session').invalidate();
+                } else {
+                    window.location.replace("/login");
+                }
             }
         }
     }
