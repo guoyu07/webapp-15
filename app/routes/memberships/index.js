@@ -3,8 +3,9 @@
  */
 import Ember from 'ember';
 import config from '../../config/environment';
+import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
     model: function () {
         // Do not specify a user id to retrieve all memberships (works only if user is an admin)
