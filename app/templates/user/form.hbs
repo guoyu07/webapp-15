@@ -21,18 +21,30 @@
         <div class="col-md-6">
             <div {{bind-attr class=":form-group fieldErrors.firstName.length:has-error"}}>
                 <label for="firstName" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                {{input type="text" id="firstName" name="firstName" value=firstName class="form-control" disabled=editMode}}
-                {{error-display fieldErrors.firstName}}
+                {{#if isNew}}
+                    {{input type="text" id="firstName" name="firstName" value=firstName class="form-control"}}
+                    {{error-display fieldErrors.firstName}}
+                {{else}}
+                    <p class="form-control-static">{{firstName}}</p>
+                {{/if}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.lastName.length:has-error"}}>
                 <label for="lastName" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                {{input type="text" id="lastName" name="lastName" value=lastName class="form-control" disabled=editMode}}
-                {{error-display fieldErrors.lastName}}
+                {{#if isNew}}
+                    {{input type="text" id="lastName" name="lastName" value=lastName class="form-control"}}
+                    {{error-display fieldErrors.lastName}}
+                {{else}}
+                    <p class="form-control-static">{{lastName}}</p>
+                {{/if}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.birthDate.length:has-error"}}>
                 <label for="birthDate" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                {{date-picker value=birthDate disabled=editMode maxDate=maxDate}}
-                {{error-display fieldErrors.birthDate}}
+                {{#if isNew}}
+                    {{date-picker value=birthDate maxDate=maxDate}}
+                    {{error-display fieldErrors.birthDate}}
+                {{else}}
+                    <p class="form-control-static">{{format-date birthDate}}</p>
+                {{/if}}
             </div>
         </div>
         <div class="col-md-6">
@@ -43,11 +55,14 @@
             </div>
             <div {{bind-attr class=":form-group fieldErrors.password.length:has-error"}}>
                 <label for="password" class="control-label">{{t 'literal.password'}}</label>
-                {{#unless isNew}}
-                    ({{#link-to 'user.change-password' id}}{{t 'user.form.changePassword'}}{{/link-to}})
-                {{/unless}}
-                {{input type="password" id="password" name="password" value=password disabled=editMode class="form-control"}}
-                {{error-display fieldErrors.password}}
+                {{#if isNew}}
+                    {{input type="password" id="password" name="password" value=password class="form-control"}}
+                    {{error-display fieldErrors.password}}
+                {{else}}
+                    <p class="form-control-static">
+                        {{#link-to 'user.change-password' id}}{{t 'user.form.changePassword'}}{{/link-to}}
+                    </p>
+                {{/if}}
             </div>
         </div>
     </div>

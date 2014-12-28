@@ -5,8 +5,6 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    editMode: true,
-
     actions: {
         saveUser: function () {
 

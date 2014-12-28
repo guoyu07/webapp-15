@@ -7,8 +7,6 @@ export default Ember.ObjectController.extend({
 
     needs: ['application', 'wwoofer', 'countries', 'departments', 'user/memberships'],
 
-    editMode: true,
-
     // Setup bindings used in partial
     hasWwoofMemberships: Ember.computed.oneWay('controllers.user/memberships.hasWwoofMemberships'),
     latestWwoofMembership: Ember.computed.oneWay('controllers.user/memberships.latestWwoofMembership'),
