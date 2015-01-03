@@ -20,6 +20,7 @@
     "jquery-file-upload": "~9.5.8",
     "alertify.js": "~0.3.11",
     "ember-i18n": "^2.9.0",
-    "ember-simple-auth": "0.7.2"
+    "ember-simple-auth": "0.7.2",
+    "jquery-cookie": "~1.4.1"
   }
 }

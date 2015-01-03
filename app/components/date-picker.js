@@ -14,8 +14,8 @@ export default Ember.Component.extend({
         dp.datetimepicker({
             pickTime: false,
             viewMode: 'years',
-            defaultDate: this.get('maxDate'),
-            maxDate: this.get('maxDate')
+            maxDate: this.get('maxDate'),
+            language: this.get('locale')
         }).on('dp.change', function () {
             self.set('value', dp.data('DateTimePicker').getDate()._d);
         });
