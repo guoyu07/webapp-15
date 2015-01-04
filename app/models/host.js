@@ -9,6 +9,7 @@ import Regex from '../utils/regex';
 export default DS.Model.extend(ValidationsMixin, {
 
     // Attributes
+    oldHostId: DS.attr('string'),
     farmName: DS.attr('string'),
     shortDescription: DS.attr('string'),
     fullDescription: DS.attr('string'),
@@ -19,6 +20,9 @@ export default DS.Model.extend(ValidationsMixin, {
     isPending: DS.attr('boolean'),
     isSuspended: DS.attr('boolean'),
     activities: DS.attr('array'),
+    note: DS.attr('string'),
+    createdAt: DS.attr('date'),
+    updatedAt: DS.attr('date'),
 
     // Relationships
     user: DS.belongsTo('user'),
@@ -34,7 +38,7 @@ export default DS.Model.extend(ValidationsMixin, {
     }),
 
     // Phone is mandatory for hosts, this binding is used for validation
-    phoneBinding: 'user.phone',
+    phone: Ember.computed.readOnly('user.phone'),
 
     // Validations
     validations: {

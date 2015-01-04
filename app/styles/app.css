@@ -3467,12 +3467,14 @@ div.table .row {
     }
 }
 
-.spinkit-three-bounce-spinner div {
-    background-color: #7bb03f;
+label.checkbox.checkbox-inline {
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-left: 0;
 }
 
-.checkbox-inline {
-    margin-right: 10px;
+.spinkit-three-bounce-spinner div {
+    background-color: #7bb03f;
 }
 
 .btn-inline-margin {

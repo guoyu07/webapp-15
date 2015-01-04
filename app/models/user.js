@@ -15,11 +15,13 @@ export default DS.Model.extend(ValidationsMixin, {
     birthDate: DS.attr('date'),
     phone: DS.attr('string'),
     isAdmin: DS.attr('boolean'),
+    locale: DS.attr('string'),
     createdAt: DS.attr('date'),
+    updatedAt: DS.attr('date'),
 
     // Relationships
-    host: DS.belongsTo('host'),
-    wwoofer: DS.belongsTo('wwoofer'),
+    host: DS.belongsTo('host', { async: true }),
+    wwoofer: DS.belongsTo('wwoofer', { async: true }),
     memberships: DS.hasMany('membership', { async: true }),
 
     // Validations

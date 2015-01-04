@@ -12,15 +12,16 @@ export default DS.Model.extend(ValidationsMixin, {
     paymentId: DS.attr('string'),
     payerId: DS.attr('string'),
     saleId: DS.attr('string'),
-    createdAt: DS.attr('date'),
     expireAt: DS.attr('date'),
     itemCode: DS.attr('string'),
     paymentType: DS.attr('string'),
     total: DS.attr('number'),
     reminderSentAt: DS.attr('date'),
+    createdAt: DS.attr('date'),
+    updatedAt: DS.attr('date'),
 
     // Relationships
-    user: DS.belongsTo('user'),
+    user: DS.belongsTo('user', { async: true }),
 
     // Computed properties
     isExpired: Ember.computed.lt('expireAt', moment()),

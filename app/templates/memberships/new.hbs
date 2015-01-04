@@ -9,7 +9,7 @@
         {{#if showWwoofMemberships}}
             <div class="form-group col-md-12">
                 <label for="wwoofMemberships" class="control-label">{{t 'memberships.new.wwoofer.label'}}</label>
-                {{view Ember.Select
+                {{view "select"
                 content=wwoofMembershipOptions
                 optionValuePath="content.id"
                 optionLabelPath="content.name"
@@ -22,7 +22,7 @@
         {{#if showShippingFees}}
             <div class="form-group col-md-12">
                 <label for="shippingRegions" class="control-label">{{t 'memberships.new.shipping.label'}}</label>
-                {{view Ember.Select
+                {{view "select"
                 content=shippingRegionOptions
                 optionValuePath="content.id"
                 optionLabelPath="content.name"
@@ -35,7 +35,7 @@
         {{#if showHostMemberships}}
             <div class="form-group col-md-12">
                 <label for="hostMemberships" class="control-label">{{t 'memberships.new.host.label'}}</label>
-                {{view Ember.Select
+                {{view "select"
                 content=hostMembershipOptions
                 optionValuePath="content.id"
                 optionLabelPath="content.name"

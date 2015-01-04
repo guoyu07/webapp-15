@@ -13,9 +13,9 @@ export default Ember.ArrayController.extend({
         'vineyard',
         'orchard',
         'vegetables',
-        'forestry',
-        'grain-farming',
         'permaculture',
+        'grain-farming',
+        'forestry',
         'beekeeping',
         'bakery'
     ],

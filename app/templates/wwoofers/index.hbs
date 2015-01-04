@@ -14,7 +14,7 @@
     <div class="col-md-3">
         <div class="form-group">
             <label for="country" class="sr-only">{{t 'address.form.country.label'}}</label>
-            {{view Ember.Select
+            {{view "select"
             content=controllers.countries.content
             optionValuePath="content.id"
             optionLabelPath="content.name"

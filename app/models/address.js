@@ -5,11 +5,17 @@ import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 
 export default DS.Model.extend(ValidationsMixin, {
+
+    // Attributes
     address1: DS.attr('string'),
     address2: DS.attr('string'),
     zipCode: DS.attr('string'),
     city: DS.attr('string'),
     state: DS.attr('string'),
+    createdAt: DS.attr('date'),
+    updatedAt: DS.attr('date'),
+
+    // Relationships
     department: DS.belongsTo('department'),
     country: DS.belongsTo('country'),
 

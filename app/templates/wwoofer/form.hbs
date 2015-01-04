@@ -85,7 +85,7 @@
                 <div class="col-md-6">
                     <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
                         <label for="country" class="control-label">{{t 'address.form.country.label'}}</label>
-                        {{view Ember.Select
+                        {{view "select"
                         content=controllers.countries.content
                         optionValuePath="content.id"
                         optionLabelPath="content.name"
@@ -101,7 +101,7 @@
                         <div class="col-md-6">
                             <div {{bind-attr class=":form-group"}}>
                                 <label for="department" class="control-label">{{t 'address.form.department.label'}}</label>
-                                {{view Ember.Select
+                                {{view "select"
                                 content=controllers.departments.content
                                 optionValuePath="content.id"
                                 optionLabelPath="content.name"

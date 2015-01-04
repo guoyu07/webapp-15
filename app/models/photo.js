@@ -9,6 +9,8 @@ export default DS.Model.extend(ValidationsMixin, {
     // Attributes
     fileName: DS.attr('string'),
     caption: DS.attr('string'),
+    createdAt: DS.attr('date'),
+    updatedAt: DS.attr('date'),
 
     // Relationships
     host: DS.belongsTo('host'),
