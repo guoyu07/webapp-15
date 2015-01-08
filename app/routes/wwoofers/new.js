@@ -19,5 +19,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     },
     renderTemplate: function () {
         this.render('wwoofer/form', { controller: 'wwoofers.new' });
+    },
+    deactivate: function () {
+        this.get('controller.model').rollback();
     }
 });
