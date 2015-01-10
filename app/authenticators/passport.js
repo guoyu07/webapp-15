@@ -33,12 +33,12 @@ export default BaseAuthenticator.extend({
 
             // Handle success
             post.done(function (data) {
-                Ember.run(resolve(data));
+                resolve(data);
             });
 
             // Handle failure
             post.fail(function (err) {
-                Ember.run(reject(err));
+               reject(err);
             });
         });
     },
@@ -56,12 +56,12 @@ export default BaseAuthenticator.extend({
 
             // Handle success
             post.done(function (data) {
-                Ember.run(resolve(data));
+                resolve(data);
             });
 
             // Handle failure
             post.fail(function (err) {
-                Ember.run(reject(err));
+                reject(err);
             });
         });
     }

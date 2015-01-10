@@ -4,7 +4,6 @@
 import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
-import config from '../config/environment';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
@@ -65,8 +64,8 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 auth.then(function () {
                     alertify.success(Ember.I18n.t('notify.userImpersonated', { email: self.get('impersonatedUserEmail') }));
 
-                    // Go to home page (refresh the page to reset app state)
-                    window.location.replace(config.baseURL);
+                    // Refresh the route
+                    self.send('userImpersonated');
                 });
 
                 // Handle failure

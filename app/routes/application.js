@@ -38,10 +38,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
     },
     actions: {
-        sessionAuthenticationSucceeded: function () {
-            // Go to home page (refresh the page to reset app state)
-            window.location.replace(config.baseURL);
-        },
         sessionInvalidationSucceeded: function () {
             // Redirect user (refresh the page to reset app state)
             var redirectUrl = (document.location.hostname === "localhost") ? config.baseURL : "http://wwoof.fr";
@@ -49,6 +45,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         },
         sessionInvalidationFailed: function() {
             alertify.error(Ember.I18n.t('notify.submissionError'));
+        },
+        userImpersonated: function() {
+            this.refresh();
         },
         error: function(err) {
             // Redirect to login if we get a 401 from the API
