@@ -2,7 +2,7 @@
 
 This application is intended to facilitate the meeting of WWOOFers from all over the world with organic farmers in France.
 
-The development of this application is done by volunteers and intended to eventually replace the current [WWOOF France](http://www.wwoof.fr) website.
+The development of this application is done by volunteers and accessible via the [WWOOF France](http://app.wwoof.fr) website.
 
 ## Getting started
 
