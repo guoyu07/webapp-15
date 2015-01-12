@@ -49,7 +49,7 @@
                             {{address.zipCode}} {{address.city}}
                         </span>
                     {{else}}
-                        <i>{{t 'host.index.membersOnly'}}</i>
+                        {{members-only}}
                     {{/if}}
                 </div>
 
@@ -59,7 +59,7 @@
                         {{#if canSeeContactInfo}}
                             {{mail-to user.email}}
                         {{else}}
-                            <i>{{t 'host.index.membersOnly'}}</i>
+                            {{members-only}}
                         {{/if}}
                     </div>
                 {{/unless}}
@@ -70,7 +70,7 @@
                         {{#if canSeeContactInfo}}
                             {{user.phone}}
                         {{else}}
-                            <i>{{t 'host.index.membersOnly'}}</i>
+                            {{members-only}}
                         {{/if}}
                     </div>
                 {{/unless}}
@@ -80,7 +80,7 @@
                     {{#if canSeeContactInfo}}
                         <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
                     {{else}}
-                        <i>{{t 'host.index.membersOnly'}}</i>
+                        {{members-only}}
                     {{/if}}
                 </div>
 

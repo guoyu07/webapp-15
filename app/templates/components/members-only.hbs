@@ -1,0 +1,5 @@
+{{#if session.isAuthenticated}}
+    <i>{{t 'host.index.membersOnly'}}</i>
+{{else}}
+    {{#link-to 'users.new'}}{{t 'host.index.membersOnly'}}{{/link-to}}
+{{/if}}
