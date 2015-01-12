@@ -38,6 +38,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
     },
     actions: {
+        sessionAuthenticationSucceeded: function() {
+            this.refresh();
+        },
         sessionInvalidationSucceeded: function () {
             // Redirect user (refresh the page to reset app state)
             var redirectUrl = (document.location.hostname === "localhost") ? config.baseURL : "http://wwoof.fr";
