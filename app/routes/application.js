@@ -38,7 +38,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
     },
     actions: {
-        sessionAuthenticationSucceeded: function() {
+        sessionAuthenticationSucceeded: function () {
             this.refresh();
         },
         sessionInvalidationSucceeded: function () {
@@ -46,13 +46,13 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
             var redirectUrl = (document.location.hostname === "localhost") ? config.baseURL : "http://wwoof.fr";
             window.location.replace(redirectUrl);
         },
-        sessionInvalidationFailed: function() {
+        sessionInvalidationFailed: function () {
             alertify.error(Ember.I18n.t('notify.submissionError'));
         },
         userImpersonated: function() {
             this.refresh();
         },
-        error: function(err) {
+        error: function (err) {
             // Redirect to login if we get a 401 from the API
             if (err && err.status === 401) {
 
@@ -65,6 +65,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
                 } else {
                     window.location.replace("/login");
                 }
+            } else {
+                Ember.onerror(err);
+                return true;
             }
         }
     }

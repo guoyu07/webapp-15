@@ -5,7 +5,8 @@
         "-Promise": true,
         "WebappENV": true,
         "moment": true,
-        "alertify": true
+        "alertify": true,
+        "Honeybadger": true
     },
     "browser": true,
     "boss": true,

@@ -55,6 +55,9 @@ app.import('bower_components/swipeshow/jquery.swipeshow.css');
 app.import('bower_components/ember-i18n/lib/i18n.js');
 app.import('bower_components/ember-i18n/lib/i18n-plurals.js');
 
+// Honeybadger
+app.import('bower_components/honeybadger.js/honeybadger.js');
+
 module.exports = mergeTrees([
     alertify,
     bootstrapFonts,
