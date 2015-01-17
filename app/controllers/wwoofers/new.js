@@ -34,22 +34,33 @@ export default Ember.ObjectController.extend({
             var self = this;
             Ember.RSVP.all(validations).then(function () {
 
-                // Create the wwoofer...
-                wwoofer.save().then(function () {
-                    // ... and the address
+                // Create the wwoofer
+                var promise = wwoofer.save();
+
+                // Create the address
+                promise = promise.then(function () {
                     return address.save();
-                }).then(function () {
-                    // Set the wwoofer's address (now that it has a valid id) and save the wwoofer again
+                });
+
+                // Set the wwoofer's address (now that it has a valid id) and update the wwoofer
+                promise = promise.then(function () {
                     wwoofer.set('address', address);
                     return wwoofer.save();
-                }).then(function () {
-                    alertify.success(Ember.I18n.t('notify.wwooferCreated'));
+                });
 
-                    // Redirect user to new membership page
+                // Inform and redirect user to payment page
+                promise = promise.then(function () {
+                    alertify.success(Ember.I18n.t('notify.wwooferCreated'));
                     var itemCode = wwoofer.firstName2 ? 'WO1': 'WO2';
                     self.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
-                }).catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
+                });
+
+                // Handle errors
+                promise.catch(function (error) {
+                    if (error && !error.message) {
+                        error.message = "Cannot create wwoofer.";
+                    }
+                    Ember.onerror(error);
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
