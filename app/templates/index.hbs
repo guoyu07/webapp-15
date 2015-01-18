@@ -3,6 +3,15 @@
         <h1>{{t 'index.title' firstNameBinding='currentUser.firstName'}}</h1>
     </div>
     <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <span class="glyphicon glyphicon-info-sign"></span>
+                {{t 'index.doNotProvideId'}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
