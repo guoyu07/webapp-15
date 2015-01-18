@@ -46,7 +46,7 @@ export default Ember.ObjectController.extend({
                     alertify.success(Ember.I18n.t('notify.hostCreated'));
                     self.transitionToRoute('host.edit', host);
                 }).catch(function () {
-                    self.alerts.error(Ember.I18n.t('notify.submissionError'));
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
