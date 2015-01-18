@@ -23,7 +23,12 @@ export default {
                 var userEmail = mainSession ? mainSession.get('user.email') : null;
 
                 // Log error remotely
-                Honeybadger.notify(error, { context: { route: currentRoute, user_id: userId, user_email: userEmail } });
+                Honeybadger.notify(error, { context: {
+                    route: currentRoute,
+                    user_id: userId,
+                    user_email: userEmail,
+                    details: error
+                } });
             } catch (e) {}
 
             // Inform the user

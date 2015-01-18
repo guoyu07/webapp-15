@@ -34,19 +34,32 @@ export default Ember.ObjectController.extend({
             var self = this;
             Ember.RSVP.all(validations).then(function () {
 
-                // Create the host...
-                host.save().then(function () {
-                    // ... and the address
+                // Create the host
+                var promise = host.save();
+
+                // Create the address
+                promise = promise.then(function () {
                     return address.save();
-                }).then(function () {
-                    // Set the host's address (now that it has a valid id) and save the host again
+                });
+
+                // Set the host's address (now that it has a valid id) and update the wwoofer
+                promise = promise.then(function () {
                     host.set('address', address);
                     return host.save();
-                }).then(function () {
+                });
+
+                // Inform and redirect user to the edit page
+                promise = promise.then(function () {
                     alertify.success(Ember.I18n.t('notify.hostCreated'));
                     self.transitionToRoute('host.edit', host);
-                }).catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
+                });
+
+                // Handle errors
+                promise.catch(function (error) {
+                    if (error && !error.message) {
+                        error.message = "Cannot create host.";
+                    }
+                    Ember.onerror(error);
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
