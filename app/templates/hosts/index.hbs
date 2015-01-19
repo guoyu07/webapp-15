@@ -57,10 +57,9 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 farm-item">
                                         <div class="col-md-12">
                                             <h3>{{farmName}}</h3>
-                                            <span class="host-name">{{user.firstName}}
-                                                <span class="last-name">{{user.lastName}}</span>
-                                            </span>
-                                            <p>{{trim-string fullDescription start=0 max=75}}</p>
+                                            <p class="description">
+                                                {{trim-string fullDescription start=0 max=200}}
+                                            </p>
                                             <span class="address">
                                                 <i>{{address.city}}, {{address.department.name}}</i>
                                             </span>
