@@ -39,5 +39,24 @@ export default {
                 Ember.Logger.assert(false, error);
             }
         };
+
+        // Handle promise errors
+        Ember.RSVP.on('error', function(error) {
+
+            // Log in the console only in dev mode
+            if (config.environment === "development") {
+                Ember.Logger.assert(false, error);
+            }
+
+            // Clear the session if 401
+            if (error && error.status === 401) {
+                var session = container.lookup('simple-auth-session:main');
+                if (session && session.isAuthenticated) {
+                    session.invalidate();
+                } else {
+                    window.location.replace("/login");
+                }
+            }
+        });
     }
 };
