@@ -58,6 +58,13 @@ app.import('bower_components/ember-i18n/lib/i18n-plurals.js');
 // Honeybadger
 app.import('bower_components/honeybadger.js/honeybadger.js');
 
+// Ember leaflet
+app.import('bower_components/ember-leaflet/dist/ember-leaflet.js');
+
+// Leaflet providers
+app.import("bower_components/leaflet-providers/leaflet-providers.js");
+
+
 module.exports = mergeTrees([
     alertify,
     bootstrapFonts,

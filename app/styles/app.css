@@ -3477,3 +3477,13 @@ label.checkbox.checkbox-inline {
 .btn-inline-margin {
     margin-left: 10px;
 }
+
+/* Map style */
+div.leaflet-container {
+    height: 550px;
+}
+
+.ember-application {
+    height: 650px;
+}
+

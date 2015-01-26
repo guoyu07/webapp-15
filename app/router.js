@@ -10,6 +10,7 @@ Router.map(function () {
     this.route('reset-password');
     this.resource('hosts', function () {
         this.route('new');
+        this.route('map');
     });
     this.resource('host', { path: '/host/:host_id' }, function () {
         this.route('edit');
