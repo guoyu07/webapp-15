@@ -64,5 +64,12 @@
         {{/each}}
         </tbody>
     </table>
+    <div class="row col-md-12">
+        <p class="load-more">
+            <button {{action "loadMoreWwoofers"}} {{bind-attr disabled=isLoadingMore}} class="btn btn-default">
+                {{t 'literal.loadMore'}}
+            </button>
+        <p class="load-more">
+    </div>
 {{/if}}
 
