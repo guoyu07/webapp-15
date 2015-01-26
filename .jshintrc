@@ -6,7 +6,9 @@
         "WebappENV": true,
         "moment": true,
         "alertify": true,
-        "Honeybadger": true
+        "Honeybadger": true,
+        "L": true,
+        "EmberLeaflet": true
     },
     "browser": true,
     "boss": true,

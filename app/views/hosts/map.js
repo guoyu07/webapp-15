@@ -1,7 +1,8 @@
 /**
  * Ember view for host index.
  */
-import App from "../../app";
+import App from '../../app';
+import Ember from 'ember';
 
 App.OSMLayer = Ember.Object.extend(EmberLeaflet.LayerMixin,{
     _newLayer: function() {
@@ -16,7 +17,10 @@ export default EmberLeaflet.MapView.extend({
     ]
 });
 
-$(window).on("resize", function() {
-    if ($(".leaflet-container"))
-        $(".leaflet-container").height($(window).height() - $("nav .container").height() - 20);
+Ember.$(window).on("resize", function() {
+    if (Ember.$(".leaflet-container")) {
+        Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container").height() - 20);
+    }
 }).trigger("resize");
+
+
