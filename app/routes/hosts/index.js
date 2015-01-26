@@ -24,6 +24,14 @@ export default Ember.Route.extend({
     afterModel: function() {
         this.controllerFor('hosts.index').set('isLoading', false);
     },
+    renderTemplate: function() {
+        this.render('hosts/index');
+        this.render('hosts/map', {   // the template to render
+            into: 'hosts/index',                // the template to render into
+            outlet: 'map',              // the name of the outlet in that template
+            controller: 'hosts'        // the controller to use for the template
+        });
+    },
     actions: {
         searchHosts: function () {
             this.refresh();
