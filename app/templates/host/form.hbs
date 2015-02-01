@@ -1,4 +1,15 @@
 <div class="page-header">
+    {{#unless isNew}}
+        <div class="btn-group pull-right">
+            <button type="button" {{bind-attr class=":btn :btn-primary isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
+                {{#if isHidden}}
+                    {{t 'host.form.showProfile'}}
+                {{else}}
+                    {{t 'host.form.hideProfile'}}
+                {{/if}}
+            </button>
+        </div>
+    {{/unless}}
     <h1>{{farmName}}</h1>
 </div>
 {{#unless isNew}}

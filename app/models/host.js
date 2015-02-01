@@ -18,6 +18,7 @@ export default DS.Model.extend(ValidationsMixin, {
     noPhone: DS.attr('boolean'),
     noEmail: DS.attr('boolean'),
     isPending: DS.attr('boolean'),
+    isHidden: DS.attr('boolean'),
     isSuspended: DS.attr('boolean'),
     activities: DS.attr('array'),
     note: DS.attr('string'),
