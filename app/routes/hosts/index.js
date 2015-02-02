@@ -25,12 +25,16 @@ export default Ember.Route.extend({
         this.controllerFor('hosts.index').set('isLoading', false);
     },
     renderTemplate: function() {
+        Ember.$("#mainContainer").removeClass( "container" ).addClass( "container-fluid" );
         this.render('hosts/index');
         this.render('hosts/map', {   // the template to render
             into: 'hosts/index',                // the template to render into
             outlet: 'map',              // the name of the outlet in that template
             controller: 'hosts'        // the controller to use for the template
         });
+    },
+    deactivate: function() {
+        Ember.$("#mainContainer").removeClass( "container-fluid" ).addClass( "container" );
     },
     actions: {
         searchHosts: function () {

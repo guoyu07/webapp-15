@@ -1,89 +1,85 @@
 <div class="row">
-    <div class="col-md-3 col-sm-12 search-box">
-        <form class="form" role="form">
-            <h4>{{t 'hosts.index.find'}}</h4>
-            <div class="form-group">
-                <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
-                {{input type="search" class="form-control" id="searchTerm" placeholderTranslation="hosts.index.searchTerm.placeholder" value=searchTerm action="searchHosts"}}
-            </div>
-            <div class="form-group">
-                <div class="dropdown-item">
-                    {{view "select"
-                    class="form-control"
-                    optionLabelPath="content.name"
-                    optionValuePath="content.id"
-                    content=departmentFilterOptions
-                    value=department
-                    promptTranslation="address.form.department.prompt"}}
+    <div class="col-md-6 col-sm-12">
+        <div class="search-box row">
+            <div class="form" role="form">
+                <h4>{{t 'hosts.index.find'}}</h4>
+                <div class="form-group">
+                    <div class="input-group">
+                        <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
+                            {{input class="form-control" type="search"  id="searchTerm" placeholderTranslation="hosts.index.searchTerm.placeholder" value=searchTerm action="searchHosts"}}
+                            <label {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block-tn input-group-addon">{{t 'literal.search'}}</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{toggle-options values=allActivities selected=activities buttonDisplayName=activitiesDisplayName optionValuePath='id'}}
+                </div>
+
+                {{#if currentUserIsAdmin}}
+                    <h4>{{t 'hosts.index.admin'}}</h4>
+                    <div class="checkbox">
+                        <label>
+                            {{input type="checkbox" checked=pendingOnly}}
+                            {{t 'hosts.index.pending.label'}}
+                        </label>
+                    </div>
+                {{/if}}
+                <div class="hidden">
+                    <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}}></button>
                 </div>
             </div>
-            <h4>{{t 'hosts.index.activities'}}</h4>
-            <div class="form-group">
-                {{toggle-options values=allActivities selected=activities optionValuePath='id'}}
-            </div>
-            {{#if currentUserIsAdmin}}
-                <h4>{{t 'hosts.index.admin'}}</h4>
-                <div class="checkbox">
-                    <label>
-                        {{input type="checkbox" checked=pendingOnly}}
-                        {{t 'hosts.index.pending.label'}}
-                    </label>
+        </div>
+        <div id="resultList" class="row">
+            {{#if isLoading}}
+                {{partial 'loading'}}
+            {{else}}
+                <div class="results-box">
+                    {{#if content}}
+                        <div class="list-group">
+                            {{#each itemController="host.index"}}
+                                {{#link-to "host" model title=farmName class="list-group-item col-md-12"}}
+                                    <div class="row farm">
+                                        <div class="col-md-4 col-sm-4">
+                                            <div class="host-thumb">
+                                                {{#if photos.length}}
+                                                    {{host-thumb url=mainPhoto.completeUrl}}
+                                                {{else}}
+                                                    {{host-thumb url="wwoof-no-photo.png"}}
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 farm-item">
+                                            <div class="col-md-12">
+                                                <h3>{{farmName}}</h3>
+                                                <p class="description">
+                                                    {{trim-string fullDescription start=0 max=200}}
+                                                </p>
+                                                <span class="address">
+                                                    <i>{{address.city}}, {{address.department.name}}</i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
+                                            <button class="btn btn-default btn-block-tn">{{t 'literal.view'}}</button>
+                                        </div>
+                                    </div>
+                                {{/link-to}}
+                            {{/each}}
+                            <div class="row col-md-12">
+                                <p class="load-more">
+                                    <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoadingMore}} class="btn btn-default">
+                                        {{t 'literal.loadMore'}}
+                                    </button>
+                                <p class="load-more">
+                            </div>
+                        </div>
+                    {{else}}
+                        <p class="text-center"><strong>{{t 'hosts.index.noResults'}}</strong></p>
+                    {{/if}}
                 </div>
             {{/if}}
-            <div class="row col-md-3 col-sm-12">
-                <button {{action "searchHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block-tn">{{t 'literal.search'}}</button>
-            </div>
-        </form>
+        </div>
     </div>
-    {{outlet map}}
-    <div class="col-md-9 col-sm-12">
-        {{#if isLoading}}
-            {{partial 'loading'}}
-        {{else}}
-            <div class="results-box">
-                {{#if content}}
-                    <div class="list-group">
-                        {{#each itemController="host.index"}}
-                            {{#link-to "host" model title=farmName class="list-group-item col-md-12"}}
-                                <div class="row farm">
-                                    <div class="col-md-4 col-sm-4">
-                                        <div class="host-thumb">
-                                            {{#if photos.length}}
-                                                {{host-thumb url=mainPhoto.completeUrl}}
-                                            {{else}}
-                                                {{host-thumb url="wwoof-no-photo.png"}}
-                                            {{/if}}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-12 farm-item">
-                                        <div class="col-md-12">
-                                            <h3>{{farmName}}</h3>
-                                            <p class="description">
-                                                {{trim-string fullDescription start=0 max=200}}
-                                            </p>
-                                            <span class="address">
-                                                <i>{{address.city}}, {{address.department.name}}</i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
-                                        <button class="btn btn-default btn-block-tn">{{t 'literal.view'}}</button>
-                                    </div>
-                                </div>
-                            {{/link-to}}
-                        {{/each}}
-                        <div class="row col-md-12">
-                            <p class="load-more">
-                                <button {{action "loadMoreHosts"}} {{bind-attr disabled=isLoadingMore}} class="btn btn-default">
-                                    {{t 'literal.loadMore'}}
-                                </button>
-                            <p class="load-more">
-                        </div>
-                    </div>
-                {{else}}
-                    <p class="text-center"><strong>{{t 'hosts.index.noResults'}}</strong></p>
-                {{/if}}
-            </div>
-        {{/if}}
+    <div id="rightRow" class="col-md-6 hidden-sm hidden-xs">
+        {{outlet map}}
     </div>
 </div>

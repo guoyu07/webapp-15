@@ -55,5 +55,9 @@ export default Ember.ObjectController.extend({
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }
-    }
+    },
+
+    activitiesDisplayName: function() {
+        return Ember.I18n.t('hosts.index.activities');
+    }.property()
 });

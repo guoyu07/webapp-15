@@ -17,6 +17,9 @@ App.HostsLayer =  Ember.Object.extend(EmberLeaflet.LayerMixin,{
             self.markers.addLayer(self.geoJsonLayer);
         });
         return this.markers;
+    },
+    requestFeatures(params) {
+
     }
 });
 
@@ -37,9 +40,6 @@ export default EmberLeaflet.MapView.extend({
 });
 
 Ember.$(window).on("resize", function() {
-    if (Ember.$(".leaflet-container")) {
-        Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container").height() - 20);
-    }
 }).trigger("resize");
 
 

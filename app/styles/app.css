@@ -1135,7 +1135,7 @@ ul {
 }
 
 .row {
-    margin-right: -15px;
+    margin-right: 0px;
     margin-left: -15px;
 }
 
@@ -1330,7 +1330,7 @@ th {
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1000;
+    z-index: 1001;
     display: none;
     float: left;
     min-width: 160px;
@@ -1342,11 +1342,35 @@ th {
     background-color: #fff;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, .15);
+    border: 1px solid #dfd7ca;
     border-radius: 4px;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.btn.buttonCheckbox {
+    width : 120px;
+    margin-bottom: 5px;
+}
+
+.closeGroup {
+    display: block;
+    float: right;
+}
+
+.closeGroup label{
+    padding: 5px 5px;
+    font-size: x-small;
+}
+
+label.btn.input-group-addon {
+    color: #ffffff;
+    background-color: #7bb03f;
+}
+
+.filters {
+    width: 380px;
+    padding: 5px;
 }
 
 .input-group {
@@ -1677,6 +1701,7 @@ th {
     padding-left: 0;
     margin-bottom: 20px;
 }
+
 
 .list-group-item {
     position: relative;
@@ -2468,27 +2493,6 @@ th {
     display: none;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 160px;
-    padding: 5px 0;
-    margin: 2px 0 0;
-    list-style: none;
-    font-size: 14px;
-    text-align: left;
-    background-color: #ffffff;
-    border: 1px solid #dfd7ca;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    background-clip: padding-box;
-}
-
 .input-group {
     position: relative;
     display: table;
@@ -3016,7 +3020,11 @@ legend {
 }
 
 .search-box {
-    margin-top: 20px;
+    margin-left: 5px;
+}
+
+.search-box .input-group {
+    width: 100%;
 }
 
 .host-thumb {
@@ -3479,11 +3487,26 @@ label.checkbox.checkbox-inline {
 }
 
 /* Map style */
+
+div#rightRow {
+    padding-right: 0px;
+}
+
 div.leaflet-container {
     height: 550px;
 }
 
 .ember-application {
     height: 650px;
+}
+
+div#resultList {
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-left: 5px;
+}
+
+div#resultList .list-group{
+    margin-bottom: -40px;
 }
 

@@ -64,5 +64,9 @@ export default Ember.ArrayController.extend({
                 self.set('isLoadingMore', false);
             });
         }
-    }
+    },
+
+    activitiesDisplayName: function() {
+        return Ember.I18n.t('hosts.index.activities');
+    }.property()
 });
