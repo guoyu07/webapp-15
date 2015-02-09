@@ -14,10 +14,15 @@ export default EmberLeaflet.MapView.extend({
         HostsLayer
     ],
 
-    didCreateLayer() {
+    didCreateLayer: function () {
         // save map instance
-        this.controller.set('map', this._layer);
+        this.controller.set('mapLayer', this._layer);
         this._super();
+    },
+
+    // moveEnd callback
+    moveend: function () {
+        this.controller.send("mapChanged");
     }
 });
 

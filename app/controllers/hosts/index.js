@@ -25,6 +25,37 @@ export default Ember.ArrayController.extend({
     currentUserIsAdmin: Ember.computed.readOnly('controllers.application.currentUserIsAdmin'),
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
+    visibleFeatures : [],
+    mapZoom : 0,
+
+    hasZoomedEnough : function () {
+        return this.get('mapZoom') >= 8;
+    }.property('mapZoom'),
+
+    hideMoreButton :  function () {
+        return this.get('isLoadingMore') || this.get('_showedFeatures.length') == this.get('visibleFeatures.length');
+    }.property('isLoadingMore', '_showedFeatures.length'),
+
+    activitiesObserver : function () {
+        if (this.get('mapLayer'))
+        {
+            this.send('updateHosts');
+        }
+    }.observes('activities'),
+
+
+    numberShowedFeatures : 10,
+
+    _showedFeatures : [],
+
+    showedFeatures : function () {
+        var mapIterator = Math.min(this.get('numberShowedFeatures'), this.get('visibleFeatures.length'));
+        for (var i= this.get('_showedFeatures.length'); i < mapIterator; i++){
+            this.get('_showedFeatures').pushObject(this.get('visibleFeatures')[i]);
+        }
+        return this.get('_showedFeatures');
+    }.property('visibleFeatures.@each', 'numberShowedFeatures'),
+
     // Query parameters
     parameters: function () {
         return {
@@ -36,33 +67,33 @@ export default Ember.ArrayController.extend({
     }.property('searchTerm', 'department', 'pendingOnly', 'activities'),
 
     actions: {
-        loadMoreHosts: function () {
-
-            // Return early if already loading
-            if (this.get('isLoadingMore')) {
+        updateHosts: function () {
+            this.set('isLoading', true);
+            this.get('hostLayer').updateFeatures(this.get('parameters'));
+        },
+        updated: function () {
+            //this.get('mapLayer').fitBounds(this.get('hostLayer.geoJsonLayer').getBounds());
+            this.set('isLoading', false);
+        },
+        mapChanged: function() {
+            this.set('visibleFeatures', []);
+            this.set('_showedFeatures', []);
+            this.set('numberShowedFeatures', 10);
+            this.set('mapZoom', this.get('mapLayer').getZoom());
+            if ( !this.get('hasZoomedEnough') && this.get('hostLayer.geoJsonLayer').getLayers().length > 40 ) {
                 return;
             }
-
-            // Set controller loading state
-            this.set('isLoadingMore', true);
-
-            // Initialize variables
-            var newOffset = this.store.metadataFor('host').offset + 10,
-                params = Ember.$.extend(true, this.get('parameters') || {}, { offset: newOffset }),
-                self = this;
-
-            // Find next page of content and update
-            this.store.find('host', params).then(function (hosts) {
-                if (hosts.get('content').length) {
-                    self.get('content').addObjects(hosts.get('content'));
-                } else {
-                    alertify.log(Ember.I18n.t('notify.noMoreHosts'));
+            var self = this;
+            var mapbounds = this.get('mapLayer').getBounds();
+            this.get('hostLayer.geoJsonLayer').eachLayer(function (marker) {
+                if (mapbounds.contains(marker.getLatLng()))
+                {
+                    self.get('visibleFeatures').push(marker.feature);
                 }
-            }).catch(function () {
-                alertify.error(Ember.I18n.t('notify.submissionError'));
-            }).finally(function () {
-                self.set('isLoadingMore', false);
             });
+        },
+        moreHosts: function () {
+            this.set('numberShowedFeatures', this.get('numberShowedFeatures') + 10);
         }
     },
 

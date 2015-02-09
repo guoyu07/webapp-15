@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 
 export default Ember.Object.extend(EmberLeaflet.LayerMixin,{
+    name : "HostLayer",
     geoJsonLayer : null,
     markers : null,
     requestURI : "/api/host-coordinates",
@@ -9,12 +10,9 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin,{
     _newLayer : function () {
         this.geoJsonLayer = new L.geoJson();
         this.markers = L.markerClusterGroup({ disableClusteringAtZoom: 9 });
-        var dataRequest = Ember.$.get( this.get('requestURI') + "?limit=" +this.get('resultLimit'));
-        var self = this;
-        dataRequest.done(function (data) {
-            self.geoJsonLayer.addData(data);
-            self.markers.addLayer(self.geoJsonLayer);
-        });
+        var params = this.controller.get('parameters');
+        this.updateFeatures(params);
+        this.controller.set('hostLayer', this);
         return this.markers;
     },
     updateFeatures(params) {
@@ -23,12 +21,24 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin,{
         {
             completeURI = completeURI + "&searchTerm=" + params.searchTerm;
         }
+        if (params.pendingOnly)
+        {
+            completeURI = completeURI + "&pendingOnly=" + params.pendingOnly;
+        }
+        var activities = this.controller.get('activities');
+        if (activities){
+            activities.forEach(function (activity) {
+                completeURI = completeURI + "&activities[]=" + activity;
+            })
+        }
         var dataRequest = Ember.$.get(completeURI);
         var self = this;
         dataRequest.done(function (data) {
+            self.markers.removeLayer(self.geoJsonLayer);
             self.geoJsonLayer.clearLayers();
             self.geoJsonLayer.addData(data);
+            self.markers.addLayer(self.geoJsonLayer);
+            self.controller.send("updated");
         });
-        //http://localhost:3333/api/host-coordinates?limit=2000&searchTerm=test
     }
 });
