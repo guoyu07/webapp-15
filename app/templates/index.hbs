@@ -21,7 +21,7 @@
     {{#if host}}
         <div class="row">
             <div class="col-md-12">
-                {{#if isApproved}}
+                {{#if host.isApproved}}
                     {{host-membership-status membershipsService=userMemberships}}
                 {{else}}
                     <div class="alert alert-warning alert-dismissable" role="alert">
