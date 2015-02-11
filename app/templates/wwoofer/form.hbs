@@ -3,7 +3,7 @@
 </div>
 {{#unless isNew}}
     {{#if belongsToCurrentUser}}
-        {{partial 'wwoofer/membership-status'}}
+        {{wwoofer-membership-status membershipsService=userMemberships}}
     {{/if}}
 {{/unless}}
 <form>

@@ -11,6 +11,20 @@
             </div>
         </div>
     </div>
+    {{#if wwoofer}}
+        <div class="row">
+            <div class="col-md-12">
+                {{wwoofer-membership-status membershipsService=userMemberships}}
+            </div>
+        </div>
+    {{/if}}
+    {{#if host}}
+        <div class="row">
+            <div class="col-md-12">
+                {{host-membership-status membershipsService=userMemberships}}
+            </div>
+        </div>
+    {{/if}}
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">

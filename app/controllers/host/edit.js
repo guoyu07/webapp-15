@@ -6,10 +6,8 @@ import config from '../../config/environment';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'host', 'departments', 'countries', 'user/memberships', 'activities'],
+    needs: ['application', 'host', 'departments', 'countries', 'activities'],
 
-    hasHostMemberships: Ember.computed.readOnly('controllers.user/memberships.hasHostMemberships'),
-    latestHostMembership: Ember.computed.readOnly('controllers.user/memberships.latestHostMembership'),
     belongsToCurrentUser: Ember.computed.readOnly('controllers.host.belongsToCurrentUser'),
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 

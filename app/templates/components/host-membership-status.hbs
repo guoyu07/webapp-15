@@ -1,5 +1,5 @@
-{{#if hasHostMemberships}}
-    {{#if latestHostMembership.isStillValidInAMonth}}
+{{#if membershipsService.hasHostMemberships}}
+    {{#if membershipsService.latestHostMembership.isStillValidInAMonth}}
         <div class="alert alert-success alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-ok-sign"></span>
@@ -11,17 +11,15 @@
             <span class="glyphicon glyphicon-exclamation-sign"></span>
 
             {{t 'host.membership-status.yourHostProfile'}}
-            {{#if latestHostMembership.isExpired}}
+            {{#if membershipsService.latestHostMembership.isExpired}}
                 {{t 'host.membership-status.isDisabledSince'}}
-                {{format-date latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
+                {{format-date membershipsService.latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
             {{else}}
                 {{t 'host.membership-status.willBeDisabled'}}
-                {{format-date latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
+                {{format-date membershipsService.latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
             {{/if}}
             {{t 'host.membership-status.community'}}
-            {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="alert-link"}}
-                {{t 'host.membership-status.renewMembership'}}
-            {{/link-to}}.
+            {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="alert-link"}}{{t 'host.membership-status.renewMembership'}}{{/link-to}}.
         </div>
     {{/if}}
 {{else}}

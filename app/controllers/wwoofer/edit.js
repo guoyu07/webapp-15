@@ -5,11 +5,9 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'wwoofer', 'countries', 'departments', 'user/memberships'],
+    needs: ['application', 'wwoofer', 'countries', 'departments'],
 
-    // Setup bindings used in partial
-    hasWwoofMemberships: Ember.computed.oneWay('controllers.user/memberships.hasWwoofMemberships'),
-    latestWwoofMembership: Ember.computed.oneWay('controllers.user/memberships.latestWwoofMembership'),
+    // Bindings
     belongsToCurrentUser: Ember.computed.oneWay('controllers.wwoofer.belongsToCurrentUser'),
 
     actions: {

@@ -12,34 +12,27 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         this._super(transition, queryParams);
 
         var self = this;
-        function getUserMemberships() {
-            var controller = self.controllerFor('application');
-
-            if (!controller.get('isAuthenticated')) {
-                return Ember.RSVP.resolve();
-            }
-
-            return controller.get('currentUser').then(function (user) {
-                return user.get('memberships');
-            });
-        }
-
         return Ember.RSVP.hash({
             // All departments are required in most routes and must be loaded BEFORE the models so the
             // binding of department query parameters with the department select works properly
             departments: this.store.find('department'),
-            countries: this.store.find('country'), // Countries are required in most routes
-            userMemberships: getUserMemberships() // The memberships of the current user (if any) are required in most pages
+            countries: this.store.find('country') // Countries are required in most routes
         }).then(function (result) {
             // Set data into controllers
             self.controllerFor('departments').set('model', result.departments);
             self.controllerFor('countries').set('model', result.countries);
-            self.controllerFor('user/memberships').set('model', result.userMemberships || []);
         });
+    },
+    model: function () {
+        // Load current user memberships
+        if (this.get('session.isAuthenticated')) {
+            this.userMemberships.loadMemberships(this.get('session.user.id'));
+        }
     },
     actions: {
         sessionAuthenticationSucceeded: function () {
             this.refresh();
+            this.userMemberships.loadMemberships(this.get('session.user.id'));
         },
         sessionInvalidationSucceeded: function () {
             // Redirect user (refresh the page to reset app state)
@@ -51,6 +44,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         },
         userImpersonated: function() {
             this.refresh();
+            this.userMemberships.loadMemberships(this.get('session.user.id'));
         },
         error: function (err) {
             // Redirect to login if we get a 401 from the API

@@ -15,8 +15,9 @@ export default Ember.Route.extend({
             // Get host
             var host = this.controller.get('model');
 
-            // Hide the validation status
+            // Set the values on the model
             host.set('isPending', false);
+            host.set('isApproved', isApproved);
 
             // Prepare URL
             var url = [ config.apiHost, config.apiNamespace, 'hosts', host.get('id'), 'approve' ].join('/');
