@@ -3029,6 +3029,16 @@ legend {
 
 .host-thumb {
     height: 220px;
+    margin-top: 20px;
+    overflow: hidden;
+    background-color: #555;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.host-thumb-small {
+    height: 150px;
     overflow: hidden;
     background-color: #555;
     text-align: center;
@@ -3510,3 +3520,12 @@ div#resultList .list-group{
     margin-bottom: -40px;
 }
 
+div.leaflet-popup {
+    width: 250px;
+}
+
+div.popupFarnName {
+    font-weight: bold;
+    color: grey;
+    margin: 5px;
+}
