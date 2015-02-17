@@ -35,7 +35,7 @@
                 </div>
                 <div class="panel-body">
                     {{#if session.user.host}}
-                        <p>{{t 'index.hostProfile.instructions' farmNameBinding='host.farmName'}}</p>
+                        <p>{{t 'index.hostProfile.instructions' farmNameBinding='session.user.host.farmName'}}</p>
                         {{#link-to 'host.index' session.user.host class="btn btn-primary"}}{{t 'index.viewProfile'}}{{/link-to}}
                         {{#link-to 'host.edit' session.user.host class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
                         {{#link-to 'wwoofers.index' class="btn btn-default"}}{{t 'index.searchWwoofers'}}{{/link-to}}
