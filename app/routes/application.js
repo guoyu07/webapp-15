@@ -26,13 +26,18 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     model: function () {
         // Load current user memberships
         if (this.get('session.isAuthenticated')) {
-            this.userMemberships.loadMemberships(this.get('session.user.id'));
+            this.reloadMemberships();
         }
+    },
+    reloadMemberships: function () {
+        var self = this;
+        return this.get('session.user').then(function (user) {
+            self.userMemberships.loadMemberships(user.get('id'));
+        });
     },
     actions: {
         sessionAuthenticationSucceeded: function () {
             this.refresh();
-            this.userMemberships.loadMemberships(this.get('session.user.id'));
         },
         sessionInvalidationSucceeded: function () {
             // Redirect user (refresh the page to reset app state)
@@ -44,7 +49,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         },
         userImpersonated: function() {
             this.refresh();
-            this.userMemberships.loadMemberships(this.get('session.user.id'));
         },
         error: function (err) {
             // Redirect to login if we get a 401 from the API

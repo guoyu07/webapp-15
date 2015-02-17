@@ -1,6 +1,6 @@
 {{#if session.isAuthenticated}}
     <div class="page-header">
-        <h1>{{t 'index.title' firstNameBinding='currentUser.firstName'}}</h1>
+        <h1>{{t 'index.title' firstNameBinding='session.user.firstName'}}</h1>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -11,17 +11,17 @@
             </div>
         </div>
     </div>
-    {{#if wwoofer}}
+    {{#if session.user.wwoofer}}
         <div class="row">
             <div class="col-md-12">
                 {{wwoofer-membership-status membershipsService=userMemberships}}
             </div>
         </div>
     {{/if}}
-    {{#if host}}
+    {{#if session.user.host}}
         <div class="row">
             <div class="col-md-12">
-                {{#if host.isApproved}}
+                {{#if session.user.host.isApproved}}
                     {{host-membership-status membershipsService=userMemberships}}
                 {{/if}}
             </div>
@@ -34,10 +34,10 @@
                     <h4 class="panel-title">{{t 'index.hostProfile.title'}}</h4>
                 </div>
                 <div class="panel-body">
-                    {{#if host}}
+                    {{#if session.user.host}}
                         <p>{{t 'index.hostProfile.instructions' farmNameBinding='host.farmName'}}</p>
-                        {{#link-to 'host.index' host.id class="btn btn-primary"}}{{t 'index.viewProfile'}}{{/link-to}}
-                        {{#link-to 'host.edit' host.id class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
+                        {{#link-to 'host.index' session.user.host class="btn btn-primary"}}{{t 'index.viewProfile'}}{{/link-to}}
+                        {{#link-to 'host.edit' session.user.host class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
                         {{#link-to 'wwoofers.index' class="btn btn-default"}}{{t 'index.searchWwoofers'}}{{/link-to}}
                     {{else}}
                         <p>{{t 'index.noHostProfile'}}</p>
@@ -52,9 +52,9 @@
                     <h4 class="panel-title">{{t 'index.wwooferProfile.title'}}</h4>
                 </div>
                 <div class="panel-body">
-                    {{#if wwoofer}}
+                    {{#if session.user.wwoofer}}
                         <p>{{t 'index.wwooferProfile.instructions'}}</p>
-                        {{#link-to 'wwoofer.edit' wwoofer.id class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
+                        {{#link-to 'wwoofer.edit' session.user.wwoofer class="btn btn-default"}}{{t 'index.editProfile'}}{{/link-to}}
                         {{#link-to 'hosts.index' class="btn btn-primary"}}{{t 'index.viewHosts'}}{{/link-to}}
                     {{else}}
                         <p>{{t 'index.noWwooferProfile'}}</p>

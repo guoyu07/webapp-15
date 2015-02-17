@@ -63,7 +63,7 @@
                             <td>{{address.country.name}}</td>
                             <td>
                                 {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}}
-                                {{#if controllers.application.currentUserIsAdmin}}
+                                {{#if session.user.isAdmin}}
                                     |
                                     {{#link-to "wwoofer.edit" id}}{{t 'literal.edit'}}{{/link-to}}
                                 {{/if}}

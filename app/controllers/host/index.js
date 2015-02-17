@@ -5,7 +5,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'host'],
+    needs: ['host'],
 
     // Bindings
     belongsToCurrentUser: Ember.computed.oneWay('controllers.host.belongsToCurrentUser'),
@@ -19,5 +19,5 @@ export default Ember.ObjectController.extend({
      * Indicates whether the current user can edit the host.
      * The user must either be the owner of the host profile or be an admin.
      */
-    canEditHost: Ember.computed.or('belongsToCurrentUser', 'controllers.application.currentUserIsAdmin')
+    canEditHost: Ember.computed.or('belongsToCurrentUser', 'session.user.isAdmin')
 });

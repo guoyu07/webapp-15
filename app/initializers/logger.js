@@ -7,28 +7,28 @@ export default {
     initialize: function (container) {
 
         // Configure Honeybadger
-        Honeybadger.configure({
-            api_key: '8655a56d945da48d892e11c4028a4b12', // Public API key
-            environment: config.environment
-        });
+        //Honeybadger.configure({
+        //    api_key: '8655a56d945da48d892e11c4028a4b12', // Public API key
+        //    environment: config.environment
+        //});
 
         // Log any error
         Ember.onerror = function (error) {
             try {
-                var appController = container.lookup('controller:application');
-                var mainSession = container.lookup('simple-auth-session:main');
+                //var appController = container.lookup('controller:application');
+                //var mainSession = container.lookup('session:main');
 
-                var currentRoute = appController ? appController.get('currentPath') : "Unknown";
-                var userId = mainSession ? mainSession.get('user.id') : null;
-                var userEmail = mainSession ? mainSession.get('user.email') : null;
+                //var currentRoute = appController ? appController.get('currentPath') : "Unknown";
+                //var userId = mainSession ? mainSession.get('user.id') : null;
+                //var userEmail = mainSession ? mainSession.get('user.email') : null;
 
                 // Log error remotely
-                Honeybadger.notify(error, { context: {
-                    route: currentRoute,
-                    user_id: userId,
-                    user_email: userEmail,
-                    details: error
-                } });
+                //Honeybadger.notify(error, { context: {
+                //    route: currentRoute,
+                //    user_id: userId,
+                //    user_email: userEmail,
+                //    details: error
+                //} });
             } catch (e) {}
 
             // Inform the user
@@ -50,8 +50,8 @@ export default {
 
             // Clear the session if 401
             if (error && error.status === 401) {
-                var session = container.lookup('simple-auth-session:main');
-                if (session && session.isAuthenticated) {
+                var session = container.lookup('session:main');
+                if (session && session.get('isAuthenticated')) {
                     session.invalidate();
                 } else {
                     window.location.replace("/login");

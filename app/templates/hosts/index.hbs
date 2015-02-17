@@ -21,7 +21,7 @@
             <div class="form-group">
                 {{toggle-options values=allActivities selected=activities optionValuePath='id'}}
             </div>
-            {{#if currentUserIsAdmin}}
+            {{#if session.user.isAdmin}}
                 <h4>{{t 'hosts.index.admin'}}</h4>
                 <div class="checkbox">
                     <label>
