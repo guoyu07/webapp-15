@@ -33,6 +33,7 @@ export default Ember.ArrayController.extend({
     init: function () {
         this.popUpContainer = Ember.ContainerView.create();
         this.popUpContainer.appendTo('body');
+        this._super();
     },
 
     hasZoomedEnough : function () {
