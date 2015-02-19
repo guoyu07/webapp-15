@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import Popup from '../views/hosts/popup';
+
 
 
 export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
@@ -53,29 +55,12 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
      * @param e
      */
     onFeatureclick : function (e) {
-        var view = this.view = this._parentLayer.createChildView('hosts/popup');
-        view.set('context', e.target.feature);
-        Ember.View.states.inDOM.enter(view);
-        view.createElement();
-        e.target.bindPopup(view.get('element')).togglePopup();
-        /*e.target.bindPopup("Loading").togglePopup();
-        var feature = e.target.feature;
-        var html = "<div class=\"popupFarnName\"><a href=\"/host/" + feature.properties.hostId + "\">" + feature.properties.farmName + "</a></div>";
-        var imgUrl = "wwoof-no-photo.png";
-        if (feature.properties.photo)
-        {
-            this.container.lookup("store:main").find('photo', feature.properties.photo).then(L.bind(function (data) {
-                imgUrl = data.get('completeUrl');
-                html = "<div class=\"host-thumb-small\" style=\"background-image:url(" + imgUrl + ")\" > </div>" + html;
-                this.bindPopup(html).togglePopup();
-            }, e.target))
-        } else {
-            var self = this;
-            setTimeout(function () {
-                html = "<div class=\"host-thumb-small\" style=\"background-image:url(" + imgUrl + ")\" > </div>" + html;
-                e.target.bindPopup(html).togglePopup();
-            }, 100);
-
-        }*/
+        var popupView = this.container.lookup('view:hosts/popup');
+        popupView.set('context', e.target.feature);
+        this.controller.get('popUpContainer').removeAllChildren();
+        this.controller.get('popUpContainer').addObject(popupView);
+        setTimeout(function () {
+            e.target.bindPopup(popupView.get('element')).togglePopup();
+        }, 100);
     }
 });

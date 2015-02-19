@@ -2,6 +2,7 @@
  * Ember controller for hosts index.
  */
 import Ember from 'ember';
+import Popup from '../../views/hosts/popup';
 
 export default Ember.ArrayController.extend({
 
@@ -27,6 +28,12 @@ export default Ember.ArrayController.extend({
 
     visibleFeatures : [],
     mapZoom : 0,
+    popUpContainer: null,
+
+    init: function () {
+        this.popUpContainer = Ember.ContainerView.create();
+        this.popUpContainer.appendTo('body');
+    },
 
     hasZoomedEnough : function () {
         return this.get('mapZoom') >= 8;

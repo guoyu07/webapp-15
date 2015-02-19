@@ -1,6 +1,11 @@
-{{properties.farmName}}
+
 {{#if properties.photo}}
-    {{host-thumb url=properties.photo.completeUrl}}
+    {{host-thumb url=view.completeUrl}}
 {{else}}
     {{host-thumb url="wwoof-no-photo.png"}}
 {{/if}}
+<div class="popupFarnName">
+    {{#link-to "host" properties.hostId title=properties.farmName }}
+        {{properties.farmName}}
+    {{/link-to}}
+</div>
