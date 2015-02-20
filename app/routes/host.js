@@ -32,7 +32,11 @@ export default Ember.Route.extend({
 
             // Handle success
             post.done(function () {
-                alertify.success(Ember.I18n.t('notify.hostApproved'));
+                if (isApproved) {
+                    alertify.success(Ember.I18n.t('notify.hostApproved'));
+                } else {
+                    alertify.success(Ember.I18n.t('notify.hostRejected'));
+                }
             });
 
             // Handle failure
