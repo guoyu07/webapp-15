@@ -6,7 +6,7 @@ import Popup from '../../views/hosts/popup';
 
 export default Ember.ArrayController.extend({
 
-    needs: ['countries', 'application', 'departments', 'activities'],
+    needs: ['countries', 'departments', 'activities'],
 
     // Query parameters bound with the URL
     queryParams: ['searchTerm', 'department', 'pendingOnly', 'activities'],
@@ -23,7 +23,6 @@ export default Ember.ArrayController.extend({
 
     // Bindings
     departmentFilterOptions: Ember.computed.alias('controllers.departments'),
-    currentUserIsAdmin: Ember.computed.readOnly('controllers.application.currentUserIsAdmin'),
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
     visibleFeatures : [],

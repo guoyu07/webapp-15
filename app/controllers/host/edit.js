@@ -2,13 +2,12 @@
  * Ember controller for host edition.
  */
 import Ember from 'ember';
+import config from '../../config/environment';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'host', 'departments', 'countries', 'user/memberships', 'activities'],
+    needs: ['application', 'host', 'departments', 'countries', 'activities'],
 
-    hasHostMemberships: Ember.computed.readOnly('controllers.user/memberships.hasHostMemberships'),
-    latestHostMembership: Ember.computed.readOnly('controllers.user/memberships.latestHostMembership'),
     belongsToCurrentUser: Ember.computed.readOnly('controllers.host.belongsToCurrentUser'),
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
@@ -53,6 +52,27 @@ export default Ember.ObjectController.extend({
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+            });
+        },
+        toggleIsHidden: function () {
+
+            // Toggle isHidden property
+            this.set('isHidden', !this.get('isHidden'));
+
+            // Prepare URL
+            var url = [ config.apiHost, config.apiNamespace, 'hosts', this.get('model.id'), 'changeVisibility' ].join('/');
+
+            // Update approve the host
+            var post = Ember.$.ajax({
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                url: url,
+                data: JSON.stringify({ isHidden: this.get('isHidden') })
+            });
+
+            // Handle failure
+            post.fail(function () {
+                alertify.error(Ember.I18n.t('notify.submissionError'));
             });
         }
     },

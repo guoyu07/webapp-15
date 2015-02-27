@@ -27,11 +27,11 @@ export default Ember.ObjectController.extend({
     ],
 
     shippingRegionOptions: [
-        { id: 'FR', name: Ember.I18n.t('memberships.shipping.FR', { price: 3.13 }), price: 3.13 },
-        { id: 'OM1', name: Ember.I18n.t('memberships.shipping.OM1', { price: 5.52 }), price: 5.52 },
-        { id: 'OM2', name: Ember.I18n.t('memberships.shipping.OM2', { price: 8.52 }), price: 8.52 },
-        { id: 'EU', name: Ember.I18n.t('memberships.shipping.EU', { price: 4.00 }), price: 4.00 },
-        { id: 'WD', name: Ember.I18n.t('memberships.shipping.WD', { price: 4.35 }), price: 4.35 }
+        { id: 'FR', name: Ember.I18n.t('memberships.shipping.FR', { price: 4.56 }), price: 4.56 },
+        { id: 'OM1', name: Ember.I18n.t('memberships.shipping.OM1', { price: 7.66 }), price: 7.66 },
+        { id: 'OM2', name: Ember.I18n.t('memberships.shipping.OM2', { price: 11.38 }), price: 11.38 },
+        { id: 'EU', name: Ember.I18n.t('memberships.shipping.EU', { price: 8.00 }), price: 8.00 },
+        { id: 'WD', name: Ember.I18n.t('memberships.shipping.WD', { price: 11 }), price: 11 }
     ],
 
     showWwoofMemberships: Ember.computed.equal('type', 'W'),

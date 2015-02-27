@@ -1,5 +1,5 @@
-{{#if hasWwoofMemberships}}
-    {{#if latestWwoofMembership.isStillValidInAMonth}}
+{{#if membershipsService.hasWwoofMemberships}}
+    {{#if membershipsService.latestWwoofMembership.isStillValidInAMonth}}
         <div class="alert alert-success alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-ok-sign"></span>
@@ -11,12 +11,12 @@
             <span class="glyphicon glyphicon-exclamation-sign"></span>
 
             {{t 'wwoofer.membership-status.yourWwooferMembership'}}
-            {{#if latestWwoofMembership.isExpired}}
+            {{#if membershipsService.latestWwoofMembership.isExpired}}
                 {{t 'wwoofer.membership-status.isExpiredSince'}}
             {{else}}
                 {{t 'wwoofer.membership-status.willExpire'}}
             {{/if}}
-            {{format-date latestWwoofMembership.expireAt}}.
+            {{format-date membershipsService.latestWwoofMembership.expireAt}}.
 
             {{t 'wwoofer.membership-status.keepAccess'}}
             {{#link-to 'memberships.new' (query-params type='W') class="alert-link"}}{{t 'wwoofer.membership-status.renewMembership'}}{{/link-to}}.

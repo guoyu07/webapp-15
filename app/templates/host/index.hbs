@@ -10,7 +10,14 @@
     {{partial 'host/validation-status'}}
 {{else}}
     {{#if belongsToCurrentUser}}
-        {{partial 'host/membership-status'}}
+        {{#if isApproved}}
+            {{host-membership-status membershipsService=userMemberships}}
+        {{else}}
+            <div class="alert alert-warning alert-dismissable" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                {{t 'host.membership-status.wasRejected'}}
+            </div>
+        {{/if}}
     {{/if}}
 {{/if}}
 

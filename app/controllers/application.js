@@ -7,39 +7,10 @@ import Regex from '../utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    needs: ['user/memberships'],
-
-    // Bindings
-    hasNonExpiredHostMembership: Ember.computed.readOnly('controllers.user/memberships.hasNonExpiredHostMembership'),
-
-    /**
-     * Gets or sets the authenticated user.
-     */
-    currentUser: function () {
-        // Get the connected user from session
-        var user = this.get('session.user');
-        return user ? this.store.find('user', user.id) : null;
-    }.property('session.user'),
-
-    /**
-     * Indicates whether the current user is authenticated.
-     */
-    isAuthenticated: Ember.computed.readOnly('session.isAuthenticated'),
-
-    /**
-     * Indicates whether the current user is anonymous.
-     */
-    isAnonymous: Ember.computed.not('isAuthenticated'),
-
-    /**
-     * Indicates whether the current user is an administrator.
-     */
-    currentUserIsAdmin: Ember.computed.and('isAuthenticated', 'currentUser.isAdmin'),
-
     /**
      * Indicates whether the current user can see the "Wwoofers" link in the main menu.
      */
-    canSeeWwoofersLink: Ember.computed.or('hasNonExpiredHostMembership', 'currentUserIsAdmin'),
+    canSeeWwoofersLink: Ember.computed.or('userMemberships.hasNonExpiredHostMembership', 'session.user.isAdmin'),
 
     /**
      * Email address of the user to impersonate (admins only).

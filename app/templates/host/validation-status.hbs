@@ -1,10 +1,12 @@
 {{#if isPending}}
-    {{#if controllers.application.currentUserIsAdmin}}
+    {{#if session.user.isAdmin}}
         <div class="alert alert-info">
             <span class="glyphicon glyphicon-info-sign"></span>
             {{t 'host.validation-status.adminPending'}}
             {{t 'host.validation-status.adminReviewDetails'}}
-            <a href="#" {{action "approveHost"}} class="alert-link">{{t 'host.validation-status.adminApprove'}}</a>.
+            <a href="#" {{action "approveHost" true}} class="alert-link">{{t 'host.validation-status.adminApprove'}}</a>
+            {{t 'host.validation-status.or'}}
+            <a href="#" {{action "approveHost" false}} class="alert-link">{{t 'host.validation-status.adminReject'}}</a>.
         </div>
     {{else}}
         <div class="alert alert-success alert-dismissable" role="alert">

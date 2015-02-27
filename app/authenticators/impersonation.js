@@ -8,7 +8,7 @@ import BaseAuthenticator from 'simple-auth/authenticators/base';
 export default BaseAuthenticator.extend({
     restore: function(data) {
         return new Ember.RSVP.Promise(function(resolve, reject) {
-            if (!Ember.isEmpty(data.user)) {
+            if (!Ember.isEmpty(data.userId)) {
                 resolve(data);
             } else {
                 reject();
@@ -32,7 +32,7 @@ export default BaseAuthenticator.extend({
 
             // Handle success
             post.done(function (data) {
-                resolve(data);
+                resolve({ userId: data.user.id });
             });
 
             // Handle failure

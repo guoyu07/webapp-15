@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "ember server --proxy https://app.wwoof.fr",
+    "start": "ember server --proxy http://localhost:3333",
     "build": "ember build",
     "test": "ember test"
   },

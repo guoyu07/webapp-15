@@ -5,23 +5,19 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 
-    needs: ['application', 'host', 'user/memberships'],
+    needs: ['host'],
 
-    // Setup bindings used in partial
-    hasHostMemberships: Ember.computed.oneWay('controllers.user/memberships.hasHostMemberships'),
-    latestHostMembership: Ember.computed.oneWay('controllers.user/memberships.latestHostMembership'),
+    // Bindings
     belongsToCurrentUser: Ember.computed.oneWay('controllers.host.belongsToCurrentUser'),
 
     /**
-     * Indicates whether the host contact info can be shown to the current user.
+     * Indicates whether the host contact info can be displayed to the current user.
      */
-    canSeeContactInfo: function() {
-        return this.get('controllers.user/memberships.hasMemberships') && !this.get('controllers.user/memberships.latestMembership.isExpired');
-    }.property('controllers.user/memberships.hasMemberships', 'controllers.user/memberships.latestMembership.isExpired'),
+    canSeeContactInfo: Ember.computed.readOnly('userMemberships.hasNonExpiredMembership'),
 
     /**
      * Indicates whether the current user can edit the host.
-     * The user must either own the host or be an admin.
+     * The user must either be the owner of the host profile or be an admin.
      */
-    canEditHost: Ember.computed.or('belongsToCurrentUser', 'controllers.application.currentUserIsAdmin')
+    canEditHost: Ember.computed.or('belongsToCurrentUser', 'session.user.isAdmin')
 });

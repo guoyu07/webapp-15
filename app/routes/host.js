@@ -10,26 +10,33 @@ export default Ember.Route.extend({
          * Approves a host after validation.
          * This action can be called either from the host edit or index page.
          */
-        approveHost: function () {
+        approveHost: function (isApproved) {
 
             // Get host
             var host = this.controller.get('model');
 
-            // Hide the validation status
+            // Set the values on the model
             host.set('isPending', false);
+            host.set('isApproved', isApproved);
 
             // Prepare URL
             var url = [ config.apiHost, config.apiNamespace, 'hosts', host.get('id'), 'approve' ].join('/');
 
             // Update approve the host
             var post = Ember.$.ajax({
+                contentType: 'application/json; charset=utf-8',
                 type: 'POST',
-                url: url
+                url: url,
+                data: JSON.stringify({ isApproved: isApproved })
             });
 
             // Handle success
             post.done(function () {
-                alertify.success(Ember.I18n.t('notify.hostApproved'));
+                if (isApproved) {
+                    alertify.success(Ember.I18n.t('notify.hostApproved'));
+                } else {
+                    alertify.success(Ember.I18n.t('notify.hostRejected'));
+                }
             });
 
             // Handle failure

@@ -6,8 +6,6 @@ import ValidationsMixin from '../../mixins/validations';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    needs: ['application'],
-
     password: null,
     passwordConfirmation: null,
     isLoading: false,
@@ -27,7 +25,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
             this.validate().then(function() {
 
                 // Get the current user id
-                var currentUserId = self.get('controllers.application.currentUser.id');
+                var currentUserId = self.get('session.user.id');
                 Ember.assert('User id cannot be null', currentUserId);
 
                 // Set controller in loading state
