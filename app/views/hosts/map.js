@@ -2,14 +2,15 @@
  * Ember view for Leaflet Map.
  */
 import Ember from 'ember';
+import config from '../../config/environment';
 import HostsLayer from '../../layers/hosts';
 import OSMLayer from '../../layers/osm';
 
 export default EmberLeaflet.MapView.extend({
-    zoom : 6,
-    center : L.latLng(46.45, 2.6),
-    options : {maxZoom : 12},
-    childLayers : [
+    zoom: config.map.defaultZoom,
+    center: L.latLng(config.map.defaultLat, config.map.defaultLon),
+    options: { maxZoom: 12 },
+    childLayers: [
         OSMLayer,
         HostsLayer
     ],
@@ -33,5 +34,3 @@ export default EmberLeaflet.MapView.extend({
 // Resize Callback
 Ember.$(window).on("resize", function() {
 }).trigger("resize");
-
-

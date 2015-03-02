@@ -21,6 +21,12 @@ module.exports = function (environment) {
             // when it is created
         },
 
+        map: {
+            defaultLat: 46.45,
+            defaultLon: 2.6,
+            defaultZoom: 6
+        },
+
         // Configure content security policy headers
         contentSecurityPolicyHeader: 'Content-Security-Policy',
         contentSecurityPolicy: {

@@ -2985,7 +2985,7 @@ legend {
 
 .farm.row {
     margin-left: 0px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .farm-item .address {
@@ -3030,7 +3030,7 @@ legend {
 
 .host-thumb {
     height: 220px;
-    margin-top: 20px;
+    margin-left: -14px;
     overflow: hidden;
     background-color: #555;
     text-align: center;
@@ -3512,6 +3512,7 @@ div.leaflet-container {
 }
 
 div#resultList {
+    border-top: #bcbcbc 1px solid;
     overflow-x: hidden;
     overflow-y: auto;
     margin-left: 5px;

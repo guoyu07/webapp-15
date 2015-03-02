@@ -4,17 +4,6 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    queryParams: {
-        department: {
-            refreshModel: false
-        },
-        activities: {
-            refreshModel: false
-        },
-        pendingOnly: {
-            refreshModel: false
-        }
-    },
     renderTemplate: function() {
         // Toggle containerFluid class
         Ember.$("#mainContainer").removeClass( "container" ).addClass( "container-fluid" );

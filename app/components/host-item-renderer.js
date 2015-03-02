@@ -6,32 +6,32 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 
     /**
-     * Farm features
+     * Host features
      */
-    farm: null,
+    host: null,
 
     /**
      * Host Id
      */
-    hostId : Ember.computed.readOnly('farm.properties.hostId'),
+    hostId : Ember.computed.readOnly('host.properties.hostId'),
 
     /**
-     * Farm Name
+     * Host farm name
      */
-    farmName: Ember.computed.readOnly('farm.properties.farmName'),
+    farmName: Ember.computed.readOnly('host.properties.farmName'),
 
     /**
-     * Farm photo Id
+     * Host photo Id
      */
-    photoId : Ember.computed.readOnly('farm.properties.photo'),
+    photoId : Ember.computed.readOnly('host.properties.photo'),
 
     /**
-     * Farm description
+     * Host description
      */
-    description: Ember.computed.readOnly('farm.properties.description'),
+    description: Ember.computed.readOnly('host.properties.description'),
 
     /**
-     * Farm photo object
+     * Host photo object
      */
     photo : function () {
         return this.get('photoId') ? this.container.lookup('store:main').find('photo', this.get('photoId')) : null;

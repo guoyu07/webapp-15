@@ -2,6 +2,7 @@
  * Ember controller for hosts index.
  */
 import Ember from 'ember';
+import config from '../../config/environment';
 import Popup from '../../views/hosts/popup';
 
 export default Ember.ArrayController.extend({
@@ -24,27 +25,27 @@ export default Ember.ArrayController.extend({
     /**
      * Current map longitude.
      */
-    lon: 46,
+    lon: config.map.defaultLon,
 
     /**
      * Current map Latitude.
      */
-    lat: 3,
+    lat: config.map.defaultLat,
 
     /**
      * Current map Zoom.
      */
-    mapZoom : 6,
+    mapZoom: config.map.defaultZoom,
 
     /**
      * Number of features that are currently displayed.
      */
-    numberShowedFeatures : 10,
+    numberShowedFeatures: 10,
 
     /**
      * List of the features displayed in the Host list.
      */
-    _showedFeatures : [],
+    _showedFeatures: [],
 
     /**
      * Leaflet Host layer.
@@ -60,11 +61,10 @@ export default Ember.ArrayController.extend({
     departmentFilterOptions: Ember.computed.alias('controllers.departments'),
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
     visibleFeatures : [],
-    popUpContainer: null,
+    popUpContainer: Ember.ContainerView.create(),
 
     init: function () {
-        this.popUpContainer = Ember.ContainerView.create();
-        this.popUpContainer.appendTo('body');
+        this.get('popUpContainer').appendTo('body');
         this._super();
     },
 
@@ -89,8 +89,7 @@ export default Ember.ArrayController.extend({
      * Observe the activities selected to send a request to refresh hosts.
      */
     activitiesObserver : function () {
-        if (this.get('mapLayer'))
-        {
+        if (this.get('mapLayer')) {
             this.send('updateHosts');
         }
     }.observes('activities'),
@@ -99,8 +98,7 @@ export default Ember.ArrayController.extend({
      * Observe the pendingOnly flag to send a request to refresh hosts.
      */
     pendingOnlyObserver : function () {
-        if (this.get('mapLayer'))
-        {
+        if (this.get('mapLayer')) {
             this.send('updateHosts');
         }
     }.observes('pendingOnly'),
@@ -144,8 +142,7 @@ export default Ember.ArrayController.extend({
         var self = this;
         var mapbounds = this.get('mapLayer').getBounds();
         this.get('hostLayer.geoJsonLayer').eachLayer(function (marker) {
-            if (mapbounds.contains(marker.getLatLng()))
-            {
+            if (mapbounds.contains(marker.getLatLng())) {
                 self.get('visibleFeatures').pushObject(marker.feature);
             }
         });

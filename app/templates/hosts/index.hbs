@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div id="resultList" class="row">
+        <div id="resultList" class="row hidden-sm hidden-xs">
             {{#if isLoading}}
                 {{partial 'loading'}}
             {{else}}
@@ -35,7 +35,7 @@
                     {{#if hasVisibleFeatures}}
                         <div class="list-group">
                             {{#each feature in showedFeatures}}
-                                {{host-item-renderer farm=feature}}
+                                {{host-item-renderer host=feature}}
                             {{/each}}
                             <div class="row col-md-12">
                                 <p class="load-more">

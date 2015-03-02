@@ -19,7 +19,7 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
         // Create Geojson Layer
         this.geoJsonLayer = new L.geoJson(null, {
 
-            //Bind click listener for each feature
+            // Bind click listener for each feature
             onEachFeature: L.bind(function (feature, layer) {
                 layer.on('click', L.bind(this.onFeatureclick, this));
             }, this)
@@ -95,7 +95,7 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
         this.controller.get('popUpContainer').addObject(popupView);
 
         // Open popup
-        // $BUG prevent a bug with Leaflet popup by adding a setTimeout
+        // $BUG : prevent a bug with Leaflet popup by adding a setTimeout
         setTimeout(function () {
             e.target.bindPopup(popupView.get('element')).togglePopup();
         }, 100);
