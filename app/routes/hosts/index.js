@@ -4,29 +4,22 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    queryParams: {
-        department: {
-            refreshModel: true
-        },
-        activities: {
-            refreshModel: true
-        },
-        pendingOnly: {
-            refreshModel: true
-        }
+    renderTemplate: function() {
+        // Toggle containerFluid class
+        Ember.$("#mainContainer").removeClass( "container" ).addClass( "container-fluid" );
+
+        // Render host.index view
+        this.render('hosts/index');
+
+        // Render hosts/map  view inside named outlet "map"
+        this.render('hosts/map', {
+            into: 'hosts/index',
+            outlet: 'map',
+            controller: 'hosts/index'
+        });
     },
-    beforeModel: function () {
-        this.controllerFor('hosts.index').set('isLoading', true);
-    },
-    model: function (params) {
-        return this.store.find('host', params);
-    },
-    afterModel: function() {
-        this.controllerFor('hosts.index').set('isLoading', false);
-    },
-    actions: {
-        searchHosts: function () {
-            this.refresh();
-        }
+    deactivate: function() {
+        // Toggle containerFluid class
+        Ember.$("#mainContainer").removeClass( "container-fluid" ).addClass( "container" );
     }
 });

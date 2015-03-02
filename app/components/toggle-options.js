@@ -13,6 +13,25 @@ export default Ember.Component.extend({
     },
 
     /**
+     * Modify event propagation to prevent dropdown from closing on click
+     *
+     * @event didInsertElement
+     */
+    didInsertElement: function () {
+        var self = this;
+        Ember.$('.dropdown-menu').click(function(event){
+            event.stopPropagation();
+        });
+
+        Ember.$('#clear-button').click(function(event){
+            self.triggerAction({
+                action:'clear',
+                target: self
+            });
+        });
+    },
+
+    /**
      * Whether this set of options can have multiple options selected or just one.
      *
      * @property selectOne
@@ -60,6 +79,14 @@ export default Ember.Component.extend({
      * @default Ember.A()
      */
     selected: null,
+
+    /**
+     * The display name to show on the dropDown button
+     *
+     * @property buttonDisplayName
+     * @type String
+     */
+    buttonDisplayName: null,
 
     /**
      * List of the possible toggle options, stuffed into objects that indicate whether
@@ -121,7 +148,6 @@ export default Ember.Component.extend({
                 }
                 this.set('selected', selected);
             }
-
             this.triggerAction();
         }
     }
