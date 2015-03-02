@@ -96,6 +96,16 @@ export default Ember.ArrayController.extend({
     }.observes('activities'),
 
     /**
+     * Observe the pendingOnly flag to send a request to refresh hosts.
+     */
+    pendingOnlyObserver : function () {
+        if (this.get('mapLayer'))
+        {
+            this.send('updateHosts');
+        }
+    }.observes('pendingOnly'),
+
+    /**
      * List of the features displayed in the Host list.
      */
     showedFeatures : function () {
