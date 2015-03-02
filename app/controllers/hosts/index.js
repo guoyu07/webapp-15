@@ -24,17 +24,17 @@ export default Ember.ArrayController.extend({
     /**
      * Current map longitude.
      */
-    lon: null,
+    lon: 46,
 
     /**
      * Current map Latitude.
      */
-    lat: null,
+    lat: 3,
 
     /**
      * Current map Zoom.
      */
-    mapZoom : null,
+    mapZoom : 6,
 
     /**
      * Number of features that are currently displayed.

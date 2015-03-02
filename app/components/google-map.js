@@ -15,8 +15,8 @@ export default Ember.Component.extend({
      * URL of the map.
      */
     mapUrl: function () {
-        var latitude = this.get('latitude') || 46;
-        var longitude = this.get('longitude') || 3;
+        var latitude = this.get('latitude') || 0;
+        var longitude = this.get('longitude') || 0;
         var url = '//maps.googleapis.com/maps/api/staticmap?' +
             'center=' + latitude + ','+ longitude +
             '&zoom=6' +

@@ -8,7 +8,7 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
     geoJsonLayer: null,
     markers: null,
     requestURI: "/api/host-coordinates",
-    resultLimit: 2000,
+    resultLimit: 5000,
     disableClusteringAtZoom: 9,
 
     /**
