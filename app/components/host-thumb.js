@@ -8,7 +8,7 @@ export default Ember.Component.extend({
     style: function () {
         var self = this;
         if (this.get('url')) {
-            // If we have a promise
+            // If we have a promise, register then
             if ( Ember.typeOf(this.get('url')) == "instance"){
                 this.get('url').then(function (data) {
                     self.set('url', data.get('completeUrl'))

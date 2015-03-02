@@ -2985,6 +2985,8 @@ legend {
 
 .farm.row {
     cursor: pointer;
+    margin-left: 0px;
+    margin-top: 5px;
 }
 
 .farm-item .address {
@@ -3321,7 +3323,7 @@ legend {
 }
 
 .results-box {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 .nav .dropdown-menu {
     width: 100%;
