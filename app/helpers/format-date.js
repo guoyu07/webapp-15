@@ -6,9 +6,5 @@ import Ember from 'ember';
 export default Ember.Handlebars.makeBoundHelper(function (date, options) {
     var format = options.hash.format ? options.hash.format : 'LL';
     var momentDate = moment(date);
-    if (momentDate.isValid()) {
-        return options.hash.utc ?
-            momentDate.utc().format(format) :
-            momentDate.format(format);
-    }
+    return momentDate.isValid() ? momentDate.format(format) : 'Invalid date';
 });
