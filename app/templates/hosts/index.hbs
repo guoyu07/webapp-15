@@ -32,7 +32,7 @@
                 {{partial 'loading'}}
             {{else}}
                 <div class="results-box">
-                    {{#if visibleFeatures}}
+                    {{#if hasVisibleFeatures}}
                         <div class="list-group">
                             {{#each feature in showedFeatures}}
                                 {{host-item-renderer farm=feature}}

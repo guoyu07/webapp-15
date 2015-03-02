@@ -9,7 +9,7 @@ export default Ember.ArrayController.extend({
     needs: ['countries', 'departments', 'activities'],
 
     // Query parameters bound with the URL
-    queryParams: ['searchTerm', 'department', 'pendingOnly', 'activities'],
+    queryParams: ['searchTerm', 'department', 'pendingOnly', 'activities', 'lon', 'lat', 'mapZoom'],
 
     // Whether the controller is in loading state
     isLoading: false,
@@ -21,12 +21,15 @@ export default Ember.ArrayController.extend({
     activities: [],
     pendingOnly: false,
 
+    // Map context
+    lon: null,
+    lat: null,
+    mapZoom : null,
+
     // Bindings
     departmentFilterOptions: Ember.computed.alias('controllers.departments'),
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
-
     visibleFeatures : [],
-    mapZoom : 0,
     popUpContainer: null,
 
     init: function () {
@@ -73,13 +76,28 @@ export default Ember.ArrayController.extend({
         };
     }.property('searchTerm', 'department', 'pendingOnly', 'activities'),
 
+    hasVisibleFeatures: function() {
+        return this.get('visibleFeatures').length > 0;
+    }.property('visibleFeatures.@each', 'visibleFeatures'),
+
+    computeFeatureVisibility: function () {
+        var self = this;
+        var mapbounds = this.get('mapLayer').getBounds();
+        this.get('hostLayer.geoJsonLayer').eachLayer(function (marker) {
+            if (mapbounds.contains(marker.getLatLng()))
+            {
+                self.get('visibleFeatures').pushObject(marker.feature);
+            }
+        });
+    },
+
     actions: {
         updateHosts: function () {
             this.set('isLoading', true);
             this.get('hostLayer').updateFeatures(this.get('parameters'));
         },
         updated: function () {
-            //this.get('mapLayer').fitBounds(this.get('hostLayer.geoJsonLayer').getBounds());
+            this.computeFeatureVisibility();
             this.set('isLoading', false);
         },
         mapChanged: function() {
@@ -87,17 +105,9 @@ export default Ember.ArrayController.extend({
             this.set('_showedFeatures', []);
             this.set('numberShowedFeatures', 10);
             this.set('mapZoom', this.get('mapLayer').getZoom());
-            if ( !this.get('hasZoomedEnough') && this.get('hostLayer.geoJsonLayer').getLayers().length > 40 ) {
-                return;
-            }
-            var self = this;
-            var mapbounds = this.get('mapLayer').getBounds();
-            this.get('hostLayer.geoJsonLayer').eachLayer(function (marker) {
-                if (mapbounds.contains(marker.getLatLng()))
-                {
-                    self.get('visibleFeatures').push(marker.feature);
-                }
-            });
+            this.set('lon', this.get('mapLayer').getCenter().lng);
+            this.set('lat', this.get('mapLayer').getCenter().lat);
+            this.computeFeatureVisibility();
         },
         moreHosts: function () {
             this.set('numberShowedFeatures', this.get('numberShowedFeatures') + 10);

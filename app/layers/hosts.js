@@ -22,6 +22,7 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
         return this.markers;
     },
     updateFeatures(params) {
+        this.controller.set('isLoading', true);
         var completeURI = this.get('requestURI') + "?limit=" + this.get('resultLimit');
         if (params.searchTerm) {
             completeURI = completeURI + "&searchTerm=" + params.searchTerm;
