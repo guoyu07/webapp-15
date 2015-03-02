@@ -8,8 +8,16 @@ export default Ember.ObjectController.extend({
     termsOk: false,
     insuranceOk: false,
 
-    // Default the max date of the birth date datepicker to 18 years old
+    // The user must be 18 years old or more
     maxDate: moment().subtract(18, 'year'),
+    selectedDate: null,
+
+    selectedDateDidChange: function() {
+        var selectedDate = this.get('selectedDate');
+        if (selectedDate) {
+            this.set('birthDate', selectedDate.format('YYYY-MM-DD'));
+        }
+    }.observes('selectedDate'),
 
     actions: {
         saveUser: function () {

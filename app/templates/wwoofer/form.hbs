@@ -46,9 +46,9 @@
             <div {{bind-attr class=":form-group"}}>
                 <label for="birthDate2" class="control-label">{{t 'user.form.birthDate.label'}}</label>
                 {{#if isNew}}
-                    {{date-picker value=birthDate2 maxDate=maxDate locale=locale}}
+                    {{date-picker selectedDate=selectedDate}}
                 {{else}}
-                    <p class="form-control-static">{{format-date birthDate2}}</p>
+                    <p class="form-control-static">{{format-date birthDate2 utc=true}}</p>
                 {{/if}}
             </div>
         </fieldset>

@@ -40,10 +40,10 @@
             <div {{bind-attr class=":form-group fieldErrors.birthDate.length:has-error"}}>
                 <label for="birthDate" class="control-label">{{t 'user.form.birthDate.label'}}</label>
                 {{#if isNew}}
-                    {{date-picker value=birthDate maxDate=maxDate locale=locale}}
+                    {{date-picker selectedDate=selectedDate}}
                     {{error-display fieldErrors.birthDate}}
                 {{else}}
-                    <p class="form-control-static">{{format-date birthDate}}</p>
+                    <p class="form-control-static">{{format-date birthDate utc=true}}</p>
                 {{/if}}
             </div>
         </div>

@@ -12,7 +12,7 @@ export default DS.Model.extend(ValidationsMixin, {
     password: DS.attr('string'), // Only used for sign up
     firstName: DS.attr('string'),
     lastName: DS.attr('string'),
-    birthDate: DS.attr('date'),
+    birthDate: DS.attr('string'),
     phone: DS.attr('string'),
     isAdmin: DS.attr('boolean'),
     locale: DS.attr('string'),

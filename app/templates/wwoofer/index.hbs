@@ -10,7 +10,7 @@
             </div>
             <div class="panel-body">
                 {{t 'wwoofer.index.memberSince'}} {{format-date user.createdAt}}<br/>
-                {{t 'wwoofer.index.born'}} {{format-date user.birthDate}} ({{birthdate-to-age user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
+                {{t 'wwoofer.index.born'}} {{format-date user.birthDate utc=true}} ({{birthdate-to-age user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
             </div>
         </div>
     </div>

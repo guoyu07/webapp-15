@@ -4,7 +4,5 @@
 import Ember from 'ember';
 
 export default Ember.Handlebars.makeBoundHelper(function (date) {
-    if (date instanceof Date) {
-        return moment().diff(date, 'years');
-    }
+    return date ? moment().diff(moment(date), 'years') : null;
 });
