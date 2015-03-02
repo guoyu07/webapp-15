@@ -1,4 +1,16 @@
-<div class='input-group date' id='datetimepicker'>
-    {{input type="text" class="form-control" value=dateString}}
-    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+<div class="row">
+    <div class="col-md-3">
+        {{view "select" content=days selection=selectedDay class="form-control"}}
+    </div>
+    <div class="col-md-6">
+        {{view "select"
+        content=months
+        optionValuePath="content.value"
+        optionLabelPath="content.name"
+        selection=selectedMonth
+        class="form-control"}}
+    </div>
+    <div class="col-md-3">
+        {{view "select" content=years selection=selectedYear class="form-control"}}
+    </div>
 </div>
