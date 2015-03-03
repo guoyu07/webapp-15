@@ -2986,6 +2986,7 @@ legend {
 .farm.row {
     margin-left: 0px;
     margin-top: 10px;
+    border-radius: 0;
 }
 
 .farm-item .address {
@@ -2997,12 +2998,8 @@ legend {
 .farm-item .description {
     font-size: 14px;
 }
-.farm-item h3 {
+.farm-item h4 {
     margin: 38px 0 10px;
-}
-
-.farm-item {
-    margin-bottom: 20px;
 }
 
 .farm-item-btn {
@@ -3030,12 +3027,15 @@ legend {
 
 .host-thumb {
     height: 220px;
-    margin-left: -14px;
     overflow: hidden;
     background-color: #555;
     text-align: center;
     background-size: cover;
     background-position: center;
+}
+
+.col-host-thumb {
+    padding-left: 0px;
 }
 
 .host-thumb-small {
@@ -3446,7 +3446,7 @@ div.table .row {
         width: 100%;
     }
 
-    .farm-item h3 {
+    .farm-item h4 {
         margin: 0 0 20px 0;
     }
 

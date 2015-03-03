@@ -1,5 +1,5 @@
 <div class="row farm list-group-item col-md-12">
-    <div class="col-md-4 col-sm-4">
+    <div class="col-md-4 col-sm-4 col-host-thumb">
         <div class="host-thumb">
             {{#if photoId}}
                 {{host-thumb url=photo.completeUrl}}
@@ -10,16 +10,15 @@
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12 farm-item">
         <div class="col-md-12">
-            <h3>{{farmName}}</h3>
+            <h4>{{farmName}}</h4>
             <p class="description">
                 {{description}}
             </p>
         </div>
     </div>
-
     <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
-    {{#link-to "host" hostId title=farmName }}
-        <button class="btn btn-default btn-block-tn">{{t 'literal.view'}}</button>
-    {{/link-to}}
+        {{#link-to "host" hostId title=farmName }}
+            <button class="btn btn-default btn-block-tn">{{t 'literal.view'}}</button>
+        {{/link-to}}
     </div>
 </div>
