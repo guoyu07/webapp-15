@@ -23,7 +23,7 @@ export default Ember.Component.extend({
             event.stopPropagation();
         });
 
-        Ember.$('#clear-button').click(function(event){
+        Ember.$('#clear-button').click(function() {
             self.triggerAction({
                 action:'clear',
                 target: self

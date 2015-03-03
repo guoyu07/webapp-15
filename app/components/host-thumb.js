@@ -9,9 +9,9 @@ export default Ember.Component.extend({
         var self = this;
         if (this.get('url')) {
             // If we have a promise, register then
-            if ( Ember.typeOf(this.get('url')) == "instance"){
+            if (Ember.typeOf(this.get('url')) === "instance"){
                 this.get('url').then(function (data) {
-                    self.set('url', data.get('completeUrl'))
+                    self.set('url', data.get('completeUrl'));
                 });
             }
             return 'background-image:url(' + this.get('url') + ');';

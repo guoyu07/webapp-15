@@ -3,7 +3,6 @@
  */
 import Ember from 'ember';
 import config from '../../config/environment';
-import Popup from '../../views/hosts/popup';
 
 export default Ember.ArrayController.extend({
 
@@ -82,7 +81,7 @@ export default Ember.ArrayController.extend({
      * Is the "Load more" button should be disabled.
      */
     hideMoreButton :  function () {
-        return this.get('isLoadingMore') || this.get('_showedFeatures.length') == this.get('visibleFeatures.length');
+        return this.get('isLoadingMore') || this.get('_showedFeatures.length') === this.get('visibleFeatures.length');
     }.property('isLoadingMore', '_showedFeatures.length'),
 
     /**
