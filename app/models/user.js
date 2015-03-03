@@ -47,7 +47,9 @@ export default DS.Model.extend(ValidationsMixin, {
             length: { maximum: 255 }
         },
         birthDate: {
-            presence: true
+            presence: {
+                if: 'isNew' // legacy users do not have a birth date
+            }
         }
     }
 });
