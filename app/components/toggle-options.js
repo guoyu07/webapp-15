@@ -19,7 +19,7 @@ export default Ember.Component.extend({
      */
     didInsertElement: function () {
         var self = this;
-        Ember.$('.dropdown-menu').click(function(event){
+        Ember.$('.dropdown-menu[name="activities"]').click(function(event){
             event.stopPropagation();
         });
 
