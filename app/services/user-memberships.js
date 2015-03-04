@@ -13,19 +13,11 @@ export default Ember.Object.extend({
 
         Ember.Logger.assert(userId, "User id must be provided to load the memberships.");
 
-        // Get the session and store
-        var store = this.container.lookup('store:main');
-
-        // Retrieve the user
+        // Retrieve the user's memberships
         var self = this;
+        var store = this.container.lookup('store:main');
         store.find('user', userId).then(function (user) {
-
-            // Retrieve the user memberships
-            user.get('memberships').then(function (memberships) {
-
-                // Set content
-                self.set('memberships', memberships.get('content'));
-            });
+            self.set('memberships', user.get('memberships'));
         });
     },
 
