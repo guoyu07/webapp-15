@@ -37,10 +37,6 @@ var alertify = pickFiles('bower_components/alertify.js/lib', {
 app.import('bower_components/alertify.js/themes/alertify.core.css');
 app.import('bower_components/alertify.js/themes/alertify.bootstrap.css');
 
-// Bootstrap Datetime picker
-app.import('bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
-app.import('bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css');
-
 // JQuery file upload
 // See: https://github.com/blueimp/jQuery-File-Upload/wiki/Basic-plugin
 app.import('bower_components/jquery-file-upload/js/vendor/jquery.ui.widget.js');
