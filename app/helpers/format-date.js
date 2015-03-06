@@ -4,6 +4,7 @@
 import Ember from 'ember';
 
 export default Ember.Handlebars.makeBoundHelper(function (date, options) {
+    if (!date) { return; }
     var format = options.hash.format ? options.hash.format : 'LL';
     var momentDate = moment(date);
     return momentDate.isValid() ? momentDate.format(format) : 'Invalid date';
