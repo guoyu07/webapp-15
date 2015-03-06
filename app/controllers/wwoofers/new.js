@@ -11,27 +11,25 @@ export default Ember.ObjectController.extend({
     maxDate: moment().subtract(18, 'year'),
     selectedDate: null,
 
-    selectedDateDidChange: function() {
-        var selectedDate = this.get('selectedDate');
-        if (selectedDate) {
-            this.set('birthDate2', selectedDate.format('YYYY-MM-DD'));
-        }
-    }.observes('selectedDate'),
-
     actions: {
         saveWwoofer: function () {
             var wwoofer = this.get('model');
             var address = wwoofer.get('address');
 
             // Prevent multiple save attempts
-            if (this.get('isSaving')) {
-                return;
-            }
+            if (this.get('isSaving')) { return; }
 
-            // Make sure the wwoofer is 18 years old
-            if (wwoofer.get('birthDate2') && moment(wwoofer.get('birthDate2')).isAfter(this.get('maxDate'))) {
-                alertify.error(Ember.I18n.t('notify.mustBe18'));
-                return;
+            // Set second wwoofer birth date (if any)
+            var hasSecondWoofer = Ember.isPresent(wwoofer.get('firstName2')) && Ember.isPresent(wwoofer.get('lastName2'));
+            var selectedDate = this.get('selectedDate');
+            if (hasSecondWoofer && selectedDate) {
+
+                // Make sure the wwoofer is 18 years old
+                if (selectedDate.isAfter(this.get('maxDate'))) {
+                    alertify.error(Ember.I18n.t('notify.mustBe18'));
+                    return;
+                }
+                this.set('birthDate2', selectedDate.format('YYYY-MM-DD'));
             }
 
             // Initialize validations array
