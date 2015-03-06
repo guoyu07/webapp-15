@@ -53,8 +53,6 @@ export default {
                 var session = container.lookup('session:main');
                 if (session && session.get('isAuthenticated')) {
                     session.invalidate();
-                } else {
-                    window.location.replace("/login");
                 }
             }
         });
