@@ -7,8 +7,6 @@ import Regex from '../utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    needs: ['application'],
-
     username: null,
     password: null,
     isLoading: false,
@@ -20,9 +18,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
         login: function () {
 
             // Prevent multiple login attempts
-            if (this.get('isLoading')) {
-                return;
-            }
+            if (this.get('isLoading')) { return; }
 
             // Validate form then login
             var self = this;
