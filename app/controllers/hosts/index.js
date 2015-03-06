@@ -6,10 +6,10 @@ import config from '../../config/environment';
 
 export default Ember.ArrayController.extend({
 
-    needs: ['countries', 'departments', 'activities'],
+    needs: ['countries', 'activities'],
 
     // Query parameters bound with the URL
-    queryParams: ['searchTerm', 'department', 'pendingOnly', 'activities', 'lon', 'lat', 'mapZoom'],
+    queryParams: ['searchTerm', 'pendingOnly', 'activities', 'lon', 'lat', 'mapZoom'],
 
     // Whether the controller is in loading state
     isLoading: false,
@@ -17,7 +17,6 @@ export default Ember.ArrayController.extend({
 
     // Search filters
     searchTerm: null,
-    department: null,
     activities: [],
     pendingOnly: false,
 
@@ -42,9 +41,14 @@ export default Ember.ArrayController.extend({
     numberShowedFeatures: 10,
 
     /**
-     * List of the features displayed in the Host list.
+     * List of the features displayed in the host list.
      */
     _showedFeatures: [],
+
+    /**
+     * List of features currently visible on the map.
+     */
+    visibleFeatures : [],
 
     /**
      * Leaflet Host layer.
@@ -56,10 +60,14 @@ export default Ember.ArrayController.extend({
      */
     mapLayer: null,
 
-    // Bindings
-    departmentFilterOptions: Ember.computed.alias('controllers.departments'),
+    /**
+     * All activities.
+     */
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
-    visibleFeatures : [],
+
+    /**
+     * The container for pop-ups.
+     */
     popUpContainer: Ember.ContainerView.create(),
 
     init: function () {
