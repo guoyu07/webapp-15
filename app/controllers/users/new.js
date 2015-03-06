@@ -12,21 +12,12 @@ export default Ember.ObjectController.extend({
     maxDate: moment().subtract(18, 'year'),
     selectedDate: null,
 
-    selectedDateDidChange: function() {
-        var selectedDate = this.get('selectedDate');
-        if (selectedDate) {
-            this.set('birthDate', selectedDate.format('YYYY-MM-DD'));
-        }
-    }.observes('selectedDate'),
-
     actions: {
         saveUser: function () {
             var user = this.get('model');
 
             // Prevent multiple save attempts
-            if (this.get('isSaving')) {
-                return;
-            }
+            if (this.get('isSaving')) { return; }
 
             // Make sure all checkboxes are checked
             if (!this.get('termsOk') || !this.get('insuranceOk')) {
@@ -34,11 +25,13 @@ export default Ember.ObjectController.extend({
                 return;
             }
 
-            // Make sure the wwoofer is 18 years old
-            if (moment(this.get('birthDate')).isAfter(this.get('maxDate'))) {
+            // Make sure the user is 18 years old
+            var selectedDate = this.get('selectedDate');
+            if (selectedDate.isAfter(this.get('maxDate'))) {
                 alertify.error(Ember.I18n.t('notify.mustBe18'));
                 return;
             }
+            this.set('birthDate', selectedDate.format('YYYY-MM-DD'));
 
             // Save the user
             var self = this;
