@@ -1,5 +1,5 @@
-<div class="page-header">
-    <h1>{{t 'wwoofer.form.title'}}</h1>
+<div class="page-header row">
+    <h1 class="col-md-11 col-md-offset-1">{{t 'wwoofer.form.title'}}</h1>
 </div>
 {{#unless isNew}}
     {{#if belongsToCurrentUser}}
@@ -8,14 +8,14 @@
 {{/unless}}
 <form>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5 col-md-offset-1">
             <div {{bind-attr class=":form-group fieldErrors.intro.length:has-error"}}>
                 <label for="intro" class="control-label">{{t 'wwoofer.form.intro.label'}}</label>
                 {{textarea id="intro" name="intro" value=intro class="form-control" rows="10"}}
                 {{error-display fieldErrors.intro}}
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div {{bind-attr class=":form-group fieldErrors.tripMotivation.length:has-error"}}>
                 <label for="tripMotivation" class="control-label">{{t 'wwoofer.form.tripMotivation.label'}}</label>
                 {{textarea id="tripMotivation" name="tripMotivation" value=tripMotivation class="form-control" rows="10"}}
@@ -24,35 +24,48 @@
         </div>
     </div>
     <div class="row">
-        <fieldset class="col-md-6">
-            <legend class="h4">{{t 'wwoofer.form.otherWwoofer'}}</legend>
+        <fieldset class="col-md-5 col-md-offset-1">
+            <legend class="h4">
+                {{t 'wwoofer.form.otherWwoofer'}} :
+                {{#if isNew }}
+                    <label>{{input type="checkbox" name="otherWwoofer" checked=hasOtherWwoofer }} Yes !</label>
+                {{else}}
+                    {{#if hasOtherWwoofer}}
+                        <label> Yes </label>
+                    {{else}}
+                        <label> No </label>
+                    {{/if}}
+                {{/if}}
 
-            <div {{bind-attr class=":form-group"}}>
-                <label for="firstName2" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                {{#if isNew}}
-                    {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control"}}
-                {{else}}
-                    <p class="form-control-static">{{firstName2}}</p>
-                {{/if}}
-            </div>
-            <div {{bind-attr class=":form-group"}}>
-                <label for="lastName2" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                {{#if isNew}}
-                    {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control"}}
-                {{else}}
-                    <p class="form-control-static">{{lastName2}}</p>
-                {{/if}}
-            </div>
-            <div {{bind-attr class=":form-group"}}>
-                <label for="birthDate2" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                {{#if isNew}}
-                    {{date-picker selectedDate=selectedDate}}
-                {{else}}
-                    <p class="form-control-static">{{format-date birthDate2}}</p>
-                {{/if}}
-            </div>
+            </legend>
+            {{#if hasOtherWwoofer}}
+                <div {{bind-attr class=":form-group"}}>
+                    <label for="firstName2" class="control-label">{{t 'user.form.firstName.label'}}</label>
+                    {{#if isNew}}
+                        {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control"}}
+                    {{else}}
+                        <p class="form-control-static">{{firstName2}}</p>
+                    {{/if}}
+                </div>
+                <div {{bind-attr class=":form-group"}}>
+                    <label for="lastName2" class="control-label">{{t 'user.form.lastName.label'}}</label>
+                    {{#if isNew}}
+                        {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control"}}
+                    {{else}}
+                        <p class="form-control-static">{{lastName2}}</p>
+                    {{/if}}
+                </div>
+                <div {{bind-attr class=":form-group"}}>
+                    <label for="birthDate2" class="control-label">{{t 'user.form.birthDate.label'}}</label>
+                    {{#if isNew}}
+                        {{date-picker selectedDate=selectedDate}}
+                    {{else}}
+                        <p class="form-control-static">{{format-date birthDate2}}</p>
+                    {{/if}}
+                </div>
+            {{/if}}
         </fieldset>
-        <fieldset class="col-md-6">
+        <fieldset class="col-md-5">
             <legend class="h4">{{t 'wwoofer.form.address'}}</legend>
 
             <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
@@ -124,15 +137,19 @@
         </fieldset>
     </div>
     <div class="row">
-        <div class="col-tn-12 float-r-xs">
-            {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
-            <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">
-                {{#if isNew}}
-                    {{t 'literal.continue'}}
-                {{else}}
-                    {{t 'literal.save'}}
-                {{/if}}
-            </button>
+        <div class="col-md-10 col-md-offset-1" >
+            <div class="row">
+                <div class="col-tn-12 float-r-xs">
+                {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
+                <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">
+                    {{#if isNew}}
+                        {{t 'literal.continue'}}
+                    {{else}}
+                        {{t 'literal.save'}}
+                    {{/if}}
+                </button>
+            </div>
         </div>
+
     </div>
 </form>

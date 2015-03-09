@@ -17,6 +17,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
      */
     impersonatedUserEmail: null,
 
+    wooferProfileClass: function () {
+        return this.get('userMemberships.hasHostMemberships') ?  'glyphicon glyphicon-ok' : 'glyphicon glyphicon-warning-sign';
+    }.property(),
+
     actions: {
         impersonateUser: function () {
 

@@ -10,6 +10,13 @@ export default Ember.ObjectController.extend({
     // Bindings
     belongsToCurrentUser: Ember.computed.oneWay('controllers.wwoofer.belongsToCurrentUser'),
 
+    /**
+     * Do a second wwoofer has been registered
+     */
+    hasOtherWwoofer: function () {
+        return this.get('model.firstName2') ? true : false;
+    }.property('model.firstName2'),
+
     actions: {
         saveWwoofer: function () {
             var wwoofer = this.get('model');

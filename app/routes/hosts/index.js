@@ -5,8 +5,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     renderTemplate: function() {
-        // Toggle containerFluid class
-        Ember.$("#mainContainer").removeClass( "container" ).addClass( "container-fluid" );
 
         // Render host.index view
         this.render('hosts/index');
@@ -19,8 +17,6 @@ export default Ember.Route.extend({
         });
     },
     deactivate: function() {
-        // Toggle containerFluid class
-        Ember.$("#mainContainer").removeClass( "container-fluid" ).addClass( "container" );
         this.set('controller.hostLayer.markers', null);
     }
 });
