@@ -41,6 +41,11 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
      * Update the Hosts features of the layer.
      */
     updateFeatures(params) {
+
+        // Avoid update when not displayed
+        if (!this.geoJsonLayer || !this.markers) {
+            return;
+        }
         // Set controller loading state
         this.controller.set('isLoading', true);
 
