@@ -27,7 +27,7 @@
             <ul class="slides">
                 {{#each photos}}
                     <li class="slide">
-                        <img {{bind-attr src="completeUrl"}} />
+                        <img {{bind-attr src="completeUrl" title="caption" alt="caption"}} />
                     </li>
                 {{else}}
                     <li class="slide">
