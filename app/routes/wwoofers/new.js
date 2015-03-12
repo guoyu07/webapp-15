@@ -9,7 +9,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      * Only one wwoofer profile allowed per user.
      * Redirects to wwoofer edit if the user already has a profile.
      */
-    beforeModel: function() {
+    beforeModel: function(transition) {
+        this._super(transition);
         var route = this;
         this.get('session.user').then(function (user) {
             var wwooferId = user.get('wwoofer.id');
