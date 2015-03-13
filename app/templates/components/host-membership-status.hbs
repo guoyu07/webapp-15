@@ -23,9 +23,9 @@
         </div>
     {{/if}}
 {{else}}
-    <div class="alert alert-info alert-dismissable" role="alert">
+    <div class="alert alert-warning alert-dismissable" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <span class="glyphicon glyphicon-info-sign"></span>
+        <span class="glyphicon glyphicon-warning-sign"></span>
         {{t 'host.membership-status.wasValidated'}}
         {{t 'host.membership-status.makeVisible'}}
         {{#link-to 'memberships.new' (query-params type='H' itemCode='H') class="alert-link"}}{{t 'host.membership-status.payMembership'}}{{/link-to}}.

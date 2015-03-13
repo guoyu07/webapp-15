@@ -8,7 +8,7 @@
     {{else}}
         <div class="alert alert-warning alert-dismissable col-md-10 col-md-offset-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <span class="glyphicon glyphicon-warning-sign"></span>
 
             {{t 'wwoofer.membership-status.yourWwooferMembership'}}
             {{#if membershipsService.latestWwoofMembership.isExpired}}
@@ -25,7 +25,7 @@
 {{else}}
     <div class="alert alert-warning alert-dismissable alert-with-button col-md-10 col-md-offset-1" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <span class="glyphicon glyphicon-info-sign"></span>
+        <span class="glyphicon glyphicon-warning-sign"></span>
         <span>
             {{t 'wwoofer.membership-status.profileComplete'}}
         </span>

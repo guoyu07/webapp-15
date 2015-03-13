@@ -1,7 +1,9 @@
-<div class="page-header">
-    <h1>{{t 'payment.complete.title'}}</h1>
+<div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>{{t 'payment.complete.title'}}</h1>
+    </div>
+
+    <p>{{t 'payment.complete.instructions'}}</p>
+
+    {{#link-to 'index' class="btn btn-primary pull-right"}}{{t 'literal.continue'}}{{/link-to}}
 </div>
-
-<p>{{t 'payment.complete.instructions'}}</p>
-
-{{#link-to 'index' class="btn btn-primary pull-right"}}{{t 'literal.continue'}}{{/link-to}}

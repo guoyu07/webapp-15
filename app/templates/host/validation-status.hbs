@@ -1,7 +1,7 @@
 {{#if isPending}}
     {{#if session.user.isAdmin}}
-        <div class="alert alert-info">
-            <span class="glyphicon glyphicon-info-sign"></span>
+        <div class="alert alert-warning">
+            <span class="glyphicon glyphicon-warning-sign"></span>
             {{t 'host.validation-status.adminPending'}}
             {{t 'host.validation-status.adminReviewDetails'}}
             <a href="#" {{action "approveHost" true}} class="alert-link">{{t 'host.validation-status.adminApprove'}}</a>

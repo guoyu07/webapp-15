@@ -1,91 +1,94 @@
-<div class="page-header">
-    <h1>
-        {{t 'wwoofers.index.title'}}
-    </h1>
-</div>
+<div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        <h1>
+            {{t 'wwoofers.index.title'}}
+        </h1>
+    </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <p>
-            {{t 'wwoofers.index.instructions'}}
-        </p>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
-            {{input type="text" class="form-control" id="searchTerm" placeholderTranslation="wwoofers.index.search.placeholder" value=searchTerm action="searchWwoofers"}}
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label for="country" class="sr-only">{{t 'address.form.country.label'}}</label>
-            {{view "select"
-            content=controllers.countries.content
-            optionValuePath="content.id"
-            optionLabelPath="content.name"
-            value=country
-            class="form-control"
-            name="country"
-            promptTranslation='wwoofers.index.country.prompt'}}
-        </div>
-    </div>
-    <div class="col-md-3">
-        <button {{action "searchWwoofers"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-lg">
-            {{t 'literal.search'}}
-        </button>
-    </div>
-</div>
-
-{{#if isLoading}}
-    {{partial 'loading'}}
-{{else}}
     <div class="row">
         <div class="col-md-12">
-            {{#if content}}
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>{{t 'wwoofers.index.firstName'}}</th>
-                        <th>{{t 'wwoofers.index.lastName'}}</th>
-                        <th>{{t 'literal.email'}}</th>
-                        <th>{{t 'wwoofers.index.city'}}</th>
-                        <th>{{t 'wwoofers.index.country'}}</th>
-                        <th>{{t 'wwoofers.index.actions'}}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each}}
-                        <tr>
-                            <td>{{user.firstName}}</td>
-                            <td>{{user.lastName}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{address.city}}</td>
-                            <td>{{address.country.name}}</td>
-                            <td>
-                                {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}}
-                                {{#if session.user.isAdmin}}
-                                    |
-                                    {{#link-to "wwoofer.edit" id}}{{t 'literal.edit'}}{{/link-to}}
-                                {{/if}}
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-                <div class="row col-md-12">
-                    <p class="load-more">
-                        <button {{action "loadMoreWwoofers"}} {{bind-attr disabled=isLoadingMore}} class="btn btn-default">
-                            {{t 'literal.loadMore'}}
-                        </button>
-                    <p class="load-more">
-                </div>
-            {{else}}
-                {{t 'wwoofers.index.noResults'}}
-                {{#if session.user.isAdmin}}
-                    {{t 'wwoofers.index.noResultsNotAdmin'}}
-                {{/if}}
-            {{/if}}
+            <p>
+                {{t 'wwoofers.index.instructions'}}
+            </p>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
+                {{input type="text" class="form-control" id="searchTerm" placeholderTranslation="wwoofers.index.search.placeholder" value=searchTerm action="searchWwoofers"}}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="country" class="sr-only">{{t 'address.form.country.label'}}</label>
+                {{view "select"
+                content=controllers.countries.content
+                optionValuePath="content.id"
+                optionLabelPath="content.name"
+                value=country
+                class="form-control"
+                name="country"
+                promptTranslation='wwoofers.index.country.prompt'}}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button {{action "searchWwoofers"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-lg">
+                {{t 'literal.search'}}
+            </button>
         </div>
     </div>
-{{/if}}
+
+    {{#if isLoading}}
+        {{partial 'loading'}}
+    {{else}}
+        <div class="row">
+            <div class="col-md-12">
+                {{#if content}}
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{t 'wwoofers.index.firstName'}}</th>
+                            <th>{{t 'wwoofers.index.lastName'}}</th>
+                            <th>{{t 'literal.email'}}</th>
+                            <th>{{t 'wwoofers.index.city'}}</th>
+                            <th>{{t 'wwoofers.index.country'}}</th>
+                            <th>{{t 'wwoofers.index.actions'}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each}}
+                            <tr>
+                                <td>{{user.firstName}}</td>
+                                <td>{{user.lastName}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{address.city}}</td>
+                                <td>{{address.country.name}}</td>
+                                <td>
+                                    {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}}
+                                    {{#if session.user.isAdmin}}
+                                        |
+                                        {{#link-to "wwoofer.edit" id}}{{t 'literal.edit'}}{{/link-to}}
+                                    {{/if}}
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                    <div class="row col-md-12">
+                        <p class="load-more">
+                            <button {{action "loadMoreWwoofers"}} {{bind-attr disabled=isLoadingMore}} class="btn btn-default">
+                                {{t 'literal.loadMore'}}
+                            </button>
+                        <p class="load-more">
+                    </div>
+                {{else}}
+                    {{t 'wwoofers.index.noResults'}}
+                    {{#if session.user.isAdmin}}
+                        {{t 'wwoofers.index.noResultsNotAdmin'}}
+                    {{/if}}
+                {{/if}}
+            </div>
+        </div>
+    {{/if}}
+</div>
+
 
