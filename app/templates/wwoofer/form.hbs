@@ -26,14 +26,14 @@
     <div class="row">
         <fieldset class="col-md-6">
             <legend class="h4">
-                {{t 'wwoofer.form.otherWwoofer'}} :
+                {{t 'wwoofer.form.otherWwoofer'}}
                 {{#if isNew }}
                     <label>{{input type="checkbox" name="otherWwoofer" checked=hasOtherWwoofer }} Yes !</label>
                 {{else}}
                     {{#if hasOtherWwoofer}}
-                        <label> Yes </label>
+                        <label>Yes</label>
                     {{else}}
-                        <label> No </label>
+                        <label>No</label>
                     {{/if}}
                 {{/if}}
 
@@ -136,15 +136,16 @@
             </div>
         </fieldset>
     </div>
-    <div class="row">
+    <div class="row form-group">
         <div class="col-tn-12 float-r-xs">
-        {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
-        <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">
-            {{#if isNew}}
-                {{t 'literal.continue'}}
-            {{else}}
-                {{t 'literal.save'}}
-            {{/if}}
-        </button>
+            {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
+            <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">
+                {{#if isNew}}
+                    {{t 'literal.continue'}}
+                {{else}}
+                    {{t 'literal.save'}}
+                {{/if}}
+            </button>
+        </div>
     </div>
 </form>
