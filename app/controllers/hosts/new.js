@@ -9,6 +9,10 @@ export default Ember.ObjectController.extend({
 
     allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
+    activitiesDisplayName: function() {
+        return Ember.I18n.t('hosts.index.activities');
+    }.property(),
+
     actions: {
         saveHost: function () {
 
