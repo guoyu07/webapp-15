@@ -8,10 +8,11 @@
             </div>
             <div class="modal-body">
                 <p>{{t 'profileModal.text'}}</p>
-                <span data-dismiss="modal">
+                <p data-dismiss="modal">
                     {{#link-to 'wwoofers.new' class="btn btn-primary col-md-offset-2"}} {{t 'profileModal.wantToBeWwoofer'}}{{/link-to}}
                     {{#link-to 'hosts.new'  class="btn btn-primary"}}{{t 'profileModal.wantToBeHost'}}{{/link-to}}
-                </span>
+                </p>
+                <p><i><small>{{t 'profileModal.details'}}</small></i></p>
             </div>
         </div>
     </div>
