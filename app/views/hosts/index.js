@@ -18,17 +18,17 @@ export default Ember.View.extend({
 
             // resize Map for mobile
             if (Ember.$(".leaflet-container")) {
-                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container").height() - Ember.$(".search-box").height() - 75);
+                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - Ember.$(".search-box").height() - 20);
             }
         } else {
 
             // resize Map for desktop
             if (Ember.$(".leaflet-container")) {
-                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container").height() - 75);
+                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - 20);
             }
 
             if (Ember.$("#resultList")) {
-                Ember.$("#resultList").height(Ember.$(window).height() - Ember.$("nav .container").height() - Ember.$("div.search-box").height() - 75);
+                Ember.$("#resultList").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - Ember.$("div.search-box").height() - 20);
             }
         }
     }
