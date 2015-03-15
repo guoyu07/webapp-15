@@ -101,4 +101,7 @@
         </div>
     </div>
 </div>
-{{create-profile-modal}}
+ {{#unless hasWwooferOrHostProfile}}
+     {{create-profile-modal}}
+ {{/unless}}
+
