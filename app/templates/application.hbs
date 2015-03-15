@@ -12,30 +12,32 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    {{#link-to 'hosts' data-toggle="collapse" data-target=".navbar-collapse"}}
+                    {{#link-to 'hosts'}}
                         <span class="glyphicon glyphicon-tree-conifer"></span> {{t 'literal.hosts'}}
                     {{/link-to}}
                 </li>
                 {{#if canSeeWwoofersLink}}
                     <li>
-                        {{#link-to 'wwoofers' data-toggle="collapse" data-target=".navbar-collapse"}}
+                        {{#link-to 'wwoofers'}}
                             <span class="glyphicon glyphicon-search"></span> {{t 'literal.wwoofers'}}
                         {{/link-to}}
                     </li>
                 {{/if}}
                 {{#if session.isAuthenticated}}
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{t "navbar.myProfiles" }}<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {{t "navbar.myProfiles" }}<span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu" role="menu">
                             {{#if session.user.wwoofer.id}}
                                 <li>
-                                    {{#link-to 'wwoofer.edit' session.user.wwoofer data-toggle="collapse" data-target=".navbar-collapse"}}
+                                    {{#link-to 'wwoofer.edit' session.user.wwoofer}}
                                         {{profile-status type="wwoofer" membershipsService=userMemberships}} {{t 'navbar.editWwooferProfile'}}
                                     {{/link-to}}
                                 </li>
                             {{else}}
                                 <li>
-                                    {{#link-to 'wwoofers.new' data-toggle="collapse" data-target=".navbar-collapse"}}
+                                    {{#link-to 'wwoofers.new'}}
                                         {{t 'navbar.createWwooferProfile'}}
                                     {{/link-to}}
                                 </li>
@@ -43,13 +45,13 @@
                             <li class="divider"></li>
                             {{#if session.user.host.id}}
                                 <li>
-                                    {{#link-to 'host.edit' session.user.host data-toggle="collapse" data-target=".navbar-collapse"}}
+                                    {{#link-to 'host.edit' session.user.host}}
                                         {{profile-status type="host" membershipsService=userMemberships}} {{t 'navbar.editHostProfile'}}
                                     {{/link-to}}
                                 </li>
                             {{else}}
                                 <li>
-                                    {{#link-to 'hosts.new' data-toggle="collapse" data-target=".navbar-collapse"}}
+                                    {{#link-to 'hosts.new'}}
                                         {{t 'navbar.createHostProfile'}}
                                     {{/link-to}}
                                 </li>
@@ -62,7 +64,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                {{#link-to 'memberships' data-toggle="collapse" data-target=".navbar-collapse"}}
+                                {{#link-to 'memberships'}}
                                     {{t 'literal.memberships'}}
                                 {{/link-to}}
                             </li>
@@ -84,24 +86,24 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                {{#link-to 'user.edit' session.user.id data-toggle="collapse" data-target=".navbar-collapse"}}
+                                {{#link-to 'user.edit' session.user.id}}
                                     {{t 'menu.myAccount'}}
                                 {{/link-to}}
                             </li>
                             <li>
-                                {{#link-to 'user.memberships' session.user.id data-toggle="collapse" data-target=".navbar-collapse"}}
+                                {{#link-to 'user.memberships' session.user.id}}
                                     {{t 'menu.myMemberships'}}
                                 {{/link-to}}
                             </li>
                             <li class="divider"></li>
                             <li>
-                                {{#link-to 'contact' data-toggle="collapse" data-target=".navbar-collapse"}}
+                                {{#link-to 'contact'}}
                                     {{t 'menu.contact'}}
                                 {{/link-to}}
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="#" data-toggle="collapse" data-target=".navbar-collapse" {{action 'invalidateSession'}}>
+                                <a href="#" {{action 'invalidateSession'}}>
                                     {{t 'menu.logout'}}
                                 </a>
                             </li>
@@ -109,12 +111,12 @@
                     </li>
                 {{else}}
                     <li>
-                        {{#link-to 'login' class="btn btn-default btn-navbar" data-toggle="collapse" data-target=".navbar-collapse"}}
+                        {{#link-to 'login' class="btn btn-default btn-navbar"}}
                             {{t 'menu.login'}}
                         {{/link-to}}
                     </li>
                     <li>
-                        {{#link-to 'users.new' class="btn btn-primary btn-navbar" data-toggle="collapse" data-target=".navbar-collapse"}}
+                        {{#link-to 'users.new' class="btn btn-primary btn-navbar"}}
                             {{t 'menu.signUp'}}
                         {{/link-to}}
                     </li>
