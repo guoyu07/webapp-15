@@ -14,12 +14,22 @@ export default Ember.View.extend({
     },
 
     resizeElements: function() {
-        if (Ember.$(".leaflet-container")) {
-            Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container").height() - 20);
-        }
+        if (Ember.$('#resultList').is(':hidden')) {
 
-        if (Ember.$("#resultList")) {
-            Ember.$("#resultList").height(Ember.$(window).height() - Ember.$("nav .container").height() - Ember.$("div.search-box").height() - 20);
+            // resize Map for mobile
+            if (Ember.$(".leaflet-container")) {
+                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container").height() - Ember.$(".search-box").height() - 75);
+            }
+        } else {
+
+            // resize Map for desktop
+            if (Ember.$(".leaflet-container")) {
+                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container").height() - 75);
+            }
+
+            if (Ember.$("#resultList")) {
+                Ember.$("#resultList").height(Ember.$(window).height() - Ember.$("nav .container").height() - Ember.$("div.search-box").height() - 75);
+            }
         }
     }
 });
