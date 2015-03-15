@@ -49,23 +49,11 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
         // Set controller loading state
         this.controller.set('isLoading', true);
 
-        // Build URI based on params
-        var completeURI = this.get('requestURI') + "?limit=" + this.get('resultLimit');
-        if (params.searchTerm) {
-            completeURI = completeURI + "&searchTerm=" + params.searchTerm;
-        }
-        if (params.pendingOnly) {
-            completeURI = completeURI + "&pendingOnly=" + params.pendingOnly;
-        }
-        var activities = this.controller.get('activities');
-        if (activities) {
-            activities.forEach(function (activity) {
-                completeURI = completeURI + "&activities[]=" + activity;
-            });
-        }
+        // Adds limit to query params
+        params.limit = this.get('resultLimit');
 
         // Create GET request
-        var dataRequest = Ember.$.get(completeURI);
+        var dataRequest = Ember.$.get(this.get('requestURI'), params);
         var self = this;
         dataRequest.done(function (data) {
 

@@ -39,7 +39,9 @@ export default Ember.Component.extend({
         // Set date
         if (arguments.length > 1 && value) {
             this.set('selectedDay', value.date());
-            this.set('selectedMonth.value', value.month());
+            if (this.get('selectedMonth')) {
+                this.set('selectedMonth.value', value.month());
+            }
             this.set('selectedYear', value.year());
         }
 

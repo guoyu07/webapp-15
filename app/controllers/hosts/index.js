@@ -9,7 +9,10 @@ export default Ember.ArrayController.extend({
     needs: ['countries', 'activities'],
 
     // Query parameters bound with the URL
-    queryParams: ['searchTerm', 'pendingOnly', 'activities', 'lon', 'lat', 'mapZoom'],
+    queryParams: [
+        'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus',
+        'mapZoom', 'isSuspended', 'isHidden', 'hasValidMembership'
+    ],
 
     // Whether the controller is in loading state
     isLoading: false,
@@ -18,7 +21,10 @@ export default Ember.ArrayController.extend({
     // Search filters
     searchTerm: null,
     activities: [],
-    pendingOnly: false,
+    approvalStatus: "approved",
+    membershipStatus: "valid",
+    isSuspended: false,
+    isHidden: false,
 
     /**
      * Current map longitude.
@@ -78,12 +84,14 @@ export default Ember.ArrayController.extend({
     // Query parameters
     parameters: function () {
         return {
-            'searchTerm': Ember.$.trim(this.get('searchTerm')) || null,
-            'department': this.get('department') || null,
-            'pendingOnly': this.get('pendingOnly'),
-            'activities': this.get('activities') || null
+            'searchTerm': Ember.$.trim(this.get('searchTerm')),
+            'approvalStatus': this.get('approvalStatus') || null,
+            'activities': this.get('activities') || null,
+            'membershipStatus': this.get('membershipStatus') || null,
+            'isSuspended': this.get('isSuspended'),
+            'isHidden': this.get('isHidden')
         };
-    }.property('searchTerm', 'department', 'pendingOnly', 'activities'),
+    }.property('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden'),
 
     /**
      * Is the "Load more" button should be disabled.
@@ -93,22 +101,13 @@ export default Ember.ArrayController.extend({
     }.property('isLoadingMore', '_showedFeatures.length'),
 
     /**
-     * Observe the activities selected to send a request to refresh hosts.
+     * Observes changes on filters then send an event to refresh the hosts.
      */
-    activitiesObserver : function () {
+    mapShouldRefresh : function () {
         if (this.get('mapLayer')) {
             this.send('updateHosts');
         }
-    }.observes('activities'),
-
-    /**
-     * Observe the pendingOnly flag to send a request to refresh hosts.
-     */
-    pendingOnlyObserver : function () {
-        if (this.get('mapLayer')) {
-            this.send('updateHosts');
-        }
-    }.observes('pendingOnly'),
+    }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden'),
 
     /**
      * List of the features displayed in the Host list.
