@@ -13,7 +13,7 @@ export default Ember.Component.extend({
      */
     profileStatusClass : function () {
         return this.get('type') == 'host' ? this.get('hostProfileClass') : this.get('wooferProfileClass');
-    }.property('type'),
+    }.property('type', 'wooferProfileClass', 'hostProfileClass'),
 
     /**
      * Provide the class name to style the component for wwoofer profile

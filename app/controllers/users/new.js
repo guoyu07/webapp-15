@@ -37,8 +37,23 @@ export default Ember.ObjectController.extend({
             var self = this;
             user.validate().then(function () {
                 user.save().then(function () {
-                    alertify.alert(Ember.I18n.t('notify.accountCreated'));
-                    self.transitionToRoute('login');
+                    // Authenticate user
+                    var auth = self.get('session').authenticate('authenticator:passport', {
+                        username: self.get('email'),
+                        password: self.get('password')
+                    });
+
+                    // Handle success
+                    auth.then(function () {
+                        alertify.success(Ember.I18n.t('notify.userAuthenticated'));
+                        self.transitionToRoute('index');
+                    });
+
+                    // Handle failure
+                    auth.catch(function () {
+                        alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
+                    });
+
                 }).catch(function (error) {
                     if (error && error.status === 409) {
                         alertify.error(Ember.I18n.t('notify.emailAddressInUse'));
