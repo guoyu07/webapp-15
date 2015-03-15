@@ -23,7 +23,7 @@
     {{/if}}
 
     <div class="row">
-        <div class="col-md-6 host-left-col">
+        <div class="col-fixed-host-index">
             <div class="host-gallery swipeshow">
                 <ul class="slides">
                     {{#each photos}}
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 host-left-col">
+        <div class="col-offset-host-index col-md-12">
             <p class="description">{{convert-breaklines fullDescription}}</p>
             {{#if activities}}
                 <div class="proposed-activities">

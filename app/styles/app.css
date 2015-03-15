@@ -816,8 +816,24 @@ html.swipeshow-grabbed * {
     visibility: visible;
 }
 
-.host-left-col {
-    max-width: 700px;
+@media only screen and (min-width: 992px) {
+    .col-fixed-host-index {
+        z-index: 999;
+        width: 553px;
+        position: absolute;
+        height: 100%;
+    }
+
+    .col-offset-host-index {
+        padding-left: 568px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .col-fixed-host-index {
+        width: 553px;
+    }
+
 }
 
 html {
