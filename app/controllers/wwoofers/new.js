@@ -20,11 +20,11 @@ export default Ember.ObjectController.extend({
             // Prevent multiple save attempts
             if (this.get('isSaving')) { return; }
 
-            // Erease the other wwoofer info if not checked
+            // Erase the other wwoofer info if not checked
             if (this.get('hasOtherWwoofer') === false) {
-                this.set('model.firstName2', null);
-                this.set('model.lastName2', null);
-                this.set('model.birthDate2', null);
+                this.set('firstName2', null);
+                this.set('lastName2', null);
+                this.set('birthDate2', null);
             }
 
             // Set second wwoofer birth date (if any)

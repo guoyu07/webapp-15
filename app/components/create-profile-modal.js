@@ -4,9 +4,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    hasBeendisplayed : false,
+    wasDisplayed: false,
 
-    displayed: function () {
+    /**
+     * Display the create profile modal depending on the user profile status
+     */
+    displayModal: function () {
 
         if (this.get('session.user.wwoofer.isFulfilled') === false) {
             return;
@@ -16,9 +19,9 @@ export default Ember.Component.extend({
             return;
         }
 
-        if (this.get('session.user.wwoofer.id') == null && this.get('session.user.host.id') == null && this.get('hasBeendisplayed') === false) {
-            Ember.$('#createprofileModal').modal('show');
-            this.set('hasBeendisplayed', true);
+        if (this.get('session.user.wwoofer.id') == null && this.get('session.user.host.id') == null && this.get('wasDisplayed') === false) {
+            Ember.$('#createProfileModal').modal('show');
+            this.set('wasDisplayed', true);
         }
     }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id')
 });

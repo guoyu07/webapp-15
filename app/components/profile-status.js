@@ -5,7 +5,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     tagName:'span',
-    type: 'host',
+    type: null,
+    membershipsService: null,
     classNameBindings: ['profileStatusClass'],
 
     /**
@@ -16,17 +17,22 @@ export default Ember.Component.extend({
     }.property('type', 'wooferProfileClass', 'hostProfileClass'),
 
     /**
-     * Provide the class name to style the component for wwoofer profile
+     * Provides the class name to style the component for wwoofer profile
      */
     wooferProfileClass: function () {
-        return this.get('userMemberships.hasNonExpiredWwoofMembership') ?  'glyphicon glyphicon-ok' : 'glyphicon glyphicon-warning-sign';
-    }.property('userMemberships.hasWwoofMemberships'),
+        return this.get('membershipsService.hasNonExpiredWwoofMembership') ?  'glyphicon glyphicon-ok' : 'glyphicon glyphicon-warning-sign';
+    }.property('membershipsService.hasWwoofMemberships'),
 
     /**
-     * Provide the class name to style the component for host profile
+     * Provides the class name to style the component for host profile
      */
     hostProfileClass: function () {
         var host = this.get('session.user.host');
+
+        // Return if the Host is not yet requested
+        if (!host) {
+            return;
+        }
 
         // Host is not approved: hourglass
         if (host.get('isApproved') === false) {
@@ -34,10 +40,9 @@ export default Ember.Component.extend({
         }
 
         // Host has no active membership: warning
-        if (this.get('userMemberships.hasNonExpiredHostMembership') === false) {
+        if (this.get('membershipsService.hasNonExpiredHostMembership') === false) {
             return 'glyphicon glyphicon-warning-sign';
-
         }
         return 'glyphicon glyphicon-ok';
-    }.property('session.user.host.isApproved', 'userMemberships.hasNonExpiredHostMembership')
+    }.property('session.user.host.isApproved', 'membershipsService.hasNonExpiredHostMembership')
 });

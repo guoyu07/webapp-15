@@ -46,7 +46,6 @@ export default Ember.ObjectController.extend({
                     // Handle success
                     auth.then(function () {
                         alertify.success(Ember.I18n.t('notify.userAuthenticated'));
-                        self.transitionToRoute('index');
                     });
 
                     // Handle failure
