@@ -62,6 +62,8 @@
                             <li>{{#link-to 'user.edit' session.user.id}}{{t 'menu.myAccount'}}{{/link-to}}</li>
                             <li>{{#link-to 'user.memberships' session.user.id}}{{t 'menu.myMemberships'}}{{/link-to}}</li>
                             <li class="divider"></li>
+                            <li>{{#link-to 'contact'}}{{t 'menu.contact'}}{{/link-to}}</li>
+                            <li class="divider"></li>
                             <li><a href="#" {{action 'invalidateSession'}}>{{t 'menu.logout'}}</a></li>
                         </ul>
                     </li>
