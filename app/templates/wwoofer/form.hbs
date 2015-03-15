@@ -28,15 +28,14 @@
             <legend class="h4">
                 {{t 'wwoofer.form.otherWwoofer'}}
                 {{#if isNew }}
-                    <label>{{input type="checkbox" name="otherWwoofer" checked=hasOtherWwoofer }} Yes !</label>
+                    <label>{{input type="checkbox" name="otherWwoofer" checked=hasOtherWwoofer }} {{t 'literal.yes'}}!</label>
                 {{else}}
                     {{#if hasOtherWwoofer}}
-                        <label>Yes</label>
+                        <label>{{t 'literal.yes'}}</label>
                     {{else}}
-                        <label>No</label>
+                        <label>{{t 'literal.no'}}</label>
                     {{/if}}
                 {{/if}}
-
             </legend>
             {{#if hasOtherWwoofer}}
                 <div {{bind-attr class=":form-group"}}>
