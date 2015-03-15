@@ -1,17 +1,19 @@
-<div class="page-header">
-    <h1>{{t 'login.title'}}</h1>
+<div class="col-md-6 col-md-offset-3">
+    <div class="page-header">
+        <h1>{{t 'login.title'}}</h1>
+    </div>
+    <form autocomplete="on" method="POST" {{action "login" on="submit"}}>
+        <div {{bind-attr class=":form-group fieldErrors.username.length:has-error"}}>
+            <label for="username" class="control-label">{{t 'literal.email'}}</label>
+            {{input value=username id="username" name="username" type="email" class="form-control"}}
+            {{error-display fieldErrors.username}}
+        </div>
+        <div {{bind-attr class=":form-group fieldErrors.password.length:has-error"}}>
+            <label for="password" class="control-label">{{t 'literal.password'}}</label>
+            {{input value=password id="password" name="password" type="password" class="form-control"}}
+            {{error-display fieldErrors.password}}
+        </div>
+        <button type="submit" class="btn btn-primary" {{bind-attr disabled="isLoading"}}>Log in</button>
+        {{#link-to 'reset-password' class="pull-right"}}{{t 'login.forgotPassword'}}{{/link-to}}
+    </form>
 </div>
-<form autocomplete="on" method="POST" {{action "login" on="submit"}}>
-    <div {{bind-attr class=":form-group fieldErrors.username.length:has-error"}}>
-        <label for="username" class="control-label">{{t 'literal.email'}}</label>
-        {{input value=username id="username" name="username" type="email" class="form-control"}}
-        {{error-display fieldErrors.username}}
-    </div>
-    <div {{bind-attr class=":form-group fieldErrors.password.length:has-error"}}>
-        <label for="password" class="control-label">{{t 'literal.password'}}</label>
-        {{input value=password id="password" name="password" type="password" class="form-control"}}
-        {{error-display fieldErrors.password}}
-    </div>
-    <button type="submit" class="btn btn-primary" {{bind-attr disabled="isLoading"}}>Log in</button>
-    {{#link-to 'reset-password' class="pull-right"}}{{t 'login.forgotPassword'}}{{/link-to}}
-</form>

@@ -981,6 +981,21 @@ th {
     content: "\e199";
 }
 
+.glyphicon-ok {
+    color: green;
+    margin-right: 5px;
+}
+
+.glyphicon-warning-sign {
+    color: orange;
+    margin-right: 5px;
+}
+
+.glyphicon-hourglass {
+    color: dodgerblue;
+    margin-right: 5px;
+}
+
 .dairy { background-image: url('/dairy.png'); }
 .forestry { background-image: url('/forestry.png'); }
 .grains { background-image: url('/grains.png'); }
@@ -3324,9 +3339,7 @@ legend {
 .results-box {
     margin-top: 40px;
 }
-.nav .dropdown-menu {
-    width: 100%;
-}
+
 .btn-profile {
     font-size: 0.5em;
 }
@@ -3531,3 +3544,17 @@ div.popupFarnName {
     color: grey;
     margin: 5px;
 }
+
+input[name="otherWwoofer"] {
+    margin-left: 10px;
+}
+
+.alert-with-button .btn {
+    float: right;
+    display: block;
+}
+
+.alert-with-button {
+    line-height: 36px;
+}
+

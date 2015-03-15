@@ -1,34 +1,40 @@
-<div class="page-header">
-    {{#unless isNew}}
-        <div class="btn-group pull-right">
-            <button type="button" {{bind-attr class=":btn :btn-primary isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
-                {{#if isHidden}}
-                    {{t 'host.form.showProfile'}}
-                {{else}}
-                    {{t 'host.form.hideProfile'}}
-                {{/if}}
-            </button>
-        </div>
-    {{/unless}}
-    <h1>{{farmName}}</h1>
+<div class=" page-header row">
+    <div class="col-md-10 col-md-offset-1">
+        {{#unless isNew}}
+            <div class="btn-group pull-right">
+                <button type="button" {{bind-attr class=":btn :btn-primary isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
+                    {{#if isHidden}}
+                        {{t 'host.form.showProfile'}}
+                    {{else}}
+                        {{t 'host.form.hideProfile'}}
+                    {{/if}}
+                </button>
+            </div>
+        {{/unless}}
+        <h1>{{farmName}}</h1>
+    </div>
 </div>
-{{#unless isNew}}
-    {{#if isPending}}
-        {{partial 'host/validation-status'}}
-    {{else}}
-        {{#if belongsToCurrentUser}}
-            {{#if isApproved}}
-                {{host-membership-status membershipsService=userMemberships}}
+<div class="row">
+    <div class=" col-md-10 col-md-offset-1">
+        {{#unless isNew}}
+            {{#if isPending}}
+                {{partial 'host/validation-status'}}
             {{else}}
-                <div class="alert alert-warning alert-dismissable" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{t 'host.membership-status.wasRejected'}}
-                </div>
+                {{#if belongsToCurrentUser}}
+                    {{#if isApproved}}
+                        {{host-membership-status membershipsService=userMemberships}}
+                    {{else}}
+                        <div class="alert alert-warning alert-dismissable" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                            {{t 'host.membership-status.wasRejected'}}
+                        </div>
+                    {{/if}}
+                {{/if}}
             {{/if}}
-        {{/if}}
-    {{/if}}
-{{/unless}}
-<form>
+        {{/unless}}
+    </div>
+</div>
+<form class="col-md-10 col-md-offset-1">
     <div class="row">
         <fieldset class="col-md-6">
             <legend class="h4">{{t 'host.form.generalInformation'}}</legend>
@@ -168,7 +174,7 @@
 
 {{#unless isNew}}
     <hr>
-    <form>
+    <form class="col-md-10 col-md-offset-1">
         <div class="row">
             <div class="col-md-12">
                 <h4>{{t 'host.form.newPhoto'}}</h4>
@@ -186,7 +192,7 @@
     </form>
     {{#if photos}}
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10 col-md-offset-1">
                 <h4>{{t 'host.form.editDeletePhoto'}}</h4>
                 <div class="table table-hover col-sm-12 col-tn-12">
                     {{#each photos itemController="photo"}}

@@ -10,6 +10,7 @@ export default Ember.ObjectController.extend({
     // The second wwoofer must be 18 years old or more
     maxDate: moment().subtract(18, 'year'),
     selectedDate: null,
+    hasOtherWwoofer: false,
 
     actions: {
         saveWwoofer: function () {
@@ -18,6 +19,13 @@ export default Ember.ObjectController.extend({
 
             // Prevent multiple save attempts
             if (this.get('isSaving')) { return; }
+
+            // Erase the other wwoofer info if not checked
+            if (this.get('hasOtherWwoofer') === false) {
+                this.set('firstName2', null);
+                this.set('lastName2', null);
+                this.set('birthDate2', null);
+            }
 
             // Set second wwoofer birth date (if any)
             var hasSecondWoofer = Ember.isPresent(wwoofer.get('firstName2')) && Ember.isPresent(wwoofer.get('lastName2'));

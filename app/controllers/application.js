@@ -13,6 +13,11 @@ export default Ember.Controller.extend(ValidationsMixin, {
     canSeeWwoofersLink: Ember.computed.or('userMemberships.hasNonExpiredHostMembership', 'session.user.isAdmin'),
 
     /**
+     * Indicates whether the current user as at least one profile.
+     */
+    hasWwooferOrHostProfile: Ember.computed.or('session.user.wwoofer.id', 'session.user.host.id'),
+
+    /**
      * Email address of the user to impersonate (admins only).
      */
     impersonatedUserEmail: null,

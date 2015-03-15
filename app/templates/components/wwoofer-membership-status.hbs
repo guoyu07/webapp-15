@@ -1,32 +1,35 @@
 {{#if membershipsService.hasWwoofMemberships}}
     {{#if membershipsService.latestWwoofMembership.isStillValidInAMonth}}
-        <div class="alert alert-success alert-dismissable" role="alert">
+        <div class="alert alert-success alert-dismissable col-md-10 col-md-offset-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-ok-sign"></span>
             {{t 'wwoofer.membership-status.valid'}}
         </div>
     {{else}}
-        <div class="alert alert-warning alert-dismissable" role="alert">
+        <div class="alert alert-warning alert-dismissable alert-with-button  col-md-10 col-md-offset-1" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            <span>
+                {{t 'wwoofer.membership-status.yourWwooferMembership'}}
+                {{#if membershipsService.latestWwoofMembership.isExpired}}
+                    {{t 'wwoofer.membership-status.isExpiredSince'}}
+                {{else}}
+                    {{t 'wwoofer.membership-status.willExpire'}}
+                {{/if}}
+                {{format-date membershipsService.latestWwoofMembership.expireAt}}.
 
-            {{t 'wwoofer.membership-status.yourWwooferMembership'}}
-            {{#if membershipsService.latestWwoofMembership.isExpired}}
-                {{t 'wwoofer.membership-status.isExpiredSince'}}
-            {{else}}
-                {{t 'wwoofer.membership-status.willExpire'}}
-            {{/if}}
-            {{format-date membershipsService.latestWwoofMembership.expireAt}}.
-
-            {{t 'wwoofer.membership-status.keepAccess'}}
-            {{#link-to 'memberships.new' (query-params type='W') class="alert-link"}}{{t 'wwoofer.membership-status.renewMembership'}}{{/link-to}}.
+                {{t 'wwoofer.membership-status.keepAccess'}}
+            </span>
+            {{#link-to 'memberships.new' (query-params type='W') class="btn btn-primary"}}{{t 'wwoofer.membership-status.renewMembership'}}{{/link-to}}.
         </div>
     {{/if}}
 {{else}}
-    <div class="alert alert-info alert-dismissable" role="alert">
+    <div class="alert alert-warning alert-dismissable alert-with-button col-md-10 col-md-offset-1" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <span class="glyphicon glyphicon-info-sign"></span>
-        {{t 'wwoofer.membership-status.profileComplete'}}
-        {{#link-to 'memberships.new' (query-params type='W') class="alert-link"}}{{t 'wwoofer.membership-status.payMembership'}}{{/link-to}}.
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <span>
+            {{t 'wwoofer.membership-status.profileComplete'}}
+        </span>
+        {{#link-to 'memberships.new' (query-params type='W') class="btn btn-primary"}}{{t 'wwoofer.membership-status.payMembership'}}{{/link-to}}
     </div>
 {{/if}}
