@@ -816,6 +816,10 @@ html.swipeshow-grabbed * {
     visibility: visible;
 }
 
+.host-left-col {
+    max-width: 700px;
+}
+
 html {
     font-family: sans-serif;
     -webkit-text-size-adjust: 100%;
