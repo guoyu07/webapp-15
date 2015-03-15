@@ -6,8 +6,7 @@
             {{t 'host.membership-status.valid'}}
         </div>
     {{else}}
-        <div class="alert alert-warning alert-dismissable alert-with-button" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert alert-warning alert-with-button" role="alert">
             <span class="glyphicon glyphicon-warning-sign"></span>
             <span>
                 {{t 'host.membership-status.yourHostProfile'}}
@@ -20,17 +19,20 @@
                 {{/if}}
                 {{t 'host.membership-status.community'}}
             </span>
-            {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="btn btn-primary"}}{{t 'host.membership-status.renewMembership'}}{{/link-to}}.
+            {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="btn btn-primary"}}
+                {{t 'host.membership-status.renewMembership'}}
+            {{/link-to}}
         </div>
     {{/if}}
 {{else}}
-    <div class="alert alert-warning alert-dismissable alert-with-button" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <div class="alert alert-warning alert-with-button" role="alert">
         <span class="glyphicon glyphicon-warning-sign"></span>
         <span>
             {{t 'host.membership-status.wasValidated'}}
             {{t 'host.membership-status.makeVisible'}}
         </span>
-        {{#link-to 'memberships.new' (query-params type='H' itemCode='H') class="btn btn-primary"}}{{t 'host.membership-status.payMembership'}}{{/link-to}}.
+        {{#link-to 'memberships.new' (query-params type='H' itemCode='H') class="btn btn-primary"}}
+            {{t 'host.membership-status.payMembership'}}
+        {{/link-to}}
     </div>
 {{/if}}
