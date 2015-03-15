@@ -1,11 +1,15 @@
 <div class="page-header row">
     <h1 class="col-md-10 col-md-offset-1">{{t 'wwoofer.form.title'}}</h1>
 </div>
-{{#unless isNew}}
-    {{#if belongsToCurrentUser}}
-        {{wwoofer-membership-status membershipsService=userMemberships}}
-    {{/if}}
-{{/unless}}
+<div class="row">
+    <div class=" col-md-10 col-md-offset-1">
+        {{#unless isNew}}
+            {{#if belongsToCurrentUser}}
+                {{wwoofer-membership-status membershipsService=userMemberships}}
+            {{/if}}
+        {{/unless}}
+    </div>
+</div>
 <form class="col-md-10 col-md-offset-1">
     <div class="row">
         <div class="col-md-6">

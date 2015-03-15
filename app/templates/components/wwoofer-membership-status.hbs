@@ -1,12 +1,12 @@
 {{#if membershipsService.hasWwoofMemberships}}
     {{#if membershipsService.latestWwoofMembership.isStillValidInAMonth}}
-        <div class="alert alert-success alert-dismissable col-md-10 col-md-offset-1" role="alert">
+        <div class="alert alert-success alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-ok-sign"></span>
             {{t 'wwoofer.membership-status.valid'}}
         </div>
     {{else}}
-        <div class="alert alert-warning alert-dismissable alert-with-button  col-md-10 col-md-offset-1" role="alert">
+        <div class="alert alert-warning alert-dismissable alert-with-button" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-warning-sign"></span>
             <span>
@@ -24,7 +24,7 @@
         </div>
     {{/if}}
 {{else}}
-    <div class="alert alert-warning alert-dismissable alert-with-button col-md-10 col-md-offset-1" role="alert">
+    <div class="alert alert-warning alert-dismissable alert-with-button" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span class="glyphicon glyphicon-warning-sign"></span>
         <span>
