@@ -20,8 +20,16 @@ export default Ember.Component.extend({
      * Provides the class name to style the component for wwoofer profile
      */
     wooferProfileClass: function () {
-        return this.get('membershipsService.hasNonExpiredWwoofMembership') ?  'glyphicon glyphicon-ok' : 'glyphicon glyphicon-warning-sign';
-    }.property('membershipsService.hasWwoofMemberships'),
+        // Host has no active membership: warning
+        var hasValidMembership = this.get('membershipsService.hasNonExpiredWwoofMembership');
+        var isStillValidInAMonth = this.get('membershipsService.latestWwoofMembership.isStillValidInAMonth');
+        if (!hasValidMembership || !isStillValidInAMonth) {
+            return 'glyphicon glyphicon-warning-sign';
+        }
+
+        // Membership status ok
+        return 'glyphicon glyphicon-ok';
+    }.property('membershipsService.hasWwoofMemberships', 'membershipsService.latestWwoofMembership.isStillValidInAMonth'),
 
     /**
      * Provides the class name to style the component for host profile
@@ -29,10 +37,8 @@ export default Ember.Component.extend({
     hostProfileClass: function () {
         var host = this.get('session.user.host');
 
-        // Return if the Host is not yet requested
-        if (!host) {
-            return;
-        }
+        // Return if the Host has not been requested yet
+        if (!host) { return; }
 
         // Host is not approved: hourglass
         if (host.get('isApproved') === false) {
@@ -40,9 +46,13 @@ export default Ember.Component.extend({
         }
 
         // Host has no active membership: warning
-        if (this.get('membershipsService.hasNonExpiredHostMembership') === false) {
+        var hasValidMembership = this.get('membershipsService.hasNonExpiredHostMembership');
+        var isStillValidInAMonth = this.get('membershipsService.latestHostMembership.isStillValidInAMonth');
+        if (!hasValidMembership || !isStillValidInAMonth) {
             return 'glyphicon glyphicon-warning-sign';
         }
+
+        // Membership status ok
         return 'glyphicon glyphicon-ok';
-    }.property('session.user.host.isApproved', 'membershipsService.hasNonExpiredHostMembership')
+    }.property('session.user.host.isApproved', 'membershipsService.hasNonExpiredHostMembership', 'membershipsService.latestHostMembership.isStillValidInAMonth')
 });
