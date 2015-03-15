@@ -164,7 +164,7 @@
             {{toggle-options values=allActivities selected=activities buttonDisplayName=activitiesDisplayName optionValuePath='id'}}
         </fieldset>
     </div>
-    <div class="row">
+    <div class="row form-group">
         <div class="col-tn-12 float-r-xs">
             {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
             <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">{{t 'literal.save'}}</button>
