@@ -1,4 +1,4 @@
-/**observes
+/**
  * Ember component for create profile modal
  */
 import Ember from 'ember';
@@ -19,11 +19,5 @@ export default Ember.Component.extend({
             $('#createprofileModal').modal('show');
             this.set('hasBeendisplayed', true);
         }
-    }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id'),
-
-    actions : {
-        close: function () {
-            $('#createprofileModal').modal('hide');
-        }
-    }
+    }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id')
 });
