@@ -8,15 +8,16 @@ export default Ember.Component.extend({
 
     displayed: function () {
 
-        if (this.get('session.user.wwoofer.isFulfilled') === false)
+        if (this.get('session.user.wwoofer.isFulfilled') === false) {
             return;
+        }
 
-        if (this.get('session.user.host.isFulfilled') === false)
+        if (this.get('session.user.host.isFulfilled') === false) {
             return;
+        }
 
-        if (this.get('session.user.wwoofer.id') == null && this.get('session.user.host.id') == null && this.get('hasBeendisplayed') === false)
-        {
-            $('#createprofileModal').modal('show');
+        if (this.get('session.user.wwoofer.id') == null && this.get('session.user.host.id') == null && this.get('hasBeendisplayed') === false) {
+            Ember.$('#createprofileModal').modal('show');
             this.set('hasBeendisplayed', true);
         }
     }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id')

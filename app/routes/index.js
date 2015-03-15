@@ -4,7 +4,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    redirect: function (model, transition) {
+    redirect: function () {
         this.transitionTo('hosts');
     }
 });

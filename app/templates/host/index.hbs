@@ -1,115 +1,116 @@
-<div class="page-header">
-    {{#if canEditHost}}
-        {{#link-to 'host.edit' class="btn btn-primary pull-right btn-inline-margin"}}{{t 'host.index.editProfile'}}{{/link-to}}
-    {{/if}}
-    {{#link-to 'hosts' class="btn btn-default pull-right"}}{{t 'literal.back'}}{{/link-to}}
-    <h1>{{farmName}}</h1>
-</div>
+<div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+        {{#if canEditHost}}
+            {{#link-to 'host.edit' class="btn btn-primary pull-right btn-inline-margin"}}{{t 'host.index.editProfile'}}{{/link-to}}
+        {{/if}}
+        {{#link-to 'hosts' class="btn btn-default pull-right"}}{{t 'literal.back'}}{{/link-to}}
+        <h1>{{farmName}}</h1>
+    </div>
 
-{{#if isPending}}
-    {{partial 'host/validation-status'}}
-{{else}}
-    {{#if belongsToCurrentUser}}
-        {{#if isApproved}}
-            {{host-membership-status membershipsService=userMemberships}}
-        {{else}}
-            <div class="alert alert-warning alert-dismissable" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign"></span>
-                {{t 'host.membership-status.wasRejected'}}
-            </div>
+    {{#if isPending}}
+        {{partial 'host/validation-status'}}
+    {{else}}
+        {{#if belongsToCurrentUser}}
+            {{#if isApproved}}
+                {{host-membership-status membershipsService=userMemberships}}
+            {{else}}
+                <div class="alert alert-warning alert-dismissable" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    {{t 'host.membership-status.wasRejected'}}
+                </div>
+            {{/if}}
         {{/if}}
     {{/if}}
-{{/if}}
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="host-gallery swipeshow">
-            <ul class="slides">
-                {{#each photos}}
-                    <li class="slide">
-                        <img {{bind-attr src="completeUrl" title="caption" alt="caption"}} />
-                    </li>
-                {{else}}
-                    <li class="slide">
-                        <img src="wwoof-no-photo.png"/>
-                    </li>
-                {{/each}}
-            </ul>
-        </div>
-
-        <div class="host-info">
-            <div class="map-img">
-                {{google-map latitude=address.latitude longitude=address.longitude}}
-            </div>
-            <div class="info-box">
-                <div class="info-row">
-                    <div class="card-label"><span class="glyphicon glyphicon-home"></span></div>
-                    {{#if canSeeContactInfo}}
-                        {{user.firstName}} {{user.lastName}} /
-                        <span>
-                            {{address.address1}} /
-                            {{#if address.address2}}
-                                {{address.address2}} /
-                            {{/if}}
-                        </span>
-                        <span>
-                            {{address.zipCode}} {{address.city}}
-                        </span>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="host-gallery swipeshow">
+                <ul class="slides">
+                    {{#each photos}}
+                        <li class="slide">
+                            <img {{bind-attr src="completeUrl" title="caption" alt="caption"}} />
+                        </li>
                     {{else}}
-                        {{members-only}}
-                    {{/if}}
-                </div>
-
-                {{#unless noEmail}}
-                    <div class="info-row">
-                        <div class="card-label"><span class="glyphicon glyphicon-envelope"></span></div>
-                        {{#if canSeeContactInfo}}
-                            {{mail-to user.email}}
-                        {{else}}
-                            {{members-only}}
-                        {{/if}}
-                    </div>
-                {{/unless}}
-
-                {{#unless noPhone}}
-                    <div class="info-row">
-                        <div class="card-label"><span class="glyphicon glyphicon-earphone"></span></div>
-                        {{#if canSeeContactInfo}}
-                            {{user.phone}}
-                        {{else}}
-                            {{members-only}}
-                        {{/if}}
-                    </div>
-                {{/unless}}
-
-                <div class="info-row">
-                    <div class="card-label"><span class="glyphicon glyphicon-globe"></span></div>
-                    {{#if canSeeContactInfo}}
-                        <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
-                    {{else}}
-                        {{members-only}}
-                    {{/if}}
-                </div>
-
-                <div class="info-row">
-                    <div class="card-label-wide"><span class="glyphicon glyphicon-plane"></span></div>
-                    {{travelDetails}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <p class="description">{{convert-breaklines fullDescription}}</p>
-        {{#if activities}}
-            <div class="proposed-activities">
-                <h4>{{t 'host.index.activities'}}</h4>
-                <ul>
-                    {{#each activity in displayedActivities}}
-                        <li>{{activity}}</li>
+                        <li class="slide">
+                            <img src="wwoof-no-photo.png"/>
+                        </li>
                     {{/each}}
                 </ul>
             </div>
-        {{/if}}
+
+            <div class="host-info">
+                <div class="map-img">
+                    {{google-map latitude=address.latitude longitude=address.longitude}}
+                </div>
+                <div class="info-box">
+                    <div class="info-row">
+                        <div class="card-label"><span class="glyphicon glyphicon-home"></span></div>
+                        {{#if canSeeContactInfo}}
+                            {{user.firstName}} {{user.lastName}} /
+                            <span>
+                                {{address.address1}} /
+                                {{#if address.address2}}
+                                    {{address.address2}} /
+                                {{/if}}
+                            </span>
+                            <span>
+                                {{address.zipCode}} {{address.city}}
+                            </span>
+                        {{else}}
+                            {{members-only}}
+                        {{/if}}
+                    </div>
+
+                    {{#unless noEmail}}
+                        <div class="info-row">
+                            <div class="card-label"><span class="glyphicon glyphicon-envelope"></span></div>
+                            {{#if canSeeContactInfo}}
+                                {{mail-to user.email}}
+                            {{else}}
+                                {{members-only}}
+                            {{/if}}
+                        </div>
+                    {{/unless}}
+
+                    {{#unless noPhone}}
+                        <div class="info-row">
+                            <div class="card-label"><span class="glyphicon glyphicon-earphone"></span></div>
+                            {{#if canSeeContactInfo}}
+                                {{user.phone}}
+                            {{else}}
+                                {{members-only}}
+                            {{/if}}
+                        </div>
+                    {{/unless}}
+
+                    <div class="info-row">
+                        <div class="card-label"><span class="glyphicon glyphicon-globe"></span></div>
+                        {{#if canSeeContactInfo}}
+                            <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
+                        {{else}}
+                            {{members-only}}
+                        {{/if}}
+                    </div>
+
+                    <div class="info-row">
+                        <div class="card-label-wide"><span class="glyphicon glyphicon-plane"></span></div>
+                        {{travelDetails}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <p class="description">{{convert-breaklines fullDescription}}</p>
+            {{#if activities}}
+                <div class="proposed-activities">
+                    <h4>{{t 'host.index.activities'}}</h4>
+                    <ul>
+                        {{#each activity in displayedActivities}}
+                            <li>{{activity}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/if}}
+        </div>
     </div>
 </div>
-

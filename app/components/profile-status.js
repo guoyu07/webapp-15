@@ -12,7 +12,7 @@ export default Ember.Component.extend({
      * Provide the class name to style the component based on the type
      */
     profileStatusClass : function () {
-        return this.get('type') == 'host' ? this.get('hostProfileClass') : this.get('wooferProfileClass');
+        return this.get('type') === 'host' ? this.get('hostProfileClass') : this.get('wooferProfileClass');
     }.property('type', 'wooferProfileClass', 'hostProfileClass'),
 
     /**
@@ -29,13 +29,15 @@ export default Ember.Component.extend({
         var host = this.get('session.user.host');
 
         // Host is not approved: hourglass
-        if (host.get('isApproved') === false)
+        if (host.get('isApproved') === false) {
             return'glyphicon glyphicon-hourglass';
+        }
 
         // Host has no active membership: warning
-        if (this.get('userMemberships.hasNonExpiredHostMembership') === false)
+        if (this.get('userMemberships.hasNonExpiredHostMembership') === false) {
             return 'glyphicon glyphicon-warning-sign';
 
+        }
         return 'glyphicon glyphicon-ok';
     }.property('session.user.host.isApproved', 'userMemberships.hasNonExpiredHostMembership')
 });
