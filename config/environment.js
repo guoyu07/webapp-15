@@ -22,8 +22,8 @@ module.exports = function (environment) {
         },
 
         map: {
-            defaultLat: 46.45,
-            defaultLon: 2.6,
+            defaultLat: 46.78,
+            defaultLon: 1.95,
             defaultZoom: 6
         },
 
