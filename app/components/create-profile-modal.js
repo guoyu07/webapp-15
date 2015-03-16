@@ -11,6 +11,10 @@ export default Ember.Component.extend({
      */
     displayModal: function () {
 
+        if (!this.get('session.isAuthenticated')) {
+            return;
+        }
+
         if (this.get('session.user.wwoofer.isFulfilled') === false) {
             return;
         }
@@ -23,5 +27,5 @@ export default Ember.Component.extend({
             Ember.$('#createProfileModal').modal('show');
             this.set('wasDisplayed', true);
         }
-    }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id')
+    }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id', 'session.isAuthenticated')
 });
