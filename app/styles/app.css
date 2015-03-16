@@ -3052,6 +3052,14 @@ legend {
     }
 }
 
+
+@media screen and (max-width: 992px) {
+    .search-box .form {
+        margin-right: 15px;
+    }
+
+}
+
 .search-box {
     margin-left: 5px;
 }
@@ -3534,6 +3542,13 @@ label.checkbox.checkbox-inline {
 
 div#rightRow {
     padding-right: 0px;
+}
+
+
+@media screen and (max-width: 992px) {
+    div#rightRow {
+        padding-right: 15px;
+    }
 }
 
 div.leaflet-container {
