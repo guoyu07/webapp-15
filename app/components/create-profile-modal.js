@@ -15,11 +15,11 @@ export default Ember.Component.extend({
             return;
         }
 
-        if (this.get('session.user.wwoofer.isFulfilled') === false) {
+        if (!this.get('session.user.wwoofer.isFulfilled')) {
             return;
         }
 
-        if (this.get('session.user.host.isFulfilled') === false) {
+        if (!this.get('session.user.host.isFulfilled')) {
             return;
         }
 
@@ -27,5 +27,5 @@ export default Ember.Component.extend({
             Ember.$('#createProfileModal').modal('show');
             this.set('wasDisplayed', true);
         }
-    }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id', 'session.isAuthenticated')
+    }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id')
 });
