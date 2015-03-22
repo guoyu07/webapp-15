@@ -38,11 +38,18 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     actions: {
         sessionAuthenticationSucceeded: function () {
             this.refresh();
+
+            // Configure trackjs
+            var userId = this.get('session.userId');
+            if (userId) {
+                this.trackjs.configure({
+                    userId: userId.toString()
+                });
+            }
         },
         sessionInvalidationSucceeded: function () {
             // Redirect user (refresh the page to reset app state)
-            var redirectUrl = (document.location.hostname === "localhost") ? config.baseURL : "http://wwoof.fr";
-            window.location.replace(redirectUrl);
+            window.location.replace(config.urlAfterLogout);
         },
         sessionInvalidationFailed: function () {
             alertify.error(Ember.I18n.t('notify.submissionError'));

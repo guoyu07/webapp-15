@@ -70,11 +70,8 @@ export default Ember.ObjectController.extend({
                 });
 
                 // Handle errors
-                promise.catch(function (error) {
-                    if (error && !error.message) {
-                        error.message = "Cannot create wwoofer.";
-                    }
-                    Ember.onerror(error);
+                promise.catch(function () {
+                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));

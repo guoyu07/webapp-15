@@ -57,6 +57,10 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
         var self = this;
         dataRequest.done(function (data) {
 
+            if (!self.markers || !self.geoJsonLayer) {
+                return;
+            }
+
             // Clean previous features
             self.markers.removeLayer(self.geoJsonLayer);
             self.geoJsonLayer.clearLayers();

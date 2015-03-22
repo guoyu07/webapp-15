@@ -9,6 +9,7 @@ module.exports = function (environment) {
         SERVER_BASE_URL: '',
         apiHost: '',
         apiNamespace: 'api',
+        urlAfterLogout: '/',
         EmberENV: {
             FEATURES: {
                 I18N_TRANSLATE_HELPER_SPAN: false
@@ -27,16 +28,25 @@ module.exports = function (environment) {
             defaultZoom: 6
         },
 
+        trackJs: {
+            addon: {
+                url: '//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js'
+            },
+            config: {
+                token: '48bf177fb24447f19be94f292931ff05'
+            }
+        },
+
         // Configure content security policy headers
         contentSecurityPolicyHeader: 'Content-Security-Policy',
         contentSecurityPolicy: {
             'default-src': "'none'",
             'font-src': "'self' fonts.gstatic.com",
-            'connect-src': "'self'",
-            'img-src': "'self' data: app.wwoof.fr maps.googleapis.com www.google-analytics.com api.honeybadger.io *.mqcdn.com",
+            'connect-src': "'self' capture.trackjs.com",
+            'img-src': "'self' data: app.wwoof.fr maps.googleapis.com www.google-analytics.com api.honeybadger.io *.mqcdn.com usage.trackjs.com",
             'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
             'media-src': "'self'",
-            'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com"
+            'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com *.cloudfront.net"
         }
     };
 
@@ -44,7 +54,8 @@ module.exports = function (environment) {
     ENV['simple-auth'] = {
         session: 'session:main',
         store: 'simple-auth-session-store:cookie',
-        routeAfterAuthentication: 'index'
+        routeAfterAuthentication: 'index',
+        authenticationRoute: 'login'
     };
 
     if (environment === 'development') {
@@ -55,6 +66,7 @@ module.exports = function (environment) {
         // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
         ENV.SERVER_BASE_URL = 'http://localhost:3333';
+        ENV.trackJs.config.enabled = false;
     }
 
     if (environment === 'test') {
@@ -67,9 +79,11 @@ module.exports = function (environment) {
         ENV.APP.LOG_VIEW_LOOKUPS = false;
 
         ENV.APP.rootElement = '#ember-testing';
+        ENV.trackJs.config.enabled = false;
     }
 
     if (environment === 'production') {
+        ENV.urlAfterLogout = 'http://wwoof.fr';
         ENV.googleAnalytics = {
             webPropertyId: 'UA-19885009-2'
         };
