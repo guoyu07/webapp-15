@@ -144,7 +144,7 @@
             {{#if session.user.isAdmin}}
                 <div {{bind-attr class=":form-group fieldErrors.note.length:has-error"}}>
                     <label for="note" class="control-label">{{t 'host.form.note.label'}}</label>
-                    {{textarea id="note" name="note" value=note class="form-control" placeholderTranslation='host.form.note.placeholder' rows="4"}}
+                    {{textarea id="note" name="note" value=note class="form-control" rows="4"}}
                     {{error-display fieldErrors.note}}
                 </div>
             {{/if}}
