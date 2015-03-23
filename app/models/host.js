@@ -64,6 +64,9 @@ export default DS.Model.extend(ValidationsMixin, {
         },
         phone: {
             presence: true
+        },
+        note: {
+            length: { maximum: 255 }
         }
     }
 });

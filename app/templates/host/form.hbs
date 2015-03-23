@@ -137,10 +137,17 @@
                 {{error-display fieldErrors.shortDescription}}
             </div>
             <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
-                <label for="entry" class="control-label">{{t 'host.form.fullDescription.label'}}</label>
+                <label for="fullDescription" class="control-label">{{t 'host.form.fullDescription.label'}}</label>
                 {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholderTranslation='host.form.fullDescription.placeholder' rows="8"}}
                 {{error-display fieldErrors.fullDescription}}
             </div>
+            {{#if session.user.isAdmin}}
+                <div {{bind-attr class=":form-group fieldErrors.note.length:has-error"}}>
+                    <label for="note" class="control-label">{{t 'host.form.note.label'}}</label>
+                    {{textarea id="note" name="note" value=note class="form-control" placeholderTranslation='host.form.note.placeholder' rows="4"}}
+                    {{error-display fieldErrors.note}}
+                </div>
+            {{/if}}
         </fieldset>
     </div>
     <div class="row">
