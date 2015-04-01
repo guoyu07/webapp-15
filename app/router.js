@@ -37,6 +37,7 @@ Router.map(function () {
         this.route('complete');
         this.route('cancel');
     });
+    this.route('404', { path: "*path"});
 });
 
 export default Router;
