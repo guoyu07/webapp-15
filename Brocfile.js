@@ -8,7 +8,6 @@ var app = new EmberApp();
 
 // Bootstrap
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
-app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 var bootstrapCssMap = pickFiles('bower_components/bootstrap/dist/css', {
     srcDir: '/',
     files: ['bootstrap.css.map'],
