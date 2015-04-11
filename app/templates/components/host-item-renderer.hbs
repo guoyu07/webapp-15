@@ -1,5 +1,5 @@
 <div class="farm list-group-item col-md-12">
-    <div class="col-md-4 col-sm-4 col-host-thumb">
+    <div class="pull-left col-host-thumb">
         <div class="host-thumb">
             {{#if photoId}}
                 {{host-thumb url=photo.completeUrl}}
@@ -16,7 +16,7 @@
             </p>
         </div>
     </div>
-    <div class="col-md-2 col-sm-2 col-xs-2 col-tn-10 col-tn-push-1 farm-item-btn">
+    <div class="pull-right farm-item-btn">
         {{#link-to "host" hostId title=farmName }}
             <button class="btn btn-default btn-block-tn">{{t 'literal.view'}}</button>
         {{/link-to}}
