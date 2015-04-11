@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6 col-sm-12">
-        <div class="search-box row">
+        <div class="search-box">
             <div class="form" role="form">
                 <h4>{{t 'hosts.index.find'}}</h4>
                 <div class="form-group">
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div id="resultList" class="row hidden-sm hidden-xs">
+        <div id="resultList" class="hidden-sm hidden-xs">
             {{#if isLoading}}
                 {{partial 'loading'}}
             {{else}}
