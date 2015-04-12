@@ -26,26 +26,28 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     model: function () {
         // Load current user memberships
         if (this.get('session.isAuthenticated')) {
-            this.reloadMemberships();
+            var self = this;
+            this.get('session.user').then(function (user) {
+                self.reloadMemberships(user.get('id'));
+                self.setTrackJsUser(user.get('id'));
+            });
         }
     },
-    reloadMemberships: function () {
-        var self = this;
-        return this.get('session.user').then(function (user) {
-            self.userMemberships.loadMemberships(user.get('id'));
-        });
+    reloadMemberships: function (userId) {
+        Ember.assert('User id required to reload memberships.', userId);
+        this.userMemberships.loadMemberships(userId);
+    },
+    setTrackJsUser: function (userId) {
+        Ember.assert('User id required to set trackJs user.', userId);
+        if (userId && trackJs) {
+            trackJs.configure({
+                userId: userId.toString()
+            });
+        }
     },
     actions: {
         sessionAuthenticationSucceeded: function () {
             this.refresh();
-
-            // Configure trackjs
-            var userId = this.get('session.userId');
-            if (userId) {
-                this.trackjs.configure({
-                    userId: userId.toString()
-                });
-            }
         },
         sessionInvalidationSucceeded: function () {
             // Redirect user (refresh the page to reset app state)
@@ -58,22 +60,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
             this.refresh();
         },
         error: function (err) {
-            // Redirect to login if we get a 401 from the API
-            if (err && err.status === 401) {
-
-                // Notify user
-                alertify.error(Ember.I18n.t('notify.unauthorizedError'));
-
-                // Invalidate session or redirect
-                if (this.get('session.isAuthenticated')) {
-                    this.get('session').invalidate();
-                } else {
-                    window.location.replace("/login");
-                }
-            } else {
-                Ember.onerror(err);
-                return true;
-            }
+            this.errorHandler.handleError(err);
         }
     }
 });

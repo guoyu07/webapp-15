@@ -56,6 +56,8 @@ app.import('bower_components/ember-leaflet/dist/ember-leaflet.js');
 // Leaflet providers
 app.import("bower_components/leaflet-providers/leaflet-providers.js");
 
+// TrackJs
+app.import("bower_components/trackjs/tracker.js");
 
 module.exports = mergeTrees([
     alertify,

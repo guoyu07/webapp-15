@@ -6,7 +6,7 @@
         "WebappENV": true,
         "moment": true,
         "alertify": true,
-        "Honeybadger": true,
+        "trackJs": false,
         "L": true,
         "EmberLeaflet": true
     },
