@@ -49,8 +49,6 @@ export default Ember.ArrayController.extend({
                 } else {
                     alertify.log(Ember.I18n.t('notify.noMoreWwoofers'));
                 }
-            }).catch(function () {
-                alertify.error(Ember.I18n.t('notify.submissionError'));
             }).finally(function () {
                 self.set('isLoadingMore', false);
             });

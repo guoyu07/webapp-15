@@ -60,20 +60,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
                         self.send('userImpersonated');
                     });
 
-                    // Handle failure
-                    auth.catch(function () {
-                        alertify.error(Ember.I18n.t('notify.submissionError'));
-                    });
-
                     auth.finally(function () {
                         self.set('isLoading', false);
                         Ember.$('#impersonationModal').modal('hide');
                     });
-                });
-
-                // Handle failure
-                userPromise.catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
                 self.set('isLoading', false);

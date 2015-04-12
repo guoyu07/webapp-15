@@ -53,11 +53,11 @@ export default Ember.ObjectController.extend({
                         alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
                     });
 
-                }).catch(function (error) {
-                    if (error && error.status === 409) {
+                }).catch(function (err) {
+                    if (err && err.status === 409) {
                         alertify.error(Ember.I18n.t('notify.emailAddressInUse'));
                     } else {
-                        alertify.error(Ember.I18n.t('notify.submissionError'));
+                        throw err;
                     }
                 });
             }).catch(function () {

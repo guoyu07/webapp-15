@@ -63,15 +63,10 @@ export default Ember.ObjectController.extend({
                 });
 
                 // Inform and redirect user to payment page
-                promise = promise.then(function () {
+                promise.then(function () {
                     alertify.success(Ember.I18n.t('notify.wwooferCreated'));
                     var itemCode = wwoofer.firstName2 ? 'WO1': 'WO2';
                     self.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
-                });
-
-                // Handle errors
-                promise.catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));

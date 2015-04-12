@@ -53,14 +53,9 @@ export default Ember.ObjectController.extend({
                 });
 
                 // Inform and redirect user to the edit page
-                promise = promise.then(function () {
+                promise.then(function () {
                     alertify.success(Ember.I18n.t('notify.hostCreated'));
                     self.transitionToRoute('host.edit', host);
-                });
-
-                // Handle errors
-                promise.catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
