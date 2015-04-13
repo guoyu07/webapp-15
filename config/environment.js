@@ -32,9 +32,9 @@ module.exports = function (environment) {
         contentSecurityPolicyHeader: 'Content-Security-Policy',
         contentSecurityPolicy: {
             'default-src': "'none'",
-            'font-src': "'self' fonts.gstatic.com d50ylagdb72pm.cloudfront.net",
+            'font-src': "'self' fonts.gstatic.com",
             'connect-src': "'self' capture.trackjs.com",
-            'img-src': "'self' data: app.wwoof.fr maps.googleapis.com www.google-analytics.com api.honeybadger.io *.mqcdn.com usage.trackjs.com",
+            'img-src': "'self' data: app.wwoof.fr maps.googleapis.com www.google-analytics.com d50ylagdb72pm.cloudfront.net *.mqcdn.com usage.trackjs.com",
             'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
             'media-src': "'self'",
             'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com *.cloudfront.net"
