@@ -4,7 +4,11 @@ var mergeTrees = require('broccoli-merge-trees');
 var pickFiles = require('broccoli-static-compiler');
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+    fingerprint: {
+        prepend: 'https://d50ylagdb72pm.cloudfront.net/'
+    }
+});
 
 // Bootstrap
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
