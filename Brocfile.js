@@ -21,7 +21,7 @@ var bootstrapCssMap = pickFiles('bower_components/bootstrap/dist/css', {
 // Put the bootstrap fonts in the place where the bootstrap css expects to find them
 var bootstrapFonts = pickFiles('bower_components/bootstrap/fonts', {
     srcDir: '/',
-    destDir: '/fonts'
+    destDir: '/assets/fonts'
 });
 
 // Moment
