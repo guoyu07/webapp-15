@@ -4,6 +4,7 @@
 import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
+import request from 'ic-ajax';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
@@ -31,21 +32,26 @@ export default Ember.Controller.extend(ValidationsMixin, {
                     url = [ adapter.get('host'), adapter.get('namespace'), 'users/reset-password' ].join('/');
 
                 // Send email
-                Ember.$.ajax({
+                request({
                     type: 'POST',
                     url: url,
                     data: {
                         email: self.get('emailAddress')
                     }
-                }).done(function () {
+                }).then(function () {
                     // Notify user
                     alertify.alert(Ember.I18n.t('notify.temporaryPassword'));
 
                     // Go to login page
                     self.transitionToRoute('login');
-                }).fail(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
-                }).always(function () {
+                }).catch(function (err) {
+                    err = err.jqXHR || err;
+                    if (err.status === 404) {
+                        alertify.error(Ember.I18n.t('notify.userNotFound'));
+                    } else {
+                        throw err;
+                    }
+                }).finally(function () {
                     self.set('isLoading', false);
                 });
             }).catch(function () {

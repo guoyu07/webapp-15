@@ -25,35 +25,48 @@ export default Ember.Controller.extend(ValidationsMixin, {
     actions: {
         impersonateUser: function () {
 
+            var impersonatedUserEmail = this.get('impersonatedUserEmail');
+
             var self = this;
             this.validate().then(function() {
 
                 // Set controller in loading state
                 self.set('isLoading', true);
 
-                // Authenticate user
-                var auth = self.get('session').authenticate('authenticator:impersonation', {
-                    impersonatedUserEmail: self.get('impersonatedUserEmail')
-                });
+                // Find the user to impersonate
+                var userPromise = self.store.find('user', { email: impersonatedUserEmail });
 
                 // Handle success
-                auth.then(function () {
-                    alertify.success(Ember.I18n.t('notify.userImpersonated', { email: self.get('impersonatedUserEmail') }));
+                userPromise.then(function (result) {
 
-                    // Refresh the route
-                    self.send('userImpersonated');
-                });
+                    // Make sure the user could be found
+                    var users = result.get('content');
+                    if (!Ember.isArray(users) || Ember.isEmpty(users)) {
+                        self.set('isLoading', false);
+                        alertify.error(Ember.I18n.t('notify.userNotFound'));
+                        return;
+                    }
 
-                // Handle failure
-                auth.catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
-                });
+                    // Authenticate user
+                    var auth = self.get('session').authenticate('authenticator:impersonation', {
+                        impersonatedUserEmail: impersonatedUserEmail
+                    });
 
-                auth.finally(function () {
-                    self.set('isLoading', false);
-                    Ember.$('#impersonationModal').modal('hide');
+                    // Handle success
+                    auth.then(function () {
+                        alertify.success(Ember.I18n.t('notify.userImpersonated', { email: impersonatedUserEmail }));
+
+                        // Refresh the route
+                        self.send('userImpersonated');
+                    });
+
+                    auth.finally(function () {
+                        self.set('isLoading', false);
+                        Ember.$('#impersonationModal').modal('hide');
+                    });
                 });
             }).catch(function () {
+                self.set('isLoading', false);
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
         }

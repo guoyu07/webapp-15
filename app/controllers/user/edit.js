@@ -21,8 +21,6 @@ export default Ember.ObjectController.extend({
                 user.save().then(function () {
                     alertify.success(Ember.I18n.t('notify.informationUpdated'));
                     self.transitionToRoute('index');
-                }).catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));

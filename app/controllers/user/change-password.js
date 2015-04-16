@@ -3,6 +3,7 @@
  */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
+import request from 'ic-ajax';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
@@ -36,18 +37,19 @@ export default Ember.Controller.extend(ValidationsMixin, {
                     url = [ adapter.get('host'), adapter.get('namespace'), 'users', currentUserId, 'change-password' ].join('/');
 
                 // Update password
-                Ember.$.ajax({
+                request({
                     type: 'POST',
                     url: url,
                     data: {
                         newPassword: self.get('password')
                     }
-                }).done(function () {
+                }).then(function () {
                     alertify.success(Ember.I18n.t('notify.informationUpdated'));
                     self.transitionToRoute('index');
-                }).fail(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
-                }).always(function () {
+                }).catch(function (err) {
+                    err = err.jqXHR || err;
+                    throw err;
+                }).finally(function () {
                     self.set('isLoading', false);
                 });
             }).catch(function () {

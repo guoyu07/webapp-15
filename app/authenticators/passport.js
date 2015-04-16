@@ -38,7 +38,7 @@ export default BaseAuthenticator.extend({
 
             // Handle failure
             post.fail(function (err) {
-               reject(err);
+                reject(err);
             });
         });
     },

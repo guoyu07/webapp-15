@@ -26,8 +26,6 @@ export default Ember.ObjectController.extend({
                     // $BUG: for some reason, the host needs to be reloaded, otherwise its photo list gets nuked
                     photo.get('host').reload();
                     alertify.success(Ember.I18n.t('notify.informationUpdated'));
-                }).catch(function () {
-                    alertify.error(Ember.I18n.t('notify.submissionError'));
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
@@ -40,11 +38,11 @@ export default Ember.ObjectController.extend({
 
             photo.destroyRecord().then(function () {
                 alertify.success(Ember.I18n.t('notify.photoDeleted'));
-            }).catch(function () {
+            }).catch(function (err) {
                 // BUG: for some reason, the host must be reloaded in order for the photo to stay in the list
                 photo.rollback();
                 host.reload();
-                alertify.error(Ember.I18n.t('notify.submissionError'));
+                throw err;
             });
         }
     }

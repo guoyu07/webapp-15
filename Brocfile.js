@@ -4,7 +4,11 @@ var mergeTrees = require('broccoli-merge-trees');
 var pickFiles = require('broccoli-static-compiler');
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+    fingerprint: {
+        prepend: 'https://d50ylagdb72pm.cloudfront.net/'
+    }
+});
 
 // Bootstrap
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
@@ -17,7 +21,7 @@ var bootstrapCssMap = pickFiles('bower_components/bootstrap/dist/css', {
 // Put the bootstrap fonts in the place where the bootstrap css expects to find them
 var bootstrapFonts = pickFiles('bower_components/bootstrap/fonts', {
     srcDir: '/',
-    destDir: '/fonts'
+    destDir: '/assets/fonts'
 });
 
 // Moment
@@ -56,6 +60,8 @@ app.import('bower_components/ember-leaflet/dist/ember-leaflet.js');
 // Leaflet providers
 app.import("bower_components/leaflet-providers/leaflet-providers.js");
 
+// TrackJs
+app.import("bower_components/trackjs/tracker.js");
 
 module.exports = mergeTrees([
     alertify,
