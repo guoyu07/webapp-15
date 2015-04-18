@@ -14,7 +14,6 @@
     "ember-qunit-notifications": "0.0.7",
     "qunit": "~1.17.1",
     "bootstrap": "~3.3.2",
-    "swipeshow": "~0.10.5",
     "moment": "~2.8.0",
     "jquery-file-upload": "~9.5.8",
     "alertify.js": "~0.3.11",

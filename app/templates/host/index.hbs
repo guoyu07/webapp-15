@@ -29,22 +29,18 @@
     {{/if}}
 
     <div class="row">
-        <div class="col-fixed-host-index">
-            <div class="host-gallery swipeshow">
-                <ul class="slides">
-                    {{#each photos}}
-                        <li class="slide">
-                            <img {{bind-attr src="completeUrl" title="caption" alt="caption"}} />
-                        </li>
-                    {{else}}
-                        <li class="slide">
-                            <img src="assets/images/wwoof-no-photo.png"/>
-                        </li>
-                    {{/each}}
-                </ul>
-            </div>
+        <div class="col-xs-12 col-md-6">
+            {{#if photos}}
+                <div class="host-photos-carousel">
+                    {{photo-carousel photos=photos}}
+                </div>
+            {{else}}
+                <li class="slide">
+                    <img src="assets/images/wwoof-no-photo.png"/>
+                </li>
+            {{/if}}
 
-            <div class="host-info">
+            <div>
                 <div class="map-img">
                     {{google-map latitude=address.latitude longitude=address.longitude}}
                 </div>
@@ -105,7 +101,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-offset-host-index col-md-12">
+        <div class="col-md-12">
             <p class="description">{{convert-breaklines fullDescription}}</p>
             {{#if activities}}
                 <div class="proposed-activities">

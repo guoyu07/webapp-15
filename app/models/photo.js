@@ -20,6 +20,11 @@ export default DS.Model.extend(ValidationsMixin, {
         return this.get('fileName') ? '//app.wwoof.fr/public/host_photos/' + encodeURIComponent(this.get('fileName')) : '';
     }.property('fileName'),
 
+    // TODO: remove this after bind-attr are gone (=> htmlbars)
+    asBackground: function () {
+        return 'background:url('+ this.get('completeUrl') +') center center; background-size:cover;';
+    }.property('completeUrl'),
+
     // Validations
     validations: {
         caption: {
