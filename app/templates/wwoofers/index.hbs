@@ -44,14 +44,14 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>{{t 'wwoofers.index.firstName'}}</th>
                                     <th>{{t 'wwoofers.index.lastName'}}</th>
                                     <th>{{t 'literal.email'}}</th>
-                                    <th>{{t 'wwoofers.index.city'}}</th>
-                                    <th>{{t 'wwoofers.index.country'}}</th>
+                                    <th class="hidden-xs hidden-sm">{{t 'wwoofers.index.city'}}</th>
+                                    <th class="hidden-xs hidden-sm">{{t 'wwoofers.index.country'}}</th>
                                     <th>{{t 'wwoofers.index.actions'}}</th>
                                 </tr>
                             </thead>
@@ -61,8 +61,8 @@
                                     <td>{{user.firstName}}</td>
                                     <td>{{user.lastName}}</td>
                                     <td>{{user.email}}</td>
-                                    <td>{{address.city}}</td>
-                                    <td>{{address.country.name}}</td>
+                                    <td class="hidden-xs hidden-sm">{{address.city}}</td>
+                                    <td class="hidden-xs hidden-sm">{{address.country.name}}</td>
                                     <td>
                                         {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}}
                                         {{#if session.user.isAdmin}}
