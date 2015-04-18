@@ -8,6 +8,11 @@ export default Ember.Component.extend({
     classNames: ['carousel', 'slide'],
     attributeBindings: ['dataRide:data-ride'],
     dataRide: 'carousel',
+
+    anchorId: function () {
+        return '#' + this.get('elementId');
+    }.property('elementId'),
+
     didInsertElement: function () {
 
         // Set active class on first photo
