@@ -20,8 +20,12 @@ export default Ember.Component.extend({
         var url = '//maps.googleapis.com/maps/api/staticmap?' +
             'center=' + latitude + ','+ longitude +
             '&zoom=6' +
-            '&size=400x300' +
+            '&size=800x300' +
             '&markers=color:red|' + latitude + ',' + longitude;
         return encodeURI(url);
-    }.property('latitude', 'longitude')
+    }.property('latitude', 'longitude'),
+
+    asBackground: function () {
+        return 'background:url(' + this.get('mapUrl') + ') center center; background-size:cover';
+    }.property('mapUrl')
 });

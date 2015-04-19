@@ -28,7 +28,7 @@ export default Ember.View.extend({
             }
 
             if (Ember.$("#resultList")) {
-                Ember.$("#resultList").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - Ember.$("div.search-box").height() - 20);
+                Ember.$("#resultList").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - Ember.$("div.search-box").height() -60);
             }
         }
     }

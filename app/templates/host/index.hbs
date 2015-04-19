@@ -1,4 +1,4 @@
-<div class="col-md-10 col-md-offset-1">
+<div class="col-xs-12">
     <div class="page-header">
         {{#if canEditHost}}
             {{#link-to 'host.edit' class="btn btn-primary pull-right btn-inline-margin"}}{{t 'host.index.editProfile'}}{{/link-to}}
@@ -29,15 +29,11 @@
     {{/if}}
 
     <div class="row">
-        <div class="col-xs-12 col-md-6">
-            <div class="host-photos-carousel">
-                {{photo-carousel photos=photos}}
-            </div>
+        <div class="col-lg-8 host-photos-carousel">
+            {{photo-carousel photos=photos}}
         </div>
-        <div class="col-xs-12 col-md-6">
-            <div class="pull-right">
+        <div class="col-lg-4 hidden-xs hidden-sm hidden-md">
             {{google-map latitude=address.latitude longitude=address.longitude}}
-            </div>
         </div>
     </div>
     <hr>

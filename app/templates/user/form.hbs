@@ -1,4 +1,4 @@
-<div class="col-md-10 col-md-offset-1">
+<div class="col-lg-8 col-lg-offset-2">
     <div class="page-header">
         <h1>
             {{#if isNew}}
@@ -87,7 +87,7 @@
             </div>
         {{/if}}
         <div class="row">
-            <div class="col-tn-12 float-r-xs">
+            <div class="col-lg-6 pull-right">
                 {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
                 <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">
                     {{#if isNew}}
