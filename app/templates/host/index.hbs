@@ -30,15 +30,9 @@
 
     <div class="row">
         <div class="col-xs-12 col-md-6">
-            {{#if photos}}
-                <div class="host-photos-carousel">
-                    {{photo-carousel photos=photos}}
-                </div>
-            {{else}}
-                <li class="slide">
-                    <img src="assets/images/wwoof-no-photo.png"/>
-                </li>
-            {{/if}}
+            <div class="host-photos-carousel">
+                {{photo-carousel photos=photos}}
+            </div>
         </div>
         <div class="col-xs-12 col-md-6">
             <div class="pull-right">

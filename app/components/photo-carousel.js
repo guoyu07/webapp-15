@@ -13,6 +13,23 @@ export default Ember.Component.extend({
         return '#' + this.get('elementId');
     }.property('elementId'),
 
+    /**
+     * Returns the photo to display.
+     * If no photo were provided, return the default wwoof picture.
+     */
+    displayedPhotos: function () {
+        var photos = this.get('photos');
+        if (Ember.isEmpty(photos)) {
+            photos = [
+                {
+                    asBackground: 'background:url(assets/images/wwoof-no-photo.png) center center; background-size:cover;',
+                    caption: 'No photo for this host yet'
+                }
+            ];
+        }
+        return photos;
+    }.property('photos'),
+
     didInsertElement: function () {
 
         // Set active class on first photo
