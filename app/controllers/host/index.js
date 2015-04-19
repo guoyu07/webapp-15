@@ -16,12 +16,6 @@ export default Ember.ObjectController.extend({
     canSeeContactInfo: Ember.computed.readOnly('userMemberships.hasNonExpiredMembership'),
 
     /**
-     * Indicates whether the current user can edit the host.
-     * The user must either be the owner of the host profile or be an admin.
-     */
-    canEditHost: Ember.computed.or('belongsToCurrentUser', 'session.user.isAdmin'),
-
-    /**
      * Indicates whether the notes about the host should be displayed.
      * Only admin can see host notes.
      */

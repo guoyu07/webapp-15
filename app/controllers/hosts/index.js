@@ -17,6 +17,19 @@ export default Ember.ArrayController.extend({
     // Whether the controller is in loading state
     isLoading: false,
     isLoadingMore: false,
+    activeTab: 'results',
+
+    /**
+     * Indicates whether the map should be showed.
+     * The map is always visible unless the active tabs is 'filters' and the list is hidden (small devices),
+     */
+    showMap: function () {
+        var showMap = true;
+        if (Ember.$('#resultList').is(':hidden') && this.get('activeTab') === 'filters') {
+            showMap = false;
+        }
+        return showMap;
+    }.property('activeTab'),
 
     // Search filters
     searchTerm: null,
@@ -94,9 +107,9 @@ export default Ember.ArrayController.extend({
     }.property('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden'),
 
     /**
-     * Is the "Load more" button should be disabled.
+     * Indicates whether we can load more hosts.
      */
-    hideMoreButton :  function () {
+    cannotLoadMore: function () {
         return this.get('isLoadingMore') || this.get('_showedFeatures.length') === this.get('visibleFeatures.length');
     }.property('isLoadingMore', '_showedFeatures.length'),
 
@@ -161,6 +174,14 @@ export default Ember.ArrayController.extend({
         updateHosts: function () {
             this.set('isLoading', true);
             this.get('hostLayer').updateFeatures(this.get('parameters'));
+        },
+
+        /**
+         * Updates the active tab.
+         * @param {String} tab
+         */
+        updateTab: function (tab) {
+            this.set('activeTab', tab);
         },
 
         /**

@@ -168,7 +168,9 @@
         </fieldset>
         <fieldset class="col-md-6">
             <legend class="h4">{{t 'host.form.activities'}}</legend>
-            {{toggle-options values=allActivities selected=activities buttonDisplayName=activitiesDisplayName optionValuePath='id'}}
+            <div class="form-group toggle-options-cols mts">
+                {{toggle-options values=allActivities selected=activities buttonDisplayName=activitiesDisplayName optionValuePath='id'}}
+            </div>
         </fieldset>
     </div>
     <div class="row form-group">
