@@ -41,60 +41,73 @@
         </div>
     </div>
     <hr>
-    <div class="row">
+    <div class="row row-general-info">
         <div class="col-md-3">
-            <h4>Contact Information</h4>
+            <h4>General Information</h4>
         </div>
         <div class="col-md-4">
-            <span class="glyphicon glyphicon-envelope"></span>
-            {{#unless noEmail}}
-                {{#if canSeeContactInfo}}
-                    {{mail-to user.email}}
-                {{else}}
-                    {{members-only}}
-                {{/if}}
-            {{/unless}}
-            <br>
-            <span class="glyphicon glyphicon-earphone"></span>
-            {{#unless noPhone}}
-                {{#if canSeeContactInfo}}
-                    {{user.phone}}
-                {{else}}
-                    {{members-only}}
-                {{/if}}
-            {{/unless}}
-            <br>
-            <span class="glyphicon glyphicon-plane"></span>
-            {{travelDetails}}
-            <br>
-            <span class="glyphicon glyphicon-globe"></span>
-            {{#if canSeeContactInfo}}
-                {{#if webSite}}
-                    <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
-                {{else}}
-                    No website provided
-                {{/if}}
-            {{else}}
-                {{members-only}}
-            {{/if}}
-        </div>
-        <div class="col-md-4">
-            <span class="glyphicon glyphicon-home"></span>
-            {{#if canSeeContactInfo}}
-                {{user.firstName}} {{user.lastName}}<br>
-                <span>
-                    {{address.address1}}<br>
-                    {{#if address.address2}}
-                        {{address.address2}}
-                        <br>
+            <p>
+                <span class="glyphicon glyphicon-envelope mrx"></span>
+                {{#unless noEmail}}
+                    {{#if canSeeContactInfo}}
+                        {{mail-to user.email}}
+                    {{else}}
+                        {{members-only}}
                     {{/if}}
-                </span>
-                <span>
-                    {{address.zipCode}} {{address.city}}
-                </span>
-            {{else}}
-                {{members-only}}
-            {{/if}}
+                {{/unless}}
+            </p>
+            <p>
+                <span class="glyphicon glyphicon-earphone mrx"></span>
+                {{#unless noPhone}}
+                    {{#if canSeeContactInfo}}
+                        {{user.phone}}
+                    {{else}}
+                        {{members-only}}
+                    {{/if}}
+                {{/unless}}
+            </p>
+            <p>
+                <span class="glyphicon glyphicon-plane mrx"></span>
+                {{travelDetails}}
+            </p>
+            <p>
+                <span class="glyphicon glyphicon-globe mrx"></span>
+                {{#if canSeeContactInfo}}
+                    {{#if webSite}}
+                        <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
+                    {{else}}
+                        No website
+                    {{/if}}
+                {{else}}
+                    {{members-only}}
+                {{/if}}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p>
+                <span class="glyphicon glyphicon-user mrx"></span>
+                {{#if canSeeContactInfo}}
+                    {{user.firstName}} {{user.lastName}}
+                {{else}}
+                    {{members-only}}
+                {{/if}}
+            </p>
+            <p>
+                <span class="glyphicon glyphicon-home mrx"></span>
+                {{#if canSeeContactInfo}}
+                    {{address.address1}}
+                    {{#if address.address2}}
+                        / {{address.address2}}
+                    {{/if}}
+                    / {{address.zipCode}} {{address.city}}
+                {{else}}
+                    {{members-only}}
+                {{/if}}
+            </p>
+            <p>
+                <span class="glyphicon glyphicon-star mrx"></span>
+                Member since {{format-date createdAt format='MMMM YYYY'}}
+            </p>
         </div>
     </div>
     <hr>

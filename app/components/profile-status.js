@@ -7,6 +7,7 @@ export default Ember.Component.extend({
     tagName:'span',
     type: null,
     membershipsService: null,
+    classNames: ['prx'],
     classNameBindings: ['profileStatusClass'],
 
     /**

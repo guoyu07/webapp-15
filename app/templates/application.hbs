@@ -13,20 +13,20 @@
             <ul class="nav navbar-nav">
                 <li>
                     {{#link-to 'hosts'}}
-                        <span class="glyphicon glyphicon-tree-conifer"></span> {{t 'literal.hosts'}}
+                        {{t 'literal.hosts'}}
                     {{/link-to}}
                 </li>
                 {{#if canSeeWwoofersLink}}
                     <li>
                         {{#link-to 'wwoofers'}}
-                            <span class="glyphicon glyphicon-search"></span> {{t 'literal.wwoofers'}}
+                            {{t 'literal.wwoofers'}}
                         {{/link-to}}
                     </li>
                 {{/if}}
                 {{#if session.isAuthenticated}}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {{t "navbar.myProfiles" }}<span class="caret"></span>
+                            {{t "navbar.myProfiles" }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             {{#if session.user.wwoofer.id}}
@@ -46,7 +46,8 @@
                             {{#if session.user.host.id}}
                                 <li>
                                     {{#link-to 'host.edit' session.user.host}}
-                                        {{profile-status type="host" membershipsService=userMemberships}} {{t 'navbar.editHostProfile'}}
+                                        {{profile-status type="host" membershipsService=userMemberships}}
+                                        {{t 'navbar.editHostProfile'}}
                                     {{/link-to}}
                                 </li>
                             {{else}}
