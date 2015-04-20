@@ -23,7 +23,7 @@ export default Ember.Component.extend({
             photos = [
                 {
                     asBackground: 'background:url(assets/images/wwoof-no-photo.png) center center; background-size:cover;',
-                    caption: 'No photo for this host yet'
+                    caption: Ember.I18n.t('host.index.noPhotoCaption')
                 }
             ];
         }

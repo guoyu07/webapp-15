@@ -36,7 +36,7 @@
     <hr>
     <div class="row">
         <div class="col-md-3">
-            <h4>General Information</h4>
+            <h4>{{t 'host.index.generalInformation'}}</h4>
         </div>
         <div class="col-md-4">
             <p>
@@ -69,7 +69,7 @@
                     {{#if webSite}}
                         <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
                     {{else}}
-                        No website
+                        {{t 'host.index.noWebsite'}}
                     {{/if}}
                 {{else}}
                     {{members-only}}
@@ -99,7 +99,7 @@
             </p>
             <p>
                 <span class="glyphicon glyphicon-star mrx"></span>
-                Member since {{format-date createdAt format='MMMM YYYY'}}
+                {{t 'host.index.memberSince'}} {{format-date createdAt format='MMMM YYYY'}}
             </p>
         </div>
     </div>
@@ -119,7 +119,7 @@
     {{/if}}
     <div class="row mbl">
         <div class="col-md-3">
-            <h4>Description</h4>
+            <h4>{{t 'host.index.description'}}</h4>
         </div>
         <div class="col-md-9">
             {{expandable-text text=fullDescription}}
