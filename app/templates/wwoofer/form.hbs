@@ -1,154 +1,151 @@
-<div class="page-header row">
-    <h1 class="col-md-10 col-md-offset-1">{{t 'wwoofer.form.title'}}</h1>
-</div>
-<div class="row">
-    <div class=" col-md-10 col-md-offset-1">
-        {{#unless isNew}}
-            {{#if belongsToCurrentUser}}
-                {{wwoofer-membership-status membershipsService=userMemberships}}
-            {{/if}}
-        {{/unless}}
+<div class="col-md-10 col-md-offset-1 mbl">
+    <div class="page-header">
+        <h1>{{t 'wwoofer.form.title'}}</h1>
     </div>
-</div>
-<form class="col-md-10 col-md-offset-1">
-    <div class="row">
-        <div class="col-md-6">
-            <div {{bind-attr class=":form-group fieldErrors.intro.length:has-error"}}>
-                <label for="intro" class="control-label">{{t 'wwoofer.form.intro.label'}}</label>
-                {{textarea id="intro" name="intro" value=intro class="form-control" rows="10"}}
-                {{error-display fieldErrors.intro}}
+    {{#unless isNew}}
+        {{#if belongsToCurrentUser}}
+            {{wwoofer-membership-status membershipsService=userMemberships}}
+        {{/if}}
+    {{/unless}}
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <div {{bind-attr class=":form-group fieldErrors.intro.length:has-error"}}>
+                    <label for="intro" class="control-label">{{t 'wwoofer.form.intro.label'}}</label>
+                    {{textarea id="intro" name="intro" value=intro class="form-control" rows="10"}}
+                    {{error-display fieldErrors.intro}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div {{bind-attr class=":form-group fieldErrors.tripMotivation.length:has-error"}}>
+                    <label for="tripMotivation" class="control-label">{{t 'wwoofer.form.tripMotivation.label'}}</label>
+                    {{textarea id="tripMotivation" name="tripMotivation" value=tripMotivation class="form-control" rows="10"}}
+                    {{error-display fieldErrors.tripMotivation}}
+                </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div {{bind-attr class=":form-group fieldErrors.tripMotivation.length:has-error"}}>
-                <label for="tripMotivation" class="control-label">{{t 'wwoofer.form.tripMotivation.label'}}</label>
-                {{textarea id="tripMotivation" name="tripMotivation" value=tripMotivation class="form-control" rows="10"}}
-                {{error-display fieldErrors.tripMotivation}}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <fieldset class="col-md-6">
-            <legend class="h4">
-                {{t 'wwoofer.form.otherWwoofer'}}
-                {{#if isNew }}
-                    <label>{{input type="checkbox" name="otherWwoofer" checked=hasOtherWwoofer }} {{t 'literal.yes'}}!</label>
-                {{else}}
-                    {{#if hasOtherWwoofer}}
-                        <label>{{t 'literal.yes'}}</label>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>{{t 'wwoofer.form.otherWwoofer'}}
+                    {{#if isNew }}
+                        <label>{{input type="checkbox" name="otherWwoofer" checked=hasOtherWwoofer }} {{t 'literal.yes'}}!</label>
                     {{else}}
-                        <label>{{t 'literal.no'}}</label>
+                        {{#if hasOtherWwoofer}}
+                            <label>{{t 'literal.yes'}}</label>
+                        {{else}}
+                            <label>{{t 'literal.no'}}</label>
+                        {{/if}}
                     {{/if}}
+                </h3>
+                {{#if hasOtherWwoofer}}
+                    <div class="form-group">
+                        <label for="firstName2" class="control-label">{{t 'user.form.firstName.label'}}</label>
+                        {{#if isNew}}
+                            {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control"}}
+                        {{else}}
+                            <p class="form-control-static">{{firstName2}}</p>
+                        {{/if}}
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName2" class="control-label">{{t 'user.form.lastName.label'}}</label>
+                        {{#if isNew}}
+                            {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control"}}
+                        {{else}}
+                            <p class="form-control-static">{{lastName2}}</p>
+                        {{/if}}
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate2" class="control-label">{{t 'user.form.birthDate.label'}}</label>
+                        {{#if isNew}}
+                            {{date-picker selectedDate=selectedDate}}
+                        {{else}}
+                            <p class="form-control-static">{{format-date birthDate2}}</p>
+                        {{/if}}
+                    </div>
                 {{/if}}
-            </legend>
-            {{#if hasOtherWwoofer}}
-                <div {{bind-attr class=":form-group"}}>
-                    <label for="firstName2" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                    {{#if isNew}}
-                        {{input type="text" id="firstName2" name="firstName2" value=firstName2 class="form-control"}}
-                    {{else}}
-                        <p class="form-control-static">{{firstName2}}</p>
-                    {{/if}}
-                </div>
-                <div {{bind-attr class=":form-group"}}>
-                    <label for="lastName2" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                    {{#if isNew}}
-                        {{input type="text" id="lastName2" name="lastName2" value=lastName2 class="form-control"}}
-                    {{else}}
-                        <p class="form-control-static">{{lastName2}}</p>
-                    {{/if}}
-                </div>
-                <div {{bind-attr class=":form-group"}}>
-                    <label for="birthDate2" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                    {{#if isNew}}
-                        {{date-picker selectedDate=selectedDate}}
-                    {{else}}
-                        <p class="form-control-static">{{format-date birthDate2}}</p>
-                    {{/if}}
-                </div>
-            {{/if}}
-        </fieldset>
-        <fieldset class="col-md-6">
-            <legend class="h4">{{t 'wwoofer.form.address'}}</legend>
+            </div>
+            <div class="col-md-6">
+                <h3>{{t 'wwoofer.form.address'}}</h3>
 
-            <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
-                <label for="address1" class="control-label">{{t 'address.form.address1.label'}}</label>
-                {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
-                {{error-display address.fieldErrors.address1}}
-            </div>
-            <div {{bind-attr class=":form-group address.fieldErrors.address2.length:has-error"}}>
-                <label for="address2" class="control-label">{{t 'address.form.address2.label'}}</label>
-                {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
-                {{error-display address.fieldErrors.address2}}
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div {{bind-attr class=":form-group address.fieldErrors.zipCode.length:has-error"}}>
-                        <label for="zipCode" class="control-label">{{t 'address.form.zipCode.label'}}</label>
-                        {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control"}}
-                        {{error-display address.fieldErrors.zipCode}}
-                    </div>
+                <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
+                    <label for="address1" class="control-label">{{t 'address.form.address1.label'}}</label>
+                    {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
+                    {{error-display address.fieldErrors.address1}}
                 </div>
-                <div class="col-md-8">
-                    <div {{bind-attr class=":form-group address.fieldErrors.city.length:has-error"}}>
-                        <label for="city" class="control-label">{{t 'address.form.city.label'}}</label>
-                        {{input type="text" id="city" name="city" value=address.city class="form-control"}}
-                        {{error-display address.fieldErrors.city}}
-                    </div>
+                <div {{bind-attr class=":form-group address.fieldErrors.address2.length:has-error"}}>
+                    <label for="address2" class="control-label">{{t 'address.form.address2.label'}}</label>
+                    {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
+                    {{error-display address.fieldErrors.address2}}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
-                        <label for="country" class="control-label">{{t 'address.form.country.label'}}</label>
-                        {{view "select"
-                        content=controllers.countries.content
-                        optionValuePath="content.id"
-                        optionLabelPath="content.name"
-                        selection=address.country
-                        class="form-control"
-                        name="country"
-                        promptTranslation='address.form.country.prompt'}}
-                        {{error-display address.fieldErrors.country}}
-                    </div>
-                </div>
-                {{#if address.country}}
-                    {{#if address.country.isFrance}}
-                        <div class="col-md-6">
-                            <div {{bind-attr class=":form-group"}}>
-                                <label for="department" class="control-label">{{t 'address.form.department.label'}}</label>
-                                {{view "select"
-                                content=controllers.departments.content
-                                optionValuePath="content.id"
-                                optionLabelPath="content.name"
-                                selection=address.department
-                                class="form-control"
-                                name="department"
-                                promptTranslation="address.form.department.prompt"}}
-                            </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div {{bind-attr class=":form-group address.fieldErrors.zipCode.length:has-error"}}>
+                            <label for="zipCode" class="control-label">{{t 'address.form.zipCode.label'}}</label>
+                            {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control"}}
+                            {{error-display address.fieldErrors.zipCode}}
                         </div>
-                    {{else}}
-                        <div class="col-md-6">
-                            <div {{bind-attr class=":form-group"}}>
-                                <label for="state" class="control-label">{{t 'address.form.state.label'}}</label>
-                                {{input type="text" id="state" name="state" value=address.state class="form-control"}}
-                            </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div {{bind-attr class=":form-group address.fieldErrors.city.length:has-error"}}>
+                            <label for="city" class="control-label">{{t 'address.form.city.label'}}</label>
+                            {{input type="text" id="city" name="city" value=address.city class="form-control"}}
+                            {{error-display address.fieldErrors.city}}
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div {{bind-attr class=":form-group model.address.fieldErrors.country.length:has-error"}}>
+                            <label for="country" class="control-label">{{t 'address.form.country.label'}}</label>
+                            {{view "select"
+                            content=controllers.countries.content
+                            optionValuePath="content.id"
+                            optionLabelPath="content.name"
+                            selection=address.country
+                            class="form-control"
+                            name="country"
+                            promptTranslation='address.form.country.prompt'}}
+                            {{error-display address.fieldErrors.country}}
+                        </div>
+                    </div>
+                    {{#if address.country}}
+                        {{#if address.country.isFrance}}
+                            <div class="col-md-6">
+                                <div {{bind-attr class=":form-group"}}>
+                                    <label for="department" class="control-label">{{t 'address.form.department.label'}}</label>
+                                    {{view "select"
+                                    content=controllers.departments.content
+                                    optionValuePath="content.id"
+                                    optionLabelPath="content.name"
+                                    selection=address.department
+                                    class="form-control"
+                                    name="department"
+                                    promptTranslation="address.form.department.prompt"}}
+                                </div>
+                            </div>
+                        {{else}}
+                            <div class="col-md-6">
+                                <div {{bind-attr class=":form-group"}}>
+                                    <label for="state" class="control-label">{{t 'address.form.state.label'}}</label>
+                                    {{input type="text" id="state" name="state" value=address.state class="form-control"}}
+                                </div>
+                            </div>
+                        {{/if}}
                     {{/if}}
-                {{/if}}
+                </div>
             </div>
-        </fieldset>
-    </div>
-    <div class="row form-group">
-        <div class="col-tn-12 float-r-xs">
-            {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
-            <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">
-                {{#if isNew}}
-                    {{t 'literal.continue'}}
-                {{else}}
-                    {{t 'literal.save'}}
-                {{/if}}
-            </button>
         </div>
-    </div>
-</form>
+        <div class="row">
+            <div class="col-xs-12">
+                <button {{action "saveWwoofer"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary pull-right mls">
+                    {{#if isNew}}
+                        {{t 'literal.continue'}}
+                    {{else}}
+                        {{t 'literal.save'}}
+                    {{/if}}
+                </button>
+                {{#link-to 'index' class="btn btn-default pull-right"}}{{t 'literal.cancel'}}{{/link-to}}
+            </div>
+        </div>
+    </form>
+</div>
