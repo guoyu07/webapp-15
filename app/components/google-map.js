@@ -25,6 +25,10 @@ export default Ember.Component.extend({
         return encodeURI(url);
     }.property('latitude', 'longitude'),
 
+    /**
+     * Returns the image as a CSS background.
+     * TODO: remove this after bind-attr are gone (=> htmlbars)
+     */
     asBackground: function () {
         return 'background:url(' + this.get('mapUrl') + ') center center; background-size:cover';
     }.property('mapUrl')
