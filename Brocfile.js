@@ -46,10 +46,6 @@ app.import('bower_components/jquery-file-upload/js/vendor/jquery.ui.widget.js');
 app.import('bower_components/jquery-file-upload/js/jquery.iframe-transport.js');
 app.import('bower_components/jquery-file-upload/js/jquery.fileupload.js');
 
-// Swipeshow gallery
-app.import('bower_components/swipeshow/jquery.swipeshow.js');
-app.import('bower_components/swipeshow/jquery.swipeshow.css');
-
 // Ember i18n
 app.import('bower_components/ember-i18n/lib/i18n.js');
 app.import('bower_components/ember-i18n/lib/i18n-plurals.js');

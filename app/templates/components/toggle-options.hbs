@@ -1,17 +1,6 @@
-<div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        {{buttonDisplayName}} <span class="caret"></span>
-    </button>
-    <div name="activities" class="dropdown-menu filters" role="menu" data-toggle="buttons">
-            {{#each option in options}}
-                <label {{bind-attr for=option.value}} {{bind-attr class=":btn :btn-primary :buttonCheckbox option.isSelected:active"}}>
-                    <input type="checkbox" autocomplete="off" {{bind-attr id=option.value}} {{bind-attr checked=option.isSelected}} {{action "select" option on="change"}}>
-                    {{option.label}}
-                </label>
-            {{/each}}
-        <div class="divider"></div>
-        <div class="closeGroup">
-            <label id="clear-button" class="btn btn-primary">Clear</label>
-        </div>
-    </div>
-</div>
+{{#each option in options}}
+    <label {{bind-attr for=option.value}} class="checkbox-inline">
+        <input type="checkbox" {{bind-attr id=option.value}} {{bind-attr checked=option.isSelected}} {{action "select" option on="change"}}>
+        {{option.label}}
+    </label>
+{{/each}}

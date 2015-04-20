@@ -8,7 +8,7 @@
     <form>
         <div class="row">
             {{#if showWwoofMemberships}}
-                <div class="form-group col-md-12">
+                <div class="form-group col-xs-12">
                     <label for="wwoofMemberships" class="control-label">{{t 'memberships.new.wwoofer.label'}}</label>
                     {{view "select"
                     content=wwoofMembershipOptions
@@ -21,7 +21,7 @@
                 </div>
             {{/if}}
             {{#if showShippingFees}}
-                <div class="form-group col-md-12">
+                <div class="form-group col-xs-12">
                     <label for="shippingRegions" class="control-label">{{t 'memberships.new.shipping.label'}}</label>
                     {{view "select"
                     content=shippingRegionOptions
@@ -34,7 +34,7 @@
                 </div>
             {{/if}}
             {{#if showHostMemberships}}
-                <div class="form-group col-md-12">
+                <div class="form-group col-xs-12">
                     <label for="hostMemberships" class="control-label">{{t 'memberships.new.host.label'}}</label>
                     {{view "select"
                     content=hostMembershipOptions
@@ -48,13 +48,13 @@
             {{/if}}
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-xs-12">
                 <b>{{t 'memberships.new.total'}}:</b> {{total}} Euros
             </div>
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-sm-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">{{t 'memberships.new.paypal'}}</h4>
@@ -65,10 +65,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-sm-2 text-center">
                 <h4>— {{t 'memberships.new.or'}} —</h4>
             </div>
-            <div class="col-md-5">
+            <div class="col-sm-5">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>

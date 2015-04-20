@@ -6,29 +6,33 @@ import Ember from "ember";
 export default Ember.View.extend({
 
     didInsertElement: function () {
-        Ember.$("#mainContainer").removeClass( "container" ).addClass( "container-fluid" );
         this.resizeElements();
         Ember.$(window).on("resize", this.resizeElements);
         this.controller.get('mapLayer').invalidateSize();
-
     },
 
     resizeElements: function() {
+
+        var windowHeight = Ember.$(window).height();
+        var navHeight = Ember.$("nav .container-fluid").outerHeight();
+        var searchBoxHeight = Ember.$("#hosts-search-box").outerHeight();
+        var searchTabsHeight = Ember.$("#hosts-search-tabs").outerHeight();
+
         if (Ember.$('#resultList').is(':hidden')) {
 
             // resize Map for mobile
             if (Ember.$(".leaflet-container")) {
-                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - Ember.$(".search-box").height() - 20);
+                Ember.$(".leaflet-container").height(windowHeight - navHeight - searchBoxHeight - searchTabsHeight - 60);
             }
         } else {
 
             // resize Map for desktop
             if (Ember.$(".leaflet-container")) {
-                Ember.$(".leaflet-container").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - 20);
+                Ember.$(".leaflet-container").height(windowHeight - navHeight - 40);
             }
 
             if (Ember.$("#resultList")) {
-                Ember.$("#resultList").height(Ember.$(window).height() - Ember.$("nav .container-fluid").height() - Ember.$("div.search-box").height() - 20);
+                Ember.$("#resultList").height(windowHeight - navHeight - searchBoxHeight - searchTabsHeight - 74);
             }
         }
     }

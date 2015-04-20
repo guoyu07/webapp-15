@@ -13,25 +13,6 @@ export default Ember.Component.extend({
     },
 
     /**
-     * Modify event propagation to prevent dropdown from closing on click
-     *
-     * @event didInsertElement
-     */
-    didInsertElement: function () {
-        var self = this;
-        Ember.$('.dropdown-menu[name="activities"]').click(function(event){
-            event.stopPropagation();
-        });
-
-        Ember.$('#clear-button').click(function() {
-            self.triggerAction({
-                action:'clear',
-                target: self
-            });
-        });
-    },
-
-    /**
      * Whether this set of options can have multiple options selected or just one.
      *
      * @property selectOne

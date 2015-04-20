@@ -1,0 +1,67 @@
+.navbar-brand > img {
+    height: 56px;
+    position: relative;
+    top: -19px;
+
+    @media (max-width: @screen-xs-max) {
+      height: 45px;
+      position: relative;
+      top: -14px;
+    }
+}
+.logo:hover {
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-name: grow-and-spin;
+}
+@-webkit-keyframes grow-and-spin {
+  0% {
+    transform: scale(1);
+  }
+  10%,20% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+  30%,50%,70%,90% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  40%,60%,80% {
+    transform: scale(1.1) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.navbar {
+  text-transform: uppercase;
+  a {
+    cursor: pointer;
+  }
+  .glyphicon-ok {
+    color: @brand-primary;
+  }
+  .glyphicon-warning-sign {
+    color: @brand-warning;
+  }
+  .glyphicon-hourglass {
+    color: @brand-info;
+  }
+  .navbar-right {
+    .btn {
+      border: none;
+    }
+    .navbar-btn {
+      margin: 11px;
+    }
+    .btn-default:hover, .btn-default.active {
+      background-color: #3e3f3a;
+      box-shadow: none;
+    }
+    .btn-primary {
+      color: #fff;
+    }
+    .btn-primary:hover, .btn-primary.active {
+      background-color: @btn-primary-border;
+    }
+  }
+}
