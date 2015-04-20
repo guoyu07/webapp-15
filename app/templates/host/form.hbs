@@ -1,8 +1,8 @@
-<div class=" page-header row">
-    <div class="col-md-10 col-md-offset-1">
+<div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
         {{#unless isNew}}
             <div class="btn-group pull-right">
-                <button type="button" {{bind-attr class=":btn :btn-primary isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
+                <button type="button" {{bind-attr class=":btn :btn-default isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
                     {{#if isHidden}}
                         {{t 'host.form.showProfile'}}
                     {{else}}
@@ -13,31 +13,25 @@
         {{/unless}}
         <h1>{{farmName}}</h1>
     </div>
-</div>
-<div class="row">
-    <div class=" col-md-10 col-md-offset-1">
-        {{#unless isNew}}
-            {{#if isPending}}
-                {{partial 'host/validation-status'}}
-            {{else}}
-                {{#if belongsToCurrentUser}}
-                    {{#if isApproved}}
-                        {{host-membership-status membershipsService=userMemberships}}
-                    {{else}}
-                        <div class="alert alert-warning alert-dismissable" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign"></span>
-                            {{t 'host.membership-status.wasRejected'}}
-                        </div>
-                    {{/if}}
+    {{#unless isNew}}
+        {{#if isPending}}
+            {{partial 'host/validation-status'}}
+        {{else}}
+            {{#if belongsToCurrentUser}}
+                {{#if isApproved}}
+                    {{host-membership-status membershipsService=userMemberships}}
+                {{else}}
+                    <div class="alert alert-warning alert-dismissable" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                        {{t 'host.membership-status.wasRejected'}}
+                    </div>
                 {{/if}}
             {{/if}}
-        {{/unless}}
-    </div>
-</div>
-<form class="col-md-10 col-md-offset-1">
+        {{/if}}
+    {{/unless}}
     <div class="row">
-        <fieldset class="col-md-6">
-            <legend class="h4">{{t 'host.form.generalInformation'}}</legend>
+        <div class="col-md-6">
+            <h3>{{t 'host.form.generalInformation'}}</h3>
             <div {{bind-attr class=":form-group fieldErrors.farmName.length:has-error"}}>
                 <label for="farm-name" class="control-label">{{t 'host.form.farmName.label'}}</label>
                 {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholderTranslation='host.form.farmName.placeholder'}}
@@ -57,10 +51,9 @@
                 <label for="travel" class="control-label">{{t 'host.form.travel.label'}}</label>
                 {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholderTranslation='host.form.travel.placeholder'}}
             </div>
-        </fieldset>
-
-        <fieldset class="col-md-6">
-            <legend class="h4">{{t 'host.form.addressInformation'}}</legend>
+        </div>
+        <div class="col-md-6">
+            <h3>{{t 'host.form.addressInformation'}}</h3>
             <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
                 <label for="address1" class="control-label">{{t 'address.form.address1.label'}}</label>
                 {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
@@ -126,11 +119,11 @@
                     {{/if}}
                 {{/if}}
             </div>
-        </fieldset>
+        </div>
     </div>
     <div class="row">
-        <fieldset class="col-md-12">
-            <legend class="h4">{{t 'host.form.farmDescription'}}</legend>
+        <div class="col-xs-12">
+            <h3>{{t 'host.form.farmDescription'}}</h3>
             <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
                 <label for="shortDescription" class="control-label">{{t 'host.form.shortDescription.label'}}</label>
                 {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholderTranslation='host.form.shortDescription.placeholder'}}
@@ -148,84 +141,77 @@
                     {{error-display fieldErrors.note}}
                 </div>
             {{/if}}
-        </fieldset>
+        </div>
     </div>
     <div class="row">
-        <fieldset class="col-md-6">
-            <legend class="h4">{{t 'host.form.communicationPreferences'}}</legend>
-            <div class="checkbox">
+        <div class="col-md-6">
+            <h3>{{t 'host.form.communicationPreferences'}}</h3>
+            <div class="checkbox mlm">
                 <label>
                     {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
                     {{t 'host.form.noPhone.label'}}
                 </label>
             </div>
-            <div class="checkbox">
+            <div class="checkbox mlm">
                 <label>
                     {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
                     {{t 'host.form.noEmail.label'}}
                 </label>
             </div>
-        </fieldset>
-        <fieldset class="col-md-6">
-            <legend class="h4">{{t 'host.form.activities'}}</legend>
-            <div class="form-group toggle-options-cols mts">
+        </div>
+        <div class="col-md-6">
+            <h3>{{t 'host.form.activities'}}</h3>
+            <div class="toggle-options-cols mts">
                 {{toggle-options values=allActivities selected=activities buttonDisplayName=activitiesDisplayName optionValuePath='id'}}
             </div>
-        </fieldset>
+        </div>
     </div>
-    <div class="row form-group">
-        <div class="col-tn-12 float-r-xs">
+    <div class="row mtm">
+        <div class="col-xs-12">
             {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
-            <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary btn-block-tn">{{t 'literal.save'}}</button>
+            <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">{{t 'literal.save'}}</button>
         </div>
     </div>
-</form>
 
-{{#unless isNew}}
-    <hr>
-    <form class="col-md-10 col-md-offset-1">
+    {{#unless isNew}}
+        <hr>
         <div class="row">
-            <div class="col-md-12">
-                <h4>{{t 'host.form.newPhoto'}}</h4>
-                <p>
-                    <i><small>{{t 'host.form.photoLimitations'}}</small></i>
-                </p>
-                <div class="form-group">
-                    <input id="file_upload" type="file" name="file" data-url="api/photos">
-                </div>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+            <div class="col-xs-12">
+                <form>
+                    <h3>{{t 'host.form.newPhoto'}}</h3>
+                    <p>
+                        <i><small>{{t 'host.form.photoLimitations'}}</small></i>
+                    </p>
+                    <div class="form-group">
+                        <input id="file_upload" type="file" name="file" data-url="api/photos">
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
-    {{#if photos}}
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h4>{{t 'host.form.editDeletePhoto'}}</h4>
-                <div class="table table-hover col-sm-12 col-tn-12">
-                    {{#each photos itemController="photo"}}
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
-                                <div class="host-thumb">
-                                    {{host-thumb url=completeUrl}}
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
-                                {{input type="text" name="caption" value=caption class="form-control" placeholderTranslation='host.form.caption.placeholder'}}
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-12 col-tn-12">
-                                <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary pull-right btn-block-tn margin-bottom-tn" style="margin-left:10px">
-                                    {{t 'literal.save'}}
-                                </button>
-                                <button {{action "deletePhoto"}} class="btn btn-default pull-right btn-block-tn">
-                                    {{t 'literal.delete'}}
-                                </button>
-                            </div>
-                        </div>
-                    {{/each}}
+
+        {{#if photos}}
+            <h3>{{t 'host.form.editDeletePhoto'}}</h3>
+            {{#each photos itemController="photo"}}
+                <div class="row">
+                    <div class="col-sm-4 mbm">
+                        {{host-thumb url=completeUrl}}
+                    </div>
+                    <div class="col-xs-8 col-sm-4 mbm">
+                        {{input type="text" name="caption" value=caption class="form-control" placeholderTranslation='host.form.caption.placeholder'}}
+                    </div>
+                    <div class="col-xs-4 col-sm-4 mbm">
+                        <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary">
+                            {{t 'literal.save'}}
+                        </button>
+                        <button {{action "deletePhoto"}} class="btn btn-default">
+                            {{t 'literal.delete'}}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
-    {{/if}}
-{{/unless}}
+            {{/each}}
+        {{/if}}
+    {{/unless}}
+</div>

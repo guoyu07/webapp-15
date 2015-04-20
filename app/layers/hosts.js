@@ -94,7 +94,7 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
         // Open popup
         // $BUG : prevent a bug with Leaflet popup by adding a setTimeout
         setTimeout(function () {
-            e.target.bindPopup(popupView.get('element')).togglePopup();
+            e.target.bindPopup(popupView.get('element'), { closeButton: false }).togglePopup();
         }, 100);
     }
 });
