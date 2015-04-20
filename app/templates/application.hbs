@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid col-md-offset-1 col-md-10">
         <div class="navbar-header">
             {{#link-to 'index' class="navbar-brand logo"}}<img src="assets/images/wwoof-fr-logo.png">{{/link-to}}
@@ -11,17 +11,13 @@
         </div>
         <div class="collapse navbar-collapse main-nav-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>
-                    {{#link-to 'hosts'}}
-                        {{t 'literal.hosts'}}
-                    {{/link-to}}
-                </li>
+                {{#link-to "hosts" tagName="li"}}
+                    <a {{bind-attr href="view.href"}}>{{t 'literal.hosts'}}</a>
+                {{/link-to}}
                 {{#if canSeeWwoofersLink}}
-                    <li>
-                        {{#link-to 'wwoofers'}}
-                            {{t 'literal.wwoofers'}}
-                        {{/link-to}}
-                    </li>
+                    {{#link-to "wwoofers" tagName="li"}}
+                        <a {{bind-attr href="view.href"}}>{{t 'literal.wwoofers'}}</a>
+                    {{/link-to}}
                 {{/if}}
                 {{#if session.isAuthenticated}}
                     <li class="dropdown">

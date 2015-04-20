@@ -9,102 +9,60 @@
       top: -14px;
     }
 }
-
 .logo:hover {
     -webkit-animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     -webkit-animation-name: grow-and-spin;
 }
-
 @-webkit-keyframes grow-and-spin {
   0% {
-    transform: scale(1); }
-
+    transform: scale(1);
+  }
   10%,20% {
-    transform: scale(0.9) rotate(-3deg); }
-
+    transform: scale(0.9) rotate(-3deg);
+  }
   30%,50%,70%,90% {
-    transform: scale(1.1) rotate(3deg); }
-
+    transform: scale(1.1) rotate(3deg);
+  }
   40%,60%,80% {
-    transform: scale(1.1) rotate(-3deg); }
-
+    transform: scale(1.1) rotate(-3deg);
+  }
   100% {
-    transform: scale(1) rotate(0); }
+    transform: scale(1) rotate(0);
+  }
 }
 
 .navbar {
   text-transform: uppercase;
-
-  .nav >li > a {
-      line-height: 22px;
+  a {
+    cursor: pointer;
   }
-
-  .caret {
-    margin-top: -5px;
-  }
-
-  .dropdown-menu {
-    border: none;
-  }
-
   .glyphicon-ok {
     color: @brand-primary;
   }
-
   .glyphicon-warning-sign {
     color: @brand-warning;
   }
-
   .glyphicon-hourglass {
     color: @brand-info;
   }
-
-  .btn-default {
-    border: none;
-  }
-
-  .navbar-nav > li > .btn-primary:hover {
-    background-color: @btn-primary-border;
-  }
-
-  .btn-navbar {
-    padding: 7px 20px !important;
-    margin: 13px !important;
-  }
-}
-
-.navbar-default .navbar-nav > li > {
-
-  .btn {
-    padding: 8px 20px;
-  }
-
-  .btn-primary {
-    color: #fff;
-  }
-}
-
-@media (max-width: @screen-xs-max) {
-  .main-nav-collapse,
-  .main-nav-collapse .dropdown-menu {
-    text-align: center;
-  }
-
-  .main-nav-collapse .btn {
-    margin: 10px auto;
-    max-width: 250px;
-  }
-
-  .user-account {
-    margin-top: -10px;
-
+  .navbar-nav > li {
     .btn {
-      padding: 8px 20px;
+      border: none;
+    }
+    .btn-default:hover, .btn-default.active {
+      background-color: #3e3f3a;
+      box-shadow: none;
+    }
+    .btn-primary {
+      color: #fff;
+    }
+    .btn-primary:hover, .btn-primary.active {
+      background-color: @btn-primary-border;
     }
   }
-
-  .navbar-nav.user-account li + li {
-    margin-left: 0;
+  .btn-navbar {
+    padding: 6px 20px !important;
+    margin: 13px !important;
   }
 }

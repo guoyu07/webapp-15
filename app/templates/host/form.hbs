@@ -1,4 +1,4 @@
-<div class="col-md-10 col-md-offset-1">
+<div class="col-md-10 col-md-offset-1 mbm">
     <div class="page-header">
         {{#unless isNew}}
             <div class="btn-group pull-right">
@@ -169,8 +169,12 @@
         </div>
         <div class="row mtm">
             <div class="col-xs-12">
-                {{#link-to 'index' class="btn btn-default"}}{{t 'literal.cancel'}}{{/link-to}}
-                <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary">{{t 'literal.save'}}</button>
+                <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary pull-right mls">
+                    {{t 'literal.save'}}
+                </button>
+                {{#link-to 'index' class="btn btn-default pull-right"}}
+                    {{t 'literal.cancel'}}
+                {{/link-to}}
             </div>
         </div>
     </form>
