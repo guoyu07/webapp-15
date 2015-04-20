@@ -76,49 +76,49 @@
                     </li>
                 {{/if}}
             </ul>
-            <div class="navbar-right">
-                {{#if session.isAuthenticated}}
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span>
-                                {{session.user.firstName}} {{session.user.lastName}} <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    {{#link-to 'user.edit' session.user.id}}
-                                        {{t 'menu.myAccount'}}
-                                    {{/link-to}}
-                                </li>
-                                <li>
-                                    {{#link-to 'user.memberships' session.user.id}}
-                                        {{t 'menu.myMemberships'}}
-                                    {{/link-to}}
-                                </li>
-                                <li class="divider hidden-xs"></li>
-                                <li>
-                                    {{#link-to 'contact'}}
-                                        {{t 'menu.contact'}}
-                                    {{/link-to}}
-                                </li>
-                                <li class="divider hidden-xs"></li>
-                                <li>
-                                    <a href="#" {{action 'invalidateSession'}}>
-                                        {{t 'menu.logout'}}
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                {{else}}
+            {{#if session.isAuthenticated}}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user hidden-xs"></span>
+                            {{session.user.firstName}} {{session.user.lastName}} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                {{#link-to 'user.edit' session.user.id}}
+                                    {{t 'menu.myAccount'}}
+                                {{/link-to}}
+                            </li>
+                            <li>
+                                {{#link-to 'user.memberships' session.user.id}}
+                                    {{t 'menu.myMemberships'}}
+                                {{/link-to}}
+                            </li>
+                            <li class="divider hidden-xs"></li>
+                            <li>
+                                {{#link-to 'contact'}}
+                                    {{t 'menu.contact'}}
+                                {{/link-to}}
+                            </li>
+                            <li class="divider hidden-xs"></li>
+                            <li>
+                                <a href="#" {{action 'invalidateSession'}}>
+                                    {{t 'menu.logout'}}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            {{else}}
+                <div class="navbar-right">
                     {{#link-to 'login' class="btn btn-default navbar-btn"}}
                         {{t 'menu.login'}}
                     {{/link-to}}
                     {{#link-to 'users.new' class="btn btn-primary navbar-btn"}}
                         {{t 'menu.signUp'}}
                     {{/link-to}}
-                {{/if}}
-            </div>
+                </div>
+            {{/if}}
         </div>
     </div>
 </nav>
