@@ -3,7 +3,7 @@
  */
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
 
     needs: ['application', 'wwoofer', 'countries', 'departments'],
 
@@ -13,29 +13,24 @@ export default Ember.ObjectController.extend({
     /**
      * Indicates whether a second wwoofer was registered
      */
-    hasOtherWwoofer: Ember.computed.notEmpty('firstName2'),
+    hasOtherWwoofer: Ember.computed.notEmpty('model.firstName2'),
 
     actions: {
         saveWwoofer: function () {
+
+            // Get wwoofer and address
             var wwoofer = this.get('model');
             var address = wwoofer.get('address');
 
-            // Prevent multiple save attempts
-            if (this.get('isSaving')) {
-                return;
-            }
-
             // Initialize validations array
-            var validations = Ember.makeArray(wwoofer.validate());
-            validations.push(address.validate());
+            var validations = [ wwoofer.validate(), address.validate() ];
 
             // Validate wwoofer and address
             var self = this;
             Ember.RSVP.all(validations).then(function () {
 
                 // Prepare update promises
-                var updates = Ember.makeArray(wwoofer.save());
-                updates.push(address.save());
+                var updates = [ wwoofer.save(), address.save() ];
 
                 // Update wwoofer and address
                 Ember.RSVP.all(updates).then(function () {

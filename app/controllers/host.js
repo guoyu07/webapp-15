@@ -4,7 +4,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-    needs: ['application'],
     belongsToCurrentUser: function() {
         var currentUserId = this.get('session.user.id');
         var hostUserId = this.get('model.user.id');

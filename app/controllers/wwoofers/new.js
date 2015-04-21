@@ -14,35 +14,39 @@ export default Ember.ObjectController.extend({
 
     actions: {
         saveWwoofer: function () {
+
+            // Get wwoofer and address
             var wwoofer = this.get('model');
             var address = wwoofer.get('address');
 
-            // Prevent multiple save attempts
-            if (this.get('isSaving')) { return; }
+            // Test whether the user has provided a second wwoofer
+            var hasSecondWoofer = Ember.isPresent(wwoofer.get('firstName2'))
+                && Ember.isPresent(wwoofer.get('lastName2'))
+                && this.get('hasOtherWwoofer') === true;
 
-            // Erase the other wwoofer info if not checked
-            if (this.get('hasOtherWwoofer') === false) {
-                this.set('firstName2', null);
-                this.set('lastName2', null);
-                this.set('birthDate2', null);
-            }
+            // Handle second wwoofer
+            if (hasSecondWoofer) {
 
-            // Set second wwoofer birth date (if any)
-            var hasSecondWoofer = Ember.isPresent(wwoofer.get('firstName2')) && Ember.isPresent(wwoofer.get('lastName2'));
-            var selectedDate = this.get('selectedDate');
-            if (hasSecondWoofer && selectedDate) {
+                // Set second wwoofer birth date (if any)
+                var selectedDate = this.get('selectedDate');
+                if (hasSecondWoofer && selectedDate) {
 
-                // Make sure the wwoofer is 18 years old
-                if (selectedDate.isAfter(this.get('maxDate'))) {
-                    alertify.error(Ember.I18n.t('notify.mustBe18'));
-                    return;
+                    // Make sure the wwoofer is 18 years old
+                    if (selectedDate.isAfter(this.get('maxDate'))) {
+                        alertify.error(Ember.I18n.t('notify.mustBe18'));
+                        return;
+                    }
+                    wwoofer.set('birthDate2', selectedDate.format('YYYY-MM-DD'));
                 }
-                this.set('birthDate2', selectedDate.format('YYYY-MM-DD'));
+            } else {
+                // Erase the other wwoofer info
+                wwoofer.set('firstName2', null);
+                wwoofer.set('lastName2', null);
+                wwoofer.set('birthDate2', null);
             }
 
             // Initialize validations array
-            var validations = Ember.makeArray(wwoofer.validate());
-            validations.push(address.validate());
+            var validations = [ wwoofer.validate(), address.validate() ];
 
             // Validate wwoofer and address
             var self = this;
@@ -65,7 +69,7 @@ export default Ember.ObjectController.extend({
                 // Inform and redirect user to payment page
                 promise.then(function () {
                     alertify.success(Ember.I18n.t('notify.wwooferCreated'));
-                    var itemCode = wwoofer.firstName2 ? 'WO1': 'WO2';
+                    var itemCode = hasSecondWoofer ? 'WO2': 'WO1';
                     self.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
                 });
             }).catch(function () {
