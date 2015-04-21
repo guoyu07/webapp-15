@@ -1,9 +1,9 @@
 <div class="col-md-10 col-md-offset-1 mbm">
     <div class="page-header">
-        {{#unless isNew}}
+        {{#unless model.isNew}}
             <div class="btn-group pull-right">
-                <button type="button" {{bind-attr class=":btn :btn-default isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
-                    {{#if isHidden}}
+                <button type="button" {{bind-attr class=":btn :btn-default model.isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
+                    {{#if model.isHidden}}
                         {{t 'host.form.showProfile'}}
                     {{else}}
                         {{t 'host.form.hideProfile'}}
@@ -11,14 +11,14 @@
                 </button>
             </div>
         {{/unless}}
-        <h1>{{farmName}}</h1>
+        <h1>{{model.farmName}}</h1>
     </div>
-    {{#unless isNew}}
-        {{#if isPending}}
+    {{#unless model.isNew}}
+        {{#if model.isPending}}
             {{partial 'host/validation-status'}}
         {{else}}
             {{#if belongsToCurrentUser}}
-                {{#if isApproved}}
+                {{#if model.isApproved}}
                     {{host-membership-status membershipsService=userMemberships}}
                 {{else}}
                     <div class="alert alert-warning alert-dismissable" role="alert">
@@ -33,51 +33,51 @@
         <div class="row">
             <div class="col-md-6">
                 <h3>{{t 'host.form.generalInformation'}}</h3>
-                <div {{bind-attr class=":form-group fieldErrors.farmName.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.farmName.length:has-error"}}>
                     <label for="farm-name" class="control-label">{{t 'host.form.farmName.label'}}</label>
-                    {{input type="text" id="farm-name" name="farm-name" value=farmName class="form-control" placeholderTranslation='host.form.farmName.placeholder'}}
-                    {{error-display fieldErrors.farmName}}
+                    {{input type="text" id="farm-name" name="farm-name" value=model.farmName class="form-control" placeholderTranslation='host.form.farmName.placeholder'}}
+                    {{error-display model.fieldErrors.farmName}}
                 </div>
-                <div {{bind-attr class=":form-group fieldErrors.webSite.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.webSite.length:has-error"}}>
                     <label for="webSite" class="control-label">{{t 'host.form.website.label'}}</label>
-                    {{input type="text" id="webSite" name="webSite" value=webSite class="form-control" placeholderTranslation='host.form.website.placeholder'}}
-                    {{error-display fieldErrors.webSite}}
+                    {{input type="text" id="webSite" name="webSite" value=model.webSite class="form-control" placeholderTranslation='host.form.website.placeholder'}}
+                    {{error-display model.fieldErrors.webSite}}
                 </div>
-                <div {{bind-attr class=":form-group fieldErrors.phone.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.phone.length:has-error"}}>
                     <label for="phone" class="control-label">{{t 'host.form.phone.label'}}</label>
-                    {{input type="text" id="phone" name="phone" value=user.phone class="form-control" placeholderTranslation='host.form.phone.placeholder'}}
-                    {{error-display fieldErrors.phone}}
+                    {{input type="text" id="phone" name="phone" value=model.user.phone class="form-control" placeholderTranslation='host.form.phone.placeholder'}}
+                    {{error-display model.fieldErrors.phone}}
                 </div>
                 <div {{bind-attr class=":form-group"}}>
                     <label for="travel" class="control-label">{{t 'host.form.travel.label'}}</label>
-                    {{input type="text" id="travelDetails" name="travelDetails" value=travelDetails class="form-control" placeholderTranslation='host.form.travel.placeholder'}}
+                    {{input type="text" id="travelDetails" name="travelDetails" value=model.travelDetails class="form-control" placeholderTranslation='host.form.travel.placeholder'}}
                 </div>
             </div>
             <div class="col-md-6">
                 <h3>{{t 'host.form.addressInformation'}}</h3>
-                <div {{bind-attr class=":form-group address.fieldErrors.address1.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.address.fieldErrors.address1.length:has-error"}}>
                     <label for="address1" class="control-label">{{t 'address.form.address1.label'}}</label>
-                    {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
-                    {{error-display address.fieldErrors.address1}}
+                    {{input type="text" id="address1" name="address1" value=model.address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
+                    {{error-display model.address.fieldErrors.address1}}
                 </div>
-                <div {{bind-attr class=":form-group address.fieldErrors.address2.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.address.fieldErrors.address2.length:has-error"}}>
                     <label for="address2" class="control-label">{{t 'address.form.address2.label'}}</label>
-                    {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
-                    {{error-display address.fieldErrors.address2}}
+                    {{input type="text" id="address2" name="address2" value=model.address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
+                    {{error-display model.address.fieldErrors.address2}}
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <div {{bind-attr class=":form-group address.fieldErrors.zipCode.length:has-error"}}>
+                        <div {{bind-attr class=":form-group model.address.fieldErrors.zipCode.length:has-error"}}>
                             <label for="zipCode" class="control-label">{{t 'address.form.zipCode.label'}}</label>
-                            {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control"}}
-                            {{error-display address.fieldErrors.zipCode}}
+                            {{input type="text" id="zipCode" name="zipCode" value=model.address.zipCode class="form-control"}}
+                            {{error-display model.address.fieldErrors.zipCode}}
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div {{bind-attr class=":form-group address.fieldErrors.city.length:has-error"}}>
+                        <div {{bind-attr class=":form-group model.address.fieldErrors.city.length:has-error"}}>
                             <label for="city" class="control-label">{{t 'address.form.city.label'}}</label>
-                            {{input type="text" id="city" name="city" value=address.city class="form-control"}}
-                            {{error-display address.fieldErrors.city}}
+                            {{input type="text" id="city" name="city" value=model.address.city class="form-control"}}
+                            {{error-display model.address.fieldErrors.city}}
                         </div>
                     </div>
                 </div>
@@ -89,15 +89,15 @@
                             content=controllers.countries.hostCountries
                             optionValuePath="content.id"
                             optionLabelPath="content.name"
-                            selection=address.country
+                            selection=model.address.country
                             class="form-control"
                             name="country"
                             promptTranslation='address.form.country.prompt'}}
-                            {{error-display address.fieldErrors.country}}
+                            {{error-display model.address.fieldErrors.country}}
                         </div>
                     </div>
-                    {{#if address.country}}
-                        {{#if address.country.isFrance}}
+                    {{#if model.address.country}}
+                        {{#if model.address.country.isFrance}}
                             <div class="col-md-6">
                                 <div {{bind-attr class=":form-group"}}>
                                     <label for="department" class="control-label">{{t 'address.form.department.label'}}</label>
@@ -105,7 +105,7 @@
                                     content=controllers.departments.content
                                     optionValuePath="content.id"
                                     optionLabelPath="content.name"
-                                    selection=address.department
+                                    selection=model.address.department
                                     class="form-control"
                                     name="department"}}
                                 </div>
@@ -114,7 +114,7 @@
                             <div class="col-md-6">
                                 <div {{bind-attr class=":form-group"}}>
                                     <label for="state" class="control-label">{{t 'address.form.state.label'}}</label>
-                                    {{input type="text" id="state" name="state" value=address.state class="form-control"}}
+                                    {{input type="text" id="state" name="state" value=model.address.state class="form-control"}}
                                 </div>
                             </div>
                         {{/if}}
@@ -125,21 +125,21 @@
         <div class="row">
             <div class="col-xs-12">
                 <h3>{{t 'host.form.farmDescription'}}</h3>
-                <div {{bind-attr class=":form-group fieldErrors.shortDescription.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.shortDescription.length:has-error"}}>
                     <label for="shortDescription" class="control-label">{{t 'host.form.shortDescription.label'}}</label>
-                    {{input type="text" id="shortDescription" name="shortDescription" value=shortDescription class="form-control" placeholderTranslation='host.form.shortDescription.placeholder'}}
-                    {{error-display fieldErrors.shortDescription}}
+                    {{input type="text" id="shortDescription" name="shortDescription" value=model.shortDescription class="form-control" placeholderTranslation='host.form.shortDescription.placeholder'}}
+                    {{error-display model.fieldErrors.shortDescription}}
                 </div>
-                <div {{bind-attr class=":form-group fieldErrors.fullDescription.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.fullDescription.length:has-error"}}>
                     <label for="fullDescription" class="control-label">{{t 'host.form.fullDescription.label'}}</label>
-                    {{textarea id="fullDescription" name="fullDescription" value=fullDescription class="form-control" placeholderTranslation='host.form.fullDescription.placeholder' rows="8"}}
-                    {{error-display fieldErrors.fullDescription}}
+                    {{textarea id="fullDescription" name="fullDescription" value=model.fullDescription class="form-control" placeholderTranslation='host.form.fullDescription.placeholder' rows="8"}}
+                    {{error-display model.fieldErrors.fullDescription}}
                 </div>
                 {{#if session.user.isAdmin}}
-                    <div {{bind-attr class=":form-group fieldErrors.note.length:has-error"}}>
+                    <div {{bind-attr class=":form-group model.fieldErrors.note.length:has-error"}}>
                         <label for="note" class="control-label">{{t 'host.form.note.label'}}</label>
-                        {{textarea id="note" name="note" value=note class="form-control" rows="4"}}
-                        {{error-display fieldErrors.note}}
+                        {{textarea id="note" name="note" value=model.note class="form-control" rows="4"}}
+                        {{error-display model.fieldErrors.note}}
                     </div>
                 {{/if}}
             </div>
@@ -149,13 +149,13 @@
                 <h3>{{t 'host.form.communicationPreferences'}}</h3>
                 <div class="checkbox mlm">
                     <label>
-                        {{input type="checkbox" id="noPhone" name="noPhone" checked=noPhone}}
+                        {{input type="checkbox" id="noPhone" name="noPhone" checked=model.noPhone}}
                         {{t 'host.form.noPhone.label'}}
                     </label>
                 </div>
                 <div class="checkbox mlm">
                     <label>
-                        {{input type="checkbox" id="noEmail" name="noEmail" checked=noEmail}}
+                        {{input type="checkbox" id="noEmail" name="noEmail" checked=model.noEmail}}
                         {{t 'host.form.noEmail.label'}}
                     </label>
                 </div>
@@ -163,13 +163,13 @@
             <div class="col-md-6">
                 <h3>{{t 'host.form.activities'}}</h3>
                 <div class="toggle-options-cols mts">
-                    {{toggle-options values=allActivities selected=activities buttonDisplayName=activitiesDisplayName optionValuePath='id'}}
+                    {{toggle-options values=allActivities selected=model.activities buttonDisplayName=activitiesDisplayName optionValuePath='id'}}
                 </div>
             </div>
         </div>
         <div class="row mtm">
             <div class="col-xs-12">
-                <button {{action "saveHost"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary pull-right mls">
+                <button {{action "saveHost"}} disabled={{model.isSaving}} class="btn btn-primary pull-right mls">
                     {{t 'literal.save'}}
                 </button>
                 {{#link-to 'index' class="btn btn-default pull-right"}}
@@ -179,7 +179,7 @@
         </div>
     </form>
 
-    {{#unless isNew}}
+    {{#unless model.isNew}}
         <hr>
         <div class="row">
             <div class="col-xs-12">
@@ -198,18 +198,18 @@
             </div>
         </div>
 
-        {{#if photos}}
+        {{#if model.photos}}
             <h3>{{t 'host.form.editDeletePhoto'}}</h3>
-            {{#each photos itemController="photo"}}
+            {{#each photo in model.photos itemController="photo"}}
                 <div class="row">
                     <div class="col-sm-4 mbm">
-                        {{host-thumb url=completeUrl}}
+                        {{host-thumb url=controller.model.completeUrl}}
                     </div>
                     <div class="col-xs-8 col-sm-4 mbm">
-                        {{input type="text" name="caption" value=caption class="form-control" placeholderTranslation='host.form.caption.placeholder'}}
+                        {{input type="text" name="caption" value=controller.model.caption class="form-control" placeholderTranslation='host.form.caption.placeholder'}}
                     </div>
                     <div class="col-xs-4 col-sm-4 mbm">
-                        <button {{action "savePhoto"}} {{bind-attr disabled="cannotSave"}} class="btn btn-primary">
+                        <button {{action "savePhoto"}} disabled={{controller.model.cannotSave}} class="btn btn-primary">
                             {{t 'literal.save'}}
                         </button>
                         <button {{action "deletePhoto"}} class="btn btn-default">

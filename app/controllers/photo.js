@@ -3,19 +3,10 @@
  */
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
-
-    cannotSave: function () {
-        return this.get('isSaving') || !this.get('isDirty');
-    }.property('isSaving', 'isDirty'),
+export default Ember.Controller.extend({
 
     actions: {
         savePhoto: function () {
-
-            // Prevent multiple save attempts
-            if (this.get('isSaving')) {
-                return;
-            }
 
             // Get photo
             var photo = this.get('model');

@@ -28,6 +28,13 @@ export default DS.Model.extend(ValidationsMixin, {
         return 'background:url('+ this.get('completeUrl') +') center center; background-size:cover;';
     }.property('completeUrl'),
 
+    /**
+     * Returns true if the photo is in a state where it cannot be saved.
+     */
+    cannotSave: function () {
+        return this.get('isSaving') || !this.get('isDirty');
+    }.property('isSaving', 'isDirty'),
+
     // Validations
     validations: {
         caption: {
