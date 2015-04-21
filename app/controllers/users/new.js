@@ -3,7 +3,7 @@
  */
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
 
     termsOk: false,
     insuranceOk: false,
@@ -15,9 +15,6 @@ export default Ember.ObjectController.extend({
     actions: {
         saveUser: function () {
             var user = this.get('model');
-
-            // Prevent multiple save attempts
-            if (this.get('isSaving')) { return; }
 
             // Make sure all checkboxes are checked
             if (!this.get('termsOk') || !this.get('insuranceOk')) {
@@ -31,7 +28,7 @@ export default Ember.ObjectController.extend({
                 alertify.error(Ember.I18n.t('notify.mustBe18'));
                 return;
             }
-            this.set('birthDate', selectedDate.format('YYYY-MM-DD'));
+            user.set('birthDate', selectedDate.format('YYYY-MM-DD'));
 
             // Save the user
             var self = this;
@@ -39,8 +36,8 @@ export default Ember.ObjectController.extend({
                 user.save().then(function () {
                     // Authenticate user
                     var auth = self.get('session').authenticate('authenticator:passport', {
-                        username: self.get('email'),
-                        password: self.get('password')
+                        username: user.get('email'),
+                        password: user.get('password')
                     });
 
                     // Handle success

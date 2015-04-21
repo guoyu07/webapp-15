@@ -1,7 +1,7 @@
 <div class="col-md-10 col-md-offset-1 mbm">
     <div class="page-header">
         <h1>
-            {{#if isNew}}
+            {{#if model.isNew}}
                 {{t 'user.form.titleNew'}}
             {{else}}
                 {{t 'user.form.titleEdit'}}
@@ -9,7 +9,7 @@
         </h1>
     </div>
 
-    {{#if isNew}}
+    {{#if model.isNew}}
         <p>
             {{t 'user.form.instructionsNew'}}
             {{t 'user.form.haveAccount'}}
@@ -20,45 +20,45 @@
     <form>
         <div class="row">
             <div class="col-md-6">
-                <div {{bind-attr class=":form-group fieldErrors.firstName.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.firstName.length:has-error"}}>
                     <label for="firstName" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                    {{#if isNew}}
-                        {{input type="text" id="firstName" name="firstName" value=firstName class="form-control"}}
-                        {{error-display fieldErrors.firstName}}
+                    {{#if model.isNew}}
+                        {{input type="text" id="firstName" name="firstName" value=model.firstName class="form-control"}}
+                        {{error-display model.fieldErrors.firstName}}
                     {{else}}
-                        <p class="form-control-static">{{firstName}}</p>
+                        <p class="form-control-static">{{model.firstName}}</p>
                     {{/if}}
                 </div>
-                <div {{bind-attr class=":form-group fieldErrors.lastName.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.lastName.length:has-error"}}>
                     <label for="lastName" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                    {{#if isNew}}
-                        {{input type="text" id="lastName" name="lastName" value=lastName class="form-control"}}
-                        {{error-display fieldErrors.lastName}}
+                    {{#if model.isNew}}
+                        {{input type="text" id="lastName" name="lastName" value=model.lastName class="form-control"}}
+                        {{error-display model.fieldErrors.lastName}}
                     {{else}}
-                        <p class="form-control-static">{{lastName}}</p>
+                        <p class="form-control-static">{{model.lastName}}</p>
                     {{/if}}
                 </div>
-                <div {{bind-attr class=":form-group fieldErrors.birthDate.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.birthDate.length:has-error"}}>
                     <label for="birthDate" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                    {{#if isNew}}
+                    {{#if model.isNew}}
                         {{date-picker selectedDate=selectedDate}}
-                        {{error-display fieldErrors.birthDate}}
+                        {{error-display model.fieldErrors.birthDate}}
                     {{else}}
-                        <p class="form-control-static">{{format-date birthDate}}</p>
+                        <p class="form-control-static">{{format-date model.birthDate}}</p>
                     {{/if}}
                 </div>
             </div>
             <div class="col-md-6">
-                <div {{bind-attr class=":form-group fieldErrors.email.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.email.length:has-error"}}>
                     <label for="email" class="control-label">{{t 'literal.email'}}</label>
-                    {{input type="email" id="email" name="email" value=email class="form-control"}}
-                    {{error-display fieldErrors.email}}
+                    {{input type="email" id="email" name="email" value=model.email class="form-control"}}
+                    {{error-display model.fieldErrors.email}}
                 </div>
-                <div {{bind-attr class=":form-group fieldErrors.password.length:has-error"}}>
+                <div {{bind-attr class=":form-group model.fieldErrors.password.length:has-error"}}>
                     <label for="password" class="control-label">{{t 'literal.password'}}</label>
-                    {{#if isNew}}
-                        {{input type="password" id="password" name="password" value=password class="form-control"}}
-                        {{error-display fieldErrors.password}}
+                    {{#if model.isNew}}
+                        {{input type="password" id="password" name="password" value=model.password class="form-control"}}
+                        {{error-display model.fieldErrors.password}}
                     {{else}}
                         <p class="form-control-static">
                             {{#link-to 'user.change-password' id}}{{t 'user.form.changePassword'}}{{/link-to}}
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        {{#if isNew}}
+        {{#if model.isNew}}
             <div class="row">
                 <div class="col-xs-12">
                     <div class="checkbox">
@@ -75,7 +75,6 @@
                             {{input type="checkbox" id="termsOk" checked=termsOk}}
                             {{t 'user.form.termsOk.label'}}
                         </label>
-                        {{error-display fieldErrors.termsOk}}
                     </div>
                     <div class="checkbox">
                         <label>
@@ -88,8 +87,8 @@
         {{/if}}
         <div class="row">
             <div class="col-xs-12">
-                <button {{action "saveUser"}} {{bind-attr disabled="isSaving"}} class="btn btn-primary pull-right mls">
-                    {{#if isNew}}
+                <button {{action "saveUser"}} disabled={{model.isSaving}} class="btn btn-primary pull-right mls">
+                    {{#if model.isNew}}
                         {{t 'user.form.register'}}
                     {{else}}
                         {{t 'literal.save'}}
