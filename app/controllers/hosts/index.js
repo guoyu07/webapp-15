@@ -11,7 +11,7 @@ export default Ember.ArrayController.extend({
     // Query parameters bound with the URL
     queryParams: [
         'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus',
-        'mapZoom', 'isSuspended', 'isHidden', 'hasValidMembership'
+        'mapZoom', 'isSuspended', 'isHidden', 'membershipStatus'
     ],
 
     // Whether the controller is in loading state
