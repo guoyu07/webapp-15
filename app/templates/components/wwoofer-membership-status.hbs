@@ -20,7 +20,9 @@
 
                 {{t 'wwoofer.membership-status.keepAccess'}}
             </span>
-            {{#link-to 'memberships.new' (query-params type='W') class="btn btn-primary"}}{{t 'wwoofer.membership-status.renewMembership'}}{{/link-to}}.
+            {{#link-to 'memberships.new' (query-params type='W') class="btn btn-primary"}}
+                {{t 'wwoofer.membership-status.renewMembership'}}
+            {{/link-to}}
         </div>
     {{/if}}
 {{else}}
