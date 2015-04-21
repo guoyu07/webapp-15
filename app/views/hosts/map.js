@@ -18,12 +18,12 @@ export default EmberLeaflet.MapView.extend({
     didCreateLayer: function () {
 
         // Get map init parameters from controller
-        this._layer.setView(L.latLng(this.controller.get('lat'), this.controller.get('lon')), this.controller.get('mapZoom'), false);
-        this.controller.set('mapLayer', this._layer);
+        this._layer.setView(L.latLng(this.get('controller.lat'), this.get('controller.lon')), this.get('controller.mapZoom'), false);
+        this.set('controller.mapLayer', this._layer);
 
         // declare moveEnd action sender
         this.moveend = function () {
-            this.controller.send("mapChanged");
+            this.get('controller').send("mapChanged");
         };
 
         // continue Init

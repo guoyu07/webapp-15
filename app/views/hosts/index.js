@@ -8,7 +8,7 @@ export default Ember.View.extend({
     didInsertElement: function () {
         this.resizeElements();
         Ember.$(window).on("resize", this.resizeElements);
-        this.controller.get('mapLayer').invalidateSize();
+        this.get('controller.mapLayer').invalidateSize();
     },
 
     resizeElements: function() {
