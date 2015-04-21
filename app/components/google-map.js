@@ -27,7 +27,7 @@ export default Ember.Component.extend({
 
     /**
      * Returns the image as a CSS background.
-     * TODO: remove this after bind-attr are gone (=> htmlbars)
+     * TODO: fix Ember warning about style attributes binding.
      */
     asBackground: function () {
         return 'background:url(' + this.get('mapUrl') + ') center center; background-size:cover';

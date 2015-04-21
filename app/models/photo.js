@@ -22,7 +22,7 @@ export default DS.Model.extend(ValidationsMixin, {
 
     /**
      * Returns the image as a CSS background.
-     * TODO: remove this after bind-attr are gone (=> htmlbars)
+     * TODO: fix Ember warning about style attributes binding.
      */
     asBackground: function () {
         return 'background:url('+ this.get('completeUrl') +') center center; background-size:cover;';

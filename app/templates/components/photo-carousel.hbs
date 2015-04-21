@@ -7,7 +7,7 @@
 <div class="carousel-inner" role="listbox">
     {{#each photo in displayedPhotos}}
         <div class="item">
-            <div {{bind-attr style="photo.asBackground"}} class="slider-size">
+            <div style={{photo.asBackground}} class="slider-size">
                 <div class="carousel-caption">
                     {{photo.caption}}
                 </div>
