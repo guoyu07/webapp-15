@@ -1,14 +1,14 @@
 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
         {{#link-to 'hosts' class="btn btn-default pull-right"}}{{t 'literal.back'}}{{/link-to}}
-        <h1>{{farmName}}</h1>
+        <h1>{{model.farmName}}</h1>
     </div>
 
-    {{#if isPending}}
+    {{#if model.isPending}}
         {{partial 'host/validation-status'}}
     {{else}}
         {{#if belongsToCurrentUser}}
-            {{#if isApproved}}
+            {{#if model.isApproved}}
                 {{host-membership-status membershipsService=userMemberships}}
             {{else}}
                 <div class="alert alert-warning" role="alert">
@@ -21,16 +21,16 @@
 
     {{#if showNote}}
         <div class="alert alert-info" role="alert">
-            <strong>{{t 'host.index.note'}}</strong>: {{note}}
+            <strong>{{t 'host.index.note'}}</strong>: {{model.note}}
         </div>
     {{/if}}
 
     <div class="row">
         <div class="col-lg-8 host-photos-carousel">
-            {{photo-carousel photos=photos}}
+            {{photo-carousel photos=model.photos}}
         </div>
         <div class="col-lg-4 hidden-xs hidden-sm hidden-md">
-            {{google-map latitude=address.latitude longitude=address.longitude}}
+            {{google-map latitude=model.address.latitude longitude=model.address.longitude}}
         </div>
     </div>
     <hr>
@@ -41,9 +41,9 @@
         <div class="col-md-4">
             <p>
                 <span class="glyphicon glyphicon-envelope mrx"></span>
-                {{#unless noEmail}}
+                {{#unless model.noEmail}}
                     {{#if canSeeContactInfo}}
-                        {{mail-to user.email}}
+                        {{mail-to model.user.email}}
                     {{else}}
                         {{members-only}}
                     {{/if}}
@@ -51,9 +51,9 @@
             </p>
             <p>
                 <span class="glyphicon glyphicon-earphone mrx"></span>
-                {{#unless noPhone}}
+                {{#unless model.noPhone}}
                     {{#if canSeeContactInfo}}
-                        {{user.phone}}
+                        {{model.user.phone}}
                     {{else}}
                         {{members-only}}
                     {{/if}}
@@ -61,13 +61,13 @@
             </p>
             <p>
                 <span class="glyphicon glyphicon-plane mrx"></span>
-                {{travelDetails}}
+                {{model.travelDetails}}
             </p>
             <p>
                 <span class="glyphicon glyphicon-globe mrx"></span>
                 {{#if canSeeContactInfo}}
-                    {{#if webSite}}
-                        <a {{bind-attr href=webSite}} target="_blank">{{webSite}}</a>
+                    {{#if model.webSite}}
+                        <a {{bind-attr href=model.webSite}} target="_blank">{{model.webSite}}</a>
                     {{else}}
                         {{t 'host.index.noWebsite'}}
                     {{/if}}
@@ -80,7 +80,7 @@
             <p>
                 <span class="glyphicon glyphicon-user mrx"></span>
                 {{#if canSeeContactInfo}}
-                    {{user.firstName}} {{user.lastName}}
+                    {{model.user.firstName}} {{model.user.lastName}}
                 {{else}}
                     {{members-only}}
                 {{/if}}
@@ -88,29 +88,29 @@
             <p>
                 <span class="glyphicon glyphicon-home mrx"></span>
                 {{#if canSeeContactInfo}}
-                    {{address.address1}}
-                    {{#if address.address2}}
-                        / {{address.address2}}
+                    {{model.address.address1}}
+                    {{#if model.address.address2}}
+                        / {{model.address.address2}}
                     {{/if}}
-                    / {{address.zipCode}} {{address.city}}
+                    / {{model.address.zipCode}} {{model.address.city}}
                 {{else}}
                     {{members-only}}
                 {{/if}}
             </p>
             <p>
                 <span class="glyphicon glyphicon-star mrx"></span>
-                {{t 'host.index.memberSince'}} {{format-date createdAt format='MMMM YYYY'}}
+                {{t 'host.index.memberSince'}} {{format-date model.createdAt format='MMMM YYYY'}}
             </p>
         </div>
     </div>
     <hr>
-    {{#if activities}}
+    {{#if model.activities}}
         <div class="row">
             <div class="col-md-3">
                 <h4>{{t 'host.index.activities'}}</h4>
             </div>
             <div class="col-md-9">
-                {{#each activity in displayedActivities}}
+                {{#each activity in model.displayedActivities}}
                     <span class="label label-activity">{{activity}}</span>
                 {{/each}}
             </div>
@@ -122,7 +122,7 @@
             <h4>{{t 'host.index.description'}}</h4>
         </div>
         <div class="col-md-9">
-            {{expandable-text text=fullDescription}}
+            {{expandable-text text=model.fullDescription}}
         </div>
     </div>
 </div>

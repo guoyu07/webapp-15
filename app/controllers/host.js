@@ -3,11 +3,11 @@
  */
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
     needs: ['application'],
     belongsToCurrentUser: function() {
         var currentUserId = this.get('session.user.id');
-        var hostUserId = this.get('user.id');
+        var hostUserId = this.get('model.user.id');
         return currentUserId === hostUserId;
-    }.property('session.user.id', 'user.id')
+    }.property('session.user.id', 'model.user.id')
 });

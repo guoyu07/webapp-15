@@ -3,7 +3,7 @@
  */
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
 
     needs: ['host'],
 
@@ -19,5 +19,5 @@ export default Ember.ObjectController.extend({
      * Indicates whether the notes about the host should be displayed.
      * Only admin can see host notes.
      */
-    showNote: Ember.computed.and('note', 'session.user.isAdmin')
+    showNote: Ember.computed.and('model.note', 'session.user.isAdmin')
 });
