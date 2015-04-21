@@ -9,9 +9,14 @@
     <div class="col-sm-12 col-lg-7">
         <h4>{{farmName}}</h4>
         <p>{{description}}</p>
-        {{#link-to "host" hostId title=farmName }}
-            <button class="btn btn-default">{{t 'literal.view'}}</button>
+        {{#link-to "host" hostId title=farmName class="btn btn-primary"}}
+            {{t 'literal.view'}}
         {{/link-to}}
+        {{#if session.user.isAdmin}}
+            {{#link-to "host.edit" hostId class="btn btn-default" }}
+                {{t 'literal.edit'}}
+            {{/link-to}}
+        {{/if}}
     </div>
 </div>
 <hr class="hr-wider"/>
