@@ -23,13 +23,5 @@ export default Ember.Component.extend({
             '&size=800x300' +
             '&markers=color:red|' + latitude + ',' + longitude;
         return encodeURI(url);
-    }.property('latitude', 'longitude'),
-
-    /**
-     * Returns the image as a CSS background.
-     * TODO: fix Ember warning about style attributes binding.
-     */
-    asBackground: function () {
-        return 'background:url(' + this.get('mapUrl') + ') center center; background-size:cover';
-    }.property('mapUrl')
+    }.property('latitude', 'longitude')
 });

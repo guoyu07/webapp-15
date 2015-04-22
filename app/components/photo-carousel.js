@@ -22,7 +22,7 @@ export default Ember.Component.extend({
         if (Ember.isEmpty(photos)) {
             photos = [
                 {
-                    asBackground: 'background:url(assets/images/wwoof-no-photo.png) center center; background-size:cover;',
+                    completeUrl: 'assets/images/wwoof-no-photo.png',
                     caption: Ember.I18n.t('host.index.noPhotoCaption')
                 }
             ];

@@ -21,14 +21,6 @@ export default DS.Model.extend(ValidationsMixin, {
     }.property('fileName'),
 
     /**
-     * Returns the image as a CSS background.
-     * TODO: fix Ember warning about style attributes binding.
-     */
-    asBackground: function () {
-        return 'background:url('+ this.get('completeUrl') +') center center; background-size:cover;';
-    }.property('completeUrl'),
-
-    /**
      * Returns true if the photo is in a state where it cannot be saved.
      */
     cannotSave: function () {

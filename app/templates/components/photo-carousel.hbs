@@ -7,7 +7,7 @@
 <div class="carousel-inner" role="listbox">
     {{#each photo in displayedPhotos}}
         <div class="item">
-            <div style={{photo.asBackground}} class="slider-size">
+            <div style="background:url({{photo.completeUrl}}) center center; background-size:cover;" class="slider-size">
                 <div class="carousel-caption">
                     {{photo.caption}}
                 </div>
