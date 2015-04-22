@@ -6,7 +6,9 @@
                 <div class="input-group">
                     <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
                     {{input class="form-control" type="search"  id="searchTerm" placeholderTranslation="hosts.index.searchTerm.placeholder" value=searchTerm action="updateHosts"}}
-                    <label {{action "updateHosts"}} {{bind-attr disabled=isLoading}} class="btn btn-primary btn-block-tn input-group-addon">{{t 'literal.search'}}</label>
+                    <a {{action "updateHosts"}} {{bind-attr class=":btn :btn-primary :input-group-addon isLoading:disabled"}}>
+                        {{t 'literal.search'}}
+                    </a>
                 </div>
             </div>
             <div class="mbm" role="tabpanel">
