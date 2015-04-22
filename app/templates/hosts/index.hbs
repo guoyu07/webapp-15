@@ -47,26 +47,38 @@
                         {{#if session.user.isAdmin}}
                             <h4>{{t 'hosts.index.admin'}}</h4>
                             <div class="col-md-4 col-sm-12">
-                                {{#radio-button value="pending" groupValue=approvalStatus class="radio"}}
-                                    {{t 'hosts.index.pending.label'}}
-                                {{/radio-button}}
-                                {{#radio-button value="approved" groupValue=approvalStatus class="radio"}}
-                                    {{t 'hosts.index.approved.label'}}
-                                {{/radio-button}}
-                                {{#radio-button value="rejected" groupValue=approvalStatus class="radio"}}
-                                    {{t 'hosts.index.rejected.label'}}
-                                {{/radio-button}}
+                                <div class="radio">
+                                    {{#radio-button value="pending" groupValue=approvalStatus}}
+                                        {{t 'hosts.index.pending.label'}}
+                                    {{/radio-button}}
+                                </div>
+                                <div class="radio">
+                                    {{#radio-button value="approved" groupValue=approvalStatus}}
+                                        {{t 'hosts.index.approved.label'}}
+                                    {{/radio-button}}
+                                </div>
+                                <div class="radio">
+                                    {{#radio-button value="rejected" groupValue=approvalStatus}}
+                                        {{t 'hosts.index.rejected.label'}}
+                                    {{/radio-button}}
+                                </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
-                                {{#radio-button value="valid" groupValue=membershipStatus class="radio"}}
-                                    {{t 'hosts.index.valid.label'}}
-                                {{/radio-button}}
-                                {{#radio-button value="expired" groupValue=membershipStatus class="radio"}}
-                                    {{t 'hosts.index.expired.label'}}
-                                {{/radio-button}}
-                                {{#radio-button value="none" groupValue=membershipStatus class="radio"}}
-                                    {{t 'hosts.index.none.label'}}
-                                {{/radio-button}}
+                                <div class="radio">
+                                    {{#radio-button value="valid" groupValue=membershipStatus}}
+                                        {{t 'hosts.index.valid.label'}}
+                                    {{/radio-button}}
+                                </div>
+                                <div class="radio">
+                                    {{#radio-button value="expired" groupValue=membershipStatus}}
+                                        {{t 'hosts.index.expired.label'}}
+                                    {{/radio-button}}
+                                </div>
+                                <div class="radio">
+                                    {{#radio-button value="none" groupValue=membershipStatus}}
+                                        {{t 'hosts.index.none.label'}}
+                                    {{/radio-button}}
+                                </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="checkbox">
