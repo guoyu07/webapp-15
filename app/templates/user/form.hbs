@@ -61,7 +61,7 @@
                         {{error-display model.fieldErrors.password}}
                     {{else}}
                         <p class="form-control-static">
-                            {{#link-to 'user.change-password' id}}{{t 'user.form.changePassword'}}{{/link-to}}
+                            {{#link-to 'user.change-password' model.id}}{{t 'user.form.changePassword'}}{{/link-to}}
                         </p>
                     {{/if}}
                 </div>

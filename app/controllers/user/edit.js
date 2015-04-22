@@ -3,17 +3,12 @@
  */
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
-
+export default Ember.Controller.extend({
     actions: {
         saveUser: function () {
 
+            // Get the user
             var user = this.get('model');
-
-            // Prevent multiple save attempts
-            if (this.get('isSaving')) {
-                return;
-            }
 
             // Validate and save
             var self = this;

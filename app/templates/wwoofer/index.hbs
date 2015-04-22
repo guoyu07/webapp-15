@@ -1,6 +1,6 @@
 <div class="col-md-10 col-md-offset-1">
     <div class="page-header">
-        <h1>{{user.firstName}} {{user.lastName}}</h1>
+        <h1>{{model.user.firstName}} {{model.user.lastName}}</h1>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -9,8 +9,9 @@
                     <h4 class="panel-title">{{t 'wwoofer.index.general'}}</h4>
                 </div>
                 <div class="panel-body">
-                    {{t 'wwoofer.index.memberSince'}} {{format-date user.createdAt}}<br/>
-                    {{t 'wwoofer.index.born'}} {{format-date user.birthDate}} ({{birthdate-to-age user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
+                    {{t 'wwoofer.index.memberSince'}} {{format-date model.user.createdAt}}<br/>
+                    {{t 'wwoofer.index.born'}} {{format-date model.user.birthDate}}
+                    ({{birthdate-to-age model.user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
                 </div>
             </div>
         </div>
@@ -20,10 +21,10 @@
                     <h4 class="panel-title">{{t 'wwoofer.index.address'}}</h4>
                 </div>
                 <div class="panel-body">
-                    {{address.address1}}<br/>
-                    {{address.address2}}<br/>
-                    {{address.zipCode}} {{address.city}} {{address.state}}<br/>
-                    {{address.country.name}}<br/>
+                    {{model.address.address1}}<br/>
+                    {{model.address.address2}}<br/>
+                    {{model.address.zipCode}} {{model.address.city}} {{model.address.state}}<br/>
+                    {{model.address.country.name}}<br/>
                 </div>
             </div>
         </div>
@@ -33,8 +34,8 @@
                     <h4 class="panel-title">{{t 'wwoofer.form.intro.label'}}</h4>
                 </div>
                 <div class="panel-body">
-                    {{#if intro}}
-                        {{intro}}
+                    {{#if model.intro}}
+                        {{model.intro}}
                     {{else}}
                         <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
                     {{/if}}
@@ -47,8 +48,8 @@
                     <h4 class="panel-title">{{t 'wwoofer.form.tripMotivation.label'}}</h4>
                 </div>
                 <div class="panel-body">
-                    {{#if tripMotivation}}
-                        {{tripMotivation}}
+                    {{#if model.tripMotivation}}
+                        {{model.tripMotivation}}
                     {{else}}
                         <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
                     {{/if}}
@@ -61,8 +62,8 @@
                     <h4 class="panel-title">{{t 'wwoofer.index.contact'}}</h4>
                 </div>
                 <div class="panel-body">
-                    {{user.phone}}<br/>
-                    {{user.email}}
+                    {{mail-to model.user.email}}<br/>
+                    {{model.user.phone}}
                 </div>
             </div>
         </div>
@@ -73,7 +74,7 @@
                         <h4 class="panel-title">{{t 'wwoofer.index.memberships'}}</h4>
                     </div>
                     <div class="panel-body">
-                        {{#link-to 'user.memberships' user}}{{t 'wwoofer.index.viewMemberships'}}{{/link-to}}
+                        {{#link-to 'user.memberships' model.user}}{{t 'wwoofer.index.viewMemberships'}}{{/link-to}}
                     </div>
                 </div>
             </div>

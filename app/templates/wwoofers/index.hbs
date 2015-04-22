@@ -52,18 +52,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {{#each}}
+                            {{#each wwoofer in this}}
                                 <tr>
-                                    <td>{{user.firstName}}</td>
-                                    <td>{{user.lastName}}</td>
-                                    <td>{{user.email}}</td>
-                                    <td class="hidden-xs hidden-sm">{{address.city}}</td>
-                                    <td class="hidden-xs hidden-sm">{{address.country.name}}</td>
+                                    <td>{{wwoofer.user.firstName}}</td>
+                                    <td>{{wwoofer.user.lastName}}</td>
+                                    <td>{{wwoofer.user.email}}</td>
+                                    <td class="hidden-xs hidden-sm">{{wwoofer.address.city}}</td>
+                                    <td class="hidden-xs hidden-sm">{{wwoofer.address.country.name}}</td>
                                     <td>
-                                        {{#link-to "wwoofer" id}}{{t 'literal.view'}}{{/link-to}}
+                                        {{#link-to "wwoofer" wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
                                         {{#if session.user.isAdmin}}
                                             |
-                                            {{#link-to "wwoofer.edit" id}}{{t 'literal.edit'}}{{/link-to}}
+                                            {{#link-to "wwoofer.edit" wwoofer.id}}{{t 'literal.edit'}}{{/link-to}}
                                         {{/if}}
                                     </td>
                                 </tr>
