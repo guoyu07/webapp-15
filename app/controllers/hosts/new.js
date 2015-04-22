@@ -3,7 +3,7 @@
  */
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
 
     needs: ['hosts', 'departments', 'countries', 'activities', 'application'],
 
@@ -16,23 +16,18 @@ export default Ember.ObjectController.extend({
     actions: {
         saveHost: function () {
 
-            // Prevent multiple save attempts
-            if (this.get('isSaving')) {
-                return;
-            }
-
-            // Get host and address
+            // Get models
             var host = this.get('model');
             var address = host.get('address');
+            var user = host.get('user');
 
-            // Reset website to null to pass server-side validation (only accept null, and not empty string)
-            if (host.get('webSite') === '') {
+            // Reset website to null to pass server-side validation (accepts only null, not empty strings)
+            if (Ember.isEmpty(host.get('webSite'))) {
                 host.set('webSite', null);
             }
 
             // Initialize validations array
-            var validations = Ember.makeArray(host.validate());
-            validations.push(address.validate());
+            var validations = [ host.validate(), address.validate(), user.validate() ];
 
             // Validate host and address
             var self = this;
@@ -50,6 +45,11 @@ export default Ember.ObjectController.extend({
                 promise = promise.then(function () {
                     host.set('address', address);
                     return host.save();
+                });
+
+                // Save the user (phone number)
+                promise = promise.then (function () {
+                    return user.save();
                 });
 
                 // Inform and redirect user to the edit page
