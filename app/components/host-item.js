@@ -23,7 +23,7 @@ export default Ember.Component.extend({
     /**
      * Host photo Id
      */
-    photoId : Ember.computed.readOnly('host.properties.photo'),
+    photoId : Ember.computed.readOnly('host.properties.photoId'),
 
     /**
      * Host description
@@ -34,6 +34,9 @@ export default Ember.Component.extend({
      * Host photo object
      */
     photo : function () {
-        return this.get('photoId') ? this.container.lookup('store:main').find('photo', this.get('photoId')) : null;
+        var photoId = this.get('photoId');
+        if (photoId) {
+            return this.container.lookup('store:main').find('photo', photoId);
+        }
     }.property('photoId')
 });

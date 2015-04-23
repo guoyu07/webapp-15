@@ -10,11 +10,11 @@ export default Ember.View.extend({
     /**
      * Farm photo complete URL
      */
-    completeUrl: function () {
-        var photoId = this.get('properties.photo');
+    photo: function () {
+        var photoId = this.get('properties.photoId');
         if (!Ember.isEmpty(photoId)) {
             return this.container.lookup("store:main").find('photo', photoId);
         }
-    }.property('properties.photo')
+    }.property('properties.photoId')
 });
 

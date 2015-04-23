@@ -1,6 +1,6 @@
 {{#link-to "host" properties.hostId title=properties.farmName }}
-    {{#if properties.photo}}
-        {{host-thumb url=view.completeUrl}}
+    {{#if properties.photoId}}
+        {{host-thumb url=view.photo.completeUrl}}
     {{else}}
         {{host-thumb url="assets/images/wwoof-no-photo.png"}}
     {{/if}}

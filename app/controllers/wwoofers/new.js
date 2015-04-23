@@ -20,9 +20,9 @@ export default Ember.Controller.extend({
             var address = wwoofer.get('address');
 
             // Test whether the user has provided a second wwoofer
-            var hasSecondWoofer = Ember.isPresent(wwoofer.get('firstName2'))
-                && Ember.isPresent(wwoofer.get('lastName2'))
-                && this.get('hasOtherWwoofer') === true;
+            var hasSecondWoofer = Ember.isPresent(wwoofer.get('firstName2')) &&
+                Ember.isPresent(wwoofer.get('lastName2')) &&
+                this.get('hasOtherWwoofer') === true;
 
             // Handle second wwoofer
             if (hasSecondWoofer) {
