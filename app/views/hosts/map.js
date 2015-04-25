@@ -9,7 +9,7 @@ import OSMLayer from '../../layers/osm';
 export default EmberLeaflet.MapView.extend({
     zoom: config.map.defaultZoom,
     center: L.latLng(config.map.defaultLat, config.map.defaultLon),
-    options: { maxZoom: 12 },
+    options: { minZoom: 3, maxZoom: 12 },
     childLayers: [
         OSMLayer,
         HostsLayer
