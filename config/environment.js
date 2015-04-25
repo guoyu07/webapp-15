@@ -37,7 +37,7 @@ module.exports = function (environment) {
             'img-src': "'self' data: app.wwoof.fr maps.googleapis.com www.google-analytics.com *.mqcdn.com usage.trackjs.com",
             'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
             'media-src': "'self'",
-            'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com *.cloudfront.net"
+            'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com"
         }
     };
 
