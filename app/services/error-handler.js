@@ -79,7 +79,7 @@ export default Ember.Object.extend({
             }
 
             // Log in trackJs and console
-            trackJs.track();
+            trackJs.track(err);
             Ember.Logger.assert(false, err);
         }
     }
