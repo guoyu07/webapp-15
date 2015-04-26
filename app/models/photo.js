@@ -17,7 +17,10 @@ export default DS.Model.extend(ValidationsMixin, {
 
     // Computed properties
     completeUrl: function () {
-        return this.get('fileName') ? '//app.wwoof.fr/public/host_photos/' + encodeURIComponent(this.get('fileName')) : '';
+        var fileName = this.get('fileName');
+        if (!Ember.isEmpty(fileName)) {
+            return 'https://app.wwoof.fr/public/host_photos/' + encodeURIComponent(fileName);
+        }
     }.property('fileName'),
 
     /**
