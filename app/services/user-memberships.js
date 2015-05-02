@@ -16,8 +16,8 @@ export default Ember.Object.extend({
         // Retrieve the user's memberships
         var self = this;
         var store = this.container.lookup('store:main');
-        store.find('user', userId).then(function (user) {
-            self.set('memberships', user.get('memberships'));
+        store.find('membership', { userId: userId }).then(function (memberships) {
+            self.set('memberships', memberships);
         });
     },
 
