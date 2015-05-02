@@ -20,12 +20,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{#each localUserMembershipsService.wwoofMemberships}}
+                    {{#each wwoofMembership in localUserMembershipsService.wwoofMemberships}}
                         <tr>
-                            <td>{{itemCode}}</td>
-                            <td>{{format-date createdAt}}</td>
-                            <td>{{total}} Euro</td>
-                            <td>{{format-date expireAt}}</td>
+                            <td>{{wwoofMembership.itemCode}}</td>
+                            <td>{{format-date wwoofMembership.createdAt}}</td>
+                            <td>{{wwoofMembership.total}} Euro</td>
+                            <td>{{format-date wwoofMembership.expireAt}}</td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -49,12 +49,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{#each localUserMembershipsService.hostMemberships}}
+                    {{#each hostMembership in localUserMembershipsService.hostMemberships}}
                         <tr>
-                            <td>{{itemCode}}</td>
-                            <td>{{format-date createdAt}}</td>
-                            <td>{{total}} Euro</td>
-                            <td>{{format-date expireAt}}</td>
+                            <td>{{hostMembership.itemCode}}</td>
+                            <td>{{format-date hostMembership.createdAt}}</td>
+                            <td>{{hostMembership.total}} Euro</td>
+                            <td>{{format-date hostMembership.expireAt}}</td>
                         </tr>
                     {{/each}}
                     </tbody>
