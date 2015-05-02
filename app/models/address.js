@@ -39,6 +39,24 @@ export default DS.Model.extend(ValidationsMixin, {
         },
         country: {
             presence: true
+        },
+        latitude: {
+            numericality: {
+                allowBlank: {
+                    if: 'isNew'
+                },
+                greaterThanOrEqualTo: -90,
+                lessThanOrEqualTo : +90
+            }
+        },
+        longitude: {
+            numericality: {
+                allowBlank: {
+                    if: 'isNew'
+                },
+                greaterThanOrEqualTo: -180,
+                lessThanOrEqualTo : +180
+            }
         }
     }
 });

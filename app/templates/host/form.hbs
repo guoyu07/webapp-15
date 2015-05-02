@@ -120,6 +120,24 @@
                         {{/if}}
                     {{/if}}
                 </div>
+                {{#if session.user.isAdmin}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div {{bind-attr class=":form-group model.address.fieldErrors.latitude.length:has-error"}}>
+                                <label for="latitude" class="control-label">{{t 'address.form.latitude.label'}}</label>
+                                {{input type="number" id="latitude" name="latitude" value=model.address.latitude class="form-control"}}
+                                {{error-display model.address.fieldErrors.latitude}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div {{bind-attr class=":form-group model.address.fieldErrors.longitude.length:has-error"}}>
+                                <label for="longitude" class="control-label">{{t 'address.form.longitude.label'}}</label>
+                                {{input type="number" id="longitude" name="longitude" value=model.address.longitude class="form-control"}}
+                                {{error-display model.address.fieldErrors.longitude}}
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
             </div>
         </div>
         <div class="row">
