@@ -23,7 +23,7 @@
                 <td>{{membership.type}}</td>
                 <td>{{format-date membership.expireAt}}</td>
                 <td>
-                    <button {{action 'sendReminder' membership}} disabled={{reminderAlreadySent}} class="btn btn-primary">
+                    <button {{action 'sendReminder' membership}} disabled={{membership.reminderAlreadySent}} class="btn btn-primary">
                         {{t 'memberships.index.sendReminder'}}
                     </button>
                 </td>
