@@ -21,6 +21,15 @@ export default DS.Model.extend(ValidationsMixin, {
     user: DS.belongsTo('user', { async: true }),
     address: DS.belongsTo('address'),
 
+    /**
+     * Returns the full name of the second wwoofer.
+     */
+    fullName2: function () {
+        if (this.get('firstName2') || this.get('lastName2')) {
+            return this.get('firstName2') + ' ' + this.get('lastName2');
+        }
+    }.property('firstName2', 'lastName2'),
+
     validations: {
         intro: {
             presence: true,

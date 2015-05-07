@@ -24,6 +24,13 @@ export default DS.Model.extend(ValidationsMixin, {
     wwoofer: DS.belongsTo('wwoofer', { async: true }),
     memberships: DS.hasMany('membership', { async: true }),
 
+    /**
+     * Returns the full name of the user.
+     */
+    fullName: function () {
+        return this.get('firstName') + ' ' + this.get('lastName');
+    }.property('firstName', 'lastName'),
+
     // Validations
     validations: {
         email: {

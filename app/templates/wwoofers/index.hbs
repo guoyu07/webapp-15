@@ -43,8 +43,8 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>{{t 'wwoofers.index.firstName'}}</th>
-                                    <th>{{t 'wwoofers.index.lastName'}}</th>
+                                    <th>{{t 'wwoofers.index.wwoofer1'}}</th>
+                                    <th>{{t 'wwoofers.index.wwoofer2'}}</th>
                                     <th>{{t 'literal.email'}}</th>
                                     <th class="hidden-xs hidden-sm">{{t 'wwoofers.index.city'}}</th>
                                     <th class="hidden-xs hidden-sm">{{t 'wwoofers.index.country'}}</th>
@@ -54,8 +54,8 @@
                             <tbody>
                             {{#each wwoofer in this}}
                                 <tr>
-                                    <td>{{wwoofer.user.firstName}}</td>
-                                    <td>{{wwoofer.user.lastName}}</td>
+                                    <td>{{wwoofer.user.fullName}}</td>
+                                    <td>{{wwoofer.fullName2}}</td>
                                     <td>{{wwoofer.user.email}}</td>
                                     <td class="hidden-xs hidden-sm">{{wwoofer.address.city}}</td>
                                     <td class="hidden-xs hidden-sm">{{wwoofer.address.country.name}}</td>
