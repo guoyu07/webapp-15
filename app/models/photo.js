@@ -20,7 +20,7 @@ export default DS.Model.extend(ValidationsMixin, {
     completeUrl: function () {
         var fileName = this.get('fileName');
         if (!Ember.isEmpty(fileName)) {
-            return 'https://app.wwoof.fr/public/host_photos/' + encodeURIComponent(fileName);
+            return 'https://s3.amazonaws.com/wwoof-france/photos/hosts/' + encodeURIComponent(fileName);
         }
     }.property('fileName'),
 
