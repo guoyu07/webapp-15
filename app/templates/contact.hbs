@@ -3,35 +3,40 @@
         <h1>{{t 'contact.title'}}</h1>
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'contact.welcome.title'}}</h4>
-                </div>
-                <div class="panel-body">
-                    <p>{{t 'contact.welcome.content1'}}</p>
-                    <p>{{t 'contact.welcome.content2'}}
-                        {{t 'contact.welcome.content3'}} <a href="mailto:webmaster@wwoof.fr">webmaster@wwoof.fr</a>.
-                        {{t 'contact.welcome.content4'}}
-                    </p>
-                    <p>
-                        {{t 'contact.welcome.content5'}} <a href="mailto:hello@wwoof.fr">hello@wwoof.fr</a>.
-                    </p>
-                </div>
+        <div class="col-xs-12">
+            <p>
+                {{t 'contact.intro'}}
+            </p>
+            <h3>{{t 'contact.generalInquiries'}}</h3>
+            <p>
+                {{t 'contact.findTheRightContact'}}
+            </p>
+            <ul>
+                <li>{{t 'contact.ifWwoofer'}} <strong>virginie@wwoof.fr</strong></li>
+                <li>{{t 'contact.ifHost'}} <strong>alexandra@wwoof.fr</strong></li>
+                <li>{{t 'contact.ifOther'}} <strong>hello@wwoof.fr</strong></li>
+            </ul>
+            <h3>{{t 'contact.technicalInquiries'}}</h3>
+            <div class="bs-callout bs-callout-danger">
+                <h4>{{t 'contact.whatBrowser'}}</h4>
+                <p>
+                    {{t 'contact.browser1'}}
+                    {{t 'contact.browser2'}}
+                    {{t 'contact.browser3'}}
+                    {{t 'contact.browser4'}}
+                </p>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'contact.contribute.title'}}</h4>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        {{t 'contact.contribute.content1'}} <a href="https://github.com/wwoof">{{t 'contact.contribute.content2'}}</a>.
-                        {{t 'contact.contribute.content3'}}
-                    </p>
-                </div>
-            </div>
+            <p>
+                {{t 'contact.support.content1'}}
+                {{t 'contact.support.content2'}}
+                {{t 'contact.support.content3'}}
+                {{t 'contact.support.content4'}}
+            </p>
+            <h3>{{t 'contact.contribute.title'}}</h3>
+            <p>
+                {{t 'contact.contribute.content1'}} <a href="https://github.com/wwoof">{{t 'contact.contribute.content2'}}</a>.
+                {{t 'contact.contribute.content3'}}
+            </p>
         </div>
     </div>
 </div>
