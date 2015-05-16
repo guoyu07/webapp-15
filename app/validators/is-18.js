@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import BaseValidator from 'ember-validations/validators/base';
 
 export default BaseValidator.extend({
