@@ -37,8 +37,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
             // Handle second wwoofer
             if (this.get('secondWwooferChecked')) {
-                // Set second wwoofer birth date (if any)
-                wwoofer.set('birthDate2', this.get('selectedDate').format('YYYY-MM-DD'));
+                if (this.get('canEditOtherWwoofer')) {
+                    // Set second wwoofer birth date
+                    wwoofer.set('birthDate2', this.get('selectedDate').format('YYYY-MM-DD'));
+                }
             } else {
                 // Erase the other wwoofer info
                 wwoofer.set('firstName2', null);

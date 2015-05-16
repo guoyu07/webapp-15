@@ -10,7 +10,7 @@ export default BaseValidator.extend({
      */
     call: function() {
         var selectedDate = this.model.get(this.property);
-        if (selectedDate.isAfter(this.get('maxDate'))) {
+        if (!selectedDate || selectedDate.isAfter(this.get('maxDate'))) {
             this.errors.pushObject(Ember.I18n.t('notify.mustBe18'));
         }
     }

@@ -2,17 +2,34 @@
  * Ember controller for user edition.
  */
 import Ember from 'ember';
+import ValidationsMixin from '../../mixins/validations';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(ValidationsMixin, {
+
+    /**
+     * Indicates whether the user's first name, last name and birth date can be edited.
+     */
+    canEditUser: Ember.computed.readOnly('session.user.isAdmin'),
+
+    selectedDate: null,
+
     actions: {
         saveUser: function () {
 
             // Get the user
             var user = this.get('model');
 
-            // Validate and save
+            // Set birth date
+            if (this.get('canEditUser')) {
+                user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
+            }
+
+            // Initialize validations array
+            var validations = [ this.validate(), user.validate() ];
+
+            // Save the user
             var self = this;
-            user.validate().then(function () {
+            Ember.RSVP.all(validations).then(function () {
                 user.save().then(function () {
                     alertify.success(Ember.I18n.t('notify.informationUpdated'));
                     self.transitionToRoute('index');
@@ -20,6 +37,12 @@ export default Ember.Controller.extend({
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
+        }
+    },
+
+    validations: {
+        selectedDate: {
+            'is-18': true
         }
     }
 });

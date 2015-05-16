@@ -2,18 +2,23 @@
  * Ember controller for user creation.
  */
 import Ember from 'ember';
+import ValidationsMixin from '../../mixins/validations';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(ValidationsMixin, {
+
+    /**
+     * Indicates whether the user's first name, last name and birth date can be edited.
+     */
+    canEditUser: true,
 
     termsOk: false,
     insuranceOk: false,
-
-    // The user must be 18 years old or more
-    maxDate: moment().subtract(18, 'year'),
     selectedDate: null,
 
     actions: {
         saveUser: function () {
+
+            // Get user
             var user = this.get('model');
 
             // Make sure all checkboxes are checked
@@ -22,17 +27,15 @@ export default Ember.Controller.extend({
                 return;
             }
 
-            // Make sure the user is 18 years old
-            var selectedDate = this.get('selectedDate');
-            if (selectedDate.isAfter(this.get('maxDate'))) {
-                alertify.error(Ember.I18n.t('notify.mustBe18'));
-                return;
-            }
-            user.set('birthDate', selectedDate.format('YYYY-MM-DD'));
+            // Set birth date
+            user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
+
+            // Initialize validations array
+            var validations = [ this.validate(), user.validate() ];
 
             // Save the user
             var self = this;
-            user.validate().then(function () {
+            Ember.RSVP.all(validations).then(function () {
                 user.save().then(function () {
                     // Authenticate user
                     var auth = self.get('session').authenticate('authenticator:passport', {
@@ -60,6 +63,12 @@ export default Ember.Controller.extend({
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
+        }
+    },
+
+    validations: {
+        selectedDate: {
+            'is-18': true
         }
     }
 });
