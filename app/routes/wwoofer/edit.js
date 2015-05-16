@@ -7,7 +7,7 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
     setupController: function (controller, wwoofer) {
         controller.set('selectedDate', moment(wwoofer.get('birthDate2')));
-        controller.set('secondWwooferChecked', !Ember.isEmpty('model.firstName2'));
+        controller.set('secondWwooferChecked', !Ember.isEmpty('wwoofer.firstName2'));
         this._super(controller, wwoofer);
     },
     renderTemplate: function () {
