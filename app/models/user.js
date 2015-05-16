@@ -36,14 +36,14 @@ export default DS.Model.extend(ValidationsMixin, {
         email: {
             presence: true,
             format: {
-                with: Regex.EMAIL_ADDRESS
+                'with': Regex.EMAIL_ADDRESS
             }
         },
         password: {
             presence: {
-                if: 'isNew'
+                'if': 'isNew'
             },
-            length: { if: 'isNew', minimum: 8, maximum: 25 }
+            length: { 'if': 'isNew', minimum: 8, maximum: 25 }
         },
         firstName: {
             presence: true,
@@ -55,7 +55,7 @@ export default DS.Model.extend(ValidationsMixin, {
         },
         birthDate: {
             presence: {
-                if: 'isNew' // legacy users do not have a birth date
+                'if': 'isNew' // legacy users do not have a birth date
             }
         }
     }

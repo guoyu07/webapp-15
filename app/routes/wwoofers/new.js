@@ -12,7 +12,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     beforeModel: function(transition) {
         this._super(transition);
         var route = this;
-        this.get('session.user').then(function (user) {
+        return this.get('session.user').then(function (user) {
             var wwooferId = user.get('wwoofer.id');
             if (wwooferId) {
                 route.transitionTo('wwoofer.edit', wwooferId);
@@ -22,9 +22,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     model: function () {
 
         // Create a new wwoofer record attached to the current logged in user
-        var address = this.store.createRecord('address');
         var self = this;
         return this.get('session.user').then(function (user) {
+            var address = this.store.createRecord('address');
             return self.store.createRecord('wwoofer', {
                 user: user,
                 address: address

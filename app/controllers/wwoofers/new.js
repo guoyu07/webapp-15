@@ -2,15 +2,28 @@
  * Ember controller for wwoofer creation.
  */
 import Ember from 'ember';
+import ValidationsMixin from '../../mixins/validations';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(ValidationsMixin, {
 
     needs: ['countries', 'departments'],
 
-    // The second wwoofer must be 18 years old or more
-    maxDate: moment().subtract(18, 'year'),
     selectedDate: null,
-    hasOtherWwoofer: false,
+
+    /**
+     * Indicates whether a second wwoofer was specified.
+     */
+    secondWwooferChecked: false,
+
+    /**
+     * Indicates whether the fields for the second wwoofer must be shown.
+     */
+    showOtherWwoofer: Ember.computed.readOnly('secondWwooferChecked'),
+
+    /**
+     * Indicates whether the second wwoofer can be edited.
+     */
+    canEditOtherWwoofer: true,
 
     actions: {
         saveWwoofer: function () {
@@ -18,26 +31,12 @@ export default Ember.Controller.extend({
             // Get wwoofer and address
             var wwoofer = this.get('model');
             var address = wwoofer.get('address');
-
-            // Test whether the user has provided a second wwoofer
-            var hasSecondWoofer = Ember.isPresent(wwoofer.get('firstName2')) &&
-                Ember.isPresent(wwoofer.get('lastName2')) &&
-                this.get('hasOtherWwoofer') === true;
+            var secondWwooferChecked = this.get('secondWwooferChecked');
 
             // Handle second wwoofer
-            if (hasSecondWoofer) {
-
+            if (secondWwooferChecked) {
                 // Set second wwoofer birth date (if any)
-                var selectedDate = this.get('selectedDate');
-                if (hasSecondWoofer && selectedDate) {
-
-                    // Make sure the wwoofer is 18 years old
-                    if (selectedDate.isAfter(this.get('maxDate'))) {
-                        alertify.error(Ember.I18n.t('notify.mustBe18'));
-                        return;
-                    }
-                    wwoofer.set('birthDate2', selectedDate.format('YYYY-MM-DD'));
-                }
+                wwoofer.set('birthDate2', this.get('selectedDate').format('YYYY-MM-DD'));
             } else {
                 // Erase the other wwoofer info
                 wwoofer.set('firstName2', null);
@@ -46,7 +45,7 @@ export default Ember.Controller.extend({
             }
 
             // Initialize validations array
-            var validations = [ wwoofer.validate(), address.validate() ];
+            var validations = [ this.validate(), wwoofer.validate(), address.validate() ];
 
             // Validate wwoofer and address
             var self = this;
@@ -69,12 +68,32 @@ export default Ember.Controller.extend({
                 // Inform and redirect user to payment page
                 promise.then(function () {
                     alertify.success(Ember.I18n.t('notify.wwooferCreated'));
-                    var itemCode = hasSecondWoofer ? 'WO2': 'WO1';
+                    var itemCode = secondWwooferChecked ? 'WO2': 'WO1';
                     self.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
+        }
+    },
+
+    validations: {
+        'model.firstName2': {
+            presence: {
+                'if': 'secondWwooferChecked'
+            },
+            length: { maximum: 255 }
+        },
+        'model.lastName2': {
+            presence: {
+                'if': 'secondWwooferChecked'
+            },
+            length: { maximum: 255 }
+        },
+        selectedDate: {
+            'is-18': {
+                'if': 'secondWwooferChecked'
+            }
         }
     }
 });

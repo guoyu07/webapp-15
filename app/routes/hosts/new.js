@@ -12,7 +12,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     beforeModel: function(transition) {
         this._super(transition);
         var route = this;
-        this.get('session.user').then(function (user) {
+        return this.get('session.user').then(function (user) {
             var hostId = user.get('host.id');
             if (hostId) {
                 route.transitionTo('host.edit', hostId);

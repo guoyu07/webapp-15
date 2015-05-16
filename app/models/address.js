@@ -43,7 +43,7 @@ export default DS.Model.extend(ValidationsMixin, {
         latitude: {
             numericality: {
                 allowBlank: {
-                    if: 'isNew'
+                    'if': 'isNew'
                 },
                 greaterThanOrEqualTo: -90,
                 lessThanOrEqualTo : +90
@@ -52,7 +52,7 @@ export default DS.Model.extend(ValidationsMixin, {
         longitude: {
             numericality: {
                 allowBlank: {
-                    if: 'isNew'
+                    'if': 'isNew'
                 },
                 greaterThanOrEqualTo: -180,
                 lessThanOrEqualTo : +180

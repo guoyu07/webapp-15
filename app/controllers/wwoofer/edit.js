@@ -2,18 +2,31 @@
  * Ember controller for wwoofer edition.
  */
 import Ember from 'ember';
+import ValidationsMixin from '../../mixins/validations';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(ValidationsMixin, {
 
-    needs: ['application', 'wwoofer', 'countries', 'departments'],
+    needs: ['wwoofer', 'countries', 'departments'],
+
+    selectedDate: null,
 
     // Bindings
     belongsToCurrentUser: Ember.computed.oneWay('controllers.wwoofer.belongsToCurrentUser'),
 
     /**
-     * Indicates whether a second wwoofer was registered
+     * Indicates whether a second wwoofer was specified.
      */
-    hasOtherWwoofer: Ember.computed.notEmpty('model.firstName2'),
+    secondWwooferChecked: Ember.computed.notEmpty('model.firstName2'),
+
+    /**
+     * Indicates whether the fields for the second wwoofer must be shown.
+     */
+    showOtherWwoofer: Ember.computed.or('secondWwooferChecked', 'session.user.isAdmin'),
+
+    /**
+     * Indicates whether the second wwoofer can be edited.
+     */
+    canEditOtherWwoofer: Ember.computed.or('session.user.isAdmin'),
 
     actions: {
         saveWwoofer: function () {
@@ -22,8 +35,19 @@ export default Ember.Controller.extend({
             var wwoofer = this.get('model');
             var address = wwoofer.get('address');
 
+            // Handle second wwoofer
+            if (this.get('secondWwooferChecked')) {
+                // Set second wwoofer birth date (if any)
+                wwoofer.set('birthDate2', this.get('selectedDate').format('YYYY-MM-DD'));
+            } else {
+                // Erase the other wwoofer info
+                wwoofer.set('firstName2', null);
+                wwoofer.set('lastName2', null);
+                wwoofer.set('birthDate2', null);
+            }
+
             // Initialize validations array
-            var validations = [ wwoofer.validate(), address.validate() ];
+            var validations = [ this.validate(), wwoofer.validate(), address.validate() ];
 
             // Validate wwoofer and address
             var self = this;
@@ -40,6 +64,26 @@ export default Ember.Controller.extend({
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
+        }
+    },
+
+    validations: {
+        'model.firstName2': {
+            presence: {
+                'if': 'secondWwooferChecked'
+            },
+            length: { maximum: 255 }
+        },
+        'model.lastName2': {
+            presence: {
+                'if': 'secondWwooferChecked'
+            },
+            length: { maximum: 255 }
+        },
+        selectedDate: {
+            'is-18': {
+                'if': 'secondWwooferChecked'
+            }
         }
     }
 });

@@ -27,37 +27,43 @@
         <div class="row">
             <div class="col-md-6">
                 <h3>{{t 'wwoofer.form.otherWwoofer'}}
-                    {{#if model.isNew }}
-                        <label>{{input type="checkbox" name="otherWwoofer" checked=hasOtherWwoofer }} {{t 'literal.yes'}}!</label>
+                    {{#if canEditOtherWwoofer }}
+                        <label>
+                            {{input type="checkbox" name="otherWwoofer" checked=secondWwooferChecked}}
+                            {{t 'literal.yes'}}!
+                        </label>
                     {{else}}
-                        {{#if hasOtherWwoofer}}
+                        {{#if secondWwooferChecked}}
                             <label>{{t 'literal.yes'}}</label>
                         {{else}}
                             <label>{{t 'literal.no'}}</label>
                         {{/if}}
                     {{/if}}
                 </h3>
-                {{#if hasOtherWwoofer}}
-                    <div class="form-group">
+                {{#if secondWwooferChecked}}
+                    <div {{bind-attr class=":form-group fieldErrors.model.firstName2.length:has-error"}}>
                         <label for="firstName2" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                        {{#if model.isNew}}
+                        {{#if canEditOtherWwoofer}}
                             {{input type="text" id="firstName2" name="firstName2" value=model.firstName2 class="form-control"}}
+                            {{error-display fieldErrors.model.firstName2}}
                         {{else}}
                             <p class="form-control-static">{{model.firstName2}}</p>
                         {{/if}}
                     </div>
-                    <div class="form-group">
+                    <div {{bind-attr class=":form-group fieldErrors.model.lastName2.length:has-error"}}>
                         <label for="lastName2" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                        {{#if model.isNew}}
+                        {{#if canEditOtherWwoofer}}
                             {{input type="text" id="lastName2" name="lastName2" value=model.lastName2 class="form-control"}}
+                            {{error-display fieldErrors.model.lastName2}}
                         {{else}}
                             <p class="form-control-static">{{model.lastName2}}</p>
                         {{/if}}
                     </div>
-                    <div class="form-group">
+                    <div {{bind-attr class=":form-group fieldErrors.selectedDate.length:has-error"}}>
                         <label for="birthDate2" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                        {{#if model.isNew}}
+                        {{#if canEditOtherWwoofer}}
                             {{date-picker selectedDate=selectedDate}}
+                            {{error-display fieldErrors.selectedDate}}
                         {{else}}
                             <p class="form-control-static">{{format-date model.birthDate2}}</p>
                         {{/if}}
