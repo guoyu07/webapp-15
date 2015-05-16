@@ -16,7 +16,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Indicates whether a second wwoofer was specified.
      */
-    secondWwooferChecked: Ember.computed.notEmpty('model.firstName2'),
+    secondWwooferChecked: false,
 
     /**
      * Indicates whether the fields for the second wwoofer must be shown.
