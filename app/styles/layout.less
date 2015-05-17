@@ -2,15 +2,6 @@ body {
     padding-top: @navbar-height + 20;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Oswald", Helvetica, Arial, sans-serif;
-}
-
 // Ugly alerts to remove
 .alert-with-button .btn {
   float: right;
@@ -64,4 +55,31 @@ span.error {
   color: #fff!important;
   font-size: 85%;
   border-radius: 2px;
+}
+
+// Align labels with inputs within horizontal forms
+//@media(min-width: @screen-sm-min) {
+//  .form-horizontal .control-label {
+//    padding-top: 12px;
+//  }
+//}
+
+// Form categories
+h3.ruled {
+  width: 100%;
+  text-align: center;
+  border-bottom: 2px solid @gray-lighter;
+  line-height: 0.1em;
+  margin: 20px 0 30px;
+}
+h3.ruled span {
+  background: @body-bg;
+  padding: 0 10px;
+}
+
+// Form instructions
+.form-details {
+  color: @gray-light;
+  font-style: italic;
+  margin-bottom: 15px;
 }
