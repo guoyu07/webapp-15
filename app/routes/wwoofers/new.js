@@ -24,7 +24,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         // Create a new wwoofer record attached to the current logged in user
         var self = this;
         return this.get('session.user').then(function (user) {
-            var address = this.store.createRecord('address');
+            var address = self.store.createRecord('address');
             return self.store.createRecord('wwoofer', {
                 user: user,
                 address: address
