@@ -178,7 +178,7 @@
                 {{/if}}
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button {{action "saveWwoofer"}} disabled={{model.isSaving}} class="btn btn-primary isNew:pull-right">
+                        <button {{action "saveWwoofer"}} disabled={{model.isSaving}} class="btn btn-primary {{if model.isNew 'pull-right'}}">
                             {{#if model.isNew}}
                                 {{t 'literal.continue'}}
                             {{else}}
