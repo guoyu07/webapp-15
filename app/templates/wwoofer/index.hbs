@@ -7,6 +7,11 @@
             {{/if}}
         </h1>
     </div>
+    {{#if showNote}}
+        <div class="alert alert-info" role="alert">
+            <strong>{{t 'wwoofer.index.note'}}</strong>: {{model.note}}
+        </div>
+    {{/if}}
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">

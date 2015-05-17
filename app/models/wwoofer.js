@@ -11,7 +11,7 @@ export default DS.Model.extend(ValidationsMixin, {
     firstName2: DS.attr('string'),
     lastName2: DS.attr('string'),
     birthDate2: DS.attr('string'),
-    comment: DS.attr('string'),
+    note: DS.attr('string'),
     createdAt: DS.attr('date'),
     updatedAt: DS.attr('date'),
     intro: DS.attr('string'),
@@ -38,6 +38,9 @@ export default DS.Model.extend(ValidationsMixin, {
         tripMotivation: {
             presence: true,
             length: { minimum: 100, maximum: 2000 }
+        },
+        note: {
+            length: { maximum: 2000 }
         }
     }
 });

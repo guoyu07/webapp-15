@@ -141,6 +141,17 @@
                 </div>
             </div>
         </div>
+        {{#if session.user.isAdmin}}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div {{bind-attr class=":form-group model.fieldErrors.note.length:has-error"}}>
+                        <label for="note" class="control-label">{{t 'wwoofer.form.note.label'}}</label>
+                        {{textarea id="note" name="note" value=model.note class="form-control" rows="4"}}
+                        {{error-display model.fieldErrors.note}}
+                    </div>
+                </div>
+            </div>
+        {{/if}}
         <div class="row">
             <div class="col-xs-12">
                 <button {{action "saveWwoofer"}} disabled={{model.isSaving}} class="btn btn-primary pull-right mls">
