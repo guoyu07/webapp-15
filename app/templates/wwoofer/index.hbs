@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-md-9">
                     {{#if model.intro}}
-                        {{model.intro}}
+                        {{convert-breaklines model.intro}}
                     {{else}}
                         <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
                     {{/if}}
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-9">
                     {{#if model.tripMotivation}}
-                        {{model.tripMotivation}}
+                        {{convert-breaklines model.tripMotivation}}
                     {{else}}
                         <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
                     {{/if}}
