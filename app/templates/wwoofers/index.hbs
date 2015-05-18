@@ -64,6 +64,8 @@
                                         {{#if session.user.isAdmin}}
                                             |
                                             {{#link-to "wwoofer.edit" wwoofer.id}}{{t 'literal.edit'}}{{/link-to}}
+                                            |
+                                            {{#link-to "user.memberships" wwoofer.user}}{{t 'wwoofers.index.viewMemberships'}}{{/link-to}}
                                         {{/if}}
                                     </td>
                                 </tr>

@@ -7,43 +7,50 @@
             {{/if}}
         </h1>
     </div>
-    {{#if showNote}}
-        <div class="alert alert-info" role="alert">
-            <strong>{{t 'wwoofer.index.note'}}</strong>: {{model.note}}
-        </div>
-    {{/if}}
     <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'wwoofer.index.general'}}</h4>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>{{t 'wwoofer.index.general'}}</h4>
                 </div>
-                <div class="panel-body">
-                    {{t 'wwoofer.index.memberSince'}} {{format-date model.user.createdAt}}<br/>
-                    {{t 'wwoofer.index.born'}} {{format-date model.user.birthDate}}
-                    ({{birthdate-to-age model.user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
+                <div class="col-md-4">
+                    <p>
+                        <span class="glyphicon glyphicon-user mrx"></span>
+                        {{model.user.fullName}}
+                        ({{birthdate-to-age model.user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
+                    </p>
+                    <p>
+                        <span class="glyphicon glyphicon-envelope mrx"></span>
+                        {{#unless model.noEmail}}
+                            {{mail-to model.user.email}}
+                        {{/unless}}
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        <span class="glyphicon glyphicon-home mrx"></span>
+                        {{#if session.user.isAdmin}}
+                            {{model.address.address1}}
+                            {{#if model.address.address2}}
+                                / {{model.address.address2}}
+                            {{/if}}
+                            / {{model.address.zipCode}} {{model.address.city}} ({{model.address.country.name}})
+                        {{else}}
+                            {{model.address.city}}, {{model.address.country.name}}
+                        {{/if}}
+                    </p>
+                    <p>
+                        <span class="glyphicon glyphicon-star mrx"></span>
+                        {{t 'wwoofer.index.memberSince'}} {{format-date model.user.createdAt format='MMMM YYYY'}}
+                    </p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'wwoofer.index.address'}}</h4>
+            <hr>
+            <div class="row mbl">
+                <div class="col-md-3">
+                    <h4>{{t 'wwoofer.form.intro.label'}}</h4>
                 </div>
-                <div class="panel-body">
-                    {{model.address.address1}}<br/>
-                    {{model.address.address2}}<br/>
-                    {{model.address.zipCode}} {{model.address.city}} {{model.address.state}}<br/>
-                    {{model.address.country.name}}<br/>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'wwoofer.form.intro.label'}}</h4>
-                </div>
-                <div class="panel-body">
+                <div class="col-md-9">
                     {{#if model.intro}}
                         {{model.intro}}
                     {{else}}
@@ -51,13 +58,12 @@
                     {{/if}}
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'wwoofer.form.tripMotivation.label'}}</h4>
+            <hr>
+            <div class="row mbl">
+                <div class="col-md-3">
+                    <h4>{{t 'wwoofer.form.tripMotivation.label'}}</h4>
                 </div>
-                <div class="panel-body">
+                <div class="col-md-9">
                     {{#if model.tripMotivation}}
                         {{model.tripMotivation}}
                     {{else}}
@@ -65,29 +71,79 @@
                     {{/if}}
                 </div>
             </div>
+            {{#link-to "wwoofers" class="btn btn-default"}}{{t 'literal.back'}}{{/link-to}}
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'wwoofer.index.contact'}}</h4>
-                </div>
-                <div class="panel-body">
-                    {{mail-to model.user.email}}<br/>
-                    {{model.user.phone}}
-                </div>
-            </div>
-        </div>
-        {{#if session.user.isAdmin}}
-            <div class="col-md-6">
-                <div class="panel panel-default">
+        <div class="col-sm-3 hidden-xs">
+            {{#if showNote}}
+                <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h4 class="panel-title">{{t 'wwoofer.index.memberships'}}</h4>
+                        <h3 class="panel-title">
+                            <span class="glyphicon glyphicon glyphicon-pushpin mrx"></span>
+                            {{t 'wwoofer.index.note'}}
+                        </h3>
                     </div>
                     <div class="panel-body">
-                        {{#link-to 'user.memberships' model.user}}{{t 'wwoofer.index.viewMemberships'}}{{/link-to}}
+                        {{model.note}}
                     </div>
                 </div>
+            {{/if}}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon glyphicon-download-alt mrx"></span>
+                        {{t 'documents.usefulDocuments'}}
+                    </h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-link mrx"></span>
+                                {{t 'documents.wwooferDeclaration'}}
+                                <!--Déclaration wwoofeur-->
+                            </td>
+                            <td><a href="http://www.wwoof.fr/documents/declaration.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                            <td><a href="http://www.wwoof.fr/documents/declaration.pdf" target="_blank">{{t 'literal.english'}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-link mrx"></span>
+                                {{t 'documents.selectWwoofer'}}
+                                <!--Sélectionner vos wwoofeurs-->
+                            </td>
+                            <td><a href="http://www.wwoof.fr/documents/selection-wwoofeur.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-link mrx"></span>
+                                {{t 'documents.wwooferArrival'}}
+                                <!--L'arrivée du wwoofeur-->
+                            </td>
+                            <td><a href="http://www.wwoof.fr/documents/arrivee-wwoofeur.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-link mrx"></span>
+                                {{t 'documents.wwoofingCharter'}}
+                            </td>
+                            <td><a href="http://www.wwoof.fr/documents/charte-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                            <td><a href="http://www.wwoof.fr/documents/wwoofing-charter.pdf" target="_blank">{{t 'literal.english'}}</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="glyphicon glyphicon-link mrx"></span>
+                                {{t 'documents.rulesAndRegulations'}}
+                            </td>
+                            <td><a href="http://www.wwoof.fr/documents/reglement-interieur-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                            <td><a href="http://www.wwoof.fr/documents/wwoofing-rules-and-regulations.pdf" target="_blank">{{t 'literal.english'}}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        {{/if}}
+        </div>
     </div>
 </div>
