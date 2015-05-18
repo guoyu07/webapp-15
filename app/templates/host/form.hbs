@@ -230,8 +230,8 @@
                         <button {{action "savePhoto"}} disabled={{controller.model.cannotSave}} class="btn btn-primary">
                             {{t 'literal.save'}}
                         </button>
-                        <button {{action "deletePhoto"}} class="btn btn-default">
-                            {{t 'literal.delete'}}
+                        <button {{action "deletePhoto"}} class="btn btn-default" aria-label={{t 'literal.delete'}}>
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
                     </div>
                 </div>
