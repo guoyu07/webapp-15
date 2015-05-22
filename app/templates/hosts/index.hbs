@@ -45,12 +45,9 @@
                             {{toggle-options values=activitiesService.allActivities selected=activities optionValuePath='id'}}
                         </div>
                         <h4 class="mtm">{{t 'hosts.index.openingMonths'}}</h4>
-                        <div class="form-group toggle-options-cols mtm">
+                        <div class="form-group toggle-options-cols capitalize mtm">
                             {{toggle-options values=monthsService.allMonths selected=months optionValuePath='id'}}
                         </div>
-                        <p class="form-details">
-                            {{t 'host.index.openingMonthsNote'}}
-                        </p>
                         {{#if session.user.isAdmin}}
                             <h4>{{t 'hosts.index.admin'}}</h4>
                             <div class="col-md-4 col-sm-12">
