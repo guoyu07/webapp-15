@@ -22,6 +22,7 @@ export default DS.Model.extend(ValidationsMixin, {
     isHidden: DS.attr('boolean'),
     isSuspended: DS.attr('boolean'),
     activities: DS.attr('array'),
+    openingMonths: DS.attr('array'),
     note: DS.attr('string'),
     createdAt: DS.attr('date'),
     updatedAt: DS.attr('date'),
@@ -38,6 +39,23 @@ export default DS.Model.extend(ValidationsMixin, {
     displayedActivities: Ember.computed.map('activities', function(activity) {
         return Ember.I18n.t('activities.' + activity);
     }),
+
+    /**
+     * Returns a list of all the months of the year.
+     * Each month comes with a boolean indicating whether the host is open.
+     */
+    openingCalendar: function () {
+        var openingMonths = this.get('openingMonths');
+        var months = [];
+        for (var i = 0; i <= 11; i++) {
+            var currentMonth = moment().months(i);
+            months.push({
+                label: currentMonth.format("MMMM"),
+                isOpen: openingMonths.contains(currentMonth.format("MM"))
+            });
+        }
+        return months;
+    }.property('openingMonths.@each'),
 
     // Phone is mandatory for hosts, this binding is used for validation
     phone: Ember.computed.readOnly('user.phone'),

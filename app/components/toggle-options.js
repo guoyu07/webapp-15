@@ -62,14 +62,6 @@ export default Ember.Component.extend({
     selected: null,
 
     /**
-     * The display name to show on the dropDown button
-     *
-     * @property buttonDisplayName
-     * @type String
-     */
-    buttonDisplayName: null,
-
-    /**
      * List of the possible toggle options, stuffed into objects that indicate whether
      * they are toggled 'on' or 'off' based on their presence in the array stored on
      * this view's `selected` property.
@@ -91,7 +83,7 @@ export default Ember.Component.extend({
                 content: value,
                 isSelected: (selectedProperties.contains(Ember.get(selectionValue, compareProperty)) || selected.contains(selectionValue)),
                 value: selectionValue,
-                label: Ember.I18n.t('activities.' + selectionValue)
+                label: value.get('label') ? value.get('label') : value
             });
         });
     }.property('values.length', 'values', 'selected.length', 'selected'),

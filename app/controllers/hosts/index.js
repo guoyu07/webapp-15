@@ -6,12 +6,15 @@ import config from '../../config/environment';
 
 export default Ember.ArrayController.extend({
 
-    needs: ['countries', 'activities'],
+    needs: ['countries'],
+
+    activitiesService: Ember.inject.service('activities'),
+    monthsService: Ember.inject.service('months'),
 
     // Query parameters bound with the URL
     queryParams: [
-        'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus',
-        'mapZoom', 'isSuspended', 'isHidden', 'membershipStatus'
+        'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'mapZoom',
+        'isSuspended', 'isHidden', 'membershipStatus', 'months'
     ],
 
     // Whether the controller is in loading state
@@ -32,8 +35,9 @@ export default Ember.ArrayController.extend({
     }.property('activeTab'),
 
     // Search filters
-    searchTerm: null,
+    searchTerm: '',
     activities: [],
+    months: [],
     approvalStatus: "approved",
     membershipStatus: "valid",
     isSuspended: false,
@@ -80,11 +84,6 @@ export default Ember.ArrayController.extend({
     mapLayer: null,
 
     /**
-     * All activities.
-     */
-    allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
-
-    /**
      * The container for pop-ups.
      */
     popUpContainer: Ember.ContainerView.create(),
@@ -102,9 +101,10 @@ export default Ember.ArrayController.extend({
             'activities': this.get('activities') || null,
             'membershipStatus': this.get('membershipStatus') || null,
             'isSuspended': this.get('isSuspended'),
-            'isHidden': this.get('isHidden')
+            'isHidden': this.get('isHidden'),
+            'months': this.get('months') || null
         };
-    }.property('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden'),
+    }.property('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
 
     /**
      * Indicates whether we can load more hosts.
@@ -120,7 +120,7 @@ export default Ember.ArrayController.extend({
         if (this.get('mapLayer')) {
             this.send('updateHosts');
         }
-    }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden'),
+    }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
 
     /**
      * List of the features displayed in the Host list.
@@ -139,13 +139,6 @@ export default Ember.ArrayController.extend({
     hasVisibleFeatures: function() {
         return this.get('visibleFeatures').length > 0;
     }.property('visibleFeatures.@each', 'visibleFeatures'),
-
-    /**
-     * Activities display name
-     */
-    activitiesDisplayName: function() {
-        return Ember.I18n.t('hosts.index.activities');
-    }.property(),
 
     /**
      * Compute the visibility of the features based on map Extend.

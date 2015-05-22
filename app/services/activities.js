@@ -1,9 +1,9 @@
 /**
- * Ember controller for host activities.
+ * Ember service for host activities.
  */
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Object.extend({
     /**
      * Activity ids.
      */

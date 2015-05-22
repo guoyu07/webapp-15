@@ -6,10 +6,12 @@ import config from '../../config/environment';
 
 export default Ember.Controller.extend({
 
-    needs: ['application', 'host', 'departments', 'countries', 'activities'],
+    needs: ['host', 'departments', 'countries'],
+
+    activitiesService: Ember.inject.service('activities'),
+    monthsService: Ember.inject.service('months'),
 
     belongsToCurrentUser: Ember.computed.readOnly('controllers.host.belongsToCurrentUser'),
-    allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
 
     actions: {
         saveHost: function () {
@@ -64,9 +66,5 @@ export default Ember.Controller.extend({
                 alertify.error(Ember.I18n.t('notify.submissionError'));
             });
         }
-    },
-
-    activitiesDisplayName: function() {
-        return Ember.I18n.t('hosts.index.activities');
-    }.property()
+    }
 });

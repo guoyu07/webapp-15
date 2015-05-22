@@ -5,13 +5,10 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    needs: ['hosts', 'departments', 'countries', 'activities', 'application'],
+    needs: ['departments', 'countries'],
 
-    allActivities: Ember.computed.readOnly('controllers.activities.allActivities'),
-
-    activitiesDisplayName: function() {
-        return Ember.I18n.t('hosts.index.activities');
-    }.property(),
+    activitiesService: Ember.inject.service('activities'),
+    monthsService: Ember.inject.service('months'),
 
     actions: {
         saveHost: function () {
