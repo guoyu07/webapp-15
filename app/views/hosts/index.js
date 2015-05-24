@@ -14,25 +14,25 @@ export default Ember.View.extend({
     resizeElements: function() {
 
         var windowHeight = Ember.$(window).height();
-        var navHeight = Ember.$("nav .container-fluid").outerHeight();
-        var searchBoxHeight = Ember.$("#hosts-search-box").outerHeight();
-        var searchTabsHeight = Ember.$("#hosts-search-tabs").outerHeight();
+        var navHeight = Ember.$("nav .container-fluid").outerHeight(true);
+        var searchBoxHeight = Ember.$("#hosts-search-box").outerHeight(true);
+        var searchTabsHeight = Ember.$("#hosts-search-tabs").outerHeight(true);
 
         if (Ember.$('#resultList').is(':hidden')) {
 
             // resize Map for mobile
             if (Ember.$(".leaflet-container")) {
-                Ember.$(".leaflet-container").height(windowHeight - navHeight - searchBoxHeight - searchTabsHeight - 60);
+                Ember.$(".leaflet-container").height(windowHeight - navHeight - searchBoxHeight - searchTabsHeight - 50);
             }
         } else {
 
             // resize Map for desktop
             if (Ember.$(".leaflet-container")) {
-                Ember.$(".leaflet-container").height(windowHeight - navHeight - 40);
+                Ember.$(".leaflet-container").height(windowHeight - navHeight - 35);
             }
 
             if (Ember.$("#resultList")) {
-                Ember.$("#resultList").height(windowHeight - navHeight - searchBoxHeight - searchTabsHeight - 74);
+                Ember.$("#resultList").height(windowHeight - navHeight - searchBoxHeight - searchTabsHeight - 55);
             }
         }
     }

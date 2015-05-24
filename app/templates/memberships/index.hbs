@@ -1,38 +1,36 @@
-<div class="col-md-10 col-md-offset-1">
-    <div class="page-header">
-        <h1>
-            {{t 'memberships.index.title'}}
-        </h1>
-    </div>
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>{{t 'memberships.index.firstName'}}</th>
-            <th>{{t 'memberships.index.lastName'}}</th>
-            <th>{{t 'memberships.index.type'}}</th>
-            <th>{{t 'memberships.index.expireAt'}}</th>
-            <th>{{t 'memberships.index.actions'}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each membership in this}}
-            <tr>
-                <td>{{membership.user.firstName}}</td>
-                <td>{{membership.user.lastName}}</td>
-                <td>{{membership.type}}</td>
-                <td>{{format-date membership.expireAt}}</td>
-                <td>
-                    <button {{action 'sendReminder' membership}} disabled={{membership.reminderAlreadySent}} class="btn btn-primary">
-                        {{t 'memberships.index.sendReminder'}}
-                    </button>
-                </td>
-            </tr>
-        {{/each}}
-        </tbody>
-    </table>
-
-    <button {{action "loadMore"}} disabled={{isLoading}} class="btn btn-default">
-        {{t 'literal.loadMore'}}
-    </button>
+<div class="page-header">
+    <h1>
+        {{t 'memberships.index.title'}}
+    </h1>
 </div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>{{t 'memberships.index.firstName'}}</th>
+        <th>{{t 'memberships.index.lastName'}}</th>
+        <th>{{t 'memberships.index.type'}}</th>
+        <th>{{t 'memberships.index.expireAt'}}</th>
+        <th>{{t 'memberships.index.actions'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each membership in this}}
+        <tr>
+            <td>{{membership.user.firstName}}</td>
+            <td>{{membership.user.lastName}}</td>
+            <td>{{membership.type}}</td>
+            <td>{{format-date membership.expireAt}}</td>
+            <td>
+                <button {{action 'sendReminder' membership}} disabled={{membership.reminderAlreadySent}} class="btn btn-primary">
+                    {{t 'memberships.index.sendReminder'}}
+                </button>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<button {{action "loadMore"}} disabled={{isLoading}} class="btn btn-default">
+    {{t 'literal.loadMore'}}
+</button>

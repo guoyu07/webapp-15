@@ -7,6 +7,10 @@ import Regex from '../utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
+    setMaxWith: function () {
+        return this.get('currentRouteName') !== 'hosts.index';
+    }.property('currentRouteName'),
+
     /**
      * Indicates whether the current user can see the "Wwoofers" link in the main menu.
      */

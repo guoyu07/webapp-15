@@ -147,7 +147,7 @@
 
 @btn-default-color:              #fff;
 @btn-default-bg:                 #3e3f3a;
-@btn-default-border:             #ccc;
+@btn-default-border:             darken(#3e3f3a, 5%);
 
 @btn-primary-color:              #fff;
 @btn-primary-bg:                 @brand-primary;
@@ -202,7 +202,7 @@
 @input-color-placeholder:        #999;
 
 //** Default `.form-control` height
-@input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 14);
+@input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 2);
 //** Large `.form-control` height
 @input-height-large:             (ceil(@font-size-large * @line-height-large) + (@padding-large-vertical * 2) + 2);
 //** Small `.form-control` height
@@ -354,7 +354,7 @@
 
 // Basics of a navbar
 @navbar-height:                    60px;
-@navbar-margin-bottom:             @line-height-computed;
+@navbar-margin-bottom:             15px;
 @navbar-border-radius:             @border-radius-base;
 @navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);

@@ -1,0 +1,40 @@
+{{#if model.isPending}}
+    {{partial 'host/validation-status'}}
+{{/if}}
+<form>
+    <h3>{{t 'host.photos.new'}}</h3>
+    <p>
+        <i><small>{{t 'host.photos.limitations'}}</small></i>
+    </p>
+    <div class="form-group">
+        <input id="file_upload" type="file" name="file" data-url="api/photos">
+    </div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <p class="form-details">
+        {{t 'host.photos.details'}}
+    </p>
+</form>
+
+{{#if model.photos}}
+    <h3>{{t 'host.photos.edit'}}</h3>
+    <div class="row">
+        {{#each photo in model.photos itemController="photo"}}
+            <div class="col-sm-4 mbm">
+                {{host-thumb url=controller.model.completeUrl}}
+                <div class="input-group mtx">
+                    {{input type="text" name="caption" value=controller.model.caption class="form-control" placeholderTranslation='host.form.caption.placeholder'}}
+                    <div class="input-group-btn">
+                        <button {{action "savePhoto"}} class="btn btn-primary" aria-label={{t 'literal.save'}} title={{t 'literal.save'}} disabled={{controller.model.cannotSave}}>
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                        </button>
+                        <button {{action "deletePhoto"}} class="btn btn-default" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+{{/if}}

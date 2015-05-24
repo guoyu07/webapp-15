@@ -1,144 +1,142 @@
-<div class="col-md-10 col-md-offset-1">
-    <div class="page-header">
-        {{#link-to 'hosts' class="btn btn-default pull-right"}}{{t 'literal.back'}}{{/link-to}}
-        <h1>{{model.farmName}}</h1>
-    </div>
+<div class="page-header">
+    {{#link-to 'hosts' class="btn btn-default pull-right"}}{{t 'literal.back'}}{{/link-to}}
+    <h1>{{model.farmName}}</h1>
+</div>
 
-    {{#if model.isPending}}
-        {{partial 'host/validation-status'}}
-    {{else}}
-        {{#if belongsToCurrentUser}}
-            {{#if model.isApproved}}
-                {{host-membership-status membershipsService=userMemberships}}
-            {{else}}
-                <div class="alert alert-warning" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    {{t 'host.membership-status.wasRejected'}}
-                </div>
-            {{/if}}
+{{#if model.isPending}}
+    {{partial 'host/validation-status'}}
+{{else}}
+    {{#if belongsToCurrentUser}}
+        {{#if model.isApproved}}
+            {{host-membership-status membershipsService=userMemberships}}
+        {{else}}
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                {{t 'host.membership-status.wasRejected'}}
+            </div>
         {{/if}}
     {{/if}}
+{{/if}}
 
-    {{#if showNote}}
-        <div class="alert alert-info" role="alert">
-            <strong>{{t 'host.index.note'}}</strong>: {{model.note}}
-        </div>
-    {{/if}}
-
-    <div class="row">
-        <div class="col-lg-8 host-photos-carousel">
-            {{photo-carousel photos=model.photos}}
-        </div>
-        <div class="col-lg-4 hidden-xs hidden-sm hidden-md">
-            {{google-map latitude=model.address.latitude longitude=model.address.longitude}}
-        </div>
+{{#if showNote}}
+    <div class="alert alert-info" role="alert">
+        <strong>{{t 'host.index.note'}}</strong>: {{model.note}}
     </div>
-    <hr>
+{{/if}}
+
+<div class="row">
+    <div class="col-lg-8 host-photos-carousel">
+        {{photo-carousel photos=model.photos}}
+    </div>
+    <div class="col-lg-4 hidden-xs hidden-sm hidden-md">
+        {{google-map latitude=model.address.latitude longitude=model.address.longitude}}
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-3">
+        <h4>{{t 'host.index.generalInformation'}}</h4>
+    </div>
+    <div class="col-md-4">
+        <p>
+            <span class="glyphicon glyphicon-envelope mrx"></span>
+            {{#unless model.noEmail}}
+                {{#if canSeeContactInfo}}
+                    {{mail-to model.user.email}}
+                {{else}}
+                    {{members-only}}
+                {{/if}}
+            {{/unless}}
+        </p>
+        <p>
+            <span class="glyphicon glyphicon-earphone mrx"></span>
+            {{#unless model.noPhone}}
+                {{#if canSeeContactInfo}}
+                    {{model.user.phone}}
+                {{else}}
+                    {{members-only}}
+                {{/if}}
+            {{/unless}}
+        </p>
+        <p>
+            <span class="glyphicon glyphicon-plane mrx"></span>
+            {{model.travelDetails}}
+        </p>
+        <p>
+            <span class="glyphicon glyphicon-globe mrx"></span>
+            {{#if canSeeContactInfo}}
+                {{#if model.webSite}}
+                    <a {{bind-attr href=model.webSite}} target="_blank">{{model.webSite}}</a>
+                {{else}}
+                    {{t 'host.index.noWebsite'}}
+                {{/if}}
+            {{else}}
+                {{members-only}}
+            {{/if}}
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p>
+            <span class="glyphicon glyphicon-user mrx"></span>
+            {{#if canSeeContactInfo}}
+                {{model.user.firstName}} {{model.user.lastName}}
+            {{else}}
+                {{members-only}}
+            {{/if}}
+        </p>
+        <p>
+            <span class="glyphicon glyphicon-home mrx"></span>
+            {{#if canSeeContactInfo}}
+                {{model.address.address1}}
+                {{#if model.address.address2}}
+                    / {{model.address.address2}}
+                {{/if}}
+                / {{model.address.zipCode}} {{model.address.city}}
+            {{else}}
+                {{members-only}}
+            {{/if}}
+        </p>
+        <p>
+            <span class="glyphicon glyphicon-star mrx"></span>
+            {{t 'host.index.memberSince'}} {{format-date model.user.createdAt format='MMMM YYYY'}}
+        </p>
+    </div>
+</div>
+<hr>
+{{#if model.activities}}
     <div class="row">
         <div class="col-md-3">
-            <h4>{{t 'host.index.generalInformation'}}</h4>
-        </div>
-        <div class="col-md-4">
-            <p>
-                <span class="glyphicon glyphicon-envelope mrx"></span>
-                {{#unless model.noEmail}}
-                    {{#if canSeeContactInfo}}
-                        {{mail-to model.user.email}}
-                    {{else}}
-                        {{members-only}}
-                    {{/if}}
-                {{/unless}}
-            </p>
-            <p>
-                <span class="glyphicon glyphicon-earphone mrx"></span>
-                {{#unless model.noPhone}}
-                    {{#if canSeeContactInfo}}
-                        {{model.user.phone}}
-                    {{else}}
-                        {{members-only}}
-                    {{/if}}
-                {{/unless}}
-            </p>
-            <p>
-                <span class="glyphicon glyphicon-plane mrx"></span>
-                {{model.travelDetails}}
-            </p>
-            <p>
-                <span class="glyphicon glyphicon-globe mrx"></span>
-                {{#if canSeeContactInfo}}
-                    {{#if model.webSite}}
-                        <a {{bind-attr href=model.webSite}} target="_blank">{{model.webSite}}</a>
-                    {{else}}
-                        {{t 'host.index.noWebsite'}}
-                    {{/if}}
-                {{else}}
-                    {{members-only}}
-                {{/if}}
-            </p>
-        </div>
-        <div class="col-md-4">
-            <p>
-                <span class="glyphicon glyphicon-user mrx"></span>
-                {{#if canSeeContactInfo}}
-                    {{model.user.firstName}} {{model.user.lastName}}
-                {{else}}
-                    {{members-only}}
-                {{/if}}
-            </p>
-            <p>
-                <span class="glyphicon glyphicon-home mrx"></span>
-                {{#if canSeeContactInfo}}
-                    {{model.address.address1}}
-                    {{#if model.address.address2}}
-                        / {{model.address.address2}}
-                    {{/if}}
-                    / {{model.address.zipCode}} {{model.address.city}}
-                {{else}}
-                    {{members-only}}
-                {{/if}}
-            </p>
-            <p>
-                <span class="glyphicon glyphicon-star mrx"></span>
-                {{t 'host.index.memberSince'}} {{format-date model.user.createdAt format='MMMM YYYY'}}
-            </p>
-        </div>
-    </div>
-    <hr>
-    {{#if model.activities}}
-        <div class="row">
-            <div class="col-md-3">
-                <h4>{{t 'host.index.activities'}}</h4>
-            </div>
-            <div class="col-md-9">
-                {{#each activity in model.displayedActivities}}
-                    <span class="label label-activity">{{activity}}</span>
-                {{/each}}
-            </div>
-        </div>
-        <hr>
-    {{/if}}
-    {{#if model.openingMonths}}
-        <div class="row">
-            <div class="col-md-3">
-                <h4>{{t 'host.index.openingMonths'}}</h4>
-            </div>
-            <div class="col-md-9">
-                {{#each month in model.openingCalendar}}
-                    <div class="col-xs-4 col-sm-3 col-lg-2 opening-month {{if month.isOpen 'text-primary'}}">
-                        <span class="glyphicon {{if month.isOpen 'glyphicon-ok' 'glyphicon-ban-circle'}}"></span>
-                        {{month.label}}
-                    </div>
-                {{/each}}
-            </div>
-        </div>
-        <hr>
-    {{/if}}
-    <div class="row mbl">
-        <div class="col-md-3">
-            <h4>{{t 'host.index.description'}}</h4>
+            <h4>{{t 'host.index.activities'}}</h4>
         </div>
         <div class="col-md-9">
-            {{expandable-text text=model.fullDescription}}
+            {{#each activity in model.displayedActivities}}
+                <span class="label label-activity">{{activity}}</span>
+            {{/each}}
         </div>
+    </div>
+    <hr>
+{{/if}}
+{{#if model.openingMonths}}
+    <div class="row">
+        <div class="col-md-3">
+            <h4>{{t 'host.index.openingMonths'}}</h4>
+        </div>
+        <div class="col-md-9">
+            {{#each month in model.openingCalendar}}
+                <div class="col-xs-4 col-sm-3 col-lg-2 opening-month {{if month.isOpen 'text-primary'}}">
+                    <span class="glyphicon {{if month.isOpen 'glyphicon-ok' 'glyphicon-ban-circle'}}"></span>
+                    {{month.label}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    <hr>
+{{/if}}
+<div class="row mbl">
+    <div class="col-md-3">
+        <h4>{{t 'host.index.description'}}</h4>
+    </div>
+    <div class="col-md-9">
+        {{expandable-text text=model.fullDescription}}
     </div>
 </div>

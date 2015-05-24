@@ -49,10 +49,10 @@ export default Ember.Controller.extend({
                     return user.save();
                 });
 
-                // Inform and redirect user to the edit page
+                // Inform and redirect user to the photos page
                 promise.then(function () {
                     alertify.success(Ember.I18n.t('notify.hostCreated'));
-                    self.transitionToRoute('host.edit', host);
+                    self.transitionToRoute('host.photos', host);
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));

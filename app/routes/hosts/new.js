@@ -26,7 +26,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         var self = this;
         return this.get('session.user').then(function (user) {
             return self.store.createRecord('host', {
-                farmName: "La Ferme de M. Seguin",
                 user: user,
                 address: address
             });
