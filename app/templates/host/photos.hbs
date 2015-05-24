@@ -24,7 +24,7 @@
             <div class="col-sm-4 mbm">
                 {{host-thumb url=controller.model.completeUrl}}
                 <div class="input-group mtx">
-                    {{input type="text" name="caption" value=controller.model.caption class="form-control" placeholderTranslation='host.form.caption.placeholder'}}
+                    {{input type="text" name="caption" value=controller.model.caption class="form-control" placeholderTranslation='host.photos.caption.placeholder'}}
                     <div class="input-group-btn">
                         <button {{action "savePhoto"}} class="btn btn-primary" aria-label={{t 'literal.save'}} title={{t 'literal.save'}} disabled={{controller.model.cannotSave}}>
                             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>

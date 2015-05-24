@@ -13,15 +13,6 @@
             {{/if}}
         {{/if}}
     {{/if}}
-    {{!--
-    <button type="button" {{bind-attr class=":btn :btn-default model.isHidden::active"}} {{action "toggleIsHidden"}} {{ta title='host.form.hideShowProfile'}}>
-        {{#if model.isHidden}}
-            {{t 'host.form.showProfile'}}
-        {{else}}
-            {{t 'host.form.hideProfile'}}
-        {{/if}}
-    </button>
-    --}}
 {{/unless}}
 <form class="form-horizontal">
     <div {{bind-attr class=":form-group model.fieldErrors.farmName.length:has-error"}}>
@@ -81,6 +72,23 @@
             {{toggle-options values=monthsService.allMonths selected=model.openingMonths optionValuePath='id'}}
         </div>
     </div>
+    {{#unless model.isNew}}
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        {{input type="checkbox" id="isHidden" name="isHidden" checked=model.isHidden}}
+                        {{t 'host.form.isHidden.label'}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <p class="form-details">
+                {{t 'host.form.isHiddenDetails'}}
+            </p>
+        </div>
+    {{/unless}}
     <div class="col-sm-offset-2 col-sm-10">
         <h3 class="ruled"><span>{{t 'host.form.contactInformation'}}</span></h3>
     </div>

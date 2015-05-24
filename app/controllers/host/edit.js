@@ -44,27 +44,6 @@ export default Ember.Controller.extend({
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
-        },
-        toggleIsHidden: function () {
-
-            // Toggle isHidden property
-            this.set('model.isHidden', !this.get('model.isHidden'));
-
-            // Prepare URL
-            var url = [ config.apiHost, config.apiNamespace, 'hosts', this.get('model.id'), 'changeVisibility' ].join('/');
-
-            // Update approve the host
-            var post = Ember.$.ajax({
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                url: url,
-                data: JSON.stringify({ isHidden: this.get('model.isHidden') })
-            });
-
-            // Handle failure
-            post.fail(function () {
-                alertify.error(Ember.I18n.t('notify.submissionError'));
-            });
         }
     }
 });
