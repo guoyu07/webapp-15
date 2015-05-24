@@ -190,7 +190,7 @@
         </div>
         <div {{bind-attr class=":form-group model.address.fieldErrors.latitude.length:has-error
                 model.address.fieldErrors.longitude.length:has-error"}}>
-            <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address.form.latitude.label'}}</label>
+            <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address.form.latitudeLongitude.label'}}</label>
             <div class="col-xs-6 col-sm-5">
                 {{input type="number" id="latitude" name="latitude" value=model.address.latitude class="form-control"}}
                 {{error-display model.address.fieldErrors.latitude}}
