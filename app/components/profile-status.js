@@ -41,9 +41,13 @@ export default Ember.Component.extend({
         // Return if the Host has not been requested yet
         if (!host) { return; }
 
-        // Host is not approved: hourglass
+        // Host is not approved: hourglass or warning
         if (host.get('isApproved') === false) {
-            return'glyphicon glyphicon-hourglass';
+            if (host.get('isPending')) {
+                return'glyphicon glyphicon-hourglass';
+            } else {
+                return'glyphicon glyphicon-warning-sign';
+            }
         }
 
         // Host has no active membership: warning
@@ -55,5 +59,5 @@ export default Ember.Component.extend({
 
         // Membership status ok
         return 'glyphicon glyphicon-ok';
-    }.property('session.user.host.isApproved', 'membershipsService.hasNonExpiredHostMembership', 'membershipsService.latestHostMembership.isStillValidInAMonth')
+    }.property('session.user.host.isPending', 'session.user.host.isApproved', 'membershipsService.hasNonExpiredHostMembership', 'membershipsService.latestHostMembership.isStillValidInAMonth')
 });

@@ -5,10 +5,10 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-    setupController: function (controller) {
+    setupController: function (controller, user) {
 
-        // Get user based on current route (can differ from authenticated user)
-        var user = this.modelFor('user');
+        // Call base class
+        this._super(controller, user);
 
         // Instantiate a local user-memberships service
         var localUserMembershipsService = this.container.lookup('service:user-memberships', { singleton: false });

@@ -6,12 +6,9 @@ import ValidationsMixin from '../../mixins/validations';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    needs: ['wwoofer', 'countries', 'departments'],
+    needs: ['countries', 'departments'],
 
     selectedDate: null,
-
-    // Bindings
-    belongsToCurrentUser: Ember.computed.oneWay('controllers.wwoofer.belongsToCurrentUser'),
 
     /**
      * Indicates whether a second wwoofer was specified.

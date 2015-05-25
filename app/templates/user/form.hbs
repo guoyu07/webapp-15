@@ -1,99 +1,91 @@
-<div class="page-header">
-    <h1>
-        {{#if model.isNew}}
-            {{t 'user.form.titleNew'}}
-        {{else}}
-            {{t 'user.form.titleEdit'}}
-        {{/if}}
-    </h1>
-</div>
-
-{{#if model.isNew}}
-    <p>
-        {{t 'user.form.instructionsNew'}}
-        {{t 'user.form.haveAccount'}}
-        {{#link-to 'login'}}{{t 'user.form.logIn'}}{{/link-to}}
-    </p>
-{{/if}}
-
-<form>
-    <div class="row">
-        <div class="col-md-6">
+<div class="panel panel-default">
+    {{#unless model.isNew}}
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{t 'user.form.title'}}
+            </h3>
+        </div>
+    {{/unless}}
+    <div class="panel-body">
+        <form class="form-horizontal">
             <div {{bind-attr class=":form-group model.fieldErrors.firstName.length:has-error"}}>
-                <label for="firstName" class="control-label">{{t 'user.form.firstName.label'}}</label>
-                {{#if canEditUser}}
-                    {{input type="text" id="firstName" name="firstName" value=model.firstName class="form-control"}}
-                    {{error-display model.fieldErrors.firstName}}
-                {{else}}
-                    <p class="form-control-static">{{model.firstName}}</p>
-                {{/if}}
+                <label for="firstName" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
+                <div class="col-sm-10">
+                    {{#if canEditUser}}
+                        {{input type="text" id="firstName" name="firstName" value=model.firstName class="form-control"}}
+                        {{error-display model.fieldErrors.firstName}}
+                    {{else}}
+                        <p class="form-control-static">{{model.firstName}}</p>
+                    {{/if}}
+                </div>
             </div>
             <div {{bind-attr class=":form-group model.fieldErrors.lastName.length:has-error"}}>
-                <label for="lastName" class="control-label">{{t 'user.form.lastName.label'}}</label>
-                {{#if canEditUser}}
-                    {{input type="text" id="lastName" name="lastName" value=model.lastName class="form-control"}}
-                    {{error-display model.fieldErrors.lastName}}
-                {{else}}
-                    <p class="form-control-static">{{model.lastName}}</p>
-                {{/if}}
+                <label for="lastName" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
+                <div class="col-sm-10">
+                    {{#if canEditUser}}
+                        {{input type="text" id="lastName" name="lastName" value=model.lastName class="form-control"}}
+                        {{error-display model.fieldErrors.lastName}}
+                    {{else}}
+                        <p class="form-control-static">{{model.lastName}}</p>
+                    {{/if}}
+                </div>
             </div>
             <div {{bind-attr class=":form-group fieldErrors.selectedDate.length:has-error"}}>
-                <label for="birthDate" class="control-label">{{t 'user.form.birthDate.label'}}</label>
-                {{#if canEditUser}}
-                    {{date-picker selectedDate=selectedDate}}
-                    {{error-display fieldErrors.selectedDate}}
-                {{else}}
-                    <p class="form-control-static">{{format-date model.birthDate}}</p>
-                {{/if}}
+                <label for="birthDate" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
+                <div class="col-sm-10">
+                    {{#if canEditUser}}
+                        {{date-picker selectedDate=selectedDate}}
+                        {{error-display fieldErrors.selectedDate}}
+                    {{else}}
+                        <p class="form-control-static">{{format-date model.birthDate}}</p>
+                    {{/if}}
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
             <div {{bind-attr class=":form-group model.fieldErrors.email.length:has-error"}}>
-                <label for="email" class="control-label">{{t 'literal.email'}}</label>
-                {{input type="email" id="email" name="email" value=model.email class="form-control"}}
-                {{error-display model.fieldErrors.email}}
-            </div>
-            <div {{bind-attr class=":form-group model.fieldErrors.password.length:has-error"}}>
-                <label for="password" class="control-label">{{t 'literal.password'}}</label>
-                {{#if model.isNew}}
-                    {{input type="password" id="password" name="password" value=model.password class="form-control"}}
-                    {{error-display model.fieldErrors.password}}
-                {{else}}
-                    <p class="form-control-static">
-                        {{#link-to 'user.change-password' model.id}}{{t 'user.form.changePassword'}}{{/link-to}}
-                    </p>
-                {{/if}}
-            </div>
-        </div>
-    </div>
-    {{#if model.isNew}}
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="checkbox">
-                    <label>
-                        {{input type="checkbox" id="termsOk" checked=termsOk}}
-                        {{t 'user.form.termsOk.label'}}
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        {{input type="checkbox" id="insuranceOk" checked=insuranceOk}}
-                        {{t 'user.form.insuranceOk.label'}}
-                    </label>
+                <label for="email" class="col-sm-2 control-label">{{t 'literal.email'}}</label>
+                <div class="col-sm-10">
+                    {{input type="email" id="email" name="email" value=model.email class="form-control"}}
+                    {{error-display model.fieldErrors.email}}
                 </div>
             </div>
-        </div>
-    {{/if}}
-    <div class="row">
-        <div class="col-xs-12">
-            <button {{action "saveUser"}} disabled={{model.isSaving}} class="btn btn-primary pull-right mls">
-                {{#if model.isNew}}
-                    {{t 'user.form.register'}}
-                {{else}}
-                    {{t 'literal.save'}}
-                {{/if}}
-            </button>
-            {{#link-to 'index' class="btn btn-default pull-right"}}{{t 'literal.cancel'}}{{/link-to}}
-        </div>
+            {{#if model.isNew}}
+                <div {{bind-attr class=":form-group model.fieldErrors.password.length:has-error"}}>
+                    <label for="password" class="col-sm-2 control-label">{{t 'literal.password'}}</label>
+                    <div class="col-sm-10">
+                        {{input type="password" id="password" name="password" value=model.password class="form-control"}}
+                        {{error-display model.fieldErrors.password}}
+                    </div>
+                </div>
+            {{/if}}
+            {{#if model.isNew}}
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                {{input type="checkbox" id="termsOk" checked=termsOk}}
+                                {{t 'user.form.termsOk.label'}}
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                {{input type="checkbox" id="insuranceOk" checked=insuranceOk}}
+                                {{t 'user.form.insuranceOk.label'}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <div class="form-group mbx">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button {{action "saveUser"}} class="btn btn-primary" disabled={{model.isSaving}}>
+                        {{#if model.isNew}}
+                            {{t 'user.form.register'}}
+                        {{else}}
+                            {{t 'literal.save'}}
+                        {{/if}}
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+</div>

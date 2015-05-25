@@ -190,9 +190,7 @@
     </div>
     <div class="col-sm-3 hidden-xs">
         {{#unless model.isNew}}
-            {{#if belongsToCurrentUser}}
-                {{wwoofer-membership-status membershipsService=userMemberships}}
-            {{/if}}
+            {{wwoofer-membership-status wwoofer=model}}
         {{/unless}}
         <div class="panel panel-primary">
             <div class="panel-heading">

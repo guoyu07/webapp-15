@@ -4,18 +4,7 @@
 </div>
 
 {{#if model.isPending}}
-    {{partial 'host/validation-status'}}
-{{else}}
-    {{#if belongsToCurrentUser}}
-        {{#if model.isApproved}}
-            {{host-membership-status membershipsService=userMemberships}}
-        {{else}}
-            <div class="alert alert-warning" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign"></span>
-                {{t 'host.membership-status.wasRejected'}}
-            </div>
-        {{/if}}
-    {{/if}}
+    {{host-approval-status host=model}}
 {{/if}}
 
 {{#if showNote}}

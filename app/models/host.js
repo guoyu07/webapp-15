@@ -57,6 +57,15 @@ export default DS.Model.extend(ValidationsMixin, {
         return months;
     }.property('openingMonths.@each'),
 
+    /**
+     * Indicates whether the host is pending approval or was rejected.
+     */
+    isPendingOrRejected: function () {
+        var isPending = this.get('isPending');
+        var isApproved = this.get('isApproved');
+        return isPending || !isApproved;
+    }.property('isPending', 'isApproved'),
+
     // Phone is mandatory for hosts, this binding is used for validation
     phone: Ember.computed.readOnly('user.phone'),
 
