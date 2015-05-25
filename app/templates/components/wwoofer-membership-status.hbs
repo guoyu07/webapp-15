@@ -1,37 +1,33 @@
-{{#if membershipsService.hasWwoofMemberships}}
-    {{#if membershipsService.latestWwoofMembership.isStillValidInAMonth}}
-        <div class="alert alert-success alert-dismissable" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <span class="glyphicon glyphicon-ok-sign"></span>
-            {{t 'wwoofer.membership-status.valid'}}
-        </div>
-    {{else}}
-        <div class="alert alert-warning alert-dismissable alert-with-button" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <span class="glyphicon glyphicon-warning-sign"></span>
-            <span>
-                {{t 'wwoofer.membership-status.yourWwooferMembership'}}
-                {{#if membershipsService.latestWwoofMembership.isExpired}}
-                    {{t 'wwoofer.membership-status.isExpiredSince'}}
-                {{else}}
-                    {{t 'wwoofer.membership-status.willExpire'}}
-                {{/if}}
-                {{format-date membershipsService.latestWwoofMembership.expireAt}}.
-
-                {{t 'wwoofer.membership-status.keepAccess'}}
-            </span>
-            {{#link-to 'memberships.new' (query-params type='W') class="btn btn-primary"}}
-                {{t 'wwoofer.membership-status.renewMembership'}}
-            {{/link-to}}
-        </div>
-    {{/if}}
-{{else}}
-    <div class="alert alert-warning alert-dismissable alert-with-button" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        <span>
-            {{t 'wwoofer.membership-status.profileComplete'}}
-        </span>
-        {{#link-to 'memberships.new' (query-params type='W') class="btn btn-primary"}}{{t 'wwoofer.membership-status.payMembership'}}{{/link-to}}
+<div class="panel {{panelClass}}">
+    <div class="panel-heading">
+        {{t 'wwoofer.membership-status.title'}}
     </div>
-{{/if}}
+    <div class="panel-body">
+        {{#if membershipsService.hasWwoofMemberships}}
+            {{#if membershipsService.latestWwoofMembership.isStillValidInAMonth}}
+                {{t 'wwoofer.membership-status.valid'}}
+            {{else}}
+                <p>
+                    {{t 'wwoofer.membership-status.yourWwooferMembership'}}
+                    {{#if membershipsService.latestWwoofMembership.isExpired}}
+                        {{t 'wwoofer.membership-status.isExpiredSince'}}
+                    {{else}}
+                        {{t 'wwoofer.membership-status.willExpire'}}
+                    {{/if}}
+                    {{format-date membershipsService.latestWwoofMembership.expireAt}}.
+                    {{t 'wwoofer.membership-status.keepAccess'}}
+                </p>
+                {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}
+                    {{t 'wwoofer.membership-status.renewMembership'}}
+                {{/link-to}}
+            {{/if}}
+        {{else}}
+            <p>
+                {{t 'wwoofer.membership-status.profileComplete'}}
+            </p>
+            {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}
+                {{t 'wwoofer.membership-status.payMembership'}}
+            {{/link-to}}
+        {{/if}}
+    </div>
+</div>
