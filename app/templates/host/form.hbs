@@ -127,6 +127,11 @@
                     {{error-display model.address.fieldErrors.address2}}
                 </div>
             </div>
+            <div class="col-sm-offset-2 col-sm-10">
+                <p class="form-details mbm">
+                    {{t 'host.form.addressDetails'}}
+                </p>
+            </div>
             <div {{bind-attr class=":form-group model.address.fieldErrors.city.length:has-error"}}>
                 <label for="city" class="col-sm-2 control-label">{{t 'address.form.city.label'}}</label>
                 <div class="col-sm-10">
