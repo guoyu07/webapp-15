@@ -1,86 +1,151 @@
-<div class="page-header">
-    <h1>{{t 'memberships.new.title'}}</h1>
-</div>
-
-<p>{{t 'memberships.new.instructions'}}</p>
-
-<form>
-    <div class="row">
+<h1>{{t 'memberships.new.title'}}</h1>
+<h4 class="mtm">
+    <small>
         {{#if showWwoofMemberships}}
-            <div class="form-group col-xs-12">
-                <label for="wwoofMemberships" class="control-label">{{t 'memberships.new.wwoofer.label'}}</label>
-                {{view "select"
-                content=wwoofMembershipOptions
-                optionValuePath="content.id"
-                optionLabelPath="content.name"
-                value=itemCode
-                selection=selectedItem
-                id="wwoofMemberships"
-                class="form-control"}}
-            </div>
-        {{/if}}
-        {{#if showShippingFees}}
-            <div class="form-group col-xs-12">
-                <label for="shippingRegions" class="control-label">{{t 'memberships.new.shipping.label'}}</label>
-                {{view "select"
-                content=shippingRegionOptions
-                optionValuePath="content.id"
-                optionLabelPath="content.name"
-                value=shippingRegion
-                selection=selectedShippingRegion
-                id="shippingRegions"
-                class="form-control"}}
-            </div>
+            {{t 'memberships.new.leadWwoof'}}
         {{/if}}
         {{#if showHostMemberships}}
-            <div class="form-group col-xs-12">
-                <label for="hostMemberships" class="control-label">{{t 'memberships.new.host.label'}}</label>
-                {{view "select"
-                content=hostMembershipOptions
-                optionValuePath="content.id"
-                optionLabelPath="content.name"
-                value=itemCode
-                selection=selectedItem
-                id="hostMemberships"
-                class="form-control"}}
-            </div>
+            {{t 'memberships.new.leadHost'}}
         {{/if}}
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <b>{{t 'memberships.new.total'}}:</b> {{total}} Euros
+    </small>
+</h4>
+<div class="row mtl">
+    <div class="col-sm-9 ">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {{t 'memberships.new.options'}}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="wwoofMemberships" class="col-sm-2 control-label">
+                            {{t 'memberships.new.itemCode.label'}}
+                        </label>
+                        <div class="col-sm-10">
+                            {{#if showWwoofMemberships}}
+                                {{view "select"
+                                        content=wwoofMembershipOptions
+                                        optionValuePath="content.id"
+                                        optionLabelPath="content.name"
+                                        value=itemCode
+                                        selection=selectedItem
+                                        id="wwoofMemberships"
+                                        class="form-control"}}
+                            {{/if}}
+                            {{#if showHostMemberships}}
+                                {{view "select"
+                                        content=hostMembershipOptions
+                                        optionValuePath="content.id"
+                                        optionLabelPath="content.name"
+                                        value=itemCode
+                                        selection=selectedItem
+                                        id="hostMemberships"
+                                        class="form-control"}}
+                            {{/if}}
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <p class="form-details mbm">
+                            {{t 'memberships.new.itemCode.details'}}
+                        </p>
+                    </div>
+                    {{#if showShippingFees}}
+                        <div class="form-group">
+                            <label for="shippingRegions" class="col-sm-2 control-label">
+                                {{t 'memberships.new.shipping.label'}}
+                            </label>
+                            <div class="col-sm-10">
+                                {{view "select"
+                                        content=shippingRegionOptions
+                                        optionValuePath="content.id"
+                                        optionLabelPath="content.name"
+                                        value=shippingRegion
+                                        selection=selectedShippingRegion
+                                        id="shippingRegions"
+                                        class="form-control"}}
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <p class="form-details mbm">
+                                {{t 'memberships.new.shipping.details'}}
+                            </p>
+                        </div>
+                    {{/if}}
+                    <div class="form-group mbx">
+                        <label for="birthDate" class="col-sm-2 control-label">{{t 'memberships.new.total'}}</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">{{total}} Euros</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'memberships.new.paypal'}}</h4>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">{{t 'memberships.new.paypal'}}</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            {{t 'memberships.new.easiestWay'}}
+                        </p>
+                        <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary mbs">
+                            {{t 'memberships.new.pay'}}
+                        </button>
+                        <p class="mbx small">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                            {{t 'memberships.new.notePaypal'}}
+                        </p>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <p>{{t 'memberships.new.easiestWay'}}</p>
-                    <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary">{{t 'memberships.new.pay'}}</button>
+            </div>
+            <div class="col-sm-2 text-center">
+                <h4>— {{t 'memberships.new.or'}} —</h4>
+            </div>
+            <div class="col-sm-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{t 'memberships.new.address'}}</p>
+                        <p class="text-center">
+                            <em>
+                                Virginie LOPEZ<br/>
+                                WWOOF France<br/>
+                                86 bis rue Principale<br/>
+                                33460 LAMARQUE (FRANCE)<br/>
+                            </em>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-2 text-center">
-            <h4>— {{t 'memberships.new.or'}} —</h4>
-        </div>
-        <div class="col-sm-5">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>
-                </div>
-                <div class="panel-body">
-                    <p>{{t 'memberships.new.address'}}</p>
-
-                    Virginie LOPEZ<br/>
-                    WWOOF France<br/>
-                    86 bis rue Principale<br/>
-                    33460 LAMARQUE (FRANCE)<br/>
-                </div>
+    </div>
+    <div class="col-sm-3 hidden-xs">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-question-sign mrx"></span>
+                    {{t 'memberships.new.whyPay'}}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    {{t 'memberships.new.whyPay1'}}
+                </p>
+                <hr/>
+                <p>
+                    {{t 'memberships.new.whyPay2'}}
+                </p>
+                <hr/>
+                <p>
+                    {{t 'memberships.new.whyPay3'}}
+                </p>
             </div>
         </div>
     </div>
-</form>
+</div>
