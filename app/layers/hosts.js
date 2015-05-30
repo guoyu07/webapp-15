@@ -10,11 +10,12 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
     requestURI: "/api/host-coordinates",
     resultLimit: 5000,
     disableClusteringAtZoom: 9,
+    dataRequest: null,
 
     /**
      * Init Method
      */
-    _newLayer: function () {
+    _newLayer() {
 
         // Create Geojson Layer
         this.geoJsonLayer = new L.geoJson(null, {
@@ -52,8 +53,16 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
         // Adds limit to query params
         params.limit = this.get('resultLimit');
 
+        // Abort any potential previous request to avoid racing issues
+        var dataRequest = this.get('dataRequest');
+        if (dataRequest) {
+            dataRequest.abort();
+        }
+
         // Create GET request
-        var dataRequest = Ember.$.get(this.get('requestURI'), params);
+        dataRequest = Ember.$.get(this.get('requestURI'), params);
+        this.set('dataRequest', dataRequest);
+
         var self = this;
         dataRequest.done(function (data) {
 
@@ -77,7 +86,7 @@ export default Ember.Object.extend(EmberLeaflet.LayerMixin, {
     /**
      * Create and display the popup associated to the clicked feature.
      */
-    onFeatureclick : function (e) {
+    onFeatureclick(e) {
 
         // Retrieve the popup View
         var popupView = this.container.lookup('view:hosts/popup');
