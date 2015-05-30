@@ -5,14 +5,29 @@
     <div class="panel-body">
         <form>
             <p>
-                <i><small>{{t 'host.photos.limitations'}}</small></i>
+                <i><small>{{t 'user.photos.limitations'}}</small></i>
             </p>
-            <div class="form-group">
-                <input id="file_upload" type="file" name="file" data-url="api/photos">
-            </div>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            {{photo-uploader dataUrl=controller.photoDataUrl model=model.user mode="user"}}
         </form>
     </div>
 </div>
+{{#if model.user.photo}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{t 'user.photos.edit'}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4 mbm">
+                    {{host-thumb url=model.user.completePhotoUrl}}
+                    <div class="input-group mtx pull-right">
+                        <button {{action "deletePhoto"}} class="btn btn-default" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                &nbsp;{{t 'literal.delete'}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}

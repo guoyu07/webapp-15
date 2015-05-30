@@ -18,11 +18,22 @@ export default DS.Model.extend(ValidationsMixin, {
     locale: DS.attr('string'),
     createdAt: DS.attr('date'),
     updatedAt: DS.attr('date'),
+    photo: DS.attr('string'),
 
     // Relationships
     host: DS.belongsTo('host', { async: true }),
     wwoofer: DS.belongsTo('wwoofer', { async: true }),
     memberships: DS.hasMany('membership', { async: true }),
+
+    // Computed properties
+    completePhotoUrl: function () {
+        var photo = this.get('photo');
+        if (!Ember.isEmpty(photo)) {
+            return 'https://s3.amazonaws.com/wwoof-france/photos/users/' + encodeURIComponent(photo);
+        } else {
+            return '../assets/images/no-photo.png';
+        }
+    }.property('photo'),
 
     /**
      * Returns the full name of the user.
