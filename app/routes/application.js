@@ -48,6 +48,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     actions: {
         sessionAuthenticationSucceeded: function () {
             this.refresh();
+
+            // Redirect to attemptedTransition if necessary
+            this._super();
         },
         sessionInvalidationSucceeded: function () {
             // Redirect user (refresh the page to reset app state)
