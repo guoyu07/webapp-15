@@ -6,8 +6,12 @@
                 <div class="input-group">
                     <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
                     {{input class="form-control" type="search"  id="searchTerm" placeholderTranslation="hosts.index.searchTerm.placeholder" value=searchTerm action="updateHosts"}}
-                    <a {{action "updateHosts"}} {{bind-attr class=":btn :btn-primary :input-group-addon isLoading:disabled"}}>
-                        {{t 'literal.search'}}
+                    <a {{action "updateHosts"}} class="btn btn-primary input-group-addon {{if isLoading 'disabled'}}">
+                        {{#if isLoading}}
+                            {{t 'literal.loading'}}
+                        {{else}}
+                            {{t 'literal.search'}}
+                        {{/if}}
                     </a>
                 </div>
             </div>
@@ -100,7 +104,7 @@
                             </div>
                         {{/if}}
                         <div class="hidden">
-                            <button {{action "updateHosts"}} {{bind-attr disabled=isLoading}}></button>
+                            <button {{action "updateHosts"}} disabled={{isLoading}}></button>
                         </div>
                     </div>
                 </div>
