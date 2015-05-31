@@ -21,7 +21,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 // Get user
                 var user = self.get('model.user');
 
-                // Impersonate the user
+                // Delete the photo
                 var deleteRequest = Ember.$.ajax({
                     type: 'DELETE',
                     url: self.get('photoDataUrl')

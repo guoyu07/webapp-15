@@ -11,9 +11,6 @@
         {{/unless}}
     </div>
     <div class="col-sm-9">
-        {{#if model.isPendingOrRejected}}
-            {{host-approval-status host=model}}
-        {{/if}}
         {{outlet}}
     </div>
 </div>
