@@ -85,7 +85,7 @@ export default Ember.Component.extend({
 
         // Push the created photo in the store, then add the photo in the host
         var controller = self.get('controller');
-        var photo = controller.get('store').push('photo', data.result.photo);
+        var photo = controller.get('container').lookup('store:main').push('photo', data.result.photo);
         self.get('model').get('photos').addObject(photo);
     },
 

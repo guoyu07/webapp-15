@@ -7,12 +7,7 @@
             <p>
                 <i><small>{{t 'host.photos.limitations'}}</small></i>
             </p>
-            <div class="form-group">
-                <input id="file_upload" type="file" name="file" data-url="api/photos">
-            </div>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            {{photo-uploader dataUrl="api/photos" model=model mode="host"}}
             <span class="form-details">
                 {{t 'host.photos.details'}}
             </span>
