@@ -16,6 +16,7 @@ Router.map(function () {
     this.resource('host', { path: '/host/:host_id' }, function () {
         this.route('edit');
         this.route('photos');
+        this.route('contact');
     });
     this.resource('wwoofers', function () {
         this.route('new');
