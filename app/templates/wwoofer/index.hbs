@@ -9,14 +9,12 @@
             </div>
             <div class="col-md-9">
                 <div class="row">
-                    <div class="col-md-6">
-                        <h1>
-                            {{model.user.fullName}}
-                            {{#if model.fullName2}}
-                                <small>{{t 'wwoofer.index.and'}} {{model.fullName2}}</small>
-                            {{/if}}
-                        </h1>
-                    </div>
+                    <h1>
+                        {{model.user.fullName}}
+                        {{#if model.fullName2}}
+                            <small>{{t 'wwoofer.index.and'}} {{model.fullName2}}</small>
+                        {{/if}}
+                    </h1>
                 </div>
                 <hr>
                 <div class="row">
@@ -80,11 +78,9 @@
                 {{/if}}
             </div>
         </div>
-        {{#if isLoggedUserProfile}}
-            {{#link-to "wwoofer.edit" class="btn btn-default"}}{{t 'literal.back'}}{{/link-to}}
-        {{else}}
+        {{#unless isLoggedUserProfile}}
             {{#link-to "wwoofers" class="btn btn-default"}}{{t 'literal.back'}}{{/link-to}}
-        {{/if}}
+        {{/unless}}
     </div>
     <div class="col-sm-3 hidden-xs">
         {{#if showNote}}

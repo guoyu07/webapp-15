@@ -14,6 +14,6 @@ export default Ember.Controller.extend({
      * Indicate whether the current viewed wwoofer profile is the one of the current logged user
      */
     isLoggedUserProfile: function () {
-        return this.get('session.user.id') == this.get('model.user.id');
+        return this.get('session.user.id') === this.get('model.user.id');
     }.property('session.user.id', 'model.user.id')
 });
