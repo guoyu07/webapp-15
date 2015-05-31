@@ -22,11 +22,11 @@ export default Ember.Component.extend({
      */
     formData: function () {
         var mode = this.get('mode');
-        if (mode == 'host') {
+        if (mode === 'host') {
             return {
                 hostId: this.get('model.id')
             };
-        } else if (mode == 'user') {
+        } else if (mode === 'user') {
             return {};
         }
     }.property('mode', 'model.id'),
@@ -38,10 +38,10 @@ export default Ember.Component.extend({
             dataType: 'json',
             formData: this.get('formData'),
             done: function (e, data) {
-                var mode = self.get('mode')
-                if (mode == 'host')  {
+                var mode = self.get('mode');
+                if (mode === 'host')  {
                     self.get('doneHost')(e, data, self);
-                } else if (mode == 'user') {
+                } else if (mode === 'user') {
                     self.get('doneUser')(e, data, self);
                 }
             },
