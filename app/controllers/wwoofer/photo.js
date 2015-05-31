@@ -3,6 +3,7 @@
  */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
+import request from 'ic-ajax';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
@@ -14,30 +15,24 @@ export default Ember.Controller.extend(ValidationsMixin, {
     }.property('model.user.id'),
 
     actions: {
+        /**
+         * Deletes the photo of a wwoofer.
+         */
         deletePhoto: function () {
-            var self = this;
-            return new Ember.RSVP.Promise(function(resolve, reject) {
 
-                // Get user
-                var user = self.get('model.user');
+            // Get user
+            var user = this.get('model.user');
 
-                // Delete the photo
-                var deleteRequest = Ember.$.ajax({
-                    type: 'DELETE',
-                    url: self.get('photoDataUrl')
-                });
+            // Delete the photo
+            var deleteRequest = request({
+                type: 'DELETE',
+                url: this.get('photoDataUrl')
+            });
 
-                // Handle success
-                deleteRequest.done(function (data) {
-                    user.set('photo', null);
-                    alertify.success(Ember.I18n.t('notify.photoDeleted'));
-                    resolve(data);
-                });
-
-                // Handle failure
-                deleteRequest.fail(function (err) {
-                    reject(err);
-                });
+            // Handle success
+            deleteRequest.then(function (data) {
+                user.set('photo', null);
+                alertify.success(Ember.I18n.t('notify.photoDeleted'));
             });
         }
     }
