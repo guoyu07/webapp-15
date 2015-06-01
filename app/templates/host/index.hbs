@@ -121,11 +121,21 @@
     </div>
     <hr>
 {{/if}}
-<div class="row mbl">
+<div class="row mbm">
     <div class="col-md-3">
         <h4>{{t 'host.index.description'}}</h4>
     </div>
     <div class="col-md-9">
         {{expandable-text text=model.fullDescription}}
+        <p class="mtl">
+            {{#unless model.noEmail}}
+                {{#if canSeeContactInfo}}
+                    {{#link-to 'host.contact' model.id class="btn btn-primary"}}
+                        <span class="glyphicon glyphicon-envelope mrx"></span>
+                        {{t 'host.index.contactHost'}}
+                    {{/link-to}}
+                {{/if}}
+            {{/unless}}
+        </p>
     </div>
 </div>

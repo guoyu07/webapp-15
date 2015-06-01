@@ -3,15 +3,10 @@
         <h3 class="panel-title">{{t 'host.photos.new'}}</h3>
     </div>
     <div class="panel-body">
-        <form>
-            <p>
-                <i><small>{{t 'host.photos.limitations'}}</small></i>
-            </p>
-            {{photo-uploader dataUrl="api/photos" model=model mode="host"}}
-            <span class="form-details">
-                {{t 'host.photos.details'}}
-            </span>
-        </form>
+        {{photo-uploader dataUrl="api/photos" model=model mode="host"}}
+        <span class="form-details">
+            {{t 'host.photos.details'}}
+        </span>
     </div>
 </div>
 {{#if model.photos}}

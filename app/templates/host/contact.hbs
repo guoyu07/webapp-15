@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-sm-9">
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            {{t 'host.contact.alert'}}
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon glyphicon-pencil mrx"></span>
+                    {{t 'host.contact.message' firstName=model.user.firstName}}
+                    <span class="label label-default pull-right small" style="color: #FFF">BETA</span>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <p class="form-details">
+                            {{t 'host.contact.details' firstName=model.user.firstName}}
+                        </p>
+                    </div>
+                    <div class="form-group {{if fieldErrors.message.length 'has-error'}}">
+                        <label for="intro" class="col-sm-2 control-label">{{t 'host.contact.message.label'}}</label>
+                        <div class="col-sm-10">
+                            {{textarea id="message" name="message" value=message class="form-control" rows="10" placeholder=messagePlaceholder}}
+                            {{error-display fieldErrors.message}}
+                        </div>
+                    </div>
+                    <div class="form-group mbx">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button {{action "sendMessage"}} disabled={{isSending}} class="btn btn-primary">
+                                <span class="glyphicon glyphicon-send mrx"></span>
+                                {{t 'literal.send'}}
+                            </button>
+                            {{#link-to 'host.index' model.id class="btn btn-default"}}
+                                {{t 'literal.back'}}
+                            {{/link-to}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 hidden-xs">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon glyphicon-pushpin mrx"></span>
+                    {{t 'host.contact.goodToKnow'}}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <span class="glyphicon glyphicon-pencil mrx"></span>
+                {{t 'host.contact.goodToKnow1'}}
+                <hr/>
+                <span class="glyphicon glyphicon-time mrx"></span>
+                {{t 'host.contact.goodToKnow2'}}
+                <hr/>
+                <span class="glyphicon glyphicon-paperclip mrx"></span>
+                {{t 'host.contact.goodToKnow3'}}
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon glyphicon-download-alt mrx"></span>
+                    {{t 'documents.usefulDocuments'}}
+                </h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-link mrx"></span>
+                            {{t 'documents.wwooferHandbook'}}
+                        </td>
+                        <td><a href="http://www.wwoof.fr/documents/guide-pratique-wwoofeur.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                        <td><a href="http://www.wwoof.fr/documents/wwoofer-handbook.pdf" target="_blank">{{t 'literal.english'}}</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-link mrx"></span>
+                            {{t 'documents.wwoofingCharter'}}
+                        </td>
+                        <td><a href="http://www.wwoof.fr/documents/charte-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                        <td><a href="http://www.wwoof.fr/documents/wwoofing-charter.pdf" target="_blank">{{t 'literal.english'}}</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="glyphicon glyphicon-link mrx"></span>
+                            {{t 'documents.rulesAndRegulations'}}
+                        </td>
+                        <td><a href="http://www.wwoof.fr/documents/reglement-interieur-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a></td>
+                        <td><a href="http://www.wwoof.fr/documents/wwoofing-rules-and-regulations.pdf" target="_blank">{{t 'literal.english'}}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 /**
  * Ember model for users.
  */
+import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
