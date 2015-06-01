@@ -49,7 +49,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
             var validations = [ this.validate(), wwoofer.validate(), address.validate() ];
 
             // Validate wwoofer and address
-            var self = this;
             Ember.RSVP.all(validations).then(function () {
 
                 // Prepare update promises

@@ -18,7 +18,8 @@ export default Ember.Object.extend({
         'forestry',
         'beekeeping',
         'bakery',
-        'brewery'
+        'brewery',
+        'foraging'
     ],
 
     /**

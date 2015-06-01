@@ -27,7 +27,6 @@ export default Ember.Controller.extend({
             var validations = [ host.validate(), address.validate(), user.validate() ];
 
             // Validate host and address
-            var self = this;
             Ember.RSVP.all(validations).then(function () {
 
                 // Prepare update promises
