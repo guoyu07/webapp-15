@@ -30,7 +30,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
             });
 
             // Handle success
-            deleteRequest.then(function (data) {
+            deleteRequest.then(function () {
                 user.set('photo', null);
                 alertify.success(Ember.I18n.t('notify.photoDeleted'));
             });
