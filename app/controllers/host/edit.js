@@ -36,10 +36,11 @@ export default Ember.Controller.extend({
                 // Update host and address
                 Ember.RSVP.all(updates).then(function () {
                     alertify.success(Ember.I18n.t('notify.informationUpdated'));
-                    self.transitionToRoute('host.index', host);
+                    window.scrollTo(0,0);
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+                window.scrollTo(0,0);
             });
         }
     }

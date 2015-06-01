@@ -58,10 +58,11 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 // Update wwoofer and address
                 Ember.RSVP.all(updates).then(function () {
                     alertify.success(Ember.I18n.t('notify.informationUpdated'));
-                    self.transitionToRoute('index');
+                    window.scrollTo(0,0);
                 });
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+                window.scrollTo(0,0);
             });
         }
     },
