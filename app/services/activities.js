@@ -13,6 +13,7 @@ export default Ember.Object.extend({
         'vineyard',
         'orchard',
         'vegetables',
+        'market-gardening',
         'permaculture',
         'grain-farming',
         'forestry',
