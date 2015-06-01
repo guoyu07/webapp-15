@@ -23,6 +23,7 @@ Router.map(function () {
     });
     this.resource('wwoofer', { path: '/wwoofer/:wwoofer_id' }, function () {
         this.route('edit');
+        this.route('photo');
     });
     this.resource('users', function () {
         this.route('new');

@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-sm-3">
+        <ul class="navbar nav">
+            <li>{{#link-to 'wwoofer.edit' model.id}}{{t 'literal.editProfile'}}{{/link-to}}</li>
+            <li>{{#link-to 'wwoofer.photo' model.id}}{{t 'literal.photo'}}{{/link-to}}</li>
+        </ul>
+        {{#link-to 'wwoofer.index' model.id class="btn btn-primary btn-block mtm mbm"}}{{t 'literal.viewProfile'}}{{/link-to}}
+        {{#unless model.isNew}}
+            <hr/>
+            {{wwoofer-membership-status wwoofer=model}}
+        {{/unless}}
+    </div>
+    <div class="col-sm-9">
+        {{outlet}}
+    </div>
+</div>
