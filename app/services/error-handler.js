@@ -65,6 +65,11 @@ export default Ember.Object.extend({
      */
     handleError: function(err) {
 
+        // Handle ic-ajax errors
+        if (err.jqXHR) {
+            err = err.jqXHR;
+        }
+
         // Special handling for HTTP errors
         if (err && err.status && Ember.typeOf(err.status) === 'number') {
             this._handleHttpError(err, err.status);
