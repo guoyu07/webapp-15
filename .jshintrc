@@ -7,8 +7,7 @@
         "moment": true,
         "alertify": true,
         "trackJs": false,
-        "L": true,
-        "EmberLeaflet": true
+        "L": true
     },
     "browser": true,
     "boss": true,
