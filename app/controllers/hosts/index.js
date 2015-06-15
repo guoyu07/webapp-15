@@ -70,6 +70,8 @@ export default Ember.ArrayController.extend({
 
     visibleFeatures: [],
 
+    dataRequest: null,
+
     /**
      * Leaflet Host layer.
      */
@@ -107,25 +109,15 @@ export default Ember.ArrayController.extend({
      * Indicates whether we can load more hosts.
      */
     cannotLoadMore: function () {
-        return this.get('isLoadingMore') || this.get('_showedFeatures.length') === this.get('visibleFeatures.length');
+        return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('visibleFeatures.length');
     }.property('isLoadingMore', '_showedFeatures.length'),
 
     /**
      * Observes changes on filters then send an event to refresh the hosts.
      */
     mapShouldRefresh : function () {
-        //if (this.get('mapLayer')) {
-            this.send('updateHosts');
-        //}
+        this.send('updateHosts');
     }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
-
-    /**
-     * List of the features displayed in the Host list.
-     */
-    showedFeatures : function () {
-
-
-    }.property('visibleFeatures.@each', 'displayedFeatures'),
 
     /**
      * Is the map has visible features.
@@ -140,8 +132,7 @@ export default Ember.ArrayController.extend({
             return;
         }
 
-        // var begin = this.get('currentDisplayedFeatureCount');
-        var end = Math.min(this.get('currentDisplayedFeatureCount'), this.get('visibleFeatures.length'));
+        var end = Math.min(this.get('currentDisplayedFeatureCount'), visibleFeatures.length);
 
         return visibleFeatures.slice(0, end);
 
@@ -152,9 +143,25 @@ export default Ember.ArrayController.extend({
          * Update the hosts features.
          */
         updateHosts: function () {
+
             this.set('isLoading', true);
+
+            // Abort any potential previous request to avoid racing issues
+            var dataRequest = this.get('dataRequest');
+            if (dataRequest) {
+                dataRequest.abort();
+            }
+
+            // Prepare params
+            var params = this.get('parameters');
+            params.limit = 5000;
+
+            // Create GET request
+            dataRequest = Ember.$.get('/api/host-coordinates', params);
+            this.set('dataRequest', dataRequest);
+
             var self = this;
-            Ember.$.get('/api/host-coordinates', this.get('parameters')).done(function (data) {
+            dataRequest.done(function (data) {
                 self.set('hostCoordinates', data);
                 self.set('isLoading', false);
             });
