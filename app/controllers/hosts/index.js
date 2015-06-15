@@ -59,19 +59,16 @@ export default Ember.ArrayController.extend({
     mapZoom: config.map.defaultZoom,
 
     /**
-     * Number of features that are currently displayed.
+     * Number of features that are displayed by default.
      */
-    numberShowedFeatures: 10,
-
-    /**
-     * List of the features displayed in the host list.
-     */
-    _showedFeatures: [],
+    defaultDisplayedFeatureCount: 10,
 
     /**
      * List of features currently visible on the map.
      */
-    visibleFeatures : [],
+    currentDisplayedFeatureCount: 0,
+
+    visibleFeatures: [],
 
     /**
      * Leaflet Host layer.
@@ -117,48 +114,38 @@ export default Ember.ArrayController.extend({
      * Observes changes on filters then send an event to refresh the hosts.
      */
     mapShouldRefresh : function () {
-        if (this.get('mapLayer')) {
+        //if (this.get('mapLayer')) {
             this.send('updateHosts');
-        }
+        //}
     }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
 
     /**
      * List of the features displayed in the Host list.
      */
     showedFeatures : function () {
-        var mapIterator = Math.min(this.get('numberShowedFeatures'), this.get('visibleFeatures.length'));
-        for (var i= this.get('_showedFeatures.length'); i < mapIterator; i++){
-            this.get('_showedFeatures').pushObject(this.get('visibleFeatures')[i]);
-        }
-        return this.get('_showedFeatures');
-    }.property('visibleFeatures.@each', 'numberShowedFeatures'),
+
+
+    }.property('visibleFeatures.@each', 'displayedFeatures'),
 
     /**
      * Is the map has visible features.
      */
-    hasVisibleFeatures: function() {
-        return this.get('visibleFeatures').length > 0;
-    }.property('visibleFeatures.@each', 'visibleFeatures'),
+    hasVisibleFeatures: Ember.computed.gt('visibleFeatures.length', 0),
 
-    /**
-     * Compute the visibility of the features based on map Extend.
-     */
-    computeFeatureVisibility: function () {
+    displayedFeatures: function () {
 
-        // Reset features list
-        this.set('visibleFeatures', []);
-        this.set('_showedFeatures', []);
-        this.set('numberShowedFeatures', 10);
+        var visibleFeatures = this.get('visibleFeatures');
 
-        // For each feature determine if inside map Extend
-        var self = this;
-        var mapbounds = this.get('mapLayer').getBounds();
-        this.get('hostLayer.geoJsonLayer').eachLayer(function (marker) {
-            if (mapbounds.contains(marker.getLatLng())) {
-                self.get('visibleFeatures').pushObject(marker.feature);
-            }
-        });
-    },
+        if (!visibleFeatures) {
+            return;
+        }
+
+        // var begin = this.get('currentDisplayedFeatureCount');
+        var end = Math.min(this.get('currentDisplayedFeatureCount'), this.get('visibleFeatures.length'));
+
+        return visibleFeatures.slice(0, end);
+
+    }.property('visibleFeatures.length', 'currentDisplayedFeatureCount'),
 
     actions: {
         /**
@@ -166,7 +153,16 @@ export default Ember.ArrayController.extend({
          */
         updateHosts: function () {
             this.set('isLoading', true);
-            this.get('hostLayer').updateFeatures(this.get('parameters'));
+            var self = this;
+            Ember.$.get('/api/host-coordinates', this.get('parameters')).done(function (data) {
+                self.set('hostCoordinates', data);
+                self.set('isLoading', false);
+            });
+        },
+
+        visibleFeaturesChanged(visibleFeatures) {
+            this.set('visibleFeatures', visibleFeatures);
+            this.set('currentDisplayedFeatureCount', this.get('defaultDisplayedFeatureCount'));
         },
 
         /**
@@ -203,7 +199,7 @@ export default Ember.ArrayController.extend({
          * Display more hosts in the host list.
          */
         moreHosts: function () {
-            this.set('numberShowedFeatures', this.get('numberShowedFeatures') + 10);
+            this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + 10);
         }
     }
 });

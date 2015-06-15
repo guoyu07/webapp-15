@@ -35,7 +35,7 @@ module.exports = function (environment) {
             'font-src': "'self' fonts.gstatic.com d50ylagdb72pm.cloudfront.net",
             'connect-src': "'self' capture.trackjs.com",
             'img-src': "'self' data: https://app.wwoof.fr https://maps.googleapis.com www.google-analytics.com " +
-            "https://*.mqcdn.com https://usage.trackjs.com https://s3.amazonaws.com/wwoof-france/",
+            "https://*.mqcdn.com http://*.tile.osm.org https://usage.trackjs.com https://s3.amazonaws.com/wwoof-france/",
             'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
             'media-src': "'self'",
             'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com"
