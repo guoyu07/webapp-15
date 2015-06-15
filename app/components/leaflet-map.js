@@ -3,49 +3,13 @@ import config from '../config/environment';
 
 export default Ember.Component.extend({
 
-    attributeBindings: ['style'],
-
-    width: '100%',
-    height: '400px',
-    latitude: config.map.defaultLat,
-    longitude: config.map.defaultLon,
-    zoom: config.map.defaultZoom,
+    latitude: null,
+    longitude: null,
+    zoom: null,
 
     map: null,
     markerClusterGroup: null,
     geoJsonLayer: null,
-
-    style: function() {
-        return [
-            'width:' + this.get('width'),
-            'height:' + this.get('height')
-        ].join(';');
-    }.property('width', 'height'),
-
-    setView: function() {
-        this.map.fitBounds([
-            [ 41.307, -4.986 ], // south west
-            [ 51.225, 9.744 ] // north east
-        ]);
-    },
-
-    setMarkers: function () {
-
-        if (!this.markers) {
-            return;
-        }
-
-        // Clean previous features
-        this.markerClusterGroup.removeLayer(this.geoJsonLayer);
-        this.geoJsonLayer.clearLayers();
-
-        // Add new data to the layers
-        this.geoJsonLayer.addData(this.markers);
-        this.markerClusterGroup.addLayer(this.geoJsonLayer);
-
-        this.updateVisibleFeatures();
-
-    }.observes('markers.length'),
 
     didInsertElement: function() {
 
@@ -66,9 +30,9 @@ export default Ember.Component.extend({
         });
 
         // Set the tile layer
-        var layer = new L.tileLayer.provider('MapQuestOpen');
-        layer._url = 'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
-        layer.addTo(this.map);
+        var tileLayer = new L.tileLayer.provider('MapQuestOpen');
+        tileLayer._url = 'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
+        tileLayer.addTo(this.map);
 
         // Attach events to the map
         this.map.on('dragend', this.mapDidMove, this);
@@ -80,26 +44,64 @@ export default Ember.Component.extend({
         this.map.invalidateSize();
 
         // Adjust map to display France
-        this.setView();
+        this.centerMap();
     },
 
-    willRemoveElement: function() {
+    /**
+     * Centers the map in the middle of France.
+     */
+    centerMap: function() {
+
+        var latitude = this.get('latitude');
+        var longitude = this.get('longitude');
+        var zoom = this.get('zoom');
+
+        if (latitude && longitude) {
+            this.map.setView([latitude, longitude], zoom);
+        } else {
+            this.map.fitBounds([
+                [ 41.263, -5.466 ], // south west
+                [ 51.268, 9.868 ] // north east
+            ]);
+        }
+    },
+
+    setMarkers: function () {
+
+        if (!this.markers) {
+            return;
+        }
+
+        // Clean previous features
+        this.markerClusterGroup.removeLayer(this.geoJsonLayer);
+        this.geoJsonLayer.clearLayers();
+
+        // Add new data to the layers
+        this.geoJsonLayer.addData(this.markers);
+        this.markerClusterGroup.addLayer(this.geoJsonLayer);
+
+        this.updateVisibleFeatures();
+
+    }.observes('markers.@each'),
+
+    willDestroyElement: function() {
         if (this.map) {
             this.map.remove();
+        }
+        if (this.markerClusterGroup) {
+            this.markerClusterGroup.removeLayer(this.geoJsonLayer);
+        }
+        if (this.geoJsonLayer) {
+            this.geoJsonLayer.clearLayers();
         }
     },
 
     mapDidMove: function() {
 
-        var map    = this.get('map'),
-            center = map.getCenter(),
-            zoom   = map.getZoom();
+        var center = this.map.getCenter();
+        var zoom = this.map.getZoom();
 
-        this.setProperties({
-            latitude: center.lat,
-            longitude: center.lng,
-            zoom: zoom
-        });
+        this.sendAction('mapMoved', center.lat, center.lng, zoom);
 
         this.updateVisibleFeatures();
     },

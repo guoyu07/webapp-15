@@ -46,17 +46,17 @@ export default Ember.ArrayController.extend({
     /**
      * Current map longitude.
      */
-    lon: config.map.defaultLon,
+    lon: null,
 
     /**
      * Current map Latitude.
      */
-    lat: config.map.defaultLat,
+    lat: null,
 
     /**
      * Current map Zoom.
      */
-    mapZoom: config.map.defaultZoom,
+    mapZoom: null,
 
     /**
      * Number of features that are displayed by default.
@@ -90,7 +90,7 @@ export default Ember.ArrayController.extend({
      */
     cannotLoadMore: function () {
         return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('visibleFeatures.length');
-    }.property('isLoadingMore', '_showedFeatures.length'),
+    }.property('isLoadingMore', 'currentDisplayedFeatureCount', 'visibleFeatures.length'),
 
     /**
      * Observes changes on filters then send an event to refresh the hosts.
@@ -153,26 +153,23 @@ export default Ember.ArrayController.extend({
         },
 
         /**
+         * The map position/zoom has changed.
+         */
+        mapMoved(latitude, longitude, zoom) {
+            this.setProperties({
+                lat: latitude,
+                lon: longitude,
+                mapZoom: zoom
+            });
+        },
+
+        /**
          * Updates the active tab.
          * @param {String} tab
          */
         updateTab: function (tab) {
             this.set('activeTab', tab);
         },
-
-        /**
-         * The map position/zoom has changed.
-         */
-        //mapChanged: function() {
-        //
-        //    // Update query params based on map
-        //    this.set('mapZoom', this.get('mapLayer').getZoom());
-        //    this.set('lon', this.get('mapLayer').getCenter().lng);
-        //    this.set('lat', this.get('mapLayer').getCenter().lat);
-        //
-        //    // Recompute feature visibility
-        //    this.computeFeatureVisibility();
-        //},
 
         /**
          * Display more hosts in the host list.
