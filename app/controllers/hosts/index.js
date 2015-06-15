@@ -64,12 +64,18 @@ export default Ember.ArrayController.extend({
     defaultDisplayedFeatureCount: 10,
 
     /**
-     * List of features currently visible on the map.
+     * List of features currently displayed in the list.
      */
     currentDisplayedFeatureCount: 0,
 
+    /**
+     * List of visible features on the map.
+     */
     visibleFeatures: [],
 
+    /**
+     * The latest host-coordinates XHR request.
+     */
     dataRequest: null,
 
     // Query parameters
@@ -88,14 +94,14 @@ export default Ember.ArrayController.extend({
     /**
      * Indicates whether we can load more hosts.
      */
-    cannotLoadMore: function () {
+    cannotLoadMore: function() {
         return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('visibleFeatures.length');
     }.property('isLoadingMore', 'currentDisplayedFeatureCount', 'visibleFeatures.length'),
 
     /**
      * Observes changes on filters then send an event to refresh the hosts.
      */
-    mapShouldRefresh : function () {
+    mapShouldRefresh: function() {
         this.send('updateHosts');
     }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
 
@@ -104,7 +110,7 @@ export default Ember.ArrayController.extend({
      */
     hasVisibleFeatures: Ember.computed.gt('visibleFeatures.length', 0),
 
-    displayedFeatures: function () {
+    displayedFeatures: function() {
 
         var visibleFeatures = this.get('visibleFeatures');
 
@@ -122,7 +128,7 @@ export default Ember.ArrayController.extend({
         /**
          * Update the hosts features.
          */
-        updateHosts: function () {
+        updateHosts() {
 
             this.set('isLoading', true);
 
@@ -167,14 +173,14 @@ export default Ember.ArrayController.extend({
          * Updates the active tab.
          * @param {String} tab
          */
-        updateTab: function (tab) {
+        updateTab(tab) {
             this.set('activeTab', tab);
         },
 
         /**
          * Display more hosts in the host list.
          */
-        moreHosts: function () {
+        moreHosts() {
             this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + 10);
         }
     }

@@ -17,7 +17,7 @@ export default Ember.Component.extend({
         this.map = L.map(this.get('element'), { minZoom: 3, maxZoom: 12 });
 
         // Prepare the cluster group
-        this.markerClusterGroup = L.markerClusterGroup({ disableClusteringAtZoom: 9 });
+        this.markerClusterGroup = L.markerClusterGroup({ disableClusteringAtZoom: 10 });
         this.map.addLayer(this.markerClusterGroup);
 
         // Prepare GeoJSON layer
@@ -66,6 +66,9 @@ export default Ember.Component.extend({
         }
     },
 
+    /**
+     * Set the markers on the map.
+     */
     setMarkers: function () {
 
         if (!this.markers) {
@@ -84,6 +87,9 @@ export default Ember.Component.extend({
 
     }.observes('markers.@each'),
 
+    /**
+     * Cleans the layers/events up.
+     */
     willDestroyElement: function() {
         if (this.map) {
             this.map.remove();
@@ -96,6 +102,9 @@ export default Ember.Component.extend({
         }
     },
 
+    /**
+     * Handles moves on the map.
+     */
     mapDidMove: function() {
 
         var center = this.map.getCenter();
@@ -107,7 +116,7 @@ export default Ember.Component.extend({
     },
 
     /**
-     * Computes the visibility of the features based on map Extend.
+     * Computes the visibility of the features based on map bounds.
      */
     updateVisibleFeatures: function () {
 
@@ -127,6 +136,9 @@ export default Ember.Component.extend({
         this.sendAction('visibleFeaturesChanged', visibleFeatures);
     },
 
+    /**
+     * Updates the size of the map/list containers based on the window size.
+     */
     resizeContainers: function() {
 
         var windowHeight = Ember.$(window).height();
