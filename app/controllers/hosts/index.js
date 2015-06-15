@@ -72,26 +72,6 @@ export default Ember.ArrayController.extend({
 
     dataRequest: null,
 
-    /**
-     * Leaflet Host layer.
-     */
-    hostLayer: null,
-
-    /**
-     * Leaflet Map.
-     */
-    mapLayer: null,
-
-    /**
-     * The container for pop-ups.
-     */
-    popUpContainer: Ember.ContainerView.create(),
-
-    init: function () {
-        this.get('popUpContainer').appendTo('body');
-        this._super();
-    },
-
     // Query parameters
     parameters: function () {
         return {
@@ -181,26 +161,18 @@ export default Ember.ArrayController.extend({
         },
 
         /**
-         * The hosts features have been updated.
-         */
-        updated: function () {
-            this.computeFeatureVisibility();
-            this.set('isLoading', false);
-        },
-
-        /**
          * The map position/zoom has changed.
          */
-        mapChanged: function() {
-
-            // Update query params based on map
-            this.set('mapZoom', this.get('mapLayer').getZoom());
-            this.set('lon', this.get('mapLayer').getCenter().lng);
-            this.set('lat', this.get('mapLayer').getCenter().lat);
-
-            // Recompute feature visibility
-            this.computeFeatureVisibility();
-        },
+        //mapChanged: function() {
+        //
+        //    // Update query params based on map
+        //    this.set('mapZoom', this.get('mapLayer').getZoom());
+        //    this.set('lon', this.get('mapLayer').getCenter().lng);
+        //    this.set('lat', this.get('mapLayer').getCenter().lat);
+        //
+        //    // Recompute feature visibility
+        //    this.computeFeatureVisibility();
+        //},
 
         /**
          * Display more hosts in the host list.

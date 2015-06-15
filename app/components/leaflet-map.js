@@ -52,10 +52,18 @@ export default Ember.Component.extend({
         // Create the map
         this.map = L.map(this.get('element'), { minZoom: 3, maxZoom: 12 });
 
-        // Prepare the cluster group and GeoJSON layers
+        // Prepare the cluster group
         this.markerClusterGroup = L.markerClusterGroup({ disableClusteringAtZoom: 9 });
-        this.geoJsonLayer = new L.geoJson();
         this.map.addLayer(this.markerClusterGroup);
+
+        // Prepare GeoJSON layer
+        this.geoJsonLayer = new L.geoJson(null, {
+
+            // Bind click listener for each feature
+            onEachFeature: L.bind(function (feature, layer) {
+                layer.on('click', L.bind(this.onFeatureClick, this));
+            }, this)
+        });
 
         // Set the tile layer
         var layer = new L.tileLayer.provider('MapQuestOpen');
@@ -140,6 +148,28 @@ export default Ember.Component.extend({
                 Ember.$("#resultList").height(windowHeight - listTopOffset - 40);
             }
         }
-    }
+    },
 
+    /**
+     * Create and display the popup associated to the clicked feature.
+     */
+    onFeatureClick(e) {
+
+        var feature = e.target.feature;
+
+        // Set values of the current host
+        this.set('hostId', feature.properties.hostId);
+        this.set('photoId', feature.properties.photoId);
+        this.set('farmName', feature.properties.farmName);
+
+        Ember.run.later(this, function() {
+
+            // Retrieve the popup content
+            var popup = Ember.$('.leaflet-popup').html();
+
+            // Open popup
+            e.target.bindPopup(popup, { closeButton: false }).togglePopup();
+
+        }, 100);
+    }
 });
