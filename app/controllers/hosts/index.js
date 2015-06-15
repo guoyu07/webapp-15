@@ -105,10 +105,13 @@ export default Ember.Controller.extend({
     }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
 
     /**
-     * Is the map has visible features.
+     * Whether the map has visible features.
      */
     hasVisibleFeatures: Ember.computed.gt('visibleFeatures.length', 0),
 
+    /**
+     * Returns the list of features displayed in the list.
+     */
     displayedFeatures: function() {
 
         var visibleFeatures = this.get('visibleFeatures');
@@ -152,6 +155,9 @@ export default Ember.Controller.extend({
             });
         },
 
+        /**
+         * Refreshes the list of visible features when yhe map is loaded or was moved.
+         */
         visibleFeaturesChanged(visibleFeatures) {
             this.set('visibleFeatures', visibleFeatures);
             this.set('currentDisplayedFeatureCount', this.get('defaultDisplayedFeatureCount'));
