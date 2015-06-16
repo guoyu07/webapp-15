@@ -1,10 +1,6 @@
 <div class="row">
     <div class="hidden-xs hidden-sm hidden-md col-lg-5 col-host-thumb">
-        {{#if photoId}}
-            {{host-thumb url=photo.completeUrl}}
-        {{else}}
-            {{host-thumb url="assets/images/wwoof-no-photo.png"}}
-        {{/if}}
+        {{host-thumb url=photoUrl}}
     </div>
     <div class="col-sm-12 col-lg-7">
         <h4>{{farmName}}</h4>

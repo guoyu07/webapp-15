@@ -21,22 +21,21 @@ export default Ember.Component.extend({
     farmName: Ember.computed.readOnly('host.properties.farmName'),
 
     /**
-     * Host photo Id
-     */
-    photoId : Ember.computed.readOnly('host.properties.photoId'),
-
-    /**
      * Host description
      */
     description: Ember.computed.readOnly('host.properties.description'),
 
     /**
-     * Host photo object
+     * Returns the photo URL to display based on the photo property.
      */
-    photo : function () {
-        var photoId = this.get('photoId');
-        if (photoId) {
-            return this.container.lookup('store:main').find('photo', photoId);
+    photoUrl: function() {
+        var photo = this.get('host.properties.photo');
+        var photoUrl;
+        if (Ember.isEmpty(photo)) {
+            photoUrl = "assets/images/wwoof-no-photo.png";
+        } else {
+            photoUrl = "https://s3.amazonaws.com/wwoof-france/photos/hosts/" + photo;
         }
-    }.property('photoId')
+        return photoUrl;
+    }.property('host.properties.photo')
 });

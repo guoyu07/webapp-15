@@ -169,11 +169,14 @@ export default Ember.Component.extend({
     onFeatureClick(e) {
 
         var feature = e.target.feature;
+        var hostId = feature.properties.hostId;
+        var photo = feature.properties.photo;
+        var farmName = feature.properties.farmName;
 
-        // Set values of the current host
-        this.set('hostId', feature.properties.hostId);
-        this.set('photoId', feature.properties.photoId);
-        this.set('farmName', feature.properties.farmName);
+        // Set info about the current host
+        this.set('hostId', hostId);
+        this.set('photo', photo);
+        this.set('farmName', farmName);
 
         Ember.run.later(this, function() {
 
