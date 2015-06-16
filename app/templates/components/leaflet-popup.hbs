@@ -1,0 +1,12 @@
+<div class="leaflet-popup">
+    {{#link-to "host" hostId title=farmName }}
+        {{#if photoId}}
+            {{host-thumb url=photo.completeUrl}}
+        {{else}}
+            {{host-thumb url="assets/images/wwoof-no-photo.png"}}
+        {{/if}}
+        <div class="leaflet-popup-farm-name mts">
+            {{farmName}}
+        </div>
+    {{/link-to}}
+</div>

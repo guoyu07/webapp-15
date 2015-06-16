@@ -1,8 +1,8 @@
-<div class="row">
+<div class="row host-index-row">
     <div class="col-md-6">
         <div class="form" role="form">
             <h4 class="sr-only">{{t 'hosts.index.find'}}</h4>
-            <div id="hosts-search-box" class="form-group">
+            <div class="form-group">
                 <div class="input-group">
                     <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
                     {{input class="form-control" type="search"  id="searchTerm" placeholderTranslation="hosts.index.searchTerm.placeholder" value=searchTerm action="updateHosts"}}
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="mbm" role="tabpanel">
-                <ul id="hosts-search-tabs" class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#results" aria-controls="results" role="tab" data-toggle="tab" {{action "updateTab" 'results'}}>Results</a>
                     </li>
@@ -24,14 +24,14 @@
                         <a href="#filters" aria-controls="filters" role="tab" data-toggle="tab" {{action "updateTab" 'filters'}}>Filters</a>
                     </li>
                 </ul>
-                <div class="tab-content">
+                <div id="resultTabContent" class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="results">
                         <div id="resultList" class="hidden-sm hidden-xs">
                             {{#if isLoading}}
                                 {{partial 'loading'}}
                             {{else}}
                                 {{#if hasVisibleFeatures}}
-                                    {{#each feature in showedFeatures}}
+                                    {{#each feature in displayedFeatures}}
                                         {{host-item host=feature}}
                                     {{/each}}
                                     <button {{action "moreHosts"}} {{bind-attr disabled=cannotLoadMore}} class="btn btn-default center-block">
@@ -112,6 +112,12 @@
         </div>
     </div>
     <div {{bind-attr class=":col-md-6 showMap:show:hidden"}}>
-        {{outlet "map"}}
+        {{leaflet-map
+            markers=hostCoordinates
+            longitude=lon
+            latitude=lat
+            zoom=mapZoom
+            mapMoved='mapMoved'
+            visibleFeaturesChanged='visibleFeaturesChanged'}}
     </div>
 </div>

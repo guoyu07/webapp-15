@@ -19,8 +19,8 @@
     "ember-i18n": "3.1.0",
     "ember-simple-auth": "0.7.3",
     "jquery-cookie": "~1.4.1",
-    "ember-leaflet": "~0.6.1",
     "leaflet-providers": "~1.0.12",
-    "trackjs": "~2.1.11"
+    "trackjs": "~2.1.11",
+    "leaflet.markercluster": "~0.4.0"
   }
 }

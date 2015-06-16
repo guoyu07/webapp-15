@@ -2,9 +2,8 @@
  * Ember controller for hosts index.
  */
 import Ember from 'ember';
-import config from '../../config/environment';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
 
     needs: ['countries'],
 
@@ -46,52 +45,37 @@ export default Ember.ArrayController.extend({
     /**
      * Current map longitude.
      */
-    lon: config.map.defaultLon,
+    lon: null,
 
     /**
      * Current map Latitude.
      */
-    lat: config.map.defaultLat,
+    lat: null,
 
     /**
      * Current map Zoom.
      */
-    mapZoom: config.map.defaultZoom,
+    mapZoom: null,
 
     /**
-     * Number of features that are currently displayed.
+     * Number of features that are displayed by default.
      */
-    numberShowedFeatures: 10,
+    defaultDisplayedFeatureCount: 10,
 
     /**
-     * List of the features displayed in the host list.
+     * List of features currently displayed in the list.
      */
-    _showedFeatures: [],
+    currentDisplayedFeatureCount: 0,
 
     /**
-     * List of features currently visible on the map.
+     * List of visible features on the map.
      */
-    visibleFeatures : [],
+    visibleFeatures: [],
 
     /**
-     * Leaflet Host layer.
+     * The latest host-coordinates XHR request.
      */
-    hostLayer: null,
-
-    /**
-     * Leaflet Map.
-     */
-    mapLayer: null,
-
-    /**
-     * The container for pop-ups.
-     */
-    popUpContainer: Ember.ContainerView.create(),
-
-    init: function () {
-        this.get('popUpContainer').appendTo('body');
-        this._super();
-    },
+    dataRequest: null,
 
     // Query parameters
     parameters: function () {
@@ -109,101 +93,100 @@ export default Ember.ArrayController.extend({
     /**
      * Indicates whether we can load more hosts.
      */
-    cannotLoadMore: function () {
-        return this.get('isLoadingMore') || this.get('_showedFeatures.length') === this.get('visibleFeatures.length');
-    }.property('isLoadingMore', '_showedFeatures.length'),
+    cannotLoadMore: function() {
+        return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('visibleFeatures.length');
+    }.property('isLoadingMore', 'currentDisplayedFeatureCount', 'visibleFeatures.length'),
 
     /**
      * Observes changes on filters then send an event to refresh the hosts.
      */
-    mapShouldRefresh : function () {
-        if (this.get('mapLayer')) {
-            this.send('updateHosts');
-        }
+    mapShouldRefresh: function() {
+        this.send('updateHosts');
     }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
 
     /**
-     * List of the features displayed in the Host list.
+     * Whether the map has visible features.
      */
-    showedFeatures : function () {
-        var mapIterator = Math.min(this.get('numberShowedFeatures'), this.get('visibleFeatures.length'));
-        for (var i= this.get('_showedFeatures.length'); i < mapIterator; i++){
-            this.get('_showedFeatures').pushObject(this.get('visibleFeatures')[i]);
+    hasVisibleFeatures: Ember.computed.gt('visibleFeatures.length', 0),
+
+    /**
+     * Returns the list of features displayed in the list.
+     */
+    displayedFeatures: function() {
+
+        var visibleFeatures = this.get('visibleFeatures');
+
+        if (!visibleFeatures) {
+            return;
         }
-        return this.get('_showedFeatures');
-    }.property('visibleFeatures.@each', 'numberShowedFeatures'),
 
-    /**
-     * Is the map has visible features.
-     */
-    hasVisibleFeatures: function() {
-        return this.get('visibleFeatures').length > 0;
-    }.property('visibleFeatures.@each', 'visibleFeatures'),
+        var end = Math.min(this.get('currentDisplayedFeatureCount'), visibleFeatures.length);
 
-    /**
-     * Compute the visibility of the features based on map Extend.
-     */
-    computeFeatureVisibility: function () {
+        return visibleFeatures.slice(0, end);
 
-        // Reset features list
-        this.set('visibleFeatures', []);
-        this.set('_showedFeatures', []);
-        this.set('numberShowedFeatures', 10);
-
-        // For each feature determine if inside map Extend
-        var self = this;
-        var mapbounds = this.get('mapLayer').getBounds();
-        this.get('hostLayer.geoJsonLayer').eachLayer(function (marker) {
-            if (mapbounds.contains(marker.getLatLng())) {
-                self.get('visibleFeatures').pushObject(marker.feature);
-            }
-        });
-    },
+    }.property('visibleFeatures.length', 'currentDisplayedFeatureCount'),
 
     actions: {
         /**
          * Update the hosts features.
          */
-        updateHosts: function () {
+        updateHosts() {
+
             this.set('isLoading', true);
-            this.get('hostLayer').updateFeatures(this.get('parameters'));
+
+            // Abort any potential previous request to avoid racing issues
+            var dataRequest = this.get('dataRequest');
+            if (dataRequest) {
+                dataRequest.abort();
+            }
+
+            // Prepare params
+            var params = this.get('parameters');
+            params.limit = 5000;
+
+            // Create GET request
+            dataRequest = Ember.$.get('/api/host-coordinates', params);
+            this.set('dataRequest', dataRequest);
+
+            var self = this;
+            dataRequest.done(function (data) {
+                self.set('hostCoordinates', data);
+                self.set('isLoading', false);
+            });
+        },
+
+        /**
+         * Refreshes the list of visible features when yhe map is loaded or was moved.
+         */
+        visibleFeaturesChanged(visibleFeatures) {
+            this.set('visibleFeatures', visibleFeatures);
+            this.set('currentDisplayedFeatureCount', this.get('defaultDisplayedFeatureCount'));
+        },
+
+        /**
+         * The map position/zoom has changed.
+         */
+        mapMoved(latitude, longitude, zoom) {
+            this.setProperties({
+                lat: latitude,
+                lon: longitude,
+                mapZoom: zoom
+            });
         },
 
         /**
          * Updates the active tab.
          * @param {String} tab
          */
-        updateTab: function (tab) {
+        updateTab(tab) {
             this.set('activeTab', tab);
-        },
-
-        /**
-         * The hosts features have been updated.
-         */
-        updated: function () {
-            this.computeFeatureVisibility();
-            this.set('isLoading', false);
-        },
-
-        /**
-         * The map position/zoom has changed.
-         */
-        mapChanged: function() {
-
-            // Update query params based on map
-            this.set('mapZoom', this.get('mapLayer').getZoom());
-            this.set('lon', this.get('mapLayer').getCenter().lng);
-            this.set('lat', this.get('mapLayer').getCenter().lat);
-
-            // Recompute feature visibility
-            this.computeFeatureVisibility();
         },
 
         /**
          * Display more hosts in the host list.
          */
-        moreHosts: function () {
-            this.set('numberShowedFeatures', this.get('numberShowedFeatures') + 10);
+        moreHosts() {
+            this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + 10);
         }
     }
 });

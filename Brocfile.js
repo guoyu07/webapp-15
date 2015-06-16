@@ -51,7 +51,14 @@ app.import('bower_components/ember-i18n/lib/i18n.js');
 app.import('bower_components/ember-i18n/lib/i18n-plurals.js');
 
 // Ember leaflet
-app.import('bower_components/ember-leaflet/dist/ember-leaflet.js');
+app.import('bower_components/leaflet/dist/leaflet-src.js');
+app.import('bower_components/leaflet/dist/leaflet.css');
+app.import('bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js');
+app.import('bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css');
+var leaflet = pickFiles('bower_components/leaflet/dist/', {
+    srcDir: 'images',
+    destDir: '/assets/images'
+});
 
 // Leaflet providers
 app.import("bower_components/leaflet-providers/leaflet-providers.js");
@@ -63,5 +70,6 @@ module.exports = mergeTrees([
     alertify,
     bootstrapFonts,
     bootstrapCssMap,
+    leaflet,
     app.toTree()
 ]);
