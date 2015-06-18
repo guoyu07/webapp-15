@@ -6,7 +6,8 @@ import ValidationsMixin from '../../mixins/validations';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    needs: ['countries', 'departments'],
+    countriesService: Ember.inject.service('countries'),
+    departmentsService: Ember.inject.service('departments'),
 
     selectedDate: null,
 

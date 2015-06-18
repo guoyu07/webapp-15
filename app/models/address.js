@@ -18,8 +18,8 @@ export default DS.Model.extend(ValidationsMixin, {
     updatedAt: DS.attr('date'),
 
     // Relationships
-    department: DS.belongsTo('department'),
-    country: DS.belongsTo('country'),
+    department: DS.belongsTo('department', { async: true }),
+    country: DS.belongsTo('country', { async: true }),
 
     validations: {
         address1: {

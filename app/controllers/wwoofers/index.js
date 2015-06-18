@@ -3,9 +3,9 @@
  */
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
 
-    needs: ['countries', 'application'],
+    countriesService: Ember.inject.service('countries'),
 
     // Query parameters bound with the URL
     queryParams: ['searchTerm', 'country'],
@@ -28,11 +28,6 @@ export default Ember.ArrayController.extend({
 
     actions: {
         loadMoreWwoofers: function () {
-
-            // Return early if already loading
-            if (this.get('isLoadingMore')) {
-                return;
-            }
 
             // Set controller loading state
             this.set('isLoadingMore', true);

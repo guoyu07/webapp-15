@@ -5,8 +5,6 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    needs: ['countries'],
-
     activitiesService: Ember.inject.service('activities'),
     monthsService: Ember.inject.service('months'),
 

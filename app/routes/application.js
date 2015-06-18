@@ -6,23 +6,6 @@ import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 import config from '../config/environment';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
-    beforeModel: function (transition, queryParams) {
-
-        // Call base class
-        this._super(transition, queryParams);
-
-        var self = this;
-        return Ember.RSVP.hash({
-            // All departments are required in most routes and must be loaded BEFORE the models so the
-            // binding of department query parameters with the department select works properly
-            departments: this.store.find('department'),
-            countries: this.store.find('country') // Countries are required in most routes
-        }).then(function (result) {
-            // Set data into controllers
-            self.controllerFor('departments').set('model', result.departments);
-            self.controllerFor('countries').set('model', result.countries);
-        });
-    },
     model: function () {
         // Load current user memberships
         if (this.get('session.isAuthenticated')) {

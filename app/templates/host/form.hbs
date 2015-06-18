@@ -150,7 +150,7 @@
                 <label for="country" class="col-sm-2 control-label">{{t 'address.form.country.label'}}</label>
                 <div class="col-sm-10">
                     {{view "select"
-                            content=controllers.countries.hostCountries
+                            content=countriesService.hostCountries
                             optionValuePath="content.id"
                             optionLabelPath="content.name"
                             selection=model.address.country
@@ -166,7 +166,7 @@
                         <label for="department" class="col-sm-2 control-label">{{t 'address.form.department.label'}}</label>
                         <div class="col-sm-10">
                             {{view "select"
-                                    content=controllers.departments.content
+                                    content=departmentsService.sortedDepartments
                                     optionValuePath="content.id"
                                     optionLabelPath="content.name"
                                     selection=model.address.department
