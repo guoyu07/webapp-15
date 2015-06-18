@@ -1,11 +1,11 @@
 <ol class="carousel-indicators">
-    {{#each photo in displayedPhotos}}
+    {{#each displayedPhotos as |photo|}}
         <li {{bind-attr data-target="anchorId"}} data-slide-to=""></li>
     {{/each}}
 </ol>
 
 <div class="carousel-inner" role="listbox">
-    {{#each photo in displayedPhotos}}
+    {{#each displayedPhotos as |photo|}}
         <div class="item">
             <div style="background:url({{photo.completeUrl}}) center center; background-size:cover;" class="slider-size">
                 <div class="carousel-caption">

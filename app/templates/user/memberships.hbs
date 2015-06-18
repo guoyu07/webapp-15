@@ -15,7 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#each wwoofMembership in localUserMembershipsService.wwoofMemberships}}
+                {{#each localUserMembershipsService.wwoofMemberships as |wwoofMembership|}}
                     <tr>
                         <td>{{wwoofMembership.itemCode}}</td>
                         <td>{{format-date wwoofMembership.createdAt}}</td>
@@ -53,7 +53,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#each hostMembership in localUserMembershipsService.hostMemberships}}
+                {{#each localUserMembershipsService.hostMemberships as |hostMembership|}}
                     <tr>
                         <td>{{hostMembership.itemCode}}</td>
                         <td>{{format-date hostMembership.createdAt}}</td>

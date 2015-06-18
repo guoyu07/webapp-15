@@ -31,7 +31,7 @@
                                 {{partial 'loading'}}
                             {{else}}
                                 {{#if hasVisibleFeatures}}
-                                    {{#each feature in displayedFeatures}}
+                                    {{#each displayedFeatures as |feature|}}
                                         {{host-item host=feature}}
                                     {{/each}}
                                     <button {{action "moreHosts"}} {{bind-attr disabled=cannotLoadMore}} class="btn btn-default center-block">

@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    {{#each membership in this}}
+    {{#each model as |membership|}}
         <tr>
             <td>{{membership.user.firstName}}</td>
             <td>{{membership.user.lastName}}</td>
