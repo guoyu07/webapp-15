@@ -34,7 +34,6 @@ export default DS.Model.extend(ValidationsMixin, {
     // Validations
     validations: {
         caption: {
-            presence: true,
             length: { maximum: 255 }
         }
     }
