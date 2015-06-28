@@ -14,11 +14,11 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 {{#link-to "hosts" tagName="li"}}
-                    <a {{bind-attr href="view.href"}}>{{t 'literal.hosts'}}</a>
+                    <a href={{view.href}}>{{t 'literal.hosts'}}</a>
                 {{/link-to}}
                 {{#if canSeeWwoofersLink}}
                     {{#link-to "wwoofers" tagName="li"}}
-                        <a {{bind-attr href="view.href"}}>{{t 'literal.wwoofers'}}</a>
+                        <a href={{view.href}}>{{t 'literal.wwoofers'}}</a>
                     {{/link-to}}
                 {{/if}}
                 {{#if session.isAuthenticated}}
