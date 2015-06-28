@@ -7,7 +7,7 @@
 <div class="carousel-inner" role="listbox">
     {{#each displayedPhotos as |photo|}}
         <div class="item">
-            {{#image-thumb classNames="slider-size" url=photo.completeUrl}}
+            {{#image-thumb url=photo.completeUrl height=300}}
                 <div class="carousel-caption">
                     {{photo.caption}}
                 </div>

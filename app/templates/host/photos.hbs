@@ -18,7 +18,7 @@
             <div class="row">
                 {{#each model.photos as |photo|}}
                     <div class="col-sm-4 mbm">
-                        {{image-thumb url=photo.completeUrl classNames="host-thumb"}}
+                        {{image-thumb url=photo.completeUrl height=200}}
                         <div class="input-group mtx">
                             {{input type="text" name="caption" value=photo.caption class="form-control" placeholderTranslation='host.photos.caption.placeholder'}}
                             <div class="input-group-btn">
