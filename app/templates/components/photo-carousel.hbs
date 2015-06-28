@@ -7,11 +7,11 @@
 <div class="carousel-inner" role="listbox">
     {{#each displayedPhotos as |photo|}}
         <div class="item">
-            <div style="background:url({{photo.completeUrl}}) center center; background-size:cover;" class="slider-size">
+            {{#host-thumb classNames="slider-size" url=photo.completeUrl}}
                 <div class="carousel-caption">
                     {{photo.caption}}
                 </div>
-            </div>
+            {{/host-thumb}}
         </div>
     {{/each}}
 </div>

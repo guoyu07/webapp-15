@@ -3,8 +3,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="item">
-                    <div style="background:url({{model.user.completePhotoUrl}}) center center; background-size:cover;" class="photo-size">
-                    </div>
+                    {{host-thumb url=model.user.completePhotoUrl classNames="photo-size"}}
                 </div>
             </div>
             <div class="col-md-9">
