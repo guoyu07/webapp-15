@@ -39,11 +39,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
                         email: self.get('emailAddress')
                     }
                 }).then(function () {
-                    // Notify user
-                    alertify.alert(Ember.I18n.t('notify.temporaryPassword'));
-
-                    // Go to login page
-                    self.transitionToRoute('login');
+                    self.transitionToRoute('login', { queryParams: { fromReset: true } });
                 }).catch(function (err) {
                     err = err.jqXHR || err;
                     if (err.status === 404) {

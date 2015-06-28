@@ -7,6 +7,9 @@ import Regex from '../utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
+    queryParams: ['fromReset'],
+
+    fromReset: null,
     username: null,
     password: null,
     isLoading: false,
@@ -31,11 +34,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 var auth = self.get('session').authenticate('authenticator:passport', {
                     username: self.get('username'),
                     password: self.get('password')
-                });
-
-                // Handle success
-                auth.then(function () {
-                    alertify.success(Ember.I18n.t('notify.userAuthenticated'));
                 });
 
                 // Handle failure
