@@ -14,7 +14,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-4">
-                    {{host-thumb url=model.user.completePhotoUrl}}
+                    {{image-thumb url=model.user.completePhotoUrl classNames="host-thumb"}}
                     <div class="input-group mtx pull-right">
                         <button {{action "deletePhoto"}} class="btn btn-default" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
                             <span class="glyphicon glyphicon-trash mrx" aria-hidden="true"></span>
