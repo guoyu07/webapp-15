@@ -8,7 +8,7 @@
     {{/unless}}
     <div class="panel-body">
         <form class="form-horizontal">
-            <div {{bind-attr class=":form-group model.fieldErrors.firstName.length:has-error"}}>
+            <div class="form-group {{if model.fieldErrors.firstName.length 'has-error'}}">
                 <label for="firstName" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
                 <div class="col-sm-10">
                     {{#if canEditUser}}
@@ -19,7 +19,7 @@
                     {{/if}}
                 </div>
             </div>
-            <div {{bind-attr class=":form-group model.fieldErrors.lastName.length:has-error"}}>
+            <div class="form-group {{if model.fieldErrors.lastName.length 'has-error'}}">
                 <label for="lastName" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
                 <div class="col-sm-10">
                     {{#if canEditUser}}
@@ -30,7 +30,7 @@
                     {{/if}}
                 </div>
             </div>
-            <div {{bind-attr class=":form-group fieldErrors.selectedDate.length:has-error"}}>
+            <div class="form-group {{if fieldErrors.selectedDate.length 'has-error'}}">
                 <label for="birthDate" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
                 <div class="col-sm-10">
                     {{#if canEditUser}}
@@ -41,7 +41,7 @@
                     {{/if}}
                 </div>
             </div>
-            <div {{bind-attr class=":form-group model.fieldErrors.email.length:has-error"}}>
+            <div class="form-group {{if model.fieldErrors.email.length 'has-error'}}">
                 <label for="email" class="col-sm-2 control-label">{{t 'literal.email'}}</label>
                 <div class="col-sm-10">
                     {{input type="email" id="email" name="email" value=model.email class="form-control"}}
@@ -49,7 +49,7 @@
                 </div>
             </div>
             {{#if model.isNew}}
-                <div {{bind-attr class=":form-group model.fieldErrors.password.length:has-error"}}>
+                <div class="form-group {{if model.fieldErrors.password.length 'has-error'}}">
                     <label for="password" class="col-sm-2 control-label">{{t 'literal.password'}}</label>
                     <div class="col-sm-10">
                         {{input type="password" id="password" name="password" value=model.password class="form-control"}}

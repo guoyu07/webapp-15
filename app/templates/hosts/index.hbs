@@ -34,7 +34,7 @@
                                     {{#each displayedFeatures as |feature|}}
                                         {{host-item host=feature}}
                                     {{/each}}
-                                    <button {{action "moreHosts"}} {{bind-attr disabled=cannotLoadMore}} class="btn btn-default center-block">
+                                    <button {{action "moreHosts"}} disabled={{cannotLoadMore}} class="btn btn-default center-block">
                                         {{t 'literal.loadMore'}}
                                     </button>
                                 {{else}}
@@ -111,7 +111,7 @@
             </div>
         </div>
     </div>
-    <div {{bind-attr class=":col-md-6 showMap:show:hidden"}}>
+    <div class="col-md-6 {{if showMap 'show' 'hidden'}}">
         {{leaflet-map
             markers=hostCoordinates
             longitude=lon

@@ -55,7 +55,7 @@
             <span class="glyphicon glyphicon-globe mrx"></span>
             {{#if canSeeContactInfo}}
                 {{#if model.webSite}}
-                    <a {{bind-attr href=model.webSite}} target="_blank">{{model.webSite}}</a>
+                    <a href={{model.webSite}} target="_blank">{{model.webSite}}</a>
                 {{else}}
                     {{t 'host.index.noWebsite'}}
                 {{/if}}

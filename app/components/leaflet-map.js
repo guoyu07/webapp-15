@@ -140,9 +140,11 @@ export default Ember.Component.extend({
      */
     resizeContainers: function() {
 
+        var hostIndexRow = Ember.$('.host-index-row');
+        var resultTabContent = Ember.$('#resultTabContent');
         var windowHeight = Ember.$(window).height();
-        var mapTopOffset = Ember.$('.host-index-row').offset().top;
-        var listTopOffset = Ember.$('#resultTabContent').offset().top;
+        var mapTopOffset = hostIndexRow.offset() ? hostIndexRow.offset().top : 0;
+        var listTopOffset = resultTabContent.offset() ? resultTabContent.offset().top : 0;
 
         if (Ember.$('#resultList').is(':hidden')) {
 

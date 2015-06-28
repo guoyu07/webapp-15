@@ -1,6 +1,6 @@
 {{#each options as |option|}}
-    <label {{bind-attr for=option.value}} class="checkbox-inline">
-        <input type="checkbox" {{bind-attr id=option.value}} {{bind-attr checked=option.isSelected}} {{action "select" option on="change"}}>
+    <label for={{option.value}} class="checkbox-inline">
+        <input type="checkbox" id={{option.value}} checked={{option.isSelected}} {{action "select" option on="change"}}>
         {{option.label}}
     </label>
 {{/each}}
