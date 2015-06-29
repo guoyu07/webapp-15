@@ -31,6 +31,6 @@
     </tbody>
 </table>
 
-<button {{action "loadMore"}} disabled={{isLoading}} class="btn btn-default">
-    {{t 'literal.loadMore'}}
-</button>
+<p class="text-center">
+    {{list-pagination currentPage=page totalPages=totalPages targetRoute='memberships'}}
+</p>

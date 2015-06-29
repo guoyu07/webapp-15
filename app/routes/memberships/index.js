@@ -7,10 +7,22 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
-    model: function () {
-        // Do not specify a user id to retrieve all memberships (works only if user is an admin)
-        return this.store.filter('membership', { offset: 0, expireSoon: true }, function (membership) {
-            return !membership.get('isExpired') && !membership.get('isStillValidInAMonth');
+    queryParams: {
+        page: {
+            refreshModel: true
+        }
+    },
+
+    model: function (params) {
+
+        var page = params.page || 1;
+        var limit = params.itemsPerPage || 20;
+        var offset = (page - 1) * limit;
+
+        return this.store.find('membership', {
+            offset: offset,
+            limit: limit,
+            expireSoon: true
         });
     },
 
@@ -38,25 +50,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             // Handle failure
             post.fail(function () {
                 alertify.error(Ember.I18n.t('notify.submissionError'));
-            });
-        },
-        loadMore: function () {
-            // Return early if already loading
-            if (this.controller.get('isLoading')) {
-                return;
-            }
-
-            // Set loading state
-            this.controller.set('isLoading', true);
-
-            // Initialize variables
-            var newOffset = this.store.metadataFor('membership').offset + 50,
-                self = this;
-
-            // Find next page of content and update
-            this.store.find('membership', { offset: newOffset, expireSoon: true }).then(function (memberships) {
-                self.controller.get('model').addObjects(memberships);
-                self.controller.set('isLoading', false);
             });
         }
     }
