@@ -26,6 +26,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         });
     },
 
+    resetController: function (controller, isExiting, transition) {
+        if (isExiting) {
+            controller.set('page', 1);
+        }
+        controller.set('selectedMemberships', Ember.A());
+        controller.set('allChecked', false);
+    },
+
     actions: {
         /**
          * Handles click actions within the membership list.
