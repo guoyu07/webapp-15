@@ -4,29 +4,29 @@
     </h1>
 </div>
 
+<p>
+    <button {{action 'sendReminder' membership}} disabled={{cannotSendReminders}} class="btn btn-primary">
+    {{t 'memberships.index.sendReminder'}} ({{remindableMembershipCount}})
+    </button>
+</p>
+
 <table class="table table-hover">
     <thead>
     <tr>
+        <th>{{input type="checkbox" checked=allChecked}}</th>
         <th>{{t 'memberships.index.firstName'}}</th>
         <th>{{t 'memberships.index.lastName'}}</th>
         <th>{{t 'memberships.index.type'}}</th>
+        <th>{{t 'memberships.index.createdAt'}}</th>
+        <th>{{t 'memberships.index.total'}}</th>
+        <th>{{t 'memberships.index.paymentType'}}</th>
         <th>{{t 'memberships.index.expireAt'}}</th>
-        <th>{{t 'memberships.index.actions'}}</th>
+        <th>Reminder</th>
     </tr>
     </thead>
     <tbody>
     {{#each model as |membership|}}
-        <tr>
-            <td>{{membership.user.firstName}}</td>
-            <td>{{membership.user.lastName}}</td>
-            <td>{{membership.type}}</td>
-            <td>{{format-date membership.expireAt}}</td>
-            <td>
-                <button {{action 'sendReminder' membership}} disabled={{membership.reminderAlreadySent}} class="btn btn-primary">
-                    {{t 'memberships.index.sendReminder'}}
-                </button>
-            </td>
-        </tr>
+        {{membership-item membership=membership allChecked=allChecked itemToggled='itemToggled'}}
     {{/each}}
     </tbody>
 </table>
