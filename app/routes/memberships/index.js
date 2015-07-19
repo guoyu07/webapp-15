@@ -2,8 +2,8 @@
  * Ember route for memberships (admin).
  */
 import Ember from 'ember';
-import config from '../../config/environment';
 import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
+import request from 'ic-ajax';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
@@ -27,29 +27,60 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     },
 
     actions: {
-        sendReminder: function(membership) {
+        /**
+         * Handles click actions within the membership list.
+         * Maintains the list of selected memberships.
+         * @param membership
+         * @param checked
+         */
+        itemToggled(membership, checked) {
+            var selectedMemberships = this.controller.get('selectedMemberships');
+            if (checked === true) {
+                selectedMemberships.addObject(membership);
+            } else {
+                selectedMemberships.removeObject(membership);
+                if (this.controller.get('allChecked') === true) {
+                    this.controller.set('allChecked', false);
+                }
+            }
+        },
+        /**
+         * Sends a reminder too each "remindable" selected membership.
+         */
+        sendReminder: function() {
 
             // Prepare URL
-            var url = [ config.apiHost, config.apiNamespace, 'memberships', membership.get('id'), 'send-reminder' ].join('/');
+            var adapter = this.store.adapterFor('application');
 
-            // Send reminder
-            var post = Ember.$.ajax({
-                type: 'POST',
-                url: url
+            // Get memberships for which no reminder was sent already
+            var remindableMemberships = this.controller.get('remindableMemberships');
+
+            // Send the reminders
+            var promises = remindableMemberships.map(function (membership) {
+                var url = [
+                    adapter.get('host'),
+                    adapter.get('namespace'),
+                    'memberships',
+                    membership.get('id'),
+                    'send-reminder'
+                ].join('/');
+
+                // Update reminder sent date
+                membership.set('reminderSentAt', new Date());
+
+                // Send reminder
+                return request({
+                    type: 'POST',
+                    url: url
+                });
             });
 
             // Handle success
-            post.done(function (data) {
-                // Update reminder sent date so the button get greyed out
-                membership.set('reminderSentAt', data.membership.reminderSentAt);
+            var promise = Ember.RSVP.all(promises);
 
+            promise.then(function () {
                 // Notify user
-                alertify.success(Ember.I18n.t('notify.reminderSent', { email: membership.get('user.email') }));
-            });
-
-            // Handle failure
-            post.fail(function () {
-                alertify.error(Ember.I18n.t('notify.submissionError'));
+                alertify.success(Ember.I18n.t('notify.reminderSent', { email: 'foobar' }));
             });
         }
     }

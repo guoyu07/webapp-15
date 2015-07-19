@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
+    tagName: 'nav',
     currentPage: 1,
     pageOffset: 3,
     totalPages: null,
