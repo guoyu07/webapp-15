@@ -93,7 +93,7 @@ export default DS.Model.extend(ValidationsMixin, {
             presence: true
         },
         note: {
-            length: { maximum: 255 }
+            length: { maximum: 2000 }
         }
     }
 });

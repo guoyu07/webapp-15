@@ -26,7 +26,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         });
     },
 
-    resetController: function (controller, isExiting, transition) {
+    resetController: function (controller, isExiting) {
         if (isExiting) {
             controller.set('page', 1);
         }
