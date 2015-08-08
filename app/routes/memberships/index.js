@@ -83,13 +83,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             // Handle success
             var promise = Ember.RSVP.all(promises);
 
-            promise.then( ()=> {
-
-                // Refresh the memberships
-                this.refresh();
-
-                // Notify user
+            // Notify user
+            promise.then(function() {
                 alertify.success(Ember.I18n.t('notify.reminderSent'));
+            });
+
+            // Refresh the memberships
+            promise.finally( ()=> {
+                this.refresh();
             });
         }
     }
