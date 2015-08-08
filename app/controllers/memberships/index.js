@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
 
     remindableMembershipCount: Ember.computed.readOnly('remindableMemberships.length'),
 
-    cannotSendReminders: Ember.computed.equal('remindableMembershipCount', 0),
+    cannotSendReminders: Ember.computed.empty('remindableMemberships'),
 
     /**
      * Process the total number of pages that can be displayed.

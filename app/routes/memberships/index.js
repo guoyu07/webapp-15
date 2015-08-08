@@ -73,9 +73,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
                     'send-reminder'
                 ].join('/');
 
-                // Update reminder sent date
-                membership.set('reminderSentAt', new Date());
-
                 // Send reminder
                 return request({
                     type: 'POST',
@@ -86,9 +83,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             // Handle success
             var promise = Ember.RSVP.all(promises);
 
-            promise.then(function () {
+            promise.then( ()=> {
+
+                // Refresh the memberships
+                this.refresh();
+
                 // Notify user
-                alertify.success(Ember.I18n.t('notify.reminderSent', { email: 'foobar' }));
+                alertify.success(Ember.I18n.t('notify.reminderSent'));
             });
         }
     }
