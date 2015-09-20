@@ -7,6 +7,11 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
     actions: {
+        /**
+         * Initializes a payment flow with PayPal.
+         * @param {String} itemCode The item code (WO1, WO2, ...).
+         * @param {String} [shippingRegion] The region where the booklet should be sent.
+         */
         initPayment: function (itemCode, shippingRegion) {
 
             // Do not continue if no item code was specified
@@ -25,6 +30,21 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
             // Redirect to server payment route in order to get redirected to PayPal
             window.location.replace(url);
+        },
+        /**
+         * Creates a membership (admin only).
+         */
+        createMembership() {
+
+            var promise = this.controller.getNewMembership();
+
+            promise = promise.then( (newMembership)=> {
+                return newMembership.save();
+            });
+
+            promise.then( (createdMembership)=> {
+                this.transitionTo('user.memberships', createdMembership.get('user'));
+            });
         }
     }
 });

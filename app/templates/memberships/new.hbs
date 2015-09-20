@@ -73,57 +73,91 @@
                             </p>
                         </div>
                     {{/if}}
+                    {{#if session.user.isAdmin}}
+                        <div class="form-group">
+                            <label for="shippingRegions" class="col-sm-2 control-label">
+                                {{t 'memberships.new.paymentType.label'}}
+                            </label>
+                            <div class="col-sm-10">
+                                {{view "select"
+                                    content=paymentTypeOptions
+                                    optionValuePath="content.id"
+                                    optionLabelPath="content.name"
+                                    selection=selectedPaymentType
+                                    id="paymentTypes"
+                                    class="form-control"
+                                    disabled=isFree}}
+                                <div class="checkbox">
+                                    <label>
+                                        {{input type="checkbox" checked=isFree}}
+                                        {{t 'memberships.new.isFree.label'}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
                     <div class="form-group mbx">
-                        <label for="birthDate" class="col-sm-2 control-label">{{t 'memberships.new.total'}}</label>
+                        <label class="col-sm-2 control-label">{{t 'memberships.new.total'}}</label>
                         <div class="col-sm-10">
                             <p class="form-control-static">{{total}} Euros</p>
                         </div>
                     </div>
+                    {{#if session.user.isAdmin}}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button {{action "createMembership"}} class="btn btn-primary mbs">
+                                    {{t 'memberships.new.create'}}
+                                </button>
+                            </div>
+                        </div>
+                    {{/if}}
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">{{t 'memberships.new.paypal'}}</h4>
+        {{#unless session.user.isAdmin}}
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">{{t 'memberships.new.paypal'}}</h4>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                {{t 'memberships.new.easiestWay'}}
+                            </p>
+                            <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary mbs">
+                                {{t 'memberships.new.pay'}}
+                            </button>
+                            <p class="mbx small">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                {{t 'memberships.new.notePaypal'}}
+                            </p>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <p>
-                            {{t 'memberships.new.easiestWay'}}
-                        </p>
-                        <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary mbs">
-                            {{t 'memberships.new.pay'}}
-                        </button>
-                        <p class="mbx small">
-                            <span class="glyphicon glyphicon-info-sign"></span>
-                            {{t 'memberships.new.notePaypal'}}
-                        </p>
+                </div>
+                <div class="col-sm-2 text-center">
+                    <h4>— {{t 'memberships.new.or'}} —</h4>
+                </div>
+                <div class="col-sm-5">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{t 'memberships.new.address'}}</p>
+                            <p class="text-center">
+                                <em>
+                                    Virginie LOPEZ<br/>
+                                    WWOOF France<br/>
+                                    86 bis rue Principale<br/>
+                                    33460 LAMARQUE (FRANCE)<br/>
+                                </em>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2 text-center">
-                <h4>— {{t 'memberships.new.or'}} —</h4>
-            </div>
-            <div class="col-sm-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{t 'memberships.new.address'}}</p>
-                        <p class="text-center">
-                            <em>
-                                Virginie LOPEZ<br/>
-                                WWOOF France<br/>
-                                86 bis rue Principale<br/>
-                                33460 LAMARQUE (FRANCE)<br/>
-                            </em>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{/unless}}
     </div>
     <div class="col-sm-3 hidden-xs">
         <div class="panel panel-primary">
