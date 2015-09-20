@@ -6,8 +6,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     tagName:'span',
     type: null,
-    membershipsService: null,
-    classNames: ['prx'],
+    user: null,
+    classNames: ['profile-status'],
     classNameBindings: ['profileStatusClass'],
 
     /**
@@ -22,21 +22,21 @@ export default Ember.Component.extend({
      */
     wooferProfileClass: function () {
         // Host has no active membership: warning
-        var hasValidMembership = this.get('membershipsService.hasNonExpiredWwoofMembership');
-        var isStillValidInAMonth = this.get('membershipsService.latestWwoofMembership.isStillValidInAMonth');
+        var hasValidMembership = this.get('user.hasNonExpiredWwoofMembership');
+        var isStillValidInAMonth = this.get('user.latestWwoofMembership.isStillValidInAMonth');
         if (!hasValidMembership || !isStillValidInAMonth) {
             return 'glyphicon glyphicon-warning-sign';
         }
 
         // Membership status ok
         return 'glyphicon glyphicon-ok';
-    }.property('membershipsService.hasWwoofMemberships', 'membershipsService.latestWwoofMembership.isStillValidInAMonth'),
+    }.property('user.hasWwoofMemberships', 'user.latestWwoofMembership.isStillValidInAMonth'),
 
     /**
      * Provides the class name to style the component for host profile
      */
     hostProfileClass: function () {
-        var host = this.get('session.user.host');
+        var host = this.get('user.host');
 
         // Return if the Host has not been requested yet
         if (!host) { return; }
@@ -51,13 +51,13 @@ export default Ember.Component.extend({
         }
 
         // Host has no active membership: warning
-        var hasValidMembership = this.get('membershipsService.hasNonExpiredHostMembership');
-        var isStillValidInAMonth = this.get('membershipsService.latestHostMembership.isStillValidInAMonth');
+        var hasValidMembership = this.get('user.hasNonExpiredHostMembership');
+        var isStillValidInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
         if (!hasValidMembership || !isStillValidInAMonth) {
             return 'glyphicon glyphicon-warning-sign';
         }
 
         // Membership status ok
         return 'glyphicon glyphicon-ok';
-    }.property('session.user.host.isPending', 'session.user.host.isApproved', 'membershipsService.hasNonExpiredHostMembership', 'membershipsService.latestHostMembership.isStillValidInAMonth')
+    }.property('user.host.isPending', 'user.host.isApproved', 'user.hasNonExpiredHostMembership', 'user.latestHostMembership.isStillValidInAMonth')
 });

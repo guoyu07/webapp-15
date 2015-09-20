@@ -1,0 +1,27 @@
+<div class="page-header">
+    <h1>
+        {{t 'users.index.title'}}
+    </h1>
+</div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>{{t 'users.index.firstName'}}</th>
+        <th>{{t 'users.index.lastName'}}</th>
+        <th>{{t 'users.index.createdAt'}}</th>
+        <th>{{t 'users.index.hasWwoofer'}}</th>
+        <th>{{t 'users.index.hasHost'}}</th>
+        <th>{{t 'users.index.actions'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each model as |user|}}
+        {{user-item user=user}}
+    {{/each}}
+    </tbody>
+</table>
+
+<p class="text-center">
+    {{list-pagination currentPage=page totalPages=totalPages targetRoute='users'}}
+</p>
