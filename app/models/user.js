@@ -36,6 +36,8 @@ export default DS.Model.extend(ValidationsMixin, {
         }
     }.property('photo'),
 
+    isNotAdmin: Ember.computed.not('isAdmin'),
+
     /**
      * Returns the full name of the user.
      */

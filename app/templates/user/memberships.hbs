@@ -28,13 +28,13 @@
             <small>{{t 'user.memberships.renewalInstructions'}}</small>
         {{else}}
             {{t 'user.memberships.noWwooferMemberships'}}
-            {{#if model.wwoofer.id}}
+            {{#if showGetWwooferMembershipLink}}
                 {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1')}}
                     {{t 'user.memberships.getNow'}}
                 {{/link-to}}
             {{/if}}
         {{/if}}
-        {{#if session.user.isAdmin}}
+        {{#if showCreateWwoofMembershipLink}}
             {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1' userId=model.id)}}
                 {{t 'user.memberships.create'}}
             {{/link-to}}
@@ -71,13 +71,13 @@
             <small>{{t 'user.memberships.renewalInstructions'}}</small>
         {{else}}
             {{t 'user.memberships.noHostMemberships'}}
-            {{#if showHostMembershipLink}}
+            {{#if showGetHostMembershipLink}}
                 {{#link-to 'memberships.new' (query-params type='H' itemCode='H')}}
                     {{t 'user.memberships.getNow'}}
                 {{/link-to}}
             {{/if}}
         {{/if}}
-        {{#if session.user.isAdmin}}
+        {{#if showCreateHostMembershipLink}}
             {{#link-to 'memberships.new' (query-params type='H' itemCode='H' userId=model.id)}}
                 {{t 'user.memberships.create'}}
             {{/link-to}}
