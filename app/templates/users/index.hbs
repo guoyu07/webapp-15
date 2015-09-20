@@ -3,25 +3,48 @@
         {{t 'users.index.title'}}
     </h1>
 </div>
+<div class="row mbm">
+    <div class="col-xs-12">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
+                {{input type="text" class="form-control" id="searchTerm" placeholderTranslation="users.index.search.placeholder" value=searchTerm action="search"}}
+            </div>
+            <button {{action "search"}} disabled={{isLoading}} class="btn btn-primary">
+                {{t 'literal.search'}}
+            </button>
+        </form>
+    </div>
+</div>
 
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th>{{t 'users.index.firstName'}}</th>
-        <th>{{t 'users.index.lastName'}}</th>
-        <th>{{t 'users.index.createdAt'}}</th>
-        <th>{{t 'users.index.hasWwoofer'}}</th>
-        <th>{{t 'users.index.hasHost'}}</th>
-        <th>{{t 'users.index.actions'}}</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each model as |user|}}
-        {{user-item user=user}}
-    {{/each}}
-    </tbody>
-</table>
+<div class="row mbm">
+    <div class="col-xs-12">
+        {{#if isLoading}}
+            {{partial 'loading'}}
+        {{else}}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{t 'users.index.firstName'}}</th>
+                        <th>{{t 'users.index.lastName'}}</th>
+                        <th>{{t 'users.index.createdAt'}}</th>
+                        <th class="text-center">{{t 'users.index.hasWwoofer'}}</th>
+                        <th class="text-center">{{t 'users.index.hasHost'}}</th>
+                        <th>{{t 'users.index.actions'}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each users as |user|}}
+                        {{user-item user=user}}
+                    {{/each}}
+                    </tbody>
+                </table>
 
-<p class="text-center">
-    {{list-pagination currentPage=page totalPages=totalPages targetRoute='users'}}
-</p>
+                <p class="text-center">
+                    {{list-pagination currentPage=page totalPages=totalPages targetRoute='users'}}
+                </p>
+            </div>
+        {{/if}}
+    </div>
+</div>

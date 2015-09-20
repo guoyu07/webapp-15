@@ -1,14 +1,14 @@
 <td>{{user.firstName}}</td>
 <td>{{user.lastName}}</td>
 <td>{{format-date user.createdAt}}</td>
-<td>
+<td class="text-center">
     {{#if user.wwoofer}}
         {{#link-to 'wwoofer.edit' user.wwoofer.id}}
             {{profile-status type="wwoofer" user=user}}
         {{/link-to}}
     {{/if}}
 </td>
-<td>
+<td class="text-center">
     {{#if user.host}}
         {{#link-to 'host.edit' user.host.id}}
             {{profile-status type="host" user=user}}
@@ -19,8 +19,10 @@
     {{#link-to 'user.edit' user.id}}
         {{t 'literal.edit'}}
     {{/link-to}}
-        |
+    |
     {{#link-to 'user.memberships' user.id}}
         {{t 'literal.memberships'}}
     {{/link-to}}
+    {{!--|
+    <a href="#" {{action "impersonateUser"}} disabled={{isLoading}}>{{t 'impersonate.button'}}</a>--}}
 </td>
