@@ -22,6 +22,8 @@ export default Ember.Component.extend({
         return this.get('nextPage') > this.get('currentPage');
     }),
 
+    showPagination: Ember.computed.gt('totalPages', 1),
+
     pages: Ember.computed('currentPage', 'totalPages', 'pageOffset', function () {
 
         var currentPage = this.get('currentPage');
