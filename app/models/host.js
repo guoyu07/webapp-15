@@ -61,10 +61,16 @@ export default DS.Model.extend(ValidationsMixin, {
      * Indicates whether the host is pending approval or was rejected.
      */
     isPendingOrRejected: function () {
-        var isPending = this.get('isPending');
+        var isPendingApproval = this.get('isPendingApproval');
         var isApproved = this.get('isApproved');
-        return isPending || !isApproved;
-    }.property('isPending', 'isApproved'),
+        return isPendingApproval || !isApproved;
+    }.property('isPendingApproval', 'isApproved'),
+
+    /**
+     * $HACK: isPending seems to be conflicting with PromiseProxy.
+     * This alias seems to solve the issue.
+     */
+    isPendingApproval: Ember.computed.alias('isPending'),
 
     // Phone is mandatory for hosts, this binding is used for validation
     phone: Ember.computed.readOnly('user.phone'),

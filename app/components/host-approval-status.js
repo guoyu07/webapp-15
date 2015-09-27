@@ -12,16 +12,16 @@ export default Ember.Component.extend({
      * Returns the CSS class of the alert based on the host's approval status.
      */
     alertClass: function () {
-        var isPending = this.get('host.isPending');
+        var isPendingApproval = this.get('host.isPendingApproval');
         var isAdmin = this.get('session.user.isAdmin');
 
         var panelClass = 'alert-warning';
-        if (isPending && !isAdmin) {
+        if (isPendingApproval && !isAdmin) {
             panelClass = 'alert-info';
         }
 
         return panelClass;
-    }.property('host.isPending', 'session.user.isAdmin'),
+    }.property('host.isPendingApproval', 'session.user.isAdmin'),
 
     actions: {
         /**
@@ -33,7 +33,7 @@ export default Ember.Component.extend({
             var host = this.get('host');
 
             // Set the values on the model
-            host.set('isPending', false);
+            host.set('isPendingApproval', false);
             host.set('isApproved', isApproved);
 
             // Prepare URL

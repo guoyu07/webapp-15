@@ -14,13 +14,13 @@ export default Ember.Component.extend({
      * Provide the class name to style the component based on the type
      */
     profileStatusClass : function () {
-        return this.get('type') === 'host' ? this.get('hostProfileClass') : this.get('wooferProfileClass');
-    }.property('type', 'wooferProfileClass', 'hostProfileClass'),
+        return this.get('type') === 'host' ? this.get('hostProfileClass') : this.get('wwooferProfileClass');
+    }.property('type', 'wwooferProfileClass', 'hostProfileClass'),
 
     /**
      * Provides the class name to style the component for wwoofer profile
      */
-    wooferProfileClass: function () {
+    wwooferProfileClass: function () {
         // Host has no active membership: warning
         var hasValidMembership = this.get('user.hasNonExpiredWwoofMembership');
         var isStillValidInAMonth = this.get('user.latestWwoofMembership.isStillValidInAMonth');
@@ -43,7 +43,7 @@ export default Ember.Component.extend({
 
         // Host is not approved: hourglass or warning
         if (host.get('isApproved') === false) {
-            if (host.get('isPending')) {
+            if (host.get('isPendingApproval')) {
                 return'glyphicon glyphicon-hourglass';
             } else {
                 return'glyphicon glyphicon-warning-sign';
@@ -59,5 +59,5 @@ export default Ember.Component.extend({
 
         // Membership status ok
         return 'glyphicon glyphicon-ok';
-    }.property('user.host.isPending', 'user.host.isApproved', 'user.hasNonExpiredHostMembership', 'user.latestHostMembership.isStillValidInAMonth')
+    }.property('user.host.isPendingApproval', 'user.host.isApproved', 'user.hasNonExpiredHostMembership', 'user.latestHostMembership.isStillValidInAMonth')
 });
