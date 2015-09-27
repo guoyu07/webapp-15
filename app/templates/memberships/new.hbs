@@ -73,7 +73,7 @@
                             </p>
                         </div>
                     {{/if}}
-                    {{#if session.user.isAdmin}}
+                    {{#if isAdminMode}}
                         <div class="form-group">
                             <label for="shippingRegions" class="col-sm-2 control-label">
                                 {{t 'memberships.new.paymentType.label'}}
@@ -102,7 +102,7 @@
                             <p class="form-control-static">{{total}} Euros</p>
                         </div>
                     </div>
-                    {{#if session.user.isAdmin}}
+                    {{#if isAdminMode}}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button {{action "createMembership"}} class="btn btn-primary mbs">
@@ -114,7 +114,7 @@
                 </form>
             </div>
         </div>
-        {{#unless session.user.isAdmin}}
+        {{#unless isAdminMode}}
             <div class="row">
                 <div class="col-sm-5">
                     <div class="panel panel-default">
