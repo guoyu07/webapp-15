@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    queryParams: ['page', 'itemsPerPage'],
+    queryParams: ['page', 'itemsPerPage', 'expireSoon', 'userId', 'includeBooklet'],
 
     /**
      * The current page.
@@ -13,6 +13,21 @@ export default Ember.Controller.extend({
      * Number of memberships displayed per page.
      */
     itemsPerPage: 20,
+
+    /**
+     * Whether to filter memberships expiring withing a month.
+     */
+    expireSoon: false,
+
+    /**
+     * Whether to filter memberships including a booklet.
+     */
+    includeBooklet: false,
+
+    /**
+     * Whether to filter memberships belonging to a specific user.
+     */
+    userId: null,
 
     /**
      * Whether the top checkbox is checked.
@@ -27,7 +42,9 @@ export default Ember.Controller.extend({
     /**
      * Selected memberships for which no reminder was sent.
      */
-    remindableMemberships: Ember.computed.filterBy('selectedMemberships', 'reminderSentAt', null),
+    remindableMemberships: Ember.computed.filter('selectedMemberships', function(membership) {
+        return membership.get('expiresWithinAMonth') && !membership.get('reminderAlreadySent');
+    }),
 
     remindableMembershipCount: Ember.computed.readOnly('remindableMemberships.length'),
 
@@ -36,8 +53,8 @@ export default Ember.Controller.extend({
     /**
      * Process the total number of pages that can be displayed.
      */
-    totalPages: Ember.computed('model.meta.total', 'itemsPerPage', function() {
-        var totalItems = this.get('model.meta.total');
+    totalPages: Ember.computed('memberships.meta.total', 'itemsPerPage', function() {
+        var totalItems = this.get('memberships.meta.total');
         var itemsPerPage = this.get('itemsPerPage');
         return Math.ceil(totalItems / itemsPerPage);
     })

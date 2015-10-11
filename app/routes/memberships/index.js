@@ -10,28 +10,61 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     queryParams: {
         page: {
             refreshModel: true
+        },
+        expireSoon: {
+            refreshModel: true
+        },
+        userId: {
+            refreshModel: true
+        },
+        includeBooklet: {
+            refreshModel: true
         }
     },
 
     model: function (params) {
 
-        var page = params.page || 1;
-        var limit = params.itemsPerPage || 20;
-        var offset = (page - 1) * limit;
+        let limit = params.itemsPerPage || 20;
+        let queryParams = {
+            offset: (params.page - 1) * limit,
+            limit: limit
+        };
+        if (params.expireSoon === true) {
+            queryParams.expireSoon = true;
+        }
+        if (params.userId) {
+            queryParams.userId = params.userId;
+        }
+        if (params.includeBooklet === true) {
+            queryParams.includeBooklet = true;
+        }
 
-        return this.store.find('membership', {
-            offset: offset,
-            limit: limit,
-            expireSoon: true
-        });
+        // Prepare promises
+        var promises = {
+            memberships: this.store.find('membership', queryParams)
+        };
+        if (params.userId) {
+            promises.user = this.store.find('user', params.userId);
+        }
+
+        return Ember.RSVP.hash(promises);
     },
 
-    resetController: function (controller, isExiting) {
+    setupController(controller, result) {
+        controller.setProperties(result);
+    },
+
+    resetController(controller, isExiting) {
         if (isExiting) {
             controller.set('page', 1);
         }
-        controller.set('selectedMemberships', Ember.A());
-        controller.set('allChecked', false);
+        controller.setProperties({
+            expireSoon: false,
+            includeBooklet: false,
+            allChecked: false,
+            userId: null,
+            selectedMemberships: Ember.A()
+        });
     },
 
     actions: {
@@ -52,6 +85,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
                 }
             }
         },
+
+        /**
+         * Clears all filters.
+         */
+        clearFilters() {
+            this.resetController(this.controller, false);
+        },
+
         /**
          * Sends a reminder too each "remindable" selected membership.
          */
