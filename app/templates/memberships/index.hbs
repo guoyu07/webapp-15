@@ -1,31 +1,54 @@
 <div class="page-header">
     <h1>
-        {{t 'memberships.index.title'}}
+        {{#if userId}}
+            {{t 'memberships.index.titleUser' fullName=user.fullName}}
+        {{else}}
+            {{t 'memberships.index.titleAll'}}
+        {{/if}}
     </h1>
 </div>
 
-<p>
-    <button {{action 'sendReminder' membership}} disabled={{cannotSendReminders}} class="btn btn-primary">
-    {{t 'memberships.index.sendReminder'}} ({{remindableMembershipCount}})
-    </button>
-</p>
+<form class="form-inline">
+    <div class="checkbox">
+        <label>
+            {{input type="checkbox" checked=expireSoon}}
+            {{t 'memberships.index.expireSoon.label'}}
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            {{input type="checkbox" checked=includeBooklet}}
+            {{t 'memberships.index.includeBooklet.label'}}
+        </label>
+    </div>
+    <div class="form-group mlm">
+        <button {{action 'sendReminder' membership}} class="btn btn-primary" disabled={{cannotSendReminders}}>
+            {{t 'memberships.index.sendReminder'}} ({{remindableMembershipCount}})
+        </button>
+    </div>
+    <div class="form-group">
+        <button {{action 'clearFilters'}} class="btn btn-default">
+            {{t 'memberships.index.clearFilters'}}
+        </button>
+    </div>
+</form>
 
-<table class="table table-hover">
+<table class="table table-hover mtm">
     <thead>
     <tr>
         <th>{{input type="checkbox" checked=allChecked}}</th>
-        <th>{{t 'memberships.index.firstName'}}</th>
-        <th>{{t 'memberships.index.lastName'}}</th>
-        <th>{{t 'memberships.index.type'}}</th>
+        <th>{{t 'memberships.index.fullName'}}</th>
+        <th>{{t 'memberships.index.code'}}</th>
         <th>{{t 'memberships.index.createdAt'}}</th>
         <th>{{t 'memberships.index.total'}}</th>
         <th>{{t 'memberships.index.paymentType'}}</th>
         <th>{{t 'memberships.index.expireAt'}}</th>
         <th>{{t 'memberships.index.reminderSent'}}</th>
+        <th>{{t 'memberships.index.bookletSent'}}</th>
     </tr>
     </thead>
     <tbody>
-    {{#each model as |membership|}}
+    {{#each memberships as |membership|}}
         {{membership-item membership=membership allChecked=allChecked itemToggled='itemToggled'}}
     {{/each}}
     </tbody>

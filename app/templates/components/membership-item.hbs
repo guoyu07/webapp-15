@@ -1,13 +1,25 @@
 <td>{{input type="checkbox" checked=checked}}</td>
-<td>{{membership.user.firstName}}</td>
-<td>{{membership.user.lastName}}</td>
-<td>{{membership.type}}</td>
+<td>{{membership.user.fullName}}</td>
+<td>{{membership.itemCode}}</td>
 <td>{{format-date membership.createdAt}}</td>
 <td>{{membership.total}} Euro</td>
 <td>{{membership.paymentType}}</td>
-<td>{{format-date membership.expireAt}}</td>
+<td class={{expireAtClass}}>{{format-date membership.expireAt}}</td>
 <td>
     {{#if membership.reminderSentAt}}
         <span class="glyphicon glyphicon-ok" title={{format-date membership.reminderSentAt}}></span>
+    {{else}}
+        {{t 'literal.no'}}
+    {{/if}}
+</td>
+<td>
+    {{#if membership.hasBooklet}}
+        {{#if membership.bookletSentAt}}
+            <span class="glyphicon glyphicon-ok" title={{format-date membership.bookletSentAt}}></span>
+        {{else}}
+            <span class="glyphicon glyphicon-send pointer" {{action 'markBookletAsSent' membership}} title={{t 'memberships.index.sendBooklet'}}></span>
+        {{/if}}
+    {{else}}
+        {{t 'literal.notApplicable'}}
     {{/if}}
 </td>

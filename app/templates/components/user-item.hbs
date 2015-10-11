@@ -17,7 +17,7 @@
 </td>
 <td>
     {{#link-to 'user.edit' user.id}}{{t 'literal.edit'}}{{/link-to}} |
-    {{#link-to 'user.memberships' user.id}}{{t 'literal.memberships'}}{{/link-to}}
+    {{#link-to 'memberships.index' (query-params userId=user.id)}}{{t 'literal.memberships'}}{{/link-to}}
     {{!--|
     <a href="#" {{action "impersonateUser"}} disabled={{isLoading}}>{{t 'impersonate.button'}}</a>--}}
 </td>
