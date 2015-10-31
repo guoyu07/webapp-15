@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>WWOOF France</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>WWOOF France</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script>
-            window._trackJs = {
-                token: '48bf177fb24447f19be94f292931ff05',
-                // Whether to send errors to TrackJS
-                enabled: true,
-                network: {
-                    // Watch the network for events
-                    enabled: false
-                }
-            };
-        </script>
+    <script>
+      window._trackJs = {
+        token: '48bf177fb24447f19be94f292931ff05',
+        // Whether to send errors to TrackJS
+        enabled: true,
+        network: {
+          // Watch the network for events
+          enabled: false
+        }
+      };
+    </script>
 
-        {{content-for 'head'}}
+    {{content-for 'head'}}
 
-        <link rel="stylesheet" href="assets/vendor.css">
-        <link rel="stylesheet" href="assets/webapp.css">
+    <link rel="stylesheet" href="assets/vendor.css">
+    <link rel="stylesheet" href="assets/webapp.css">
 
-        {{content-for 'head-footer'}}
-    </head>
-    <body>
-        {{content-for 'body'}}
+    {{content-for 'head-footer'}}
+  </head>
+  <body>
+    {{content-for 'body'}}
 
-        <script src="assets/alertify.js"></script>
-        <script src="assets/vendor.js"></script>
-        <script src="assets/webapp.js"></script>
+    <script src="assets/alertify.js"></script>
+    <script src="assets/vendor.js"></script>
+    <script src="assets/webapp.js"></script>
 
-        {{content-for 'body-footer'}}
-    </body>
+    {{content-for 'body-footer'}}
+  </body>
 </html>
