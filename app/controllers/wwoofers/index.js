@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
     isLoadingMore: false,
 
     // Search filters
-    searchTerm: null,
+    searchTerm: '',
     country: null,
 
     // Query parameters

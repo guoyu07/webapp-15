@@ -11,7 +11,13 @@
         <form class="form-inline">
             <div class="form-group">
                 <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
-                {{input type="text" class="form-control" id="searchTerm" placeholderTranslation="wwoofers.index.search.placeholder" value=searchTerm action="searchWwoofers"}}
+                {{input
+                  type="text"
+                  class="form-control"
+                  id="searchTerm"
+                  placeholderTranslation="wwoofers.index.search.placeholder"
+                  value=searchTerm
+                  enter="searchWwoofers"}}
             </div>
             <div class="form-group">
                 <label for="country" class="sr-only">{{t 'address.form.country.label'}}</label>
