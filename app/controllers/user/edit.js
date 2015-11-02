@@ -9,7 +9,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Indicates whether the user's first name, last name and birth date can be edited.
      */
-    canEditUser: Ember.computed.readOnly('session.user.isAdmin'),
+    canEditUser: Ember.computed.readOnly('sessionUser.user.isAdmin'),
 
     selectedDate: null,
 

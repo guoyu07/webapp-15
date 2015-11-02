@@ -13,7 +13,7 @@ export default Ember.Component.extend({
      */
     alertClass: function () {
         var isPendingApproval = this.get('host.isPendingApproval');
-        var isAdmin = this.get('session.user.isAdmin');
+        var isAdmin = this.get('sessionUser.user.isAdmin');
 
         var panelClass = 'alert-warning';
         if (isPendingApproval && !isAdmin) {
@@ -21,7 +21,7 @@ export default Ember.Component.extend({
         }
 
         return panelClass;
-    }.property('host.isPendingApproval', 'session.user.isAdmin'),
+    }.property('host.isPendingApproval', 'sessionUser.user.isAdmin'),
 
     actions: {
         /**

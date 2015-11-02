@@ -2,7 +2,7 @@
  * Ember route for wwoofer creation.
  */
 import Ember from 'ember';
-import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
     /**
@@ -12,7 +12,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     beforeModel: function(transition) {
         this._super(transition);
         var route = this;
-        return this.get('session.user').then(function (user) {
+        return this.get('sessionUser.user').then(function (user) {
             var wwooferId = user.get('wwoofer.id');
             if (wwooferId) {
                 route.transitionTo('wwoofer.edit', wwooferId);
@@ -23,7 +23,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
         // Create a new wwoofer record attached to the current logged in user
         var self = this;
-        return this.get('session.user').then(function (user) {
+        return this.get('sessionUser.user').then(function (user) {
             var address = self.store.createRecord('address');
             return self.store.createRecord('wwoofer', {
                 user: user,

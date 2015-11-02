@@ -3,7 +3,7 @@
  */
 import Ember from 'ember';
 
-export default Ember.Object.extend({
+export default Ember.Service.extend({
     /**
      * Activity ids.
      */
@@ -27,13 +27,13 @@ export default Ember.Object.extend({
      * List of all activities proposed by the hosts.
      */
     allActivities: function () {
-        var activities = [];
-        this.get('activityIds').forEach(function (item) {
-            activities.push(Ember.Object.create({
+        var activities = this.get('activityIds').map(function (item) {
+            return Ember.Object.create({
                 id: item,
                 label: Ember.I18n.t('activities.' + item)
-            }));
+            });
         });
+
         return activities;
     }.property()
 });

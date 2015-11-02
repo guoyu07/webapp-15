@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Object.extend({
+const { service } = Ember.inject;
+
+export default Ember.Service.extend({
+
+    session: service('session'),
+
     /**
      * Handles HTTP errors.
      * @param err The error.
@@ -14,7 +19,6 @@ export default Ember.Object.extend({
             case 401:
 
                 var applicationController = this.container.lookup('controller:application');
-                var session = this.container.lookup('session:main');
 
                 // Ignore errors from login page
                 if (applicationController && applicationController.get('currentRouteName') === 'login') {
@@ -25,8 +29,8 @@ export default Ember.Object.extend({
                 alertify.error(Ember.I18n.t('notify.unauthorizedError'));
 
                 // Invalidate session or redirect
-                if (session.get('isAuthenticated')) {
-                    session.invalidate();
+                if (this.get('session.isAuthenticated')) {
+                    this.get('session').invalidate();
                 } else {
                     window.location.replace("/login");
                 }
@@ -70,11 +74,8 @@ export default Ember.Object.extend({
             err = err.jqXHR;
         }
 
-        // Special handling for HTTP errors
-        if (err && err.status && Ember.typeOf(err.status) === 'number') {
-            this._handleHttpError(err, err.status);
-        } else {
-
+        let status = Ember.get(err, 'errors.firstObject.status');
+        if (isNaN(status)) {
             // Ensure that error if of type error
             err = this._convertToError(err);
 
@@ -86,6 +87,9 @@ export default Ember.Object.extend({
             // Log in trackJs and console
             trackJs.track(err);
             Ember.Logger.assert(false, err);
+        } else {
+            // Special handling for HTTP errors
+            this._handleHttpError(err, parseInt(status, 10));
         }
     }
 });

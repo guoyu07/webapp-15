@@ -33,7 +33,7 @@
                     <div class="col-md-6">
                         <p>
                             <span class="glyphicon glyphicon-home mrx"></span>
-                            {{#if session.user.isAdmin}}
+                            {{#if sessionUser.user.isAdmin}}
                                 {{model.address.address1}}
                                 {{#if model.address.address2}}
                                     / {{model.address.address2}}

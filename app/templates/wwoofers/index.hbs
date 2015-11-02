@@ -65,7 +65,7 @@
                                 <td class="hidden-xs hidden-sm">{{wwoofer.address.country.name}}</td>
                                 <td>
                                     {{#link-to "wwoofer" wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
-                                    {{#if session.user.isAdmin}}
+                                    {{#if sessionUser.user.isAdmin}}
                                         |
                                         {{#link-to "wwoofer.edit" wwoofer.id}}{{t 'literal.edit'}}{{/link-to}}
                                         |
@@ -86,7 +86,7 @@
                 </div>
             {{else}}
                 {{t 'wwoofers.index.noResults'}}
-                {{#if session.user.isAdmin}}
+                {{#if sessionUser.user.isAdmin}}
                     {{t 'wwoofers.index.noResultsNotAdmin'}}
                 {{/if}}
             {{/if}}

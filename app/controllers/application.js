@@ -14,12 +14,12 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Indicates whether the current user can see the "Wwoofers" link in the main menu.
      */
-    canSeeWwoofersLink: Ember.computed.or('userMemberships.hasNonExpiredHostMembership', 'session.user.isAdmin'),
+    canSeeWwoofersLink: Ember.computed.or('userMemberships.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
 
     /**
      * Indicates whether the current user as at least one profile.
      */
-    hasWwooferOrHostProfile: Ember.computed.or('session.user.wwoofer.id', 'session.user.host.id'),
+    hasWwooferOrHostProfile: Ember.computed.or('sessionUser.user.wwoofer.id', 'sessionUser.user.host.id'),
 
     /**
      * Email address of the user to impersonate (admins only).

@@ -1,7 +1,7 @@
 <div class="alert {{alertClass}} alert-dismissable" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     {{#if host.isPendingApproval}}
-        {{#if session.user.isAdmin}}
+        {{#if sessionUser.user.isAdmin}}
             {{t 'host.validation-status.adminPending'}}
             {{t 'host.validation-status.adminReviewDetails'}}
             <a href="#" {{action "approveHost" true}} class="alert-link">{{t 'host.validation-status.adminApprove'}}</a>

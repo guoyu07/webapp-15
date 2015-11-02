@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
     showHostMemberships: Ember.computed.equal('type', 'H'),
 
     hasUserId: Ember.computed.notEmpty('userId'),
-    isAdminMode: Ember.computed.and('session.user.isAdmin', 'hasUserId'),
+    isAdminMode: Ember.computed.and('sessionUser.user.isAdmin', 'hasUserId'),
 
     /**
      * Reset the shipping fees to null if shipping is not available for the current item.
