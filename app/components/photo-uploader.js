@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
+
+    store: service('store'),
 
     /**
      * Data-url where the photo will be posted
@@ -75,7 +79,7 @@ export default Ember.Component.extend({
     },
 
     /**
-     * Callback when the request is sucessfull in host mode
+     * Callback when the request is successful in host mode
      * @param e
      * @param data
      * @param self
@@ -84,13 +88,12 @@ export default Ember.Component.extend({
         alertify.success(Ember.I18n.t('notify.fileUploaded'));
 
         // Push the created photo in the store, then add the photo in the host
-        var controller = self.get('controller');
-        var photo = controller.get('container').lookup('store:main').push('photo', data.result.photo);
-        self.get('model').get('photos').addObject(photo);
+        var photo = self.get('store').push('photo', data.result.photo);
+        self.get('model.photos').addObject(photo);
     },
 
     /**
-     * Callback when the request is sucessfull in user mode
+     * Callback when the request is successful in user mode
      * @param e
      * @param data
      * @param self

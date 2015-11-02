@@ -28,8 +28,8 @@ export default DS.Model.extend(ValidationsMixin, {
      * Returns true if the photo is in a state where it cannot be saved.
      */
     cannotSave: function () {
-        return this.get('isSaving') || !this.get('isDirty');
-    }.property('isSaving', 'isDirty'),
+        return this.get('isSaving') || !this.get('hasDirtyAttributes');
+    }.property('isSaving', 'hasDirtyAttributes'),
 
     // Validations
     validations: {
