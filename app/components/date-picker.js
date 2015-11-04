@@ -34,24 +34,22 @@ export default Ember.Component.extend({
         return moment({ month: month, year: year }).endOf('month').date();
     },
 
-    selectedDate: function (key, value) {
+    selectedDate: Ember.computed('selectedDay', 'selectedMonth.value', 'selectedYear', {
+        get: function() {
+            var day = this.get('selectedDay');
+            var month = this.get('selectedMonth.value');
+            var year = this.get('selectedYear');
+            if (day === null || month === null || year === null) { return moment(); }
 
-        // Set date
-        if (arguments.length > 1 && value) {
+            var daysInMonth = this.daysInMonth(month, year);
+            day = (day > daysInMonth) ? daysInMonth : day;
+
+            return moment({ day: day, month: month, year: year });
+        },
+        set: function(key, value) {
             this.set('selectedDay', value.date());
             this.set('selectedMonth', { value: value.month() });
             this.set('selectedYear', value.year());
         }
-
-        // Get date
-        var day = this.get('selectedDay');
-        var month = this.get('selectedMonth.value');
-        var year = this.get('selectedYear');
-        if (day === null || month === null || year === null) { return moment(); }
-
-        var daysInMonth = this.daysInMonth(month, year);
-        day = (day > daysInMonth) ? daysInMonth : day;
-
-        return moment({ day: day, month: month, year: year });
-    }.property('selectedDay', 'selectedMonth.value', 'selectedYear')
+    })
 });
