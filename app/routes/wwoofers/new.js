@@ -9,7 +9,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      * Only one wwoofer profile allowed per user.
      * Redirects to wwoofer edit if the user already has a profile.
      */
-    beforeModel: function(transition) {
+    beforeModel(transition) {
         this._super(transition);
         var route = this;
         return this.get('sessionUser.user').then(function (user) {
@@ -19,7 +19,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             }
         });
     },
-    model: function () {
+    model() {
 
         // Create a new wwoofer record attached to the current logged in user
         var self = this;
@@ -31,10 +31,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             });
         });
     },
-    renderTemplate: function () {
+    setupController(controller, model) {
+        controller.set('selectedDate', moment().subtract(18, 'year'));
+        this._super(controller, model);
+    },
+    renderTemplate() {
         this.render('wwoofer/form', { controller: 'wwoofers.new' });
     },
-    deactivate: function () {
+    deactivate() {
         this.get('controller.model').rollback();
     }
 });
