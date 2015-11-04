@@ -55,7 +55,7 @@ export default DS.Model.extend(ValidationsMixin, {
             });
         }
         return months;
-    }.property('openingMonths.@each'),
+    }.property('openingMonths.[]'),
 
     /**
      * Indicates whether the host is pending approval or was rejected.

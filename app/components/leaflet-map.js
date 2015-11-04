@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
+    markers: [],
     latitude: null,
     longitude: null,
     zoom: null,
@@ -70,7 +71,7 @@ export default Ember.Component.extend({
      */
     setMarkers: function () {
 
-        if (!this.markers) {
+        if (!this.get('markers')) {
             return;
         }
 
@@ -79,12 +80,12 @@ export default Ember.Component.extend({
         this.geoJsonLayer.clearLayers();
 
         // Add new data to the layers
-        this.geoJsonLayer.addData(this.markers);
+        this.geoJsonLayer.addData(this.get('markers'));
         this.markerClusterGroup.addLayer(this.geoJsonLayer);
 
         this.updateVisibleFeatures();
 
-    }.observes('markers.@each'),
+    }.observes('markers.features.[]'),
 
     /**
      * Cleans the layers/events up.
