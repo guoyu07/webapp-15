@@ -14,7 +14,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     selectedDate: null,
 
     actions: {
-        saveUser: function () {
+        saveUser() {
 
             // Get the user
             var user = this.get('model');
@@ -37,6 +37,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
+        },
+
+        dateSelected(date) {
+            this.set('selectedDate', date);
         }
     },
 

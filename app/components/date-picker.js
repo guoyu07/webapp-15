@@ -3,53 +3,63 @@
  */
 import Ember from 'ember';
 
+const { observer, computed } = Ember;
+
 export default Ember.Component.extend({
 
-    selectedDay: null,
-    selectedMonth: null,
-    selectedYear: null,
+    _selectedDay: null,
+    _selectedMonth: null,
+    _selectedYear: null,
 
-    days: function () {
+    selectedDate: null,
+
+    days: computed('_selectedMonth.value', '_selectedYear', function () {
         var days = [];
-        var endOfMonth = this.daysInMonth(this.get('selectedMonth.value'), this.get('selectedYear'));
+        var endOfMonth = this.daysInMonth(this.get('_selectedMonth.value'), this.get('_selectedYear'));
         for (var i = 1; i <= endOfMonth; i++) { days.push(i); }
         return days;
-    }.property('selectedMonth.value', 'selectedYear'),
+    }),
 
-    months: function () {
+    months: computed(function () {
         var months = [];
         for (var i = 0; i <= 11; i++) {
             months.push({ value: i, name: moment().months(i).format("MMMM") });
         }
         return months;
-    }.property(),
+    }),
 
-    years: function () {
+    years: computed(function () {
         var years = [];
         for (var i = moment().subtract(18, 'years').year(); i >= 1900; i--) { years.push(i); }
         return years;
-    }.property(),
+    }),
 
-    daysInMonth: function (month, year) {
+    daysInMonth(month, year) {
         return moment({ month: month, year: year }).endOf('month').date();
     },
 
-    selectedDate: Ember.computed('selectedDay', 'selectedMonth.value', 'selectedYear', {
-        get: function() {
-            var day = this.get('selectedDay');
-            var month = this.get('selectedMonth.value');
-            var year = this.get('selectedYear');
-            if (day === null || month === null || year === null) { return moment(); }
-
-            var daysInMonth = this.daysInMonth(month, year);
-            day = (day > daysInMonth) ? daysInMonth : day;
-
-            return moment({ day: day, month: month, year: year });
-        },
-        set: function(key, value) {
-            this.set('selectedDay', value.date());
-            this.set('selectedMonth', { value: value.month() });
-            this.set('selectedYear', value.year());
+    didReceiveAttrs() {
+        let selectedDate = this.getAttr('selectedDate');
+        if (selectedDate) {
+            this.set('_selectedDay', selectedDate.date());
+            this.set('_selectedMonth', { value: selectedDate.month() });
+            this.set('_selectedYear', selectedDate.year());
         }
+    },
+
+    dateChanged: observer('_selectedDay', '_selectedMonth.value', '_selectedYear', function() {
+        var day = this.get('_selectedDay');
+        var month = this.get('_selectedMonth.value');
+        var year = this.get('_selectedYear');
+
+        if (Ember.isEmpty(day) || Ember.isEmpty(month) || Ember.isEmpty(year)) {
+            return;
+        }
+
+        var daysInMonth = this.daysInMonth(month, year);
+        day = (day > daysInMonth) ? daysInMonth : day;
+
+        var date = moment({ day: day, month: month, year: year });
+        this.sendAction('dateSelected', date);
     })
 });

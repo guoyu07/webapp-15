@@ -34,7 +34,7 @@
                 <label for="birthDate" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
                 <div class="col-sm-10">
                     {{#if canEditUser}}
-                        {{date-picker selectedDate=selectedDate}}
+                        {{date-picker selectedDate=selectedDate dateSelected='dateSelected'}}
                         {{error-display errors=fieldErrors.selectedDate}}
                     {{else}}
                         <p class="form-control-static">{{format-date model.birthDate}}</p>
