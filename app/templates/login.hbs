@@ -12,12 +12,12 @@
         <div class="form-group {{if fieldErrors.username.length 'has-error'}}">
             <label for="username" class="control-label">{{t 'literal.email'}}</label>
             {{input value=username id="username" name="username" type="email" class="form-control"}}
-            {{error-display fieldErrors.username}}
+            {{error-display errors=fieldErrors.username}}
         </div>
         <div class="form-group {{if fieldErrors.password.length 'has-error'}}">
             <label for="password" class="control-label">{{t 'literal.password'}}</label>
             {{input value=password id="password" name="password" type="password" class="form-control"}}
-            {{error-display fieldErrors.password}}
+            {{error-display errors=fieldErrors.password}}
         </div>
         <button type="submit" class="btn btn-primary" disabled={{isLoading}}>{{t 'login.login'}}</button>
         {{#link-to 'reset-password' class="pull-right"}}{{t 'login.forgotPassword'}}{{/link-to}}

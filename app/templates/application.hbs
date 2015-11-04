@@ -143,7 +143,7 @@
                 <div class="form-group {{if fieldErrors.impersonatedUserEmail.length 'has-error'}}">
                     <label for="impersonatedUserEmail" class="control-label">{{t 'impersonate.email.label'}}</label>
                     {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control" placeholder="someone@domain.com"}}
-                    {{error-display fieldErrors.impersonatedUserEmail}}
+                    {{error-display errors=fieldErrors.impersonatedUserEmail}}
                 </div>
             </div>
             <div class="modal-footer">

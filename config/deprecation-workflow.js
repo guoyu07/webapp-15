@@ -6,7 +6,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchMessage: "In Ember 2.0 service factories must have an `isServiceFactory` property set to true. You registered (unknown mixin) as a service factory. Either add the `isServiceFactory` property to this factory or extend from Ember.Service." },
     { handler: "silence", matchMessage: "Ember.Select is deprecated. Consult the Deprecations Guide for a migration strategy." },
     { handler: "silence", matchMessage: "Ember.View is deprecated. Consult the Deprecations Guide for a migration strategy." },
-    { handler: "silence", matchMessage: "Using Ember.Handlebars.makeBoundHelper is deprecated. Please refactor to using `Ember.Helper.helper`." },
     { handler: "silence", matchMessage: "A property of <webapp@view:-outlet::ember522> was modified inside the didInsertElement hook. You should never change properties on components, services or models during didInsertElement because it causes significant performance degradation." },
     { handler: "silence", matchMessage: "Ember.keys is deprecated in favor of Object.keys" },
     { handler: "silence", matchMessage: "You modified ShouldDisplay(hasVisibleFeatures) twice in a single render. This was unreliable in Ember 1.x and will be removed in Ember 2.0" },

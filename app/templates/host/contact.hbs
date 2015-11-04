@@ -18,12 +18,12 @@
                         <label for="intro" class="col-sm-2 control-label">{{t 'host.contact.message.label'}}</label>
                         <div class="col-sm-10">
                             {{textarea id="message" name="message" value=message class="form-control" rows="10" placeholder=messagePlaceholder}}
-                            {{error-display fieldErrors.message}}
+                            {{error-display errors=fieldErrors.message}}
                         </div>
                     </div>
                     <div class="form-group mbx">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button {{action "sendMessage"}} disabled={{isSending}} class="btn btn-primary">
+                            <button {{action "sendMessage"}} class="btn btn-primary" disabled={{isSending}}>
                                 <span class="glyphicon glyphicon-send mrx"></span>
                                 {{t 'literal.send'}}
                             </button>
