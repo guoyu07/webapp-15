@@ -69,9 +69,9 @@
                                     content=paymentTypeOptions
                                     optionValuePath="content.id"
                                     optionLabelPath="content.name"
-                                    selection=selectedPaymentType
-                                    id="paymentTypes"
+                                    value=paymentType
                                     class="form-control"
+                                    prompt=(t 'memberships.new.paymentType.prompt')
                                     disabled=isFree}}
                                 <div class="checkbox">
                                     <label>
@@ -91,7 +91,7 @@
                     {{#if isAdminMode}}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button {{action "createMembership"}} class="btn btn-primary mbs">
+                                <button {{action "createMembership"}} class="btn btn-primary mbs" disabled={{isInvalidAdmin}}>
                                     {{t 'memberships.new.create'}}
                                 </button>
                             </div>

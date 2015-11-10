@@ -13,8 +13,7 @@ export default Ember.Controller.extend({
     itemCode: null,
     shippingRegion: null,
     userId: null,
-
-    selectedPaymentType: null,
+    paymentType: null,
     isFree: false,
 
     _membershipOptions: [
@@ -93,7 +92,7 @@ export default Ember.Controller.extend({
 
         var type = this.get('type');
         var itemCode = this.get('itemCode');
-        var paymentType = this.get('selectedPaymentType.id');
+        var paymentType = this.get('paymentType');
         var total = this.get('total');
         var isFree = this.get('isFree');
         var userId = this.get('userId');
@@ -129,5 +128,11 @@ export default Ember.Controller.extend({
         return isValid;
     }),
 
-    isInvalid: computed.not('isValid')
+    isInvalid: computed.not('isValid'),
+
+    isValidAdmin: computed('isValid', 'paymentType', 'isFree', function () {
+        return this.get('isValid') && (Ember.isPresent(this.get('paymentType')) || this.get('isFree'));
+    }),
+
+    isInvalidAdmin: computed.not('isValidAdmin')
 });
