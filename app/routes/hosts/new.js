@@ -2,7 +2,7 @@
  * Ember route for host creation.
  */
 import Ember from 'ember';
-import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
     /**
@@ -12,7 +12,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     beforeModel: function(transition) {
         this._super(transition);
         var route = this;
-        return this.get('session.user').then(function (user) {
+        return this.get('sessionUser.user').then(function (user) {
             var hostId = user.get('host.id');
             if (hostId) {
                 route.transitionTo('host.edit', hostId);
@@ -24,7 +24,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         // Create a new host record attached to the current logged in user
         var address = this.store.createRecord('address');
         var self = this;
-        return this.get('session.user').then(function (user) {
+        return this.get('sessionUser.user').then(function (user) {
             return self.store.createRecord('host', {
                 user: user,
                 address: address

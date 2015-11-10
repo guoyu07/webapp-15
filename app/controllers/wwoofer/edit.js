@@ -19,15 +19,15 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Indicates whether the fields for the second wwoofer must be shown.
      */
-    showOtherWwoofer: Ember.computed.or('secondWwooferChecked', 'session.user.isAdmin'),
+    showOtherWwoofer: Ember.computed.or('secondWwooferChecked', 'sessionUser.user.isAdmin'),
 
     /**
      * Indicates whether the second wwoofer can be edited.
      */
-    canEditOtherWwoofer: Ember.computed.or('session.user.isAdmin'),
+    canEditOtherWwoofer: Ember.computed.or('sessionUser.user.isAdmin'),
 
     actions: {
-        saveWwoofer: function () {
+        saveWwoofer() {
 
             // Get wwoofer and address
             var wwoofer = this.get('model');
@@ -64,6 +64,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
                 window.scrollTo(0,0);
             });
+        },
+
+        dateSelected(date) {
+            this.set('selectedDate', date);
         }
     },
 

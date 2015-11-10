@@ -27,10 +27,10 @@
                             {{t "navbar.myProfiles" }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            {{#if session.user.wwoofer.id}}
+                            {{#if sessionUser.user.wwoofer.id}}
                                 <li>
-                                    {{#link-to 'wwoofer.edit' session.user.wwoofer}}
-                                        {{profile-status type="wwoofer" user=session.user class="prx"}} {{t 'navbar.editWwooferProfile'}}
+                                    {{#link-to 'wwoofer.edit' sessionUser.user.wwoofer}}
+                                        {{profile-status type="wwoofer" user=sessionUser.user class="prx"}} {{t 'navbar.editWwooferProfile'}}
                                     {{/link-to}}
                                 </li>
                             {{else}}
@@ -41,10 +41,10 @@
                                 </li>
                             {{/if}}
                             <li class="divider hidden-xs"></li>
-                            {{#if session.user.host.id}}
+                            {{#if sessionUser.user.host.id}}
                                 <li>
-                                    {{#link-to 'host.edit' session.user.host}}
-                                        {{profile-status type="host" user=session.user class="prx"}}
+                                    {{#link-to 'host.edit' sessionUser.user.host}}
+                                        {{profile-status type="host" user=sessionUser.user class="prx"}}
                                         {{t 'navbar.editHostProfile'}}
                                     {{/link-to}}
                                 </li>
@@ -58,7 +58,7 @@
                         </ul>
                     </li>
                 {{/if}}
-                {{#if session.user.isAdmin}}
+                {{#if sessionUser.user.isAdmin}}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -86,16 +86,16 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user hidden-xs"></span>
-                            {{session.user.firstName}} {{session.user.lastName}} <b class="caret"></b>
+                            {{sessionUser.user.firstName}} {{sessionUser.user.lastName}} <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                {{#link-to 'user.edit' session.user.id}}
+                                {{#link-to 'user.edit' sessionUser.user.id}}
                                     {{t 'menu.myAccount'}}
                                 {{/link-to}}
                             </li>
                             <li>
-                                {{#link-to 'user.memberships' session.user.id}}
+                                {{#link-to 'user.memberships' sessionUser.user.id}}
                                     {{t 'menu.myMemberships'}}
                                 {{/link-to}}
                             </li>
@@ -143,7 +143,7 @@
                 <div class="form-group {{if fieldErrors.impersonatedUserEmail.length 'has-error'}}">
                     <label for="impersonatedUserEmail" class="control-label">{{t 'impersonate.email.label'}}</label>
                     {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control" placeholder="someone@domain.com"}}
-                    {{error-display fieldErrors.impersonatedUserEmail}}
+                    {{error-display errors=fieldErrors.impersonatedUserEmail}}
                 </div>
             </div>
             <div class="modal-footer">

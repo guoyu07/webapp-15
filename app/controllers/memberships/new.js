@@ -13,23 +13,21 @@ export default Ember.Controller.extend({
     itemCode: null,
     shippingRegion: null,
     userId: null,
-
-    selectedItem: null,
-    selectedShippingRegion: null,
-    selectedPaymentType: null,
+    paymentType: null,
     isFree: false,
 
-    wwoofMembershipOptions: [
-        { id: 'WO1', name: Ember.I18n.t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
-        { id: 'WO2', name: Ember.I18n.t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
-        { id: 'WOB1', name: Ember.I18n.t('memberships.itemCodes.WOB1', { price: 35 }), price: 35 },
-        { id: 'WOB2', name: Ember.I18n.t('memberships.itemCodes.WOB2', { price: 40 }), price: 40 }
+    _membershipOptions: [
+        { id: 'WO1', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
+        { id: 'WO2', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
+        { id: 'WOB1', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WOB1', { price: 35 }), price: 35 },
+        { id: 'WOB2', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WOB2', { price: 40 }), price: 40 },
+        { id: 'H', type: 'H', name: Ember.I18n.t('memberships.itemCodes.H', { price: 35 }), price: 35 },
+        { id: 'HR', type: 'H', name: Ember.I18n.t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
     ],
 
-    hostMembershipOptions: [
-        { id: 'H', name: Ember.I18n.t('memberships.itemCodes.H', { price: 35 }), price: 35 },
-        { id: 'HR', name: Ember.I18n.t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
-    ],
+    membershipOptions: computed.filter('_membershipOptions', function (membershipOption) {
+        return this.get('type') === membershipOption.type;
+    }),
 
     shippingRegionOptions: [
         { id: 'FR', name: Ember.I18n.t('memberships.shipping.FR', { price: 4.56 }), price: 4.56 },
@@ -48,18 +46,10 @@ export default Ember.Controller.extend({
 
     showWwoofMemberships: Ember.computed.equal('type', 'W'),
     showHostMemberships: Ember.computed.equal('type', 'H'),
+    itemCodeIncludesShipping: Ember.computed.match('itemCode', /WOB1|WOB2/),
 
     hasUserId: Ember.computed.notEmpty('userId'),
-    isAdminMode: Ember.computed.and('session.user.isAdmin', 'hasUserId'),
-
-    /**
-     * Reset the shipping fees to null if shipping is not available for the current item.
-     */
-    resetShippingFees: observer('showShippingFees', function() {
-        if (!this.get('showShippingFees')) {
-            this.set('shippingRegion', null);
-        }
-    }),
+    isAdminMode: Ember.computed.and('sessionUser.user.isAdmin', 'hasUserId'),
 
     /**
      * Determines whether the shipping fees menu should be displayed.
@@ -67,7 +57,7 @@ export default Ember.Controller.extend({
      */
     showShippingFees: computed('showWwoofMemberships', 'itemCode', function() {
         var showShippingFees = false;
-        if (this.get('showWwoofMemberships') && this.get('itemCode') === 'WOB1' || this.get('itemCode') === 'WOB2') {
+        if (this.get('showWwoofMemberships') && this.get('itemCodeIncludesShipping')) {
             showShippingFees = true;
         }
         return showShippingFees;
@@ -76,11 +66,18 @@ export default Ember.Controller.extend({
     /**
      * Processes the total (membership + shipping fee).
      */
-    total: computed('selectedItem.price', 'selectedShippingRegion.price', 'isFree', function () {
-        var itemPrice = this.get('selectedItem.price') || 0;
-        var shippingFee = this.get('selectedShippingRegion.price') || 0;
-        var isFree = this.get('isFree');
+    total: computed('itemCode', 'shippingRegion', 'isFree', function () {
+        var itemCode = this.get('itemCode');
+        var membershipOption = this.get('membershipOptions').filterBy('id', itemCode)[0];
+        var itemPrice = membershipOption ? membershipOption.price : 0;
+
+        var shippingRegion = this.get('shippingRegion');
+        var shippingRegionOption = this.get('shippingRegionOptions').filterBy('id', shippingRegion)[0];
+        var shippingFee = shippingRegionOption ? shippingRegionOption.price : 0;
+
         var total = (itemPrice + shippingFee).toFixed(2);
+
+        var isFree = this.get('isFree');
         if (isFree) {
             total = 0;
         }
@@ -95,7 +92,7 @@ export default Ember.Controller.extend({
 
         var type = this.get('type');
         var itemCode = this.get('itemCode');
-        var paymentType = this.get('selectedPaymentType.id');
+        var paymentType = this.get('paymentType');
         var total = this.get('total');
         var isFree = this.get('isFree');
         var userId = this.get('userId');
@@ -115,5 +112,27 @@ export default Ember.Controller.extend({
                 user: user
             });
         });
-    }
+    },
+
+    isValid: computed('itemCode', 'itemCodeIncludesShipping', 'shippingRegion', function () {
+        let isValid = false;
+        let itemCode = this.get('itemCode');
+
+        if (itemCode) {
+            if (this.get('itemCodeIncludesShipping')) {
+                isValid = Ember.isPresent(this.get('shippingRegion'));
+            } else {
+                isValid = true;
+            }
+        }
+        return isValid;
+    }),
+
+    isInvalid: computed.not('isValid'),
+
+    isValidAdmin: computed('isValid', 'paymentType', 'isFree', function () {
+        return this.get('isValid') && (Ember.isPresent(this.get('paymentType')) || this.get('isFree'));
+    }),
+
+    isInvalidAdmin: computed.not('isValidAdmin')
 });

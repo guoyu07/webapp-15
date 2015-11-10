@@ -105,7 +105,7 @@ export default Ember.Controller.extend({
     /**
      * Whether the map has visible features.
      */
-    hasVisibleFeatures: Ember.computed.gt('visibleFeatures.length', 0),
+    hasVisibleFeatures: Ember.computed.notEmpty('visibleFeatures'),
 
     /**
      * Returns the list of features displayed in the list.

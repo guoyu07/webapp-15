@@ -3,7 +3,7 @@
  */
 import Ember from 'ember';
 import config from '../config/environment';
-import BaseAuthenticator from 'simple-auth/authenticators/base';
+import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
 export default BaseAuthenticator.extend({
     restore: function(data) {

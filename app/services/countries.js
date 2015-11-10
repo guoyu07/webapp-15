@@ -1,14 +1,17 @@
 import Ember from 'ember';
 
-export default Ember.Object.extend({
+const { service } = Ember.inject;
+
+export default Ember.Service.extend({
+
+    store: service('store'),
 
     countries: Ember.computed(function () {
-        var store = this.container.lookup('store:main');
-        return store.find('country');
+        return this.get('store').find('country');
     }),
 
     /**
-     * Countries that hosts can be attached to.
+     * Countries hosts can be attached to.
      */
     hostCountries: Ember.computed.filterBy('countries', 'isFrance', true),
 

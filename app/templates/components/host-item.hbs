@@ -8,7 +8,7 @@
         {{#link-to "host" hostId title=farmName class="btn btn-primary"}}
             {{t 'literal.view'}}
         {{/link-to}}
-        {{#if session.user.isAdmin}}
+        {{#if sessionUser.user.isAdmin}}
             {{#link-to "host.edit" hostId class="btn btn-default mlx" }}
                 {{t 'literal.edit'}}
             {{/link-to}}

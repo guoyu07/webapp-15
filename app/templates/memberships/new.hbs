@@ -24,26 +24,13 @@
                             {{t 'memberships.new.itemCode.label'}}
                         </label>
                         <div class="col-sm-10">
-                            {{#if showWwoofMemberships}}
-                                {{view "select"
-                                        content=wwoofMembershipOptions
-                                        optionValuePath="content.id"
-                                        optionLabelPath="content.name"
-                                        value=itemCode
-                                        selection=selectedItem
-                                        id="wwoofMemberships"
-                                        class="form-control"}}
-                            {{/if}}
-                            {{#if showHostMemberships}}
-                                {{view "select"
-                                        content=hostMembershipOptions
-                                        optionValuePath="content.id"
-                                        optionLabelPath="content.name"
-                                        value=itemCode
-                                        selection=selectedItem
-                                        id="hostMemberships"
-                                        class="form-control"}}
-                            {{/if}}
+                            {{#each membershipOptions as |membershipOption|}}
+                                <div class="radio">
+                                    {{#radio-button value=membershipOption.id groupValue=itemCode changed='membershipOptionChanged'}}
+                                        {{membershipOption.name}}
+                                    {{/radio-button}}
+                                </div>
+                            {{/each}}
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
@@ -57,14 +44,13 @@
                                 {{t 'memberships.new.shipping.label'}}
                             </label>
                             <div class="col-sm-10">
-                                {{view "select"
-                                        content=shippingRegionOptions
-                                        optionValuePath="content.id"
-                                        optionLabelPath="content.name"
-                                        value=shippingRegion
-                                        selection=selectedShippingRegion
-                                        id="shippingRegions"
-                                        class="form-control"}}
+                              {{#each shippingRegionOptions as |shippingRegionOption|}}
+                                  <div class="radio">
+                                      {{#radio-button value=shippingRegionOption.id groupValue=shippingRegion}}
+                                         {{shippingRegionOption.name}}
+                                      {{/radio-button}}
+                                  </div>
+                              {{/each}}
                             </div>
                         </div>
                         <div class="col-sm-offset-2 col-sm-10">
@@ -83,9 +69,9 @@
                                     content=paymentTypeOptions
                                     optionValuePath="content.id"
                                     optionLabelPath="content.name"
-                                    selection=selectedPaymentType
-                                    id="paymentTypes"
+                                    value=paymentType
                                     class="form-control"
+                                    prompt=(t 'memberships.new.paymentType.prompt')
                                     disabled=isFree}}
                                 <div class="checkbox">
                                     <label>
@@ -105,7 +91,7 @@
                     {{#if isAdminMode}}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button {{action "createMembership"}} class="btn btn-primary mbs">
+                                <button {{action "createMembership"}} class="btn btn-primary mbs" disabled={{isInvalidAdmin}}>
                                     {{t 'memberships.new.create'}}
                                 </button>
                             </div>
@@ -125,7 +111,7 @@
                             <p>
                                 {{t 'memberships.new.easiestWay'}}
                             </p>
-                            <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary mbs">
+                            <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary mbs" disabled={{isInvalid}}>
                                 {{t 'memberships.new.pay'}}
                             </button>
                             <p class="mbx small">

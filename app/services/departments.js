@@ -1,10 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Object.extend({
+const { service } = Ember.inject;
+
+export default Ember.Service.extend({
+
+    store: service('store'),
 
     departments: Ember.computed(function () {
-        var store = this.container.lookup('store:main');
-        return store.find('department');
+        return this.get('store').find('department');
     }),
 
     /**

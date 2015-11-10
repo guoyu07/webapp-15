@@ -52,7 +52,7 @@
                         <div class="form-group toggle-options-cols capitalize mtm">
                             {{toggle-options values=monthsService.allMonths selected=months optionValuePath='id'}}
                         </div>
-                        {{#if session.user.isAdmin}}
+                        {{#if sessionUser.user.isAdmin}}
                             <h4>{{t 'hosts.index.admin'}}</h4>
                             <div class="col-md-4 col-sm-12">
                                 <div class="radio">

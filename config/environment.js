@@ -43,9 +43,7 @@ module.exports = function (environment) {
     };
 
     // Ember simple auth configuration
-    ENV['simple-auth'] = {
-        session: 'session:main',
-        store: 'simple-auth-session-store:cookie',
+    ENV['ember-simple-auth'] = {
         routeAfterAuthentication: 'index',
         authenticationRoute: 'login'
     };

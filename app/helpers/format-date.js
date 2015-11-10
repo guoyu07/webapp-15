@@ -1,11 +1,15 @@
 /**
- * Ember helper to diplay dates in a human readable format.
+ * Ember helper to display dates in a human readable format.
  */
 import Ember from 'ember';
 
-export default Ember.Handlebars.makeBoundHelper(function (date, options) {
+export function formatDate(params, hash) {
+    let date = params[0];
     if (!date) { return; }
-    var format = options.hash.format ? options.hash.format : 'LL';
+
+    var format = hash.format || 'LL';
     var momentDate = moment(date);
     return momentDate.isValid() ? momentDate.format(format) : 'Invalid date';
-});
+}
+
+export default Ember.Helper.helper(formatDate);

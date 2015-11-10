@@ -15,17 +15,17 @@ export default Ember.Component.extend({
             return;
         }
 
-        if (!this.get('session.user.wwoofer.isFulfilled')) {
+        if (!this.get('sessionUser.user.wwoofer.isFulfilled')) {
             return;
         }
 
-        if (!this.get('session.user.host.isFulfilled')) {
+        if (!this.get('sessionUser.user.host.isFulfilled')) {
             return;
         }
 
-        if (this.get('session.user.wwoofer.id') == null && this.get('session.user.host.id') == null && this.get('wasDisplayed') === false) {
+        if (this.get('sessionUser.user.wwoofer.id') == null && this.get('sessionUser.user.host.id') == null && this.get('wasDisplayed') === false) {
             Ember.$('#createProfileModal').modal('show');
             this.set('wasDisplayed', true);
         }
-    }.observes('session.user.wwoofer.isFulfilled','session.user.wwoofer.id', 'session.user.host.isFulfilled', 'session.user.host.id')
+    }.observes('sessionUser.user.wwoofer.isFulfilled','sessionUser.user.wwoofer.id', 'sessionUser.user.host.isFulfilled', 'sessionUser.user.host.id')
 });

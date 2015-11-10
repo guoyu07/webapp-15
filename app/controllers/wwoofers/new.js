@@ -27,7 +27,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     canEditOtherWwoofer: true,
 
     actions: {
-        saveWwoofer: function () {
+        saveWwoofer() {
 
             // Get wwoofer and address
             var wwoofer = this.get('model');
@@ -75,6 +75,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
             }).catch(function () {
                 alertify.error(Ember.I18n.t('notify.submissionInvalid'));
             });
+        },
+
+        dateSelected(date) {
+            this.set('selectedDate', date);
         }
     },
 

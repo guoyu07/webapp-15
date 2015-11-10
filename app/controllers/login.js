@@ -24,16 +24,15 @@ export default Ember.Controller.extend(ValidationsMixin, {
             if (this.get('isLoading')) { return; }
 
             // Validate form then login
-            var self = this;
-            this.validate().then(function () {
+            this.validate().then(() => {
 
                 // Set controller in loading state
-                self.set('isLoading', true);
+                this.set('isLoading', true);
 
                 // Authenticate user
-                var auth = self.get('session').authenticate('authenticator:passport', {
-                    username: self.get('username'),
-                    password: self.get('password')
+                var auth = this.get('session').authenticate('authenticator:passport', {
+                    username: this.get('username'),
+                    password: this.get('password')
                 });
 
                 // Handle failure
@@ -41,8 +40,8 @@ export default Ember.Controller.extend(ValidationsMixin, {
                     alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
                 });
 
-                auth.finally(function () {
-                    self.set('isLoading', false);
+                auth.finally(() => {
+                    this.set('isLoading', false);
                 });
 
             }).catch(function () {

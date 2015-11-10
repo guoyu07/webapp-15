@@ -3,7 +3,7 @@
         <h3 class="panel-title">{{t 'user.photo.new'}}</h3>
     </div>
     <div class="panel-body">
-        {{photo-uploader dataUrl=controller.photoDataUrl model=model.user mode="user"}}
+        {{photo-uploader dataUrl=photoDataUrl model=model.user mode="user"}}
     </div>
 </div>
 {{#if model.user.photo}}

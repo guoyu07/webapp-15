@@ -3,7 +3,7 @@
  */
 import Ember from 'ember';
 import config from '../../config/environment';
-import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
     actions: {
@@ -31,6 +31,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             // Redirect to server payment route in order to get redirected to PayPal
             window.location.replace(url);
         },
+
         /**
          * Creates a membership (admin only).
          */
@@ -45,6 +46,19 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
             promise.then( (createdMembership)=> {
                 this.transitionTo('user.memberships', createdMembership.get('user'));
             });
+        },
+
+        membershipOptionChanged(membershipOption) {
+            switch (membershipOption) {
+                case 'WOB1':
+                case 'WOB2':
+                    if (!this.controller.get('shippingRegion')) {
+                        this.controller.set('shippingRegion', 'FR');
+                    }
+                    break;
+                default:
+                    this.controller.set('shippingRegion', null);
+            }
         }
     }
 });

@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Object.extend({
+const { service } = Ember.inject;
+
+export default Ember.Service.extend({
+
+    store: service('store'),
 
     // Unordered memberships
     memberships: [],
@@ -15,8 +19,7 @@ export default Ember.Object.extend({
 
         // Retrieve the user's memberships
         var self = this;
-        var store = this.container.lookup('store:main');
-        store.find('membership', { userId: userId }).then(function (memberships) {
+        this.get('store').find('membership', { userId: userId }).then(function (memberships) {
             self.set('memberships', memberships);
         });
     },

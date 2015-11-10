@@ -13,7 +13,7 @@
                 <div class="col-sm-10">
                     {{#if canEditUser}}
                         {{input type="text" id="firstName" name="firstName" value=model.firstName class="form-control"}}
-                        {{error-display model.fieldErrors.firstName}}
+                        {{error-display errors=model.fieldErrors.firstName}}
                     {{else}}
                         <p class="form-control-static">{{model.firstName}}</p>
                     {{/if}}
@@ -24,7 +24,7 @@
                 <div class="col-sm-10">
                     {{#if canEditUser}}
                         {{input type="text" id="lastName" name="lastName" value=model.lastName class="form-control"}}
-                        {{error-display model.fieldErrors.lastName}}
+                        {{error-display errors=model.fieldErrors.lastName}}
                     {{else}}
                         <p class="form-control-static">{{model.lastName}}</p>
                     {{/if}}
@@ -34,8 +34,8 @@
                 <label for="birthDate" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
                 <div class="col-sm-10">
                     {{#if canEditUser}}
-                        {{date-picker selectedDate=selectedDate}}
-                        {{error-display fieldErrors.selectedDate}}
+                        {{date-picker selectedDate=selectedDate dateSelected='dateSelected'}}
+                        {{error-display errors=fieldErrors.selectedDate}}
                     {{else}}
                         <p class="form-control-static">{{format-date model.birthDate}}</p>
                     {{/if}}
@@ -45,7 +45,7 @@
                 <label for="email" class="col-sm-2 control-label">{{t 'literal.email'}}</label>
                 <div class="col-sm-10">
                     {{input type="email" id="email" name="email" value=model.email class="form-control"}}
-                    {{error-display model.fieldErrors.email}}
+                    {{error-display errors=model.fieldErrors.email}}
                 </div>
             </div>
             {{#if model.isNew}}
@@ -53,7 +53,7 @@
                     <label for="password" class="col-sm-2 control-label">{{t 'literal.password'}}</label>
                     <div class="col-sm-10">
                         {{input type="password" id="password" name="password" value=model.password class="form-control"}}
-                        {{error-display model.fieldErrors.password}}
+                        {{error-display errors=model.fieldErrors.password}}
                     </div>
                 </div>
             {{/if}}

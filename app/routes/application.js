@@ -2,25 +2,24 @@
  * Ember route for the application.
  */
 import Ember from 'ember';
-import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
+import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from '../config/environment';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
-    model: function () {
+    model() {
         // Load current user memberships
         if (this.get('session.isAuthenticated')) {
-            var self = this;
-            this.get('session.user').then(function (user) {
-                self.reloadMemberships(user.get('id'));
-                self.setTrackJsUser(user.get('id'));
+            this.get('sessionUser.user').then((user) => {
+                this.reloadMemberships(user.get('id'));
+                this.setTrackJsUser(user.get('id'));
             });
         }
     },
-    reloadMemberships: function (userId) {
+    reloadMemberships(userId) {
         Ember.assert('User id required to reload memberships.', userId);
         this.userMemberships.loadMemberships(userId);
     },
-    setTrackJsUser: function (userId) {
+    setTrackJsUser(userId) {
         Ember.assert('User id required to set trackJs user.', userId);
         if (userId && trackJs) {
             trackJs.configure({
@@ -28,24 +27,21 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
             });
         }
     },
+    /**
+     * Redirects user after logout.
+     * Refreshes the page to reset app state.
+     */
+    sessionInvalidated() {
+        window.location.replace(config.urlAfterLogout);
+    },
     actions: {
-        sessionAuthenticationSucceeded: function () {
-            this.refresh();
-
-            // Redirect to attemptedTransition if necessary
-            this._super();
+        invalidateSession() {
+            this.get('session').invalidate();
         },
-        sessionInvalidationSucceeded: function () {
-            // Redirect user (refresh the page to reset app state)
-            window.location.replace(config.urlAfterLogout);
-        },
-        sessionInvalidationFailed: function () {
-            alertify.error(Ember.I18n.t('notify.submissionError'));
-        },
-        userImpersonated: function() {
+        userImpersonated() {
             this.refresh();
         },
-        error: function (err) {
+        error(err) {
             this.errorHandler.handleError(err);
         }
     }

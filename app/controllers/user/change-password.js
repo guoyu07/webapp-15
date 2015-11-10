@@ -26,7 +26,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
             this.validate().then(function() {
 
                 // Get the current user id
-                var currentUserId = self.get('session.user.id');
+                var currentUserId = self.get('sessionUser.user.id');
                 Ember.assert('User id cannot be null', currentUserId);
 
                 // Set controller in loading state
