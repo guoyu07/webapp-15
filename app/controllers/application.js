@@ -14,7 +14,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Indicates whether the current user can see the "Wwoofers" link in the main menu.
      */
-    canSeeWwoofersLink: Ember.computed.or('userMemberships.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
+    canSeeWwoofersLink: Ember.computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
 
     /**
      * Indicates whether the current user as at least one profile.

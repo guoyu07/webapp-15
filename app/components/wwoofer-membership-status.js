@@ -3,28 +3,21 @@
  */
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
-    membershipsService: null,
-    wwoofer: null,
+    user: null,
 
-    /**
-     * Observes changes on the wwoofer and load its memberships.
-     */
-    wwooferDidChange: function () {
-        var userId = this.get('wwoofer.user.id');
-        if (!Ember.isEmpty(userId)) {
-            this.set('membershipsService', this.container.lookup('service:user-memberships', { singleton: false }));
-            this.get('membershipsService').loadMemberships(userId);
-        }
-    }.observes('wwoofer.user.id').on('init'),
+    classNames: ['panel'],
+    classNameBindings: ['panelClass'],
 
     /**
      * Returns the CSS class of the panel based on the wwoofer's membership status.
      */
-    panelClass: function () {
-        var hasWwoofMemberships = this.get('membershipsService.hasWwoofMemberships');
-        var stillGoodInAMonth = this.get('membershipsService.latestWwoofMembership.isStillValidInAMonth');
+    panelClass: computed('user.hasWwoofMemberships', 'user.latestWwoofMembership.isStillValidInAMonth', function () {
+        var hasWwoofMemberships = this.get('user.hasWwoofMemberships');
+        var stillGoodInAMonth = this.get('user.latestWwoofMembership.isStillValidInAMonth');
 
         var panelClass = 'panel-success';
         if (!hasWwoofMemberships) {
@@ -34,5 +27,5 @@ export default Ember.Component.extend({
         }
 
         return panelClass;
-    }.property('membershipsService.hasWwoofMemberships', 'membershipsService.latestWwoofMembership.isStillValidInAMonth')
+    })
 });

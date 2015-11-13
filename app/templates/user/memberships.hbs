@@ -3,8 +3,8 @@
         <h3 class="panel-title">{{t 'user.memberships.wwoofer'}}</h3>
     </div>
     <div class="panel-body">
-        {{#if localUserMembershipsService.hasWwoofMemberships}}
-            {{wwoofer-membership-status wwoofer=model.wwoofer}}
+        {{#if user.hasWwoofMemberships}}
+            {{wwoofer-membership-status user=user}}
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -15,7 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#each localUserMembershipsService.wwoofMemberships as |wwoofMembership|}}
+                {{#each user.wwoofMemberships as |wwoofMembership|}}
                     <tr>
                         <td>{{wwoofMembership.itemCode}}</td>
                         <td>{{format-date wwoofMembership.createdAt}}</td>
@@ -28,14 +28,14 @@
             <small>{{t 'user.memberships.renewalInstructions'}}</small>
         {{else}}
             {{t 'user.memberships.noWwooferMemberships'}}
-            {{#if showGetWwooferMembershipLink}}
+            {{#if showGetWwoofMembershipLink}}
                 {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1')}}
                     {{t 'user.memberships.getNow'}}
                 {{/link-to}}
             {{/if}}
         {{/if}}
         {{#if showCreateWwoofMembershipLink}}
-            {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1' userId=model.id)}}
+            {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1' userId=user.id)}}
                 {{t 'user.memberships.create'}}
             {{/link-to}}
         {{/if}}
@@ -47,7 +47,8 @@
         <h3 class="panel-title">{{t 'user.memberships.host'}}</h3>
     </div>
     <div class="panel-body">
-        {{#if localUserMembershipsService.hasHostMemberships}}
+        {{#if user.hasHostMemberships}}
+            {{host-membership-status user=user}}
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -58,7 +59,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#each localUserMembershipsService.hostMemberships as |hostMembership|}}
+                {{#each user.hostMemberships as |hostMembership|}}
                     <tr>
                         <td>{{hostMembership.itemCode}}</td>
                         <td>{{format-date hostMembership.createdAt}}</td>
@@ -78,7 +79,7 @@
             {{/if}}
         {{/if}}
         {{#if showCreateHostMembershipLink}}
-            {{#link-to 'memberships.new' (query-params type='H' itemCode='H' userId=model.id)}}
+            {{#link-to 'memberships.new' (query-params type='H' itemCode='H' userId=user.id)}}
                 {{t 'user.memberships.create'}}
             {{/link-to}}
         {{/if}}

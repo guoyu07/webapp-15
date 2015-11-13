@@ -7,7 +7,7 @@
         {{#link-to 'host.index' model.id class="btn btn-primary btn-block mtm mbm"}}{{t 'literal.viewProfile'}}{{/link-to}}
         {{#unless model.isPendingOrRejected}}
             <hr/>
-            {{host-membership-status host=model}}
+            {{host-membership-status user=model.user}}
         {{/unless}}
     </div>
     <div class="col-sm-9">
