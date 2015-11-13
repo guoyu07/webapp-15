@@ -7,7 +7,7 @@
         {{#link-to 'wwoofer.index' model.id class="btn btn-primary btn-block mtm mbm"}}{{t 'literal.viewProfile'}}{{/link-to}}
         {{#unless model.isNew}}
             <hr/>
-            {{wwoofer-membership-status wwoofer=model}}
+            {{wwoofer-membership-status user=model.user}}
         {{/unless}}
     </div>
     <div class="col-sm-9">
