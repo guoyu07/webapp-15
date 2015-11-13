@@ -3,14 +3,19 @@
  */
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
     user: null,
 
+    classNames: ['panel'],
+    classNameBindings: ['panelClass'],
+
     /**
      * Returns the CSS class of the panel based on the host's membership status.
      */
-    panelClass: function () {
+    panelClass: computed('user.hasHostMemberships', 'user.latestHostMembership.isStillValidInAMonth', function () {
         var hasHostMemberships = this.get('user.hasHostMemberships');
         var stillGoodInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
 
@@ -22,5 +27,5 @@ export default Ember.Component.extend({
         }
 
         return panelClass;
-    }.property('user.hasHostMemberships', 'user.latestHostMembership.isStillValidInAMonth')
+    })
 });

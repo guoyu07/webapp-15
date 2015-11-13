@@ -3,14 +3,19 @@
  */
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
     user: null,
 
+    classNames: ['panel'],
+    classNameBindings: ['panelClass'],
+
     /**
      * Returns the CSS class of the panel based on the wwoofer's membership status.
      */
-    panelClass: function () {
+    panelClass: computed('user.hasWwoofMemberships', 'user.latestWwoofMembership.isStillValidInAMonth', function () {
         var hasWwoofMemberships = this.get('user.hasWwoofMemberships');
         var stillGoodInAMonth = this.get('user.latestWwoofMembership.isStillValidInAMonth');
 
@@ -22,5 +27,5 @@ export default Ember.Component.extend({
         }
 
         return panelClass;
-    }.property('user.hasWwoofMemberships', 'user.latestWwoofMembership.isStillValidInAMonth')
+    })
 });
