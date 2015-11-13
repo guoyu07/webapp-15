@@ -7,18 +7,18 @@ import config from '../config/environment';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
     model() {
-        // Load current user memberships
+        // Set trackJs user if authenticated
         if (this.get('session.isAuthenticated')) {
             this.get('sessionUser.user').then((user) => {
-                this.reloadMemberships(user.get('id'));
                 this.setTrackJsUser(user.get('id'));
             });
         }
     },
-    reloadMemberships(userId) {
-        Ember.assert('User id required to reload memberships.', userId);
-        this.userMemberships.loadMemberships(userId);
-    },
+
+    /**
+     * Sets the current user ID for track JS.
+     * @param userId
+     */
     setTrackJsUser(userId) {
         Ember.assert('User id required to set trackJs user.', userId);
         if (userId && trackJs) {
@@ -27,6 +27,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
             });
         }
     },
+
     /**
      * Redirects user after logout.
      * Refreshes the page to reset app state.
@@ -34,6 +35,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     sessionInvalidated() {
         window.location.replace(config.urlAfterLogout);
     },
+
     actions: {
         invalidateSession() {
             this.get('session').invalidate();

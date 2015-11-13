@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
     /**
      * Indicates whether the host contact info can be displayed to the current user.
      */
-    canSeeContactInfo: Ember.computed.readOnly('userMemberships.hasNonExpiredMembership'),
+    canSeeContactInfo: Ember.computed.readOnly('sessionUser.user.hasNonExpiredMembership'),
 
     /**
      * Indicates whether the notes about the host should be displayed.

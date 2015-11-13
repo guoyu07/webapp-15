@@ -5,13 +5,11 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    // Local user memberships service (not singleton)
-    localUserMembershipsService: null,
+    // Only show the link to get a first membership if the user's host profile was approved
+    showGetHostMembershipLink: Ember.computed.and('user.host.id', 'user.host.isApproved', 'sessionUser.user.isNotAdmin'),
+    showGetWwooferMembershipLink: Ember.computed.and('user.wwoofer.id', 'sessionUser.user.isNotAdmin'),
 
-    // Only show the link to get a first membership if the host was approved
-    showGetHostMembershipLink: Ember.computed.and('model.host.id', 'model.host.isApproved', 'sessionUser.user.isNotAdmin'),
-    showGetWwooferMembershipLink: Ember.computed.and('model.wwoofer.id', 'sessionUser.user.isNotAdmin'),
-
-    showCreateWwoofMembershipLink: Ember.computed.and('sessionUser.user.isAdmin', 'model.wwoofer.id'),
-    showCreateHostMembershipLink: Ember.computed.and('sessionUser.user.isAdmin', 'model.host.id')
+    // Only show the links to create a membership of the current user is admin
+    showCreateWwoofMembershipLink: Ember.computed.and('sessionUser.user.isAdmin', 'user.wwoofer.id'),
+    showCreateHostMembershipLink: Ember.computed.and('sessionUser.user.isAdmin', 'user.host.id')
 });

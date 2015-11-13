@@ -3,18 +3,18 @@
         {{t 'host.membership-status.title'}}
     </div>
     <div class="panel-body">
-        {{#if membershipsService.hasHostMemberships}}
-            {{#if membershipsService.latestHostMembership.isStillValidInAMonth}}
+        {{#if user.hasHostMemberships}}
+            {{#if user.latestHostMembership.isStillValidInAMonth}}
                 {{t 'host.membership-status.valid'}}
             {{else}}
                 <p>
                     {{t 'host.membership-status.yourHostProfile'}}
-                    {{#if membershipsService.latestHostMembership.isExpired}}
+                    {{#if user.latestHostMembership.isExpired}}
                         {{t 'host.membership-status.isDisabledSince'}}
-                        {{format-date membershipsService.latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
+                        {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
                     {{else}}
                         {{t 'host.membership-status.willBeDisabled'}}
-                        {{format-date membershipsService.latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
+                        {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
                     {{/if}}
                     {{t 'host.membership-status.community'}}
                 </p>
