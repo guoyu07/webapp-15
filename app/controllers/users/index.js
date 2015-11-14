@@ -2,36 +2,36 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    users: [],
+  users: [],
 
-    queryParams: ['page', 'itemsPerPage', 'searchTerm'],
+  queryParams: ['page', 'itemsPerPage', 'searchTerm'],
 
-    /**
-     * The current page.
-     */
-    page: 1,
+  /**
+   * The current page.
+   */
+  page: 1,
 
-    /**
-     * Number of memberships displayed per page.
-     */
-    itemsPerPage: 20,
+  /**
+   * Number of memberships displayed per page.
+   */
+  itemsPerPage: 20,
 
-    /**
-     * Whether the controller is in loading state.
-     */
-    isLoading: false,
+  /**
+   * Whether the controller is in loading state.
+   */
+  isLoading: false,
 
-    /**
-     * Search filters.
-     */
-    searchTerm: '',
+  /**
+   * Search filters.
+   */
+  searchTerm: '',
 
-    /**
-     * Process the total number of pages that can be displayed.
-     */
-    totalPages: Ember.computed('users.meta.total', 'itemsPerPage', function() {
-        var totalItems = this.get('users.meta.total');
-        var itemsPerPage = this.get('itemsPerPage');
-        return Math.ceil(totalItems / itemsPerPage);
-    })
+  /**
+   * Process the total number of pages that can be displayed.
+   */
+  totalPages: Ember.computed('users.meta.total', 'itemsPerPage', function() {
+    var totalItems = this.get('users.meta.total');
+    var itemsPerPage = this.get('itemsPerPage');
+    return Math.ceil(totalItems / itemsPerPage);
+  })
 });

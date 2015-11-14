@@ -6,7 +6,7 @@ export function initialize(application) {
   var errorHandler = application.container.lookup('service:error-handler');
 
   // Forward all Ember and RSVP errors to the error handler
-  Ember.onerror = function (err) {
+  Ember.onerror = function(err) {
     errorHandler.handleError(err);
   };
   Ember.RSVP.on('error', function(err) {

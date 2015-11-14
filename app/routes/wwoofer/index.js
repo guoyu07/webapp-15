@@ -5,7 +5,7 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-    renderTemplate: function() {
-        this.render({ into: 'application' });
-    }
+  renderTemplate: function() {
+    this.render({ into: 'application' });
+  }
 });

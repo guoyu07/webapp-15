@@ -7,81 +7,81 @@ import Regex from '../utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    setMaxWith: function () {
-        return this.get('currentRouteName') !== 'hosts.index';
-    }.property('currentRouteName'),
+  setMaxWith: function() {
+    return this.get('currentRouteName') !== 'hosts.index';
+  }.property('currentRouteName'),
 
-    /**
-     * Indicates whether the current user can see the "Wwoofers" link in the main menu.
-     */
-    canSeeWwoofersLink: Ember.computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
+  /**
+   * Indicates whether the current user can see the "Wwoofers" link in the main menu.
+   */
+  canSeeWwoofersLink: Ember.computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
 
-    /**
-     * Indicates whether the current user as at least one profile.
-     */
-    hasWwooferOrHostProfile: Ember.computed.or('sessionUser.user.wwoofer.id', 'sessionUser.user.host.id'),
+  /**
+   * Indicates whether the current user as at least one profile.
+   */
+  hasWwooferOrHostProfile: Ember.computed.or('sessionUser.user.wwoofer.id', 'sessionUser.user.host.id'),
 
-    /**
-     * Email address of the user to impersonate (admins only).
-     */
-    impersonatedUserEmail: null,
+  /**
+   * Email address of the user to impersonate (admins only).
+   */
+  impersonatedUserEmail: null,
 
-    actions: {
-        impersonateUser: function () {
+  actions: {
+    impersonateUser: function() {
 
-            var impersonatedUserEmail = this.get('impersonatedUserEmail');
+      var impersonatedUserEmail = this.get('impersonatedUserEmail');
 
-            var self = this;
-            this.validate().then(function() {
+      var self = this;
+      this.validate().then(function() {
 
-                // Set controller in loading state
-                self.set('isLoading', true);
+        // Set controller in loading state
+        self.set('isLoading', true);
 
-                // Find the user to impersonate
-                var userPromise = self.store.find('user', { email: impersonatedUserEmail });
+        // Find the user to impersonate
+        var userPromise = self.store.find('user', { email: impersonatedUserEmail });
 
-                // Handle success
-                userPromise.then(function (result) {
+        // Handle success
+        userPromise.then(function(result) {
 
-                    // Make sure the user could be found
-                    var users = result.get('content');
-                    if (!Ember.isArray(users) || Ember.isEmpty(users)) {
-                        self.set('isLoading', false);
-                        alertify.error(Ember.I18n.t('notify.userNotFound'));
-                        return;
-                    }
+          // Make sure the user could be found
+          var users = result.get('content');
+          if (!Ember.isArray(users) || Ember.isEmpty(users)) {
+            self.set('isLoading', false);
+            alertify.error(Ember.I18n.t('notify.userNotFound'));
+            return;
+          }
 
-                    // Authenticate user
-                    var auth = self.get('session').authenticate('authenticator:impersonation', {
-                        impersonatedUserEmail: impersonatedUserEmail
-                    });
+          // Authenticate user
+          var auth = self.get('session').authenticate('authenticator:impersonation', {
+            impersonatedUserEmail: impersonatedUserEmail
+          });
 
-                    // Handle success
-                    auth.then(function () {
-                        alertify.success(Ember.I18n.t('notify.userImpersonated', { email: impersonatedUserEmail }));
+          // Handle success
+          auth.then(function() {
+            alertify.success(Ember.I18n.t('notify.userImpersonated', { email: impersonatedUserEmail }));
 
-                        // Refresh the route
-                        self.send('userImpersonated');
-                    });
+            // Refresh the route
+            self.send('userImpersonated');
+          });
 
-                    auth.finally(function () {
-                        self.set('isLoading', false);
-                        Ember.$('#impersonationModal').modal('hide');
-                    });
-                });
-            }).catch(function () {
-                self.set('isLoading', false);
-                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
-            });
-        }
-    },
-
-    validations: {
-        impersonatedUserEmail: {
-            presence: true,
-            format: {
-                with: Regex.EMAIL_ADDRESS
-            }
-        }
+          auth.finally(function() {
+            self.set('isLoading', false);
+            Ember.$('#impersonationModal').modal('hide');
+          });
+        });
+      }).catch(function() {
+        self.set('isLoading', false);
+        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      });
     }
+  },
+
+  validations: {
+    impersonatedUserEmail: {
+      presence: true,
+      format: {
+        with: Regex.EMAIL_ADDRESS
+      }
+    }
+  }
 });
