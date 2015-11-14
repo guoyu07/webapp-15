@@ -5,58 +5,58 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-    activitiesService: Ember.inject.service('activities'),
-    monthsService: Ember.inject.service('months'),
-    countriesService: Ember.inject.service('countries'),
-    departmentsService: Ember.inject.service('departments'),
+  activitiesService: Ember.inject.service('activities'),
+  monthsService: Ember.inject.service('months'),
+  countriesService: Ember.inject.service('countries'),
+  departmentsService: Ember.inject.service('departments'),
 
-    actions: {
-        saveHost: function () {
+  actions: {
+    saveHost: function() {
 
-            // Get models
-            var host = this.get('model');
-            var address = host.get('address');
-            var user = host.get('user');
+      // Get models
+      var host = this.get('model');
+      var address = host.get('address');
+      var user = host.get('user');
 
-            // Reset website to null to pass server-side validation (accepts only null, not empty strings)
-            if (Ember.isEmpty(host.get('webSite'))) {
-                host.set('webSite', null);
-            }
+      // Reset website to null to pass server-side validation (accepts only null, not empty strings)
+      if (Ember.isEmpty(host.get('webSite'))) {
+        host.set('webSite', null);
+      }
 
-            // Initialize validations array
-            var validations = [ host.validate(), address.validate(), user.validate() ];
+      // Initialize validations array
+      var validations = [host.validate(), address.validate(), user.validate()];
 
-            // Validate host and address
-            var self = this;
-            Ember.RSVP.all(validations).then(function () {
+      // Validate host and address
+      var self = this;
+      Ember.RSVP.all(validations).then(function() {
 
-                // Create the host
-                var promise = host.save();
+        // Create the host
+        var promise = host.save();
 
-                // Create the address
-                promise = promise.then(function () {
-                    return address.save();
-                });
+        // Create the address
+        promise = promise.then(function() {
+          return address.save();
+        });
 
-                // Set the host's address (now that it has a valid id) and update the wwoofer
-                promise = promise.then(function () {
-                    host.set('address', address);
-                    return host.save();
-                });
+        // Set the host's address (now that it has a valid id) and update the wwoofer
+        promise = promise.then(function() {
+          host.set('address', address);
+          return host.save();
+        });
 
-                // Save the user (phone number)
-                promise = promise.then (function () {
-                    return user.save();
-                });
+        // Save the user (phone number)
+        promise = promise.then (function() {
+          return user.save();
+        });
 
-                // Inform and redirect user to the photos page
-                promise.then(function () {
-                    alertify.success(Ember.I18n.t('notify.hostCreated'));
-                    self.transitionToRoute('host.photos', host);
-                });
-            }).catch(function () {
-                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
-            });
-        }
+        // Inform and redirect user to the photos page
+        promise.then(function() {
+          alertify.success(Ember.I18n.t('notify.hostCreated'));
+          self.transitionToRoute('host.photos', host);
+        });
+      }).catch(function() {
+        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      });
     }
+  }
 });

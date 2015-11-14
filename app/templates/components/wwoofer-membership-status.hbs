@@ -1,31 +1,31 @@
 <div class="panel-heading">
-    {{t 'wwoofer.membership-status.title'}}
+  {{t 'wwoofer.membership-status.title'}}
 </div>
 <div class="panel-body">
-    {{#if user.hasWwoofMemberships}}
-        {{#if user.latestWwoofMembership.isStillValidInAMonth}}
-            {{t 'wwoofer.membership-status.valid'}}
-        {{else}}
-            <p>
-                {{t 'wwoofer.membership-status.yourWwooferMembership'}}
-                {{#if user.latestWwoofMembership.isExpired}}
-                    {{t 'wwoofer.membership-status.isExpiredSince'}}
-                {{else}}
-                    {{t 'wwoofer.membership-status.willExpire'}}
-                {{/if}}
-                {{format-date user.latestWwoofMembership.expireAt}}.
-                {{t 'wwoofer.membership-status.keepAccess'}}
-            </p>
-            {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}
-                {{t 'wwoofer.membership-status.renewMembership'}}
-            {{/link-to}}
-        {{/if}}
+  {{#if user.hasWwoofMemberships}}
+    {{#if user.latestWwoofMembership.isStillValidInAMonth}}
+      {{t 'wwoofer.membership-status.valid'}}
     {{else}}
-        <p>
-            {{t 'wwoofer.membership-status.profileComplete'}}
-        </p>
-        {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}
-            {{t 'wwoofer.membership-status.payMembership'}}
-        {{/link-to}}
+      <p>
+        {{t 'wwoofer.membership-status.yourWwooferMembership'}}
+        {{#if user.latestWwoofMembership.isExpired}}
+          {{t 'wwoofer.membership-status.isExpiredSince'}}
+        {{else}}
+          {{t 'wwoofer.membership-status.willExpire'}}
+        {{/if}}
+        {{format-date user.latestWwoofMembership.expireAt}}.
+        {{t 'wwoofer.membership-status.keepAccess'}}
+      </p>
+      {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}
+        {{t 'wwoofer.membership-status.renewMembership'}}
+      {{/link-to}}
     {{/if}}
+  {{else}}
+    <p>
+      {{t 'wwoofer.membership-status.profileComplete'}}
+    </p>
+    {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}
+      {{t 'wwoofer.membership-status.payMembership'}}
+    {{/link-to}}
+  {{/if}}
 </div>

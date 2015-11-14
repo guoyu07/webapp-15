@@ -6,47 +6,47 @@ import ValidationsMixin from '../../mixins/validations';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    /**
-     * Indicates whether the user's first name, last name and birth date can be edited.
-     */
-    canEditUser: Ember.computed.readOnly('sessionUser.user.isAdmin'),
+  /**
+   * Indicates whether the user's first name, last name and birth date can be edited.
+   */
+  canEditUser: Ember.computed.readOnly('sessionUser.user.isAdmin'),
 
-    selectedDate: null,
+  selectedDate: null,
 
-    actions: {
-        saveUser() {
+  actions: {
+    saveUser() {
 
-            // Get the user
-            var user = this.get('model');
+      // Get the user
+      var user = this.get('model');
 
-            // Set birth date
-            if (this.get('canEditUser')) {
-                user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
-            }
+      // Set birth date
+      if (this.get('canEditUser')) {
+        user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
+      }
 
-            // Initialize validations array
-            var validations = [ this.validate(), user.validate() ];
+      // Initialize validations array
+      var validations = [this.validate(), user.validate()];
 
-            // Save the user
-            var self = this;
-            Ember.RSVP.all(validations).then(function () {
-                user.save().then(function () {
-                    alertify.success(Ember.I18n.t('notify.informationUpdated'));
-                    self.transitionToRoute('index');
-                });
-            }).catch(function () {
-                alertify.error(Ember.I18n.t('notify.submissionInvalid'));
-            });
-        },
-
-        dateSelected(date) {
-            this.set('selectedDate', date);
-        }
+      // Save the user
+      var self = this;
+      Ember.RSVP.all(validations).then(function() {
+        user.save().then(function() {
+          alertify.success(Ember.I18n.t('notify.informationUpdated'));
+          self.transitionToRoute('index');
+        });
+      }).catch(function() {
+        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      });
     },
 
-    validations: {
-        selectedDate: {
-            'is-18': true
-        }
+    dateSelected(date) {
+      this.set('selectedDate', date);
     }
+  },
+
+  validations: {
+    selectedDate: {
+      'is-18': true
+    }
+  }
 });

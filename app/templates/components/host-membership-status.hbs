@@ -1,33 +1,33 @@
 <div class="panel-heading">
-    {{t 'host.membership-status.title'}}
+  {{t 'host.membership-status.title'}}
 </div>
 <div class="panel-body">
-    {{#if user.hasHostMemberships}}
-        {{#if user.latestHostMembership.isStillValidInAMonth}}
-            {{t 'host.membership-status.valid'}}
-        {{else}}
-            <p>
-                {{t 'host.membership-status.yourHostProfile'}}
-                {{#if user.latestHostMembership.isExpired}}
-                    {{t 'host.membership-status.isDisabledSince'}}
-                    {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
-                {{else}}
-                    {{t 'host.membership-status.willBeDisabled'}}
-                    {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
-                {{/if}}
-                {{t 'host.membership-status.community'}}
-            </p>
-            {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="btn btn-warning btn-block"}}
-                {{t 'host.membership-status.renewMembership'}}
-            {{/link-to}}
-        {{/if}}
+  {{#if user.hasHostMemberships}}
+    {{#if user.latestHostMembership.isStillValidInAMonth}}
+      {{t 'host.membership-status.valid'}}
     {{else}}
-        <p>
-            {{t 'host.membership-status.wasValidated'}}
-            {{t 'host.membership-status.makeVisible'}}
-        </p>
-        {{#link-to 'memberships.new' (query-params type='H' itemCode='H') class="btn btn-warning btn-block"}}
-            {{t 'host.membership-status.payMembership'}}
-        {{/link-to}}
+      <p>
+        {{t 'host.membership-status.yourHostProfile'}}
+        {{#if user.latestHostMembership.isExpired}}
+          {{t 'host.membership-status.isDisabledSince'}}
+          {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
+        {{else}}
+          {{t 'host.membership-status.willBeDisabled'}}
+          {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
+        {{/if}}
+        {{t 'host.membership-status.community'}}
+      </p>
+      {{#link-to 'memberships.new' (query-params type='H' itemCode='HR') class="btn btn-warning btn-block"}}
+        {{t 'host.membership-status.renewMembership'}}
+      {{/link-to}}
     {{/if}}
+  {{else}}
+    <p>
+      {{t 'host.membership-status.wasValidated'}}
+      {{t 'host.membership-status.makeVisible'}}
+    </p>
+    {{#link-to 'memberships.new' (query-params type='H' itemCode='H') class="btn btn-warning btn-block"}}
+      {{t 'host.membership-status.payMembership'}}
+    {{/link-to}}
+  {{/if}}
 </div>

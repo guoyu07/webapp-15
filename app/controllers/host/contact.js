@@ -6,16 +6,16 @@ import ValidationsMixin from '../../mixins/validations';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
-    message: null,
+  message: null,
 
-    messagePlaceholder: function () {
-        return 'Bonjour ' + this.get('model.user.firstName') + '!';
-    }.property('model.user.firstName'),
+  messagePlaceholder: function() {
+    return 'Bonjour ' + this.get('model.user.firstName') + '!';
+  }.property('model.user.firstName'),
 
-    validations: {
-        message: {
-            presence: true,
-            length: { minimum: 50, maximum: 5000 }
-        }
+  validations: {
+    message: {
+      presence: true,
+      length: { minimum: 50, maximum: 5000 }
     }
+  }
 });

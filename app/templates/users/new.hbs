@@ -1,32 +1,32 @@
 <h1>{{t 'users.new.title'}}</h1>
 <h4 class="mtm">
-    <small>
-        {{t 'users.new.instructions'}}
-        {{t 'users.new.haveAccount'}}
-        {{#link-to 'login'}}{{t 'users.new.logIn'}}{{/link-to}}
-    </small>
+  <small>
+    {{t 'users.new.instructions'}}
+    {{t 'users.new.haveAccount'}}
+    {{#link-to 'login'}}{{t 'users.new.logIn'}}{{/link-to}}
+  </small>
 </h4>
 <div class="row mtl">
-    <div class="col-sm-9 ">
-        {{partial 'user/form'}}
+  <div class="col-sm-9 ">
+    {{partial 'user/form'}}
+  </div>
+  <div class="col-sm-3 hidden-xs">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-heart mrx"></span>
+          {{t 'users.new.loveWwoofing'}}
+        </h3>
+      </div>
+      <div class="panel-body">
+        <p>{{t 'users.new.intro1'}}</p>
+        <hr/>
+        <p>{{t 'users.new.intro2'}}</p>
+        <hr/>
+        <p>{{t 'users.new.intro3'}}</p>
+      </div>
     </div>
-    <div class="col-sm-3 hidden-xs">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <span class="glyphicon glyphicon-heart mrx"></span>
-                    {{t 'users.new.loveWwoofing'}}
-                </h3>
-            </div>
-            <div class="panel-body">
-                <p>{{t 'users.new.intro1'}}</p>
-                <hr/>
-                <p>{{t 'users.new.intro2'}}</p>
-                <hr/>
-                <p>{{t 'users.new.intro3'}}</p>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 
 

@@ -1,38 +1,38 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{{t 'host.photos.new'}}</h3>
-    </div>
-    <div class="panel-body">
-        {{photo-uploader dataUrl="api/photos" model=model mode="host"}}
-        <span class="form-details">
-            {{t 'host.photos.details'}}
-        </span>
-    </div>
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'host.photos.new'}}</h3>
+  </div>
+  <div class="panel-body">
+    {{photo-uploader dataUrl="api/photos" model=model mode="host"}}
+    <span class="form-details">
+      {{t 'host.photos.details'}}
+    </span>
+  </div>
 </div>
 {{#if model.photos}}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{t 'host.photos.edit'}}</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                {{#each model.photos as |photo|}}
-                    <div class="col-sm-4 mbm">
-                        {{image-thumb url=photo.completeUrl height=200}}
-                        <div class="input-group mtx">
-                            {{input type="text" name="caption" value=photo.caption class="form-control" placeholderTranslation='host.photos.caption.placeholder'}}
-                            <div class="input-group-btn">
-                                <button {{action "savePhoto" photo}} class="btn btn-primary" aria-label={{t 'literal.save'}} title={{t 'literal.save'}} disabled={{photo.cannotSave}}>
-                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                                </button>
-                                <button {{action "deletePhoto" photo}} class="btn btn-default" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                {{/each}}
-            </div>
-        </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{t 'host.photos.edit'}}</h3>
     </div>
+    <div class="panel-body">
+      <div class="row">
+        {{#each model.photos as |photo|}}
+          <div class="col-sm-4 mbm">
+            {{image-thumb url=photo.completeUrl height=200}}
+            <div class="input-group mtx">
+              {{input type="text" name="caption" value=photo.caption class="form-control" placeholderTranslation='host.photos.caption.placeholder'}}
+              <div class="input-group-btn">
+                <button {{action "savePhoto" photo}} class="btn btn-primary" aria-label={{t 'literal.save'}} title={{t 'literal.save'}} disabled={{photo.cannotSave}}>
+                  <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                </button>
+                <button {{action "deletePhoto" photo}} class="btn btn-default" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 {{/if}}
