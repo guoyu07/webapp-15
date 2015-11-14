@@ -6,20 +6,20 @@
 <td>{{membership.paymentType}}</td>
 <td class={{expireAtClass}}>{{format-date membership.expireAt}}</td>
 <td>
-    {{#if membership.reminderSentAt}}
-        <span class="glyphicon glyphicon-ok" title={{format-date membership.reminderSentAt}}></span>
-    {{else}}
-        {{t 'literal.no'}}
-    {{/if}}
+  {{#if membership.reminderSentAt}}
+    <span class="glyphicon glyphicon-ok" title={{format-date membership.reminderSentAt}}></span>
+  {{else}}
+    {{t 'literal.no'}}
+  {{/if}}
 </td>
 <td>
-    {{#if membership.hasBooklet}}
-        {{#if membership.bookletSentAt}}
-            <span class="glyphicon glyphicon-ok" title={{format-date membership.bookletSentAt}}></span>
-        {{else}}
-            <span class="glyphicon glyphicon-send pointer" {{action 'markBookletAsSent' membership}} title={{t 'memberships.index.sendBooklet'}}></span>
-        {{/if}}
+  {{#if membership.hasBooklet}}
+    {{#if membership.bookletSentAt}}
+      <span class="glyphicon glyphicon-ok" title={{format-date membership.bookletSentAt}}></span>
     {{else}}
-        {{t 'literal.notApplicable'}}
+      <span class="glyphicon glyphicon-send pointer" {{action 'markBookletAsSent' membership}} title={{t 'memberships.index.sendBooklet'}}></span>
     {{/if}}
+  {{else}}
+    {{t 'literal.notApplicable'}}
+  {{/if}}
 </td>

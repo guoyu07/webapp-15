@@ -1,20 +1,20 @@
 <div class="alert {{alertClass}} alert-dismissable" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    {{#if host.isPendingApproval}}
-        {{#if sessionUser.user.isAdmin}}
-            {{t 'host.validation-status.adminPending'}}
-            {{t 'host.validation-status.adminReviewDetails'}}
-            <a href="#" {{action "approveHost" true}} class="alert-link">{{t 'host.validation-status.adminApprove'}}</a>
-            {{t 'host.validation-status.or'}}
-            <a href="#" {{action "approveHost" false}} class="alert-link">{{t 'host.validation-status.adminReject'}}</a>.
-        {{else}}
-            {{t 'host.validation-status.profileCreated'}}
-            {{t 'host.validation-status.mustValidate'}}
-            {{t 'host.validation-status.uploadPictures'}}
-        {{/if}}
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  {{#if host.isPendingApproval}}
+    {{#if sessionUser.user.isAdmin}}
+      {{t 'host.validation-status.adminPending'}}
+      {{t 'host.validation-status.adminReviewDetails'}}
+      <a href="#" {{action "approveHost" true}} class="alert-link">{{t 'host.validation-status.adminApprove'}}</a>
+      {{t 'host.validation-status.or'}}
+      <a href="#" {{action "approveHost" false}} class="alert-link">{{t 'host.validation-status.adminReject'}}</a>.
     {{else}}
-        {{#unless host.isApproved}}
-            {{t 'host.membership-status.wasRejected'}}
-        {{/unless}}
+      {{t 'host.validation-status.profileCreated'}}
+      {{t 'host.validation-status.mustValidate'}}
+      {{t 'host.validation-status.uploadPictures'}}
     {{/if}}
+  {{else}}
+    {{#unless host.isApproved}}
+      {{t 'host.membership-status.wasRejected'}}
+    {{/unless}}
+  {{/if}}
 </div>

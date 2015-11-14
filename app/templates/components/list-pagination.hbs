@@ -1,21 +1,21 @@
 {{#if showPagination}}
-    <ul class="pagination">
-        <li class="{{unless hasPreviousPage 'disabled'}}">
-            {{#link-to targetRoute (query-params page=previousPage)}}
-                <span aria-hidden="true">&laquo;</span>
-            {{/link-to}}
-        </li>
-        {{#each pages as |page|}}
-            <li class="{{if page.isCurrent 'active'}}">
-                {{#link-to targetRoute (query-params page=page.number)}}
-                    {{page.number}}
-                {{/link-to}}
-            </li>
-        {{/each}}
-        <li class="{{unless hasNextPage 'disabled'}}">
-            {{#link-to targetRoute (query-params page=nextPage)}}
-                <span aria-hidden="true">&raquo;</span>
-            {{/link-to}}
-        </li>
-    </ul>
+  <ul class="pagination">
+    <li class="{{unless hasPreviousPage 'disabled'}}">
+      {{#link-to targetRoute (query-params page=previousPage)}}
+        <span aria-hidden="true">&laquo;</span>
+      {{/link-to}}
+    </li>
+    {{#each pages as |page|}}
+      <li class="{{if page.isCurrent 'active'}}">
+        {{#link-to targetRoute (query-params page=page.number)}}
+          {{page.number}}
+        {{/link-to}}
+      </li>
+    {{/each}}
+    <li class="{{unless hasNextPage 'disabled'}}">
+      {{#link-to targetRoute (query-params page=nextPage)}}
+        <span aria-hidden="true">&raquo;</span>
+      {{/link-to}}
+    </li>
+  </ul>
 {{/if}}

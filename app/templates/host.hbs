@@ -1,19 +1,19 @@
 <div class="row">
-    <div class="col-sm-3">
-        <ul class="navbar nav">
-            <li>{{#link-to 'host.edit' model.id}}{{t 'literal.editProfile'}}{{/link-to}}</li>
-            <li>{{#link-to 'host.photos' model.id}}{{t 'literal.photos'}}{{/link-to}}</li>
-        </ul>
-        {{#link-to 'host.index' model.id class="btn btn-primary btn-block mtm mbm"}}{{t 'literal.viewProfile'}}{{/link-to}}
-        {{#unless model.isPendingOrRejected}}
-            <hr/>
-            {{host-membership-status user=model.user}}
-        {{/unless}}
-    </div>
-    <div class="col-sm-9">
-        {{#if model.isPendingOrRejected}}
-            {{host-approval-status host=model}}
-        {{/if}}
-        {{outlet}}
-    </div>
+  <div class="col-sm-3">
+    <ul class="navbar nav">
+      <li>{{#link-to 'host.edit' model.id}}{{t 'literal.editProfile'}}{{/link-to}}</li>
+      <li>{{#link-to 'host.photos' model.id}}{{t 'literal.photos'}}{{/link-to}}</li>
+    </ul>
+    {{#link-to 'host.index' model.id class="btn btn-primary btn-block mtm mbm"}}{{t 'literal.viewProfile'}}{{/link-to}}
+    {{#unless model.isPendingOrRejected}}
+      <hr/>
+      {{host-membership-status user=model.user}}
+    {{/unless}}
+  </div>
+  <div class="col-sm-9">
+    {{#if model.isPendingOrRejected}}
+      {{host-approval-status host=model}}
+    {{/if}}
+    {{outlet}}
+  </div>
 </div>

@@ -1,225 +1,244 @@
 <form class="form-horizontal">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{t 'host.form.generalInformation'}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group {{if model.fieldErrors.farmName.length 'has-error'}}">
+        <label for="farm-name" class="col-sm-2 control-label">{{t 'host.form.farmName.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="farm-name" name="farm-name" value=model.farmName class="form-control" placeholderTranslation='host.form.farmName.placeholder'}}
+          {{error-display errors=model.fieldErrors.farmName}}
+        </div>
+      </div>
+      <div class="form-group {{if model.fieldErrors.shortDescription.length 'has-error'}}">
+        <label for="shortDescription" class="col-sm-2 control-label">{{t 'host.form.shortDescription.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="shortDescription" name="shortDescription" value=model.shortDescription class="form-control" placeholderTranslation='host.form.shortDescription.placeholder'}}
+          {{error-display errors=model.fieldErrors.shortDescription}}
+        </div>
+      </div>
+      <div class="form-group {{if model.fieldErrors.fullDescription.length 'has-error'}}">
+        <label for="fullDescription" class="col-sm-2 control-label">{{t 'host.form.fullDescription.label'}}</label>
+
+        <div class="col-sm-10">
+          {{textarea id="fullDescription" name="fullDescription" value=model.fullDescription class="form-control" placeholderTranslation='host.form.fullDescription.placeholder' rows="10"}}
+          {{error-display errors=model.fieldErrors.fullDescription}}
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10 mbs">
+        <p class="form-details">
+          {{t 'host.form.fullDescriptionDetails'}}
+        </p>
+      </div>
+      <div class="form-group {{if model.fieldErrors.webSite.length 'has-error'}}">
+        <label for="webSite" class="col-sm-2 control-label">{{t 'host.form.website.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="webSite" name="webSite" value=model.webSite class="form-control" placeholderTranslation='host.form.website.placeholder'}}
+          {{error-display errors=model.fieldErrors.webSite}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="travelDetails" class="col-sm-2 control-label">{{t 'host.form.travel.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="travelDetails" name="travelDetails" value=model.travelDetails class="form-control" placeholderTranslation='host.form.travel.placeholder'}}
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10">
+        <p class="form-details">
+          {{t 'host.form.travelDetails'}}
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="openingMonths" class="col-sm-2 control-label">{{t 'host.form.activities'}}</label>
+
+        <div class="col-sm-10 toggle-options-cols">
+          {{toggle-options values=activitiesService.allActivities selected=model.activities optionValuePath='id'}}
+        </div>
+      </div>
+      <hr class="col-sm-offset-2 col-sm-10">
+      <div class="form-group">
+        <label for="openingMonths" class="col-sm-2 control-label">{{t 'host.form.openingMonths'}}</label>
+
+        <div class="col-sm-10 toggle-options-cols capitalize">
+          {{toggle-options values=monthsService.allMonths selected=model.openingMonths optionValuePath='id'}}
+        </div>
+      </div>
+      {{#unless model.isNew}}
+        <hr class="col-sm-offset-2 col-sm-10">
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                {{input type="checkbox" id="isHidden" name="isHidden" checked=model.isHidden}}
+                {{t 'host.form.isHidden.label'}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+          <span class="form-details">
+            {{t 'host.form.isHiddenDetails'}}
+          </span>
+        </div>
+      {{/unless}}
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{t 'host.form.contactInformation'}}</h3>
+    </div>
+    <div class="panel-body">
+      <p class="form-details mbm">
+        {{t 'host.form.contactInformationDetails'}}
+      </p>
+
+      <div class="form-group {{if model.fieldErrors.phone.length 'has-error'}}">
+        <label for="phone" class="col-sm-2 control-label">{{t 'host.form.phone.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="phone" name="phone" value=model.user.phone class="form-control" placeholderTranslation='host.form.phone.placeholder'}}
+          {{error-display errors=model.fieldErrors.phone}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">{{t 'host.form.communicationPreferences'}}</label>
+
+        <div class="col-sm-10">
+          <div class="checkbox">
+            <label>
+              {{input type="checkbox" id="noPhone" name="noPhone" checked=model.noPhone}}
+              {{t 'host.form.noPhone.label'}}
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              {{input type="checkbox" id="noEmail" name="noEmail" checked=model.noEmail}}
+              {{t 'host.form.noEmail.label'}}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group {{if model.address.fieldErrors.address1.length 'has-error'}}">
+        <label for="address1" class="col-sm-2 control-label">{{t 'address.form.address1.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="address1" name="address1" value=model.address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
+          {{error-display errors=model.address.fieldErrors.address1}}
+        </div>
+      </div>
+      <div class="form-group {{if model.address.fieldErrors.address2.length 'has-error'}}">
+        <label for="address2" class="col-sm-2 control-label">{{t 'address.form.address2.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="address2" name="address2" value=model.address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
+          {{error-display errors=model.address.fieldErrors.address2}}
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10">
+        <p class="form-details mbm">
+          {{t 'host.form.addressDetails'}}
+        </p>
+      </div>
+      <div class="form-group {{if model.address.fieldErrors.city.length 'has-error'}}">
+        <label for="city" class="col-sm-2 control-label">{{t 'address.form.city.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="city" name="city" value=model.address.city class="form-control"}}
+          {{error-display errors=model.address.fieldErrors.city}}
+        </div>
+      </div>
+      <div class="form-group {{if model.address.fieldErrors.zipCode.length 'has-error'}}">
+        <label for="zipCode" class="col-sm-2 control-label">{{t 'address.form.zipCode.label'}}</label>
+
+        <div class="col-sm-10">
+          {{input type="text" id="zipCode" name="zipCode" value=model.address.zipCode class="form-control"}}
+          {{error-display errors=model.address.fieldErrors.zipCode}}
+        </div>
+      </div>
+      <div class="form-group {{if model.address.fieldErrors.country.length 'has-error'}}">
+        <label for="country" class="col-sm-2 control-label">{{t 'address.form.country.label'}}</label>
+
+        <div class="col-sm-10">
+          {{view "select"
+          content=countriesService.hostCountries
+          optionValuePath="content.id"
+          optionLabelPath="content.name"
+          selection=model.address.country
+          class="form-control"
+          name="country"
+          promptTranslation='address.form.country.prompt'}}
+          {{error-display errors=model.address.fieldErrors.country}}
+        </div>
+      </div>
+      {{#if model.address.country}}
+        <div class="form-group">
+          {{#if model.address.country.isFrance}}
+            <label for="department" class="col-sm-2 control-label">{{t 'address.form.department.label'}}</label>
+
+            <div class="col-sm-10">
+              {{view "select"
+              content=departmentsService.sortedDepartments
+              optionValuePath="content.id"
+              optionLabelPath="content.name"
+              selection=model.address.department
+              class="form-control"
+              name="department"}}
+            </div>
+          {{else}}
+            <label for="state" class="col-sm-2 control-label">{{t 'address.form.state.label'}}</label>
+
+            <div class="col-sm-10">
+              {{input type="text" id="state" name="state" value=model.address.state class="form-control"}}
+            </div>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  {{#if sessionUser.user.isAdmin}}
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{t 'host.form.generalInformation'}}</h3>
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'host.form.admin'}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group {{if model.address.fieldErrors.latitude.length 'has-error'}}
+          {{if model.address.fieldErrors.longitude.length 'has-error'}}">
+          <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address.form.latitudeLongitude.label'}}</label>
+
+          <div class="col-xs-6 col-sm-5">
+            {{input type="number" id="latitude" name="latitude" value=model.address.latitude class="form-control"}}
+            {{error-display errors=model.address.fieldErrors.latitude}}
+          </div>
+          <div class="col-xs-6 col-sm-5">
+            {{input type="number" id="longitude" name="longitude" value=model.address.longitude class="form-control"}}
+            {{error-display errors=model.address.fieldErrors.longitude}}
+          </div>
         </div>
-        <div class="panel-body">
-            <div class="form-group {{if model.fieldErrors.farmName.length 'has-error'}}">
-                <label for="farm-name" class="col-sm-2 control-label">{{t 'host.form.farmName.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="farm-name" name="farm-name" value=model.farmName class="form-control" placeholderTranslation='host.form.farmName.placeholder'}}
-                    {{error-display errors=model.fieldErrors.farmName}}
-                </div>
-            </div>
-            <div class="form-group {{if model.fieldErrors.shortDescription.length 'has-error'}}">
-                <label for="shortDescription" class="col-sm-2 control-label">{{t 'host.form.shortDescription.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="shortDescription" name="shortDescription" value=model.shortDescription class="form-control" placeholderTranslation='host.form.shortDescription.placeholder'}}
-                    {{error-display errors=model.fieldErrors.shortDescription}}
-                </div>
-            </div>
-            <div class="form-group {{if model.fieldErrors.fullDescription.length 'has-error'}}">
-                <label for="fullDescription" class="col-sm-2 control-label">{{t 'host.form.fullDescription.label'}}</label>
-                <div class="col-sm-10">
-                    {{textarea id="fullDescription" name="fullDescription" value=model.fullDescription class="form-control" placeholderTranslation='host.form.fullDescription.placeholder' rows="10"}}
-                    {{error-display errors=model.fieldErrors.fullDescription}}
-                </div>
-            </div>
-            <div class="col-sm-offset-2 col-sm-10 mbs">
-                <p class="form-details">
-                    {{t 'host.form.fullDescriptionDetails'}}
-                </p>
-            </div>
-            <div class="form-group {{if model.fieldErrors.webSite.length 'has-error'}}">
-                <label for="webSite" class="col-sm-2 control-label">{{t 'host.form.website.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="webSite" name="webSite" value=model.webSite class="form-control" placeholderTranslation='host.form.website.placeholder'}}
-                    {{error-display errors=model.fieldErrors.webSite}}
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="travelDetails" class="col-sm-2 control-label">{{t 'host.form.travel.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="travelDetails" name="travelDetails" value=model.travelDetails class="form-control" placeholderTranslation='host.form.travel.placeholder'}}
-                </div>
-            </div>
-            <div class="col-sm-offset-2 col-sm-10">
-                <p class="form-details">
-                    {{t 'host.form.travelDetails'}}
-                </p>
-            </div>
-            <div class="form-group">
-                <label for="openingMonths" class="col-sm-2 control-label">{{t 'host.form.activities'}}</label>
-                <div class="col-sm-10 toggle-options-cols">
-                    {{toggle-options values=activitiesService.allActivities selected=model.activities optionValuePath='id'}}
-                </div>
-            </div>
-            <hr class="col-sm-offset-2 col-sm-10">
-            <div class="form-group">
-                <label for="openingMonths" class="col-sm-2 control-label">{{t 'host.form.openingMonths'}}</label>
-                <div class="col-sm-10 toggle-options-cols capitalize">
-                    {{toggle-options values=monthsService.allMonths selected=model.openingMonths optionValuePath='id'}}
-                </div>
-            </div>
-            {{#unless model.isNew}}
-                <hr class="col-sm-offset-2 col-sm-10">
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div class="checkbox">
-                            <label>
-                                {{input type="checkbox" id="isHidden" name="isHidden" checked=model.isHidden}}
-                                {{t 'host.form.isHidden.label'}}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-offset-2 col-sm-10">
-                    <span class="form-details">
-                        {{t 'host.form.isHiddenDetails'}}
-                    </span>
-                </div>
-            {{/unless}}
+        <div class="form-group {{if model.fieldErrors.note.length 'has-error'}}">
+          <label for="note" class="col-sm-2 control-label">{{t 'host.form.note.label'}}</label>
+
+          <div class="col-sm-10">
+            {{textarea id="note" name="note" value=model.note class="form-control" rows="4"}}
+            {{error-display errors=model.fieldErrors.note}}
+          </div>
         </div>
+      </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{t 'host.form.contactInformation'}}</h3>
-        </div>
-        <div class="panel-body">
-            <p class="form-details mbm">
-                {{t 'host.form.contactInformationDetails'}}
-            </p>
-            <div class="form-group {{if model.fieldErrors.phone.length 'has-error'}}">
-                <label for="phone" class="col-sm-2 control-label">{{t 'host.form.phone.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="phone" name="phone" value=model.user.phone class="form-control" placeholderTranslation='host.form.phone.placeholder'}}
-                    {{error-display errors=model.fieldErrors.phone}}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{t 'host.form.communicationPreferences'}}</label>
-                <div class="col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            {{input type="checkbox" id="noPhone" name="noPhone" checked=model.noPhone}}
-                            {{t 'host.form.noPhone.label'}}
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            {{input type="checkbox" id="noEmail" name="noEmail" checked=model.noEmail}}
-                            {{t 'host.form.noEmail.label'}}
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group {{if model.address.fieldErrors.address1.length 'has-error'}}">
-                <label for="address1" class="col-sm-2 control-label">{{t 'address.form.address1.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="address1" name="address1" value=model.address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
-                    {{error-display errors=model.address.fieldErrors.address1}}
-                </div>
-            </div>
-            <div class="form-group {{if model.address.fieldErrors.address2.length 'has-error'}}">
-                <label for="address2" class="col-sm-2 control-label">{{t 'address.form.address2.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="address2" name="address2" value=model.address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
-                    {{error-display errors=model.address.fieldErrors.address2}}
-                </div>
-            </div>
-            <div class="col-sm-offset-2 col-sm-10">
-                <p class="form-details mbm">
-                    {{t 'host.form.addressDetails'}}
-                </p>
-            </div>
-            <div class="form-group {{if model.address.fieldErrors.city.length 'has-error'}}">
-                <label for="city" class="col-sm-2 control-label">{{t 'address.form.city.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="city" name="city" value=model.address.city class="form-control"}}
-                    {{error-display errors=model.address.fieldErrors.city}}
-                </div>
-            </div>
-            <div class="form-group {{if model.address.fieldErrors.zipCode.length 'has-error'}}">
-                <label for="zipCode" class="col-sm-2 control-label">{{t 'address.form.zipCode.label'}}</label>
-                <div class="col-sm-10">
-                    {{input type="text" id="zipCode" name="zipCode" value=model.address.zipCode class="form-control"}}
-                    {{error-display errors=model.address.fieldErrors.zipCode}}
-                </div>
-            </div>
-            <div class="form-group {{if model.address.fieldErrors.country.length 'has-error'}}">
-                <label for="country" class="col-sm-2 control-label">{{t 'address.form.country.label'}}</label>
-                <div class="col-sm-10">
-                    {{view "select"
-                            content=countriesService.hostCountries
-                            optionValuePath="content.id"
-                            optionLabelPath="content.name"
-                            selection=model.address.country
-                            class="form-control"
-                            name="country"
-                            promptTranslation='address.form.country.prompt'}}
-                    {{error-display errors=model.address.fieldErrors.country}}
-                </div>
-            </div>
-            {{#if model.address.country}}
-                <div class="form-group">
-                    {{#if model.address.country.isFrance}}
-                        <label for="department" class="col-sm-2 control-label">{{t 'address.form.department.label'}}</label>
-                        <div class="col-sm-10">
-                            {{view "select"
-                                    content=departmentsService.sortedDepartments
-                                    optionValuePath="content.id"
-                                    optionLabelPath="content.name"
-                                    selection=model.address.department
-                                    class="form-control"
-                                    name="department"}}
-                        </div>
-                    {{else}}
-                        <label for="state" class="col-sm-2 control-label">{{t 'address.form.state.label'}}</label>
-                        <div class="col-sm-10">
-                            {{input type="text" id="state" name="state" value=model.address.state class="form-control"}}
-                        </div>
-                    {{/if}}
-                </div>
-            {{/if}}
-        </div>
+  {{/if}}
+  <div class="form-group">
+    <div class="col-xs-12">
+      <button {{action "saveHost"}} disabled={{model.isSaving}} class="btn btn-primary {{if model.isNew 'pull-right'}}">
+      {{#if model.isNew}}
+        {{t 'literal.continue'}}
+      {{else}}
+        {{t 'literal.save'}}
+      {{/if}}
+      </button>
     </div>
-    {{#if sessionUser.user.isAdmin}}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{t 'host.form.admin'}}</h3>
-            </div>
-            <div class="panel-body">
-                <div class="form-group {{if model.address.fieldErrors.latitude.length 'has-error'}}
-                        {{if model.address.fieldErrors.longitude.length 'has-error'}}">
-                    <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address.form.latitudeLongitude.label'}}</label>
-                    <div class="col-xs-6 col-sm-5">
-                        {{input type="number" id="latitude" name="latitude" value=model.address.latitude class="form-control"}}
-                        {{error-display errors=model.address.fieldErrors.latitude}}
-                    </div>
-                    <div class="col-xs-6 col-sm-5">
-                        {{input type="number" id="longitude" name="longitude" value=model.address.longitude class="form-control"}}
-                        {{error-display errors=model.address.fieldErrors.longitude}}
-                    </div>
-                </div>
-                <div class="form-group {{if model.fieldErrors.note.length 'has-error'}}">
-                    <label for="note" class="col-sm-2 control-label">{{t 'host.form.note.label'}}</label>
-                    <div class="col-sm-10">
-                        {{textarea id="note" name="note" value=model.note class="form-control" rows="4"}}
-                        {{error-display errors=model.fieldErrors.note}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {{/if}}
-    <div class="form-group">
-        <div class="col-xs-12">
-            <button {{action "saveHost"}} disabled={{model.isSaving}} class="btn btn-primary {{if model.isNew 'pull-right'}}">
-                {{#if model.isNew}}
-                    {{t 'literal.continue'}}
-                {{else}}
-                    {{t 'literal.save'}}
-                {{/if}}
-            </button>
-        </div>
-    </div>
+  </div>
 </form>

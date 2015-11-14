@@ -1,6 +1,6 @@
 {{#each options as |option|}}
-    <label for={{option.value}} class="checkbox-inline">
-        <input type="checkbox" id={{option.value}} checked={{option.isSelected}} {{action "select" option on="change"}}>
-        {{option.label}}
-    </label>
+  <label for={{option.value}} class="checkbox-inline">
+    <input type="checkbox" id={{option.value}} checked={{option.isSelected}} {{action "select" option on="change"}}>
+    {{option.label}}
+  </label>
 {{/each}}

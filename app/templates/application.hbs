@@ -1,159 +1,160 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid {{if setMaxWith 'main-container'}}">
-        <div class="navbar-header">
-            {{#link-to 'index' class="navbar-brand logo"}}
-                <img src="assets/images/wwoof-fr-logo.png">
-            {{/link-to}}
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                {{#link-to "hosts" tagName="li"}}
-                    <a href={{view.href}}>{{t 'literal.hosts'}}</a>
-                {{/link-to}}
-                {{#if canSeeWwoofersLink}}
-                    {{#link-to "wwoofers" tagName="li"}}
-                        <a href={{view.href}}>{{t 'literal.wwoofers'}}</a>
-                    {{/link-to}}
-                {{/if}}
-                {{#if session.isAuthenticated}}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {{t "navbar.myProfiles" }} <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            {{#if sessionUser.user.wwoofer.id}}
-                                <li>
-                                    {{#link-to 'wwoofer.edit' sessionUser.user.wwoofer}}
-                                        {{profile-status type="wwoofer" user=sessionUser.user class="prx"}} {{t 'navbar.editWwooferProfile'}}
-                                    {{/link-to}}
-                                </li>
-                            {{else}}
-                                <li>
-                                    {{#link-to 'wwoofers.new'}}
-                                        {{t 'navbar.createWwooferProfile'}}
-                                    {{/link-to}}
-                                </li>
-                            {{/if}}
-                            <li class="divider hidden-xs"></li>
-                            {{#if sessionUser.user.host.id}}
-                                <li>
-                                    {{#link-to 'host.edit' sessionUser.user.host}}
-                                        {{profile-status type="host" user=sessionUser.user class="prx"}}
-                                        {{t 'navbar.editHostProfile'}}
-                                    {{/link-to}}
-                                </li>
-                            {{else}}
-                                <li>
-                                    {{#link-to 'hosts.new'}}
-                                        {{t 'navbar.createHostProfile'}}
-                                    {{/link-to}}
-                                </li>
-                            {{/if}}
-                        </ul>
-                    </li>
-                {{/if}}
-                {{#if sessionUser.user.isAdmin}}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                {{#link-to 'users'}}
-                                    {{t 'literal.users'}}
-                                {{/link-to}}
-                            </li>
-                            <li>
-                                {{#link-to 'memberships'}}
-                                    {{t 'literal.memberships'}}
-                                {{/link-to}}
-                            </li>
-                            <li>
-                                <a href="#" data-toggle="modal" data-target="#impersonationModal">
-                                    {{t 'menu.impersonateUser'}}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                {{/if}}
-            </ul>
-            {{#if session.isAuthenticated}}
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-user hidden-xs"></span>
-                            {{sessionUser.user.firstName}} {{sessionUser.user.lastName}} <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                {{#link-to 'user.edit' sessionUser.user.id}}
-                                    {{t 'menu.myAccount'}}
-                                {{/link-to}}
-                            </li>
-                            <li>
-                                {{#link-to 'user.memberships' sessionUser.user.id}}
-                                    {{t 'menu.myMemberships'}}
-                                {{/link-to}}
-                            </li>
-                            <li class="divider hidden-xs"></li>
-                            <li>
-                                {{#link-to 'contact'}}
-                                    {{t 'menu.contact'}}
-                                {{/link-to}}
-                            </li>
-                            <li class="divider hidden-xs"></li>
-                            <li>
-                                <a href="#" {{action 'invalidateSession'}}>
-                                    {{t 'menu.logout'}}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            {{else}}
-                <div class="navbar-right">
-                    {{#link-to 'login' class="btn btn-default navbar-btn"}}
-                        {{t 'menu.login'}}
-                    {{/link-to}}
-                    {{#link-to 'users.new' class="btn btn-primary navbar-btn"}}
-                        {{t 'menu.signUp'}}
-                    {{/link-to}}
-                </div>
-            {{/if}}
-        </div>
+  <div class="container-fluid {{if setMaxWith 'main-container'}}">
+    <div class="navbar-header">
+      {{#link-to 'index' class="navbar-brand logo"}}
+        <img src="assets/images/wwoof-fr-logo.png">
+      {{/link-to}}
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        {{#link-to "hosts" tagName="li"}}
+          <a href={{view.href}}>{{t 'literal.hosts'}}</a>
+        {{/link-to}}
+        {{#if canSeeWwoofersLink}}
+          {{#link-to "wwoofers" tagName="li"}}
+            <a href={{view.href}}>{{t 'literal.wwoofers'}}</a>
+          {{/link-to}}
+        {{/if}}
+        {{#if session.isAuthenticated}}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              {{t "navbar.myProfiles" }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              {{#if sessionUser.user.wwoofer.id}}
+                <li>
+                  {{#link-to 'wwoofer.edit' sessionUser.user.wwoofer}}
+                    {{profile-status type="wwoofer" user=sessionUser.user class="prx"}} {{t 'navbar.editWwooferProfile'}}
+                  {{/link-to}}
+                </li>
+              {{else}}
+                <li>
+                  {{#link-to 'wwoofers.new'}}
+                    {{t 'navbar.createWwooferProfile'}}
+                  {{/link-to}}
+                </li>
+              {{/if}}
+              <li class="divider hidden-xs"></li>
+              {{#if sessionUser.user.host.id}}
+                <li>
+                  {{#link-to 'host.edit' sessionUser.user.host}}
+                    {{profile-status type="host" user=sessionUser.user class="prx"}}
+                    {{t 'navbar.editHostProfile'}}
+                  {{/link-to}}
+                </li>
+              {{else}}
+                <li>
+                  {{#link-to 'hosts.new'}}
+                    {{t 'navbar.createHostProfile'}}
+                  {{/link-to}}
+                </li>
+              {{/if}}
+            </ul>
+          </li>
+        {{/if}}
+        {{#if sessionUser.user.isAdmin}}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                {{#link-to 'users'}}
+                  {{t 'literal.users'}}
+                {{/link-to}}
+              </li>
+              <li>
+                {{#link-to 'memberships'}}
+                  {{t 'literal.memberships'}}
+                {{/link-to}}
+              </li>
+              <li>
+                <a href="#" data-toggle="modal" data-target="#impersonationModal">
+                  {{t 'menu.impersonateUser'}}
+                </a>
+              </li>
+            </ul>
+          </li>
+        {{/if}}
+      </ul>
+      {{#if session.isAuthenticated}}
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-user hidden-xs"></span>
+              {{sessionUser.user.firstName}} {{sessionUser.user.lastName}} <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                {{#link-to 'user.edit' sessionUser.user.id}}
+                  {{t 'menu.myAccount'}}
+                {{/link-to}}
+              </li>
+              <li>
+                {{#link-to 'user.memberships' sessionUser.user.id}}
+                  {{t 'menu.myMemberships'}}
+                {{/link-to}}
+              </li>
+              <li class="divider hidden-xs"></li>
+              <li>
+                {{#link-to 'contact'}}
+                  {{t 'menu.contact'}}
+                {{/link-to}}
+              </li>
+              <li class="divider hidden-xs"></li>
+              <li>
+                <a href="#" {{action 'invalidateSession'}}>
+                  {{t 'menu.logout'}}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      {{else}}
+        <div class="navbar-right">
+          {{#link-to 'login' class="btn btn-default navbar-btn"}}
+            {{t 'menu.login'}}
+          {{/link-to}}
+          {{#link-to 'users.new' class="btn btn-primary navbar-btn"}}
+            {{t 'menu.signUp'}}
+          {{/link-to}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
 </nav>
 <div class="container-fluid {{if setMaxWith 'main-container mbm'}}">
-    {{outlet}}
+  {{outlet}}
 </div>
 
 <!-- Impersonation modal box (admins only) -->
 <div class="modal fade" id="impersonationModal" tabindex="-1" role="dialog" aria-labelledby="impersonationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="impersonationModalLabel">{{t 'impersonate.title'}}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group {{if fieldErrors.impersonatedUserEmail.length 'has-error'}}">
-                    <label for="impersonatedUserEmail" class="control-label">{{t 'impersonate.email.label'}}</label>
-                    {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control" placeholder="someone@domain.com"}}
-                    {{error-display errors=fieldErrors.impersonatedUserEmail}}
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{t 'literal.cancel'}}</button>
-                <button type="button" class="btn btn-primary" {{action "impersonateUser"}} disabled={{isLoading}}>{{t 'impersonate.button'}}</button>
-            </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="impersonationModalLabel">{{t 'impersonate.title'}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group {{if fieldErrors.impersonatedUserEmail.length 'has-error'}}">
+          <label for="impersonatedUserEmail" class="control-label">{{t 'impersonate.email.label'}}</label>
+          {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control" placeholder="someone@domain.com"}}
+          {{error-display errors=fieldErrors.impersonatedUserEmail}}
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{t 'literal.cancel'}}</button>
+        <button type="button" class="btn btn-primary" {{action "impersonateUser"}} disabled={{isLoading}}>{{t 'impersonate.button'}}</button>
+      </div>
     </div>
+  </div>
 </div>
- {{#unless hasWwooferOrHostProfile}}
-     {{create-profile-modal}}
- {{/unless}}
+{{#unless hasWwooferOrHostProfile}}
+  {{create-profile-modal}}
+{{/unless}}
 
