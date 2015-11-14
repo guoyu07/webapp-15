@@ -28,7 +28,7 @@ export default DS.Model.extend(ValidationsMixin, {
   updatedAt: DS.attr('date'),
 
   // Relationships
-  user: DS.belongsTo('user'),
+  user: DS.belongsTo('user', { async: true }),
   address: DS.belongsTo('address'),
   photos: DS.hasMany('photo'),
 
