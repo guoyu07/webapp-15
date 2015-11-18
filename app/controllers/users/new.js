@@ -54,7 +54,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
           });
 
         }).catch(function(err) {
-          if (err && err.status === 409) {
+          if (Ember.get(err, 'errors.firstObject.status') === '409') {
             alertify.error(Ember.I18n.t('notify.emailAddressInUse'));
           } else {
             throw err;
