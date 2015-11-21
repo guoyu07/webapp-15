@@ -37,8 +37,15 @@ export default DS.Model.extend(ValidationsMixin, {
       presence: true,
       length: { minimum: 2, maximum: 255 }
     },
-    country: {
+    'country.id': {
       presence: true
+    },
+    'department.id': {
+      presence: {
+        'if': function (address) {
+          return address.get('country.code') === 'FR';
+        }
+      }
     },
     latitude: {
       numericality: {
