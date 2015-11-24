@@ -2,32 +2,20 @@
  * Ember component for host approval status.
  */
 import Ember from 'ember';
-import config from '../config/environment';
+import config from 'webapp/config/environment';
 
 export default Ember.Component.extend({
 
   host: null,
 
-  /**
-   * Returns the CSS class of the alert based on the host's approval status.
-   */
-  alertClass: function() {
-    var isPendingApproval = this.get('host.isPendingApproval');
-    var isAdmin = this.get('sessionUser.user.isAdmin');
-
-    var panelClass = 'alert-warning';
-    if (isPendingApproval && !isAdmin) {
-      panelClass = 'alert-info';
-    }
-
-    return panelClass;
-  }.property('host.isPendingApproval', 'sessionUser.user.isAdmin'),
+  classNames: ['panel'],
+  classNameBindings: ['panelClass', 'host.isPendingApproval:panel-info:panel-danger'],
 
   actions: {
     /**
      * Approves or rejects a host after validation.
      */
-    approveHost: function(isApproved) {
+    approveHost(isApproved) {
 
       // Get host
       var host = this.get('host');

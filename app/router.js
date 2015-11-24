@@ -15,6 +15,7 @@ Router.map(function() {
   });
   this.resource('host', { path: '/host/:host_id' }, function() {
     this.route('edit');
+    this.route('address');
     this.route('photos');
     this.route('contact');
   });

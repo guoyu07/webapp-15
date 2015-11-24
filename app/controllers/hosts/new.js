@@ -7,17 +7,14 @@ export default Ember.Controller.extend({
 
   activitiesService: Ember.inject.service('activities'),
   monthsService: Ember.inject.service('months'),
-  countriesService: Ember.inject.service('countries'),
-  departmentsService: Ember.inject.service('departments'),
 
   actions: {
     saveHost() {
 
-      // Get models
+      // Get the host
       var host = this.get('model');
-      var address = host.get('address');
 
-      // Get the user (async)
+      // Get the host's user (async)
       host.get('user').then((user)=> {
 
         // Reset website to null to pass server-side validation (accepts only null, not empty strings)
@@ -26,7 +23,7 @@ export default Ember.Controller.extend({
         }
 
         // Prepare validation promises
-        var validations = [host.validate(), address.validate(), user.validate()];
+        var validations = [host.validate(), user.validate()];
 
         // Validate all models
         Ember.RSVP.all(validations).then(()=> {
@@ -34,26 +31,15 @@ export default Ember.Controller.extend({
           // Create the host
           var promise = host.save();
 
-          // Create the address
-          promise = promise.then(function() {
-            return address.save();
-          });
-
-          // Set the host's address (now that it has a valid id) and update the wwoofer
-          promise = promise.then(function() {
-            host.set('address', address);
-            return host.save();
-          });
-
           // Save the user (phone number)
-          promise = promise.then (function() {
+          promise = promise.then (()=> {
             return user.save();
           });
 
-          // Inform and redirect user to the photos page
+          // Inform and redirect user to the address page
           promise.then(()=> {
             alertify.success(Ember.I18n.t('notify.hostCreated'));
-            this.transitionToRoute('host.photos', host);
+            this.transitionToRoute('host.address', host);
           });
         }).catch(function() {
           alertify.error(Ember.I18n.t('notify.submissionInvalid'));
