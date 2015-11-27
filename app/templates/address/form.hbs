@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
       <p class="form-details mbm">
-        {{t 'host.form.addressDetails'}}
+        {{instructions}}
       </p>
       <div class="form-group {{if address.fieldErrors.address1.length 'has-error'}}">
         <label for="address1" class="col-sm-2 control-label">{{t 'address.form.address1.label'}}</label>
@@ -44,7 +44,7 @@
 
         <div class="col-sm-10">
           {{view "select"
-          content=countriesService.hostCountries
+          content=countries
           optionValuePath="content.id"
           optionLabelPath="content.name"
           selection=address.country

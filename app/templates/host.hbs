@@ -5,13 +5,17 @@
       <li>{{#link-to 'host.address' model.id}}{{t 'literal.myAddress'}}{{/link-to}}</li>
       <li>{{#link-to 'host.photos' model.id}}{{t 'literal.photos'}}{{/link-to}}</li>
     </ul>
-    {{#link-to 'host.index' model.id class="btn btn-primary btn-block mtm mbm"}}{{t 'literal.viewProfile'}}{{/link-to}}
+    {{#link-to 'host.index' model.id class="btn btn-primary btn-block mtm mbm" disabled=model.isIncomplete}}
+      {{t 'literal.viewProfile'}}
+    {{/link-to}}
 
-    <hr/>
-    {{#if model.isPendingOrRejected}}
-      {{host-approval-status host=model}}
-    {{else}}
-      {{host-membership-status user=model.user}}
+    {{#if model.isComplete}}
+      <hr/>
+      {{#if model.isPendingOrRejected}}
+        {{host-approval-status host=model}}
+      {{else}}
+        {{host-membership-status user=model.user}}
+      {{/if}}
     {{/if}}
   </div>
   <div class="col-sm-9">

@@ -29,9 +29,8 @@ export default Ember.Controller.extend(ValidationsMixin, {
   actions: {
     saveWwoofer() {
 
-      // Get wwoofer and address
+      // Get the wwoofer
       var wwoofer = this.get('model');
-      var address = wwoofer.get('address');
       var secondWwooferChecked = this.get('secondWwooferChecked');
 
       // Handle second wwoofer
@@ -45,32 +44,19 @@ export default Ember.Controller.extend(ValidationsMixin, {
         wwoofer.set('birthDate2', null);
       }
 
-      // Initialize validations array
-      var validations = [this.validate(), wwoofer.validate(), address.validate()];
+      // Prepare validation promises
+      var validations = [this.validate(), wwoofer.validate()];
 
-      // Validate wwoofer and address
-      var self = this;
-      Ember.RSVP.all(validations).then(function() {
+      // Validate all models
+      Ember.RSVP.all(validations).then(()=> {
 
         // Create the wwoofer
         var promise = wwoofer.save();
 
-        // Create the address
-        promise = promise.then(function() {
-          return address.save();
-        });
-
-        // Set the wwoofer's address (now that it has a valid id) and update the wwoofer
-        promise = promise.then(function() {
-          wwoofer.set('address', address);
-          return wwoofer.save();
-        });
-
         // Inform and redirect user to payment page
-        promise.then(function() {
+        promise.then(()=> {
           alertify.success(Ember.I18n.t('notify.wwooferCreated'));
-          var itemCode = secondWwooferChecked ? 'WO2' : 'WO1';
-          self.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
+          this.transitionToRoute('wwoofer.address', wwoofer);
         });
       }).catch(function() {
         alertify.error(Ember.I18n.t('notify.submissionInvalid'));

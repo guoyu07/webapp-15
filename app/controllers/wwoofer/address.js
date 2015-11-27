@@ -7,16 +7,16 @@ export default Ember.Controller.extend({
   countriesService: Ember.inject.service('countries'),
   departmentsService: Ember.inject.service('departments'),
 
-  countries: computed.readOnly('countriesService.hostCountries'),
+  countries: computed.readOnly('countriesService.sortedCountries'),
 
   instructions: computed(function () {
-    return Ember.I18n.t('address.form.hostInstructions');
+    return Ember.I18n.t('address.form.wwooferInstructions');
   }),
 
   actions: {
     saveAddress() {
 
-      var host = this.get('host');
+      var wwoofer = this.get('wwoofer');
       var address = this.get('address');
       var isNewAddress = address.get('isNew');
 
@@ -28,18 +28,19 @@ export default Ember.Controller.extend({
         // Create or update the address
         promise = address.save();
 
-        // Set the host's address (now that it has a valid id), then update the host
+        // Set the wwoofer's address (now that it has a valid id), then update the wwoofer
         if (isNewAddress) {
           promise = promise.then(()=> {
-            host.set('address', address);
-            return host.save();
+            wwoofer.set('address', address);
+            return wwoofer.save();
           });
         }
 
         promise.then(()=> {
           alertify.success(Ember.I18n.t('notify.addressSaved'));
           if (isNewAddress) {
-            this.transitionToRoute('host.photos', host);
+            var itemCode = Ember.isPresent(wwoofer.get('lastName2')) ? 'WO2' : 'WO1';
+            this.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
           }
         });
       }).catch(function() {
