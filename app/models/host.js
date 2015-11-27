@@ -6,6 +6,8 @@ import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
 
+const { computed } = Ember;
+
 export default DS.Model.extend(ValidationsMixin, {
 
   // Attributes
@@ -33,18 +35,26 @@ export default DS.Model.extend(ValidationsMixin, {
   photos: DS.hasMany('photo'),
 
   // First photo
-  mainPhoto: Ember.computed.readOnly('photos.firstObject'),
+  mainPhoto: computed.readOnly('photos.firstObject'),
 
   // Translated activities
-  displayedActivities: Ember.computed.map('activities', function(activity) {
+  displayedActivities: computed.map('activities', function(activity) {
     return Ember.I18n.t('activities.' + activity);
   }),
+
+  /**
+   * Indicates whether the host profile is complete (i.e. ready for payment).
+   */
+  isComplete: computed('fullDescription', 'address.id', function () {
+    return Ember.isPresent(this.get('fullDescription')) && Ember.isPresent(this.get('address.id'));
+  }),
+  isIncomplete: computed.not('isComplete'),
 
   /**
    * Returns a list of all the months of the year.
    * Each month comes with a boolean indicating whether the host is open.
    */
-  openingCalendar: function() {
+  openingCalendar: computed('openingMonths.[]', function () {
     var openingMonths = this.get('openingMonths');
     var months = [];
     for (var i = 0; i <= 11; i++) {
@@ -55,25 +65,25 @@ export default DS.Model.extend(ValidationsMixin, {
       });
     }
     return months;
-  }.property('openingMonths.[]'),
+  }),
 
   /**
    * Indicates whether the host is pending approval or was rejected.
    */
-  isPendingOrRejected: function() {
+  isPendingOrRejected: computed('isPendingApproval', 'isApproved', function() {
     var isPendingApproval = this.get('isPendingApproval');
     var isApproved = this.get('isApproved');
-    return isPendingApproval || !isApproved;
-  }.property('isPendingApproval', 'isApproved'),
+    return isPendingApproval || isApproved === false;
+  }),
 
   /**
    * $HACK: isPending seems to be conflicting with PromiseProxy.
    * This alias seems to solve the issue.
    */
-  isPendingApproval: Ember.computed.alias('isPending'),
+  isPendingApproval: computed.alias('isPending'),
 
   // Phone is mandatory for hosts, this binding is used for validation
-  phone: Ember.computed.readOnly('user.phone'),
+  phone: computed.readOnly('user.phone'),
 
   // Validations
   validations: {

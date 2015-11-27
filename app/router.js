@@ -15,6 +15,7 @@ Router.map(function() {
   });
   this.resource('host', { path: '/host/:host_id' }, function() {
     this.route('edit');
+    this.route('address');
     this.route('photos');
     this.route('contact');
   });
@@ -23,6 +24,7 @@ Router.map(function() {
   });
   this.resource('wwoofer', { path: '/wwoofer/:wwoofer_id' }, function() {
     this.route('edit');
+    this.route('address');
     this.route('photo');
   });
   this.resource('users', function() {

@@ -9,7 +9,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
    * Only one host profile allowed per user.
    * Redirects to host edit if the user already has a profile.
    */
-  beforeModel: function(transition) {
+  beforeModel(transition) {
     this._super(transition);
     var route = this;
     return this.get('sessionUser.user').then(function(user) {
@@ -19,22 +19,23 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       }
     });
   },
-  model: function() {
 
-    // Create a new host record attached to the current logged in user
-    var address = this.store.createRecord('address');
-    var self = this;
-    return this.get('sessionUser.user').then(function(user) {
-      return self.store.createRecord('host', {
-        user: user,
-        address: address
+  /**
+   * Creates a new host record attached to the current user.
+   */
+  model() {
+    return this.get('sessionUser.user').then((user)=> {
+      return this.store.createRecord('host', {
+        user: user
       });
     });
   },
+
   renderTemplate: function() {
     this.render('host/form', { controller: 'hosts.new' });
   },
-  deactivate: function() {
-    this.get('controller.model').rollback();
+
+  deactivate() {
+    this.controller.get('model').rollback();
   }
 });

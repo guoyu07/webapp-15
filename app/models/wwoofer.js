@@ -4,6 +4,8 @@
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 
+const { computed } = Ember;
+
 export default DS.Model.extend(ValidationsMixin, {
 
   // Attributes
@@ -24,11 +26,19 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Returns the full name of the second wwoofer.
    */
-  fullName2: function() {
+  fullName2: computed('firstName2', 'lastName2', function() {
     if (this.get('firstName2') || this.get('lastName2')) {
       return this.get('firstName2') + ' ' + this.get('lastName2');
     }
-  }.property('firstName2', 'lastName2'),
+  }),
+
+  /**
+   * Indicates whether the wwoofer profile is complete (i.e. ready for payment).
+   */
+  isComplete: computed('intro', 'address.id', function () {
+    return Ember.isPresent(this.get('intro')) && Ember.isPresent(this.get('address.id'));
+  }),
+  isIncomplete: computed.not('isComplete'),
 
   validations: {
     intro: {

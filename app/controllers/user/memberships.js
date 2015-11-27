@@ -3,13 +3,17 @@
  */
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Controller.extend({
 
+  user: null,
+
   // Only show the link to get a membership if the user's host profile was approved
-  showGetWwoofMembershipLink: Ember.computed.and('user.wwoofer.id', 'sessionUser.user.isNotAdmin'),
-  showGetHostMembershipLink: Ember.computed.and('user.host.isApproved', 'sessionUser.user.isNotAdmin'),
+  showGetWwoofMembershipLink: computed.and('user.wwoofer.isComplete', 'sessionUser.user.isNotAdmin'),
+  showGetHostMembershipLink: computed.and('user.host.isApproved', 'sessionUser.user.isNotAdmin'),
 
   // Only show the links to create a membership if the current user is admin
-  showCreateWwoofMembershipLink: Ember.computed.and('user.wwoofer.id', 'sessionUser.user.isAdmin'),
-  showCreateHostMembershipLink: Ember.computed.and('user.host.id', 'sessionUser.user.isAdmin')
+  showCreateWwoofMembershipLink: computed.and('user.wwoofer.isComplete', 'sessionUser.user.isAdmin'),
+  showCreateHostMembershipLink: computed.and('user.host.isComplete', 'sessionUser.user.isAdmin')
 });
