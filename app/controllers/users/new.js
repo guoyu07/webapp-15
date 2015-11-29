@@ -34,18 +34,12 @@ export default Ember.Controller.extend(ValidationsMixin, {
       var validations = [this.validate(), user.validate()];
 
       // Save the user
-      var self = this;
-      Ember.RSVP.all(validations).then(function() {
-        user.save().then(function() {
+      Ember.RSVP.all(validations).then(()=> {
+        user.save().then(()=> {
           // Authenticate user
-          var auth = self.get('session').authenticate('authenticator:passport', {
+          var auth = this.get('session').authenticate('authenticator:passport', {
             username: user.get('email'),
             password: user.get('password')
-          });
-
-          // Handle success
-          auth.then(function() {
-            alertify.success(Ember.I18n.t('notify.userAuthenticated'));
           });
 
           // Handle failure
@@ -53,7 +47,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
             alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
           });
 
-        }).catch(function(err) {
+        }).catch((err)=> {
           if (Ember.get(err, 'errors.firstObject.status') === '409') {
             alertify.error(Ember.I18n.t('notify.emailAddressInUse'));
           } else {
