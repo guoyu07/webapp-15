@@ -1,13 +1,13 @@
-<div class="panel panel-default">
-  {{#unless model.isNew}}
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        {{t 'user.form.title'}}
-      </h3>
-    </div>
-  {{/unless}}
-  <div class="panel-body">
-    <form class="form-horizontal">
+<form class="form-horizontal">
+  <div class="panel panel-default">
+    {{#unless model.isNew}}
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{t 'user.form.title'}}
+        </h3>
+      </div>
+    {{/unless}}
+    <div class="panel-body">
       <div class="form-group {{if model.fieldErrors.firstName.length 'has-error'}}">
         <label for="firstName" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
 
@@ -79,18 +79,49 @@
             </div>
           </div>
         </div>
+        <div class="form-group mbx">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button {{action "saveUser"}} class="btn btn-primary" disabled={{model.isSaving}}>
+                {{t 'user.form.register'}}
+            </button>
+          </div>
+        </div>
       {{/if}}
-      <div class="form-group mbx">
+    </div>
+  </div>
+
+  {{#if sessionUser.user.isAdmin}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'host.form.admin'}}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                {{input type="checkbox" id="isHidden" name="isHidden" checked=model.isSuspended}}
+                {{t 'user.form.isSuspended.label'}}
+              </label>
+            </div>
+          </div>
+        </div>
         <div class="col-sm-offset-2 col-sm-10">
-          <button {{action "saveUser"}} class="btn btn-primary" disabled={{model.isSaving}}>
-            {{#if model.isNew}}
-              {{t 'user.form.register'}}
-            {{else}}
-              {{t 'literal.save'}}
-            {{/if}}
-          </button>
+          <span class="form-details">
+            {{t 'user.form.isSuspendedDetails'}}
+          </span>
         </div>
       </div>
-    </form>
-  </div>
-</div>
+    </div>
+  {{/if}}
+
+  {{#unless model.isNew}}
+    <div class="form-group">
+      <div class="col-xs-12">
+        <button {{action "saveUser"}} class="btn btn-primary" disabled={{model.isSaving}}>
+            {{t 'literal.save'}}
+        </button>
+      </div>
+    </div>
+  {{/unless}}
+</form>

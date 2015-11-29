@@ -44,6 +44,11 @@ export default Ember.Component.extend({
 
   didReceiveAttrs() {
     let selectedDate = this.getAttr('selectedDate');
+
+    if (!selectedDate || !selectedDate.isValid()) {
+      selectedDate = moment();
+    }
+
     if (selectedDate) {
       this.set('_selectedDay', selectedDate.date());
       this.set('_selectedMonth', { value: selectedDate.month() });

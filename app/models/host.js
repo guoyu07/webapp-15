@@ -22,7 +22,6 @@ export default DS.Model.extend(ValidationsMixin, {
   isPending: DS.attr('boolean'),
   isApproved: DS.attr('boolean'),
   isHidden: DS.attr('boolean'),
-  isSuspended: DS.attr('boolean'),
   activities: DS.attr('array'),
   openingMonths: DS.attr('array'),
   note: DS.attr('string'),

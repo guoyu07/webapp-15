@@ -138,9 +138,10 @@
       </div>
     </div>
   {{/if}}
+
   <div class="form-group">
     <div class="col-xs-12">
-      <button {{action "saveHost"}} disabled={{model.isSaving}} class="btn btn-primary {{if model.isNew 'pull-right'}}">
+      <button {{action "saveHost"}} class="btn btn-primary {{if model.isNew 'pull-right'}}" disabled={{model.isSaving}}>
         {{#if model.isNew}}
           {{t 'literal.continue'}}
         {{else}}

@@ -28,11 +28,9 @@ export default Ember.Controller.extend(ValidationsMixin, {
       var validations = [this.validate(), user.validate()];
 
       // Save the user
-      var self = this;
-      Ember.RSVP.all(validations).then(function() {
-        user.save().then(function() {
+      Ember.RSVP.all(validations).then(()=> {
+        user.save().then(()=> {
           alertify.success(Ember.I18n.t('notify.informationUpdated'));
-          self.transitionToRoute('index');
         });
       }).catch(function() {
         alertify.error(Ember.I18n.t('notify.submissionInvalid'));

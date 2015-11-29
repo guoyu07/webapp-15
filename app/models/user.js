@@ -16,6 +16,7 @@ export default DS.Model.extend(ValidationsMixin, {
   birthDate: DS.attr('string'),
   phone: DS.attr('string'),
   isAdmin: DS.attr('boolean'),
+  isSuspended: DS.attr('boolean'),
   locale: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
