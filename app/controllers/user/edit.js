@@ -31,6 +31,11 @@ export default Ember.Controller.extend(ValidationsMixin, {
       Ember.RSVP.all(validations).then(()=> {
         user.save().then(()=> {
           alertify.success(Ember.I18n.t('notify.informationUpdated'));
+
+          // Refresh the page if the user locale was updated
+          if (this.locale !== user.get('locale')) {
+            location.reload();
+          }
         });
       }).catch(function() {
         alertify.error(Ember.I18n.t('notify.submissionInvalid'));
