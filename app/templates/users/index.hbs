@@ -3,10 +3,17 @@
     {{t 'users.index.title'}}
   </h1>
 </div>
+
 <div class="row mbm">
   <div class="col-xs-12">
     <form class="form-inline">
-      <div class="form-group">
+      <div class="checkbox">
+        <label>
+          {{input type="checkbox" checked=isSuspended}}
+          {{t 'users.index.isSuspended.label'}}
+        </label>
+      </div>
+      <div class="form-group mlm">
         <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
         {{input type="text" class="form-control" id="searchTerm" placeholderTranslation="users.index.search.placeholder" value=searchTerm action="search"}}
       </div>

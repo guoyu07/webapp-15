@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
 
   users: [],
 
-  queryParams: ['page', 'itemsPerPage', 'searchTerm'],
+  queryParams: ['page', 'itemsPerPage', 'searchTerm', 'isSuspended'],
 
   /**
    * The current page.
@@ -25,6 +25,7 @@ export default Ember.Controller.extend({
    * Search filters.
    */
   searchTerm: '',
+  isSuspended: false,
 
   /**
    * Process the total number of pages that can be displayed.

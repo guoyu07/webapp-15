@@ -9,6 +9,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   queryParams: {
     page: {
       refreshModel: true
+    },
+    isSuspended: {
+      refreshModel: true
     }
   },
 
