@@ -38,11 +38,11 @@ export default Ember.Controller.extend({
 
           // Inform and redirect user to the address page
           promise.then(()=> {
-            alertify.success(Ember.I18n.t('notify.hostCreated'));
+            alertify.success(this.get('i18n').t('notify.hostCreated'));
             this.transitionToRoute('host.address', host);
           });
-        }).catch(function() {
-          alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+        }).catch(()=> {
+          alertify.error(this.get('i18n').t('notify.submissionInvalid'));
         });
       });
     }

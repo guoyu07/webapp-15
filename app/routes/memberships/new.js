@@ -2,7 +2,7 @@
  * Ember route for memberships (admin).
  */
 import Ember from 'ember';
-import config from '../../config/environment';
+import config from 'webapp/config/environment';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
@@ -12,11 +12,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      * @param {String} itemCode The item code (WO1, WO2, ...).
      * @param {String} [shippingRegion] The region where the booklet should be sent.
      */
-    initPayment: function(itemCode, shippingRegion) {
+    initPayment(itemCode, shippingRegion) {
 
       // Do not continue if no item code was specified
       if (!itemCode) {
-        alertify.error(Ember.I18n.t('notify.noItemCode'));
+        alertify.error(this.get('i18n').t('notify.noItemCode'));
         return;
       }
 

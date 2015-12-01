@@ -30,15 +30,15 @@ export default Ember.Controller.extend(ValidationsMixin, {
       // Save the user
       Ember.RSVP.all(validations).then(()=> {
         user.save().then(()=> {
-          alertify.success(Ember.I18n.t('notify.informationUpdated'));
+          alertify.success(this.get('i18n').t('notify.informationUpdated'));
 
           // Refresh the page if the user locale was updated
-          if (this.locale !== user.get('locale')) {
+          if (this.get('i18n.locale') !== user.get('locale')) {
             location.reload();
           }
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     },
 

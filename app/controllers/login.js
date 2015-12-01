@@ -18,7 +18,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Logs a user in.
      */
-    login: function() {
+    login() {
 
       // Prevent multiple login attempts
       if (this.get('isLoading')) {
@@ -38,16 +38,16 @@ export default Ember.Controller.extend(ValidationsMixin, {
         });
 
         // Handle failure
-        auth.catch(function() {
-          alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
+        auth.catch(()=> {
+          alertify.error(this.get('i18n').t('notify.userCannotAuthenticate'));
         });
 
         auth.finally(() => {
           this.set('isLoading', false);
         });
 
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   },

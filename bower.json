@@ -16,7 +16,6 @@
     "moment": "~2.8.0",
     "jquery-file-upload": "~9.5.8",
     "alertify.js": "~0.3.11",
-    "ember-i18n": "3.1.0",
     "jquery-cookie": "~1.4.1",
     "leaflet-providers": "~1.0.12",
     "trackjs": "~2.1.11",

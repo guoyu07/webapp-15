@@ -11,15 +11,16 @@ module.exports = function(environment) {
     apiNamespace: 'api',
     urlAfterLogout: '/',
     EmberENV: {
-      FEATURES: {
-        I18N_TRANSLATE_HELPER_SPAN: false
-      },
-      I18N_COMPILE_WITHOUT_HANDLEBARS: true
+
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    i18n: {
+      defaultLocale: 'en'
     },
 
     map: {

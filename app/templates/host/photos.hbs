@@ -20,7 +20,7 @@
           <div class="col-sm-4 mbm">
             {{image-thumb url=photo.completeUrl height=200}}
             <div class="input-group mtx">
-              {{input type="text" name="caption" value=photo.caption class="form-control" placeholderTranslation='host.photos.caption.placeholder'}}
+              {{input type="text" name="caption" value=photo.caption class="form-control" placeholder=(t 'host.photos.caption.placeholder')}}
               <div class="input-group-btn">
                 <button {{action "savePhoto" photo}} class="btn btn-primary" aria-label={{t 'literal.save'}} title={{t 'literal.save'}} disabled={{photo.cannotSave}}>
                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>

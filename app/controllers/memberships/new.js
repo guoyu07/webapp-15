@@ -16,40 +16,46 @@ export default Ember.Controller.extend({
   paymentType: null,
   isFree: false,
 
-  _membershipOptions: [
-    { id: 'WO1', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
-    { id: 'WO2', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
-    { id: 'WOB1', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WOB1', { price: 35 }), price: 35 },
-    { id: 'WOB2', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WOB2', { price: 40 }), price: 40 },
-    { id: 'H', type: 'H', name: Ember.I18n.t('memberships.itemCodes.H', { price: 35 }), price: 35 },
-    { id: 'HR', type: 'H', name: Ember.I18n.t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
-  ],
-
-  membershipOptions: computed.filter('_membershipOptions', function(membershipOption) {
-    return this.get('type') === membershipOption.type;
+  _membershipOptions: computed(function() {
+    return [
+      { id: 'WO1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
+      { id: 'WO2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
+      { id: 'WOB1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB1', { price: 35 }), price: 35 },
+      { id: 'WOB2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB2', { price: 40 }), price: 40 },
+      { id: 'H', type: 'H', name: this.get('i18n').t('memberships.itemCodes.H', { price: 35 }), price: 35 },
+      { id: 'HR', type: 'H', name: this.get('i18n').t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
+    ];
   }),
 
-  shippingRegionOptions: [
-    { id: 'FR', name: Ember.I18n.t('memberships.shipping.FR', { price: 4.56 }), price: 4.56 },
-    { id: 'OM1', name: Ember.I18n.t('memberships.shipping.OM1', { price: 7.66 }), price: 7.66 },
-    { id: 'OM2', name: Ember.I18n.t('memberships.shipping.OM2', { price: 11.38 }), price: 11.38 },
-    { id: 'EU', name: Ember.I18n.t('memberships.shipping.EU', { price: 8.00 }), price: 8.00 },
-    { id: 'WD', name: Ember.I18n.t('memberships.shipping.WD', { price: 11 }), price: 11 }
-  ],
+  membershipOptions: computed('_membershipOptions.[]', 'type', function() {
+    return this.get('_membershipOptions').filterBy('type', this.get('type'))
+  }),
 
-  paymentTypeOptions: [
-    { id: 'CHQ', name: Ember.I18n.t('memberships.paymentTypes.CHQ') },
-    { id: 'ESP', name: Ember.I18n.t('memberships.paymentTypes.ESP') },
-    { id: 'VIRT', name: Ember.I18n.t('memberships.paymentTypes.VIRT') },
-    { id: 'PPL', name: Ember.I18n.t('memberships.paymentTypes.PPL') }
-  ],
+  shippingRegionOptions: computed(function() {
+    return [
+      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: 4.56 }), price: 4.56 },
+      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: 7.66 }), price: 7.66 },
+      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: 11.38 }), price: 11.38 },
+      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: 8.00 }), price: 8.00 },
+      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: 11 }), price: 11 }
+    ];
+  }),
 
-  showWwoofMemberships: Ember.computed.equal('type', 'W'),
-  showHostMemberships: Ember.computed.equal('type', 'H'),
-  itemCodeIncludesShipping: Ember.computed.match('itemCode', /WOB1|WOB2/),
+  paymentTypeOptions: computed(function() {
+    return [
+      { id: 'CHQ', name: this.get('i18n').t('memberships.paymentTypes.CHQ') },
+      { id: 'ESP', name: this.get('i18n').t('memberships.paymentTypes.ESP') },
+      { id: 'VIRT', name: this.get('i18n').t('memberships.paymentTypes.VIRT') },
+      { id: 'PPL', name: this.get('i18n').t('memberships.paymentTypes.PPL') }
+    ];
+  }),
 
-  hasUserId: Ember.computed.notEmpty('userId'),
-  isAdminMode: Ember.computed.and('sessionUser.user.isAdmin', 'hasUserId'),
+  showWwoofMemberships: computed.equal('type', 'W'),
+  showHostMemberships: computed.equal('type', 'H'),
+  itemCodeIncludesShipping: computed.match('itemCode', /WOB1|WOB2/),
+
+  hasUserId: computed.notEmpty('userId'),
+  isAdminMode: computed.and('sessionUser.user.isAdmin', 'hasUserId'),
 
   /**
    * Determines whether the shipping fees menu should be displayed.

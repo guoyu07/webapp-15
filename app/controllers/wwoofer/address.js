@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
 const { computed } = Ember;
 
@@ -9,9 +10,7 @@ export default Ember.Controller.extend({
 
   countries: computed.readOnly('countriesService.sortedCountries'),
 
-  instructions: computed(function () {
-    return Ember.I18n.t('address.form.wwooferInstructions');
-  }),
+  instructions: t('address.form.wwooferInstructions'),
 
   actions: {
     saveAddress() {
@@ -37,14 +36,14 @@ export default Ember.Controller.extend({
         }
 
         promise.then(()=> {
-          alertify.success(Ember.I18n.t('notify.addressSaved'));
+          alertify.success(this.get('i18n').t('notify.addressSaved'));
           if (isNewAddress) {
             var itemCode = Ember.isPresent(wwoofer.get('lastName2')) ? 'WO2' : 'WO1';
             this.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
           }
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

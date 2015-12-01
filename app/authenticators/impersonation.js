@@ -2,7 +2,7 @@
  * Custom authenticator for admin impersonation.
  */
 import Ember from 'ember';
-import config from '../config/environment';
+import config from 'webapp/config/environment';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
 export default BaseAuthenticator.extend({

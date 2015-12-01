@@ -16,7 +16,7 @@
         type="text"
         class="form-control"
         id="searchTerm"
-        placeholderTranslation="wwoofers.index.search.placeholder"
+        placeholder=(t 'wwoofers.index.search.placeholder')
         value=searchTerm
         enter="searchWwoofers"}}
       </div>
@@ -29,7 +29,7 @@
         value=country
         class="form-control"
         name="country"
-        promptTranslation='wwoofers.index.country.prompt'}}
+        prompt=(t 'wwoofers.index.country.prompt')}}
       </div>
       <button {{action "searchWwoofers"}} class="btn btn-primary" disabled={{isLoading}}>
       {{t 'literal.search'}}

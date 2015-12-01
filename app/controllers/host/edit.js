@@ -29,18 +29,18 @@ export default Ember.Controller.extend({
         var validations = [host.validate(), address.validate(), user.validate()];
 
         // Validate all models
-        Ember.RSVP.all(validations).then(function() {
+        Ember.RSVP.all(validations).then(()=> {
 
           // Prepare update promises
           var updates = [host.save(), address.save(), user.save()];
 
           // Update host and address
-          Ember.RSVP.all(updates).then(function() {
-            alertify.success(Ember.I18n.t('notify.informationUpdated'));
+          Ember.RSVP.all(updates).then(()=> {
+            alertify.success(this.get('i18n').t('notify.informationUpdated'));
             window.scrollTo(0, 0);
           });
-        }).catch(function() {
-          alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+        }).catch(()=> {
+          alertify.error(this.get('i18n').t('notify.submissionInvalid'));
           window.scrollTo(0, 0);
         });
       });

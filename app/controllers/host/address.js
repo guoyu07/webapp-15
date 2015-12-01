@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
 
 const { computed } = Ember;
 
@@ -9,9 +10,7 @@ export default Ember.Controller.extend({
 
   countries: computed.readOnly('countriesService.hostCountries'),
 
-  instructions: computed(function () {
-    return Ember.I18n.t('address.form.hostInstructions');
-  }),
+  instructions: t('address.form.hostInstructions'),
 
   actions: {
     saveAddress() {
@@ -37,13 +36,13 @@ export default Ember.Controller.extend({
         }
 
         promise.then(()=> {
-          alertify.success(Ember.I18n.t('notify.addressSaved'));
+          alertify.success(this.get('i18n').t('notify.addressSaved'));
           if (isNewAddress) {
             this.transitionToRoute('host.photos', host);
           }
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

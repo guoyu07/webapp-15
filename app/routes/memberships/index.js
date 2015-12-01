@@ -96,7 +96,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     /**
      * Sends a reminder too each "remindable" selected membership.
      */
-    sendReminder: function() {
+    sendReminder() {
 
       // Prepare URL
       var adapter = this.store.adapterFor('application');
@@ -125,8 +125,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       var promise = Ember.RSVP.all(promises);
 
       // Notify user
-      promise.then(function() {
-        alertify.success(Ember.I18n.t('notify.reminderSent'));
+      promise.then(()=> {
+        alertify.success(this.get('i18n').t('notify.reminderSent'));
       });
 
       // Refresh the memberships

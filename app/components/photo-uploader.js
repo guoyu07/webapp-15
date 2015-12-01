@@ -35,7 +35,7 @@ export default Ember.Component.extend({
     }
   }.property('mode', 'model.id'),
 
-  didInsertElement: function() {
+  didInsertElement() {
     var self = this;
 
     Ember.$('#file_upload').fileupload({
@@ -50,7 +50,7 @@ export default Ember.Component.extend({
         }
       },
       error: function() {
-        alertify.error(Ember.I18n.t('notify.submissionError'));
+        alertify.error(self.get('i18n').t('notify.submissionError'));
       },
       progressall: function(e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -61,11 +61,11 @@ export default Ember.Component.extend({
         var goUpload = true;
         Ember.$.each(data.files, function(index, file) {
           if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(file.name)) {
-            alertify.error(Ember.I18n.t('notify.imageFormatError', { fileName: file.name }));
+            alertify.error(self.get('i18n').t('notify.imageFormatError', { fileName: file.name }));
             goUpload = false;
           }
           if (file.size > 5000000) { // 5mb
-            alertify.error(Ember.I18n.t('notify.imageSizeError', { fileName: file.name }));
+            alertify.error(self.get('i18n').t('notify.imageSizeError', { fileName: file.name }));
             goUpload = false;
           }
         });
@@ -85,7 +85,7 @@ export default Ember.Component.extend({
    * @param self
    */
   doneHost: function(e, data, self) {
-    alertify.success(Ember.I18n.t('notify.fileUploaded'));
+    alertify.success(self.get('i18n').t('notify.fileUploaded'));
 
     // Push the created photo in the store, then add the photo in the host
     var photo = self.get('store').push('photo', data.result.photo);
@@ -99,7 +99,7 @@ export default Ember.Component.extend({
    * @param self
    */
   doneUser: function(e, data, self) {
-    alertify.success(Ember.I18n.t('notify.fileUploaded'));
+    alertify.success(self.get('i18n').t('notify.fileUploaded'));
 
     // Set the created photo as user photo
     self.get('model').set('photo', data.result.photo);
