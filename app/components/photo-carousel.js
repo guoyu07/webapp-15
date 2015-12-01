@@ -2,7 +2,6 @@
  * Ember component to display a bootstrap carousel.
  */
 import Ember from 'ember';
-import { translationMacro as t } from "ember-i18n";
 
 const { computed } = Ember;
 
