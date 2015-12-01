@@ -3,8 +3,8 @@
  */
 import Ember from 'ember';
 import DS from 'ember-data';
-import ValidationsMixin from '../mixins/validations';
-import Regex from '../utils/regex';
+import ValidationsMixin from 'webapp/mixins/validations';
+import Regex from 'webapp/utils/regex';
 
 const { computed } = Ember;
 

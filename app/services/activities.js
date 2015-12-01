@@ -3,6 +3,7 @@
  */
 import Ember from 'ember';
 
+const { computed } = Ember;
 const { service } = Ember.inject;
 
 export default Ember.Service.extend({
