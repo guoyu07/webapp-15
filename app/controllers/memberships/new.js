@@ -27,8 +27,8 @@ export default Ember.Controller.extend({
     ];
   }),
 
-  membershipOptions: computed.filter('_membershipOptions', function(membershipOption) {
-    return this.get('type') === membershipOption.type;
+  membershipOptions: computed('_membershipOptions.[]', 'type', function() {
+    return this.get('_membershipOptions').filterBy('type', this.get('type'))
   }),
 
   shippingRegionOptions: computed(function() {
@@ -50,12 +50,12 @@ export default Ember.Controller.extend({
     ];
   }),
 
-  showWwoofMemberships: Ember.computed.equal('type', 'W'),
-  showHostMemberships: Ember.computed.equal('type', 'H'),
-  itemCodeIncludesShipping: Ember.computed.match('itemCode', /WOB1|WOB2/),
+  showWwoofMemberships: computed.equal('type', 'W'),
+  showHostMemberships: computed.equal('type', 'H'),
+  itemCodeIncludesShipping: computed.match('itemCode', /WOB1|WOB2/),
 
-  hasUserId: Ember.computed.notEmpty('userId'),
-  isAdminMode: Ember.computed.and('sessionUser.user.isAdmin', 'hasUserId'),
+  hasUserId: computed.notEmpty('userId'),
+  isAdminMode: computed.and('sessionUser.user.isAdmin', 'hasUserId'),
 
   /**
    * Determines whether the shipping fees menu should be displayed.
