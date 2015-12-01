@@ -85,7 +85,7 @@ export default Ember.Component.extend({
    * @param self
    */
   doneHost: function(e, data, self) {
-    alertify.success(this.get('i18n').t('notify.fileUploaded'));
+    alertify.success(self.get('i18n').t('notify.fileUploaded'));
 
     // Push the created photo in the store, then add the photo in the host
     var photo = self.get('store').push('photo', data.result.photo);
@@ -99,7 +99,7 @@ export default Ember.Component.extend({
    * @param self
    */
   doneUser: function(e, data, self) {
-    alertify.success(this.get('i18n').t('notify.fileUploaded'));
+    alertify.success(self.get('i18n').t('notify.fileUploaded'));
 
     // Set the created photo as user photo
     self.get('model').set('photo', data.result.photo);
