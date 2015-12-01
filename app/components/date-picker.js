@@ -2,6 +2,7 @@
  * Ember component for date picker.
  */
 import Ember from 'ember';
+import moment from 'moment';
 
 const { observer, computed } = Ember;
 

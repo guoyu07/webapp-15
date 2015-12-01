@@ -1,6 +1,7 @@
 /**
  * Ember model for Wwoofer.
  */
+import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 

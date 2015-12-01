@@ -5,6 +5,7 @@ import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'webapp/config/environment';
 import request from 'ic-ajax';
+import moment from 'moment';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
 

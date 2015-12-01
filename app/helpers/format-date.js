@@ -2,6 +2,7 @@
  * Ember helper to display dates in a human readable format.
  */
 import Ember from 'ember';
+import moment from 'moment';
 
 export function formatDate(params, hash) {
   let date = params[0];

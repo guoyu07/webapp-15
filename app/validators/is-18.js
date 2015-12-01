@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import BaseValidator from 'ember-validations/validators/base';
+import moment from 'moment';
 
 const { service } = Ember.inject;
 

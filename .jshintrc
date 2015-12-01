@@ -4,7 +4,6 @@
         "window": true,
         "-Promise": true,
         "WebappENV": true,
-        "moment": true,
         "alertify": true,
         "trackJs": false,
         "L": true

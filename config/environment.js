@@ -23,6 +23,10 @@ module.exports = function(environment) {
       defaultLocale: 'en'
     },
 
+    moment: {
+      includeLocales: ['fr']
+    },
+
     map: {
       defaultLat: 46.78,
       defaultLon: 1.95,

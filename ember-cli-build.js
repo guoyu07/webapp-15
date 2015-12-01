@@ -24,10 +24,6 @@ module.exports = function(defaults) {
     destDir: '/assets/fonts'
   });
 
-  // Moment
-  app.import('bower_components/moment/moment.js');
-  app.import('bower_components/moment/locale/fr.js');
-
   // jQuery Cookie
   app.import('bower_components/jquery-cookie/jquery.cookie.js');
 

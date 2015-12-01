@@ -4,6 +4,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
+import moment from 'moment';
 
 export default DS.Model.extend(ValidationsMixin, {
 

@@ -29,24 +29,24 @@
   <div class="col-xs-12 col-sm-6 col-md-4">
     <p>
       <span class="glyphicon glyphicon-envelope mrx"></span>
-      {{#unless model.noEmail}}
-        {{#if canSeeContactInfo}}
+      {{#if canSeeContactInfo}}
+        {{#unless model.noEmail}}
           {{mail-to model.user.email}}
-        {{else}}
-          {{members-only}}
-        {{/if}}
-      {{/unless}}
+        {{/unless}}
+      {{else}}
+        {{members-only}}
+      {{/if}}
     </p>
 
     <p>
       <span class="glyphicon glyphicon-earphone mrx"></span>
-      {{#unless model.noPhone}}
-        {{#if canSeeContactInfo}}
+      {{#if canSeeContactInfo}}
+        {{#unless model.noPhone}}
           {{model.user.phone}}
-        {{else}}
-          {{members-only}}
-        {{/if}}
-      {{/unless}}
+        {{/unless}}
+      {{else}}
+        {{members-only}}
+      {{/if}}
     </p>
 
     <p>
@@ -78,13 +78,9 @@
     </p>
 
     <p>
-      <span class="glyphicon glyphicon-home mrx"></span>
+      <span class="glyphicon glyphicon-map-marker mrx"></span>
       {{#if canSeeContactInfo}}
-        {{model.address.address1}}
-        {{#if model.address.address2}}
-          / {{model.address.address2}}
-        {{/if}}
-        / {{model.address.zipCode}} {{model.address.city}}
+        {{model.address.city}} ({{model.address.zipCode}})
       {{else}}
         {{members-only}}
       {{/if}}
@@ -93,6 +89,10 @@
     <p>
       <span class="glyphicon glyphicon-star mrx"></span>
       {{t 'host.index.memberSince'}} {{format-date model.user.createdAt format='MMMM YYYY'}}
+    </p>
+    <p>
+      <span class="glyphicon glyphicon-time mrx"></span>
+      {{t 'host.index.updated'}} {{moment-from-now model.updatedAt}}
     </p>
   </div>
 </div>

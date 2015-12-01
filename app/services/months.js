@@ -2,6 +2,7 @@
  * Ember service for months.
  */
 import Ember from 'ember';
+import moment from 'moment';
 
 export default Ember.Service.extend({
   /**

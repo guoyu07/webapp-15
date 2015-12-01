@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
   }),
 
   membershipOptions: computed('_membershipOptions.[]', 'type', function() {
-    return this.get('_membershipOptions').filterBy('type', this.get('type'))
+    return this.get('_membershipOptions').filterBy('type', this.get('type'));
   }),
 
   shippingRegionOptions: computed(function() {
