@@ -16,33 +16,39 @@ export default Ember.Controller.extend({
   paymentType: null,
   isFree: false,
 
-  _membershipOptions: [
-    { id: 'WO1', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
-    { id: 'WO2', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
-    { id: 'WOB1', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WOB1', { price: 35 }), price: 35 },
-    { id: 'WOB2', type: 'W', name: Ember.I18n.t('memberships.itemCodes.WOB2', { price: 40 }), price: 40 },
-    { id: 'H', type: 'H', name: Ember.I18n.t('memberships.itemCodes.H', { price: 35 }), price: 35 },
-    { id: 'HR', type: 'H', name: Ember.I18n.t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
-  ],
+  _membershipOptions: computed(function() {
+    return [
+      { id: 'WO1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
+      { id: 'WO2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
+      { id: 'WOB1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB1', { price: 35 }), price: 35 },
+      { id: 'WOB2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB2', { price: 40 }), price: 40 },
+      { id: 'H', type: 'H', name: this.get('i18n').t('memberships.itemCodes.H', { price: 35 }), price: 35 },
+      { id: 'HR', type: 'H', name: this.get('i18n').t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
+    ];
+  }),
 
   membershipOptions: computed.filter('_membershipOptions', function(membershipOption) {
     return this.get('type') === membershipOption.type;
   }),
 
-  shippingRegionOptions: [
-    { id: 'FR', name: Ember.I18n.t('memberships.shipping.FR', { price: 4.56 }), price: 4.56 },
-    { id: 'OM1', name: Ember.I18n.t('memberships.shipping.OM1', { price: 7.66 }), price: 7.66 },
-    { id: 'OM2', name: Ember.I18n.t('memberships.shipping.OM2', { price: 11.38 }), price: 11.38 },
-    { id: 'EU', name: Ember.I18n.t('memberships.shipping.EU', { price: 8.00 }), price: 8.00 },
-    { id: 'WD', name: Ember.I18n.t('memberships.shipping.WD', { price: 11 }), price: 11 }
-  ],
+  shippingRegionOptions: computed(function() {
+    return [
+      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: 4.56 }), price: 4.56 },
+      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: 7.66 }), price: 7.66 },
+      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: 11.38 }), price: 11.38 },
+      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: 8.00 }), price: 8.00 },
+      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: 11 }), price: 11 }
+    ];
+  }),
 
-  paymentTypeOptions: [
-    { id: 'CHQ', name: Ember.I18n.t('memberships.paymentTypes.CHQ') },
-    { id: 'ESP', name: Ember.I18n.t('memberships.paymentTypes.ESP') },
-    { id: 'VIRT', name: Ember.I18n.t('memberships.paymentTypes.VIRT') },
-    { id: 'PPL', name: Ember.I18n.t('memberships.paymentTypes.PPL') }
-  ],
+  paymentTypeOptions: computed(function() {
+    return [
+      { id: 'CHQ', name: this.get('i18n').t('memberships.paymentTypes.CHQ') },
+      { id: 'ESP', name: this.get('i18n').t('memberships.paymentTypes.ESP') },
+      { id: 'VIRT', name: this.get('i18n').t('memberships.paymentTypes.VIRT') },
+      { id: 'PPL', name: this.get('i18n').t('memberships.paymentTypes.PPL') }
+    ];
+  }),
 
   showWwoofMemberships: Ember.computed.equal('type', 'W'),
   showHostMemberships: Ember.computed.equal('type', 'H'),

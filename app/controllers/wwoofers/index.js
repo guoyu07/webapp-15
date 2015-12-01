@@ -27,25 +27,24 @@ export default Ember.Controller.extend({
   }.property('searchTerm', 'country'),
 
   actions: {
-    loadMoreWwoofers: function() {
+    loadMoreWwoofers() {
 
       // Set controller loading state
       this.set('isLoadingMore', true);
 
       // Initialize variables
-      var newOffset = this.store.metadataFor('wwoofer').offset + 20,
-        params = Ember.$.extend(true, this.get('parameters') || {}, { offset: newOffset }),
-        self = this;
+      var newOffset = this.store.metadataFor('wwoofer').offset + 20;
+      var params = Ember.$.extend(true, this.get('parameters') || {}, { offset: newOffset });
 
       // Find next page of content and update
-      this.store.find('wwoofer', params).then(function(wwoofers) {
+      this.store.find('wwoofer', params).then((wwoofers)=> {
         if (wwoofers.get('content').length) {
-          self.get('content').addObjects(wwoofers.get('content'));
+          this.get('content').addObjects(wwoofers.get('content'));
         } else {
-          alertify.log(Ember.I18n.t('notify.noMoreWwoofers'));
+          alertify.log(this.get('i18n').t('notify.noMoreWwoofers'));
         }
-      }).finally(function() {
-        self.set('isLoadingMore', false);
+      }).finally(()=> {
+        this.set('isLoadingMore', false);
       });
     }
   }

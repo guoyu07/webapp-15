@@ -15,45 +15,50 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Updates a user's password.
      */
-    changePassword: function() {
+    changePassword() {
 
       if (this.get('isLoading')) {
         return;
       }
 
       // Validate form
-      var self = this;
-      this.validate().then(function() {
+      this.validate().then(()=> {
 
         // Get the current user id
-        var currentUserId = self.get('sessionUser.user.id');
+        var currentUserId = this.get('sessionUser.user.id');
         Ember.assert('User id cannot be null', currentUserId);
 
         // Set controller in loading state
-        self.set('isLoading', true);
+        this.set('isLoading', true);
 
         // Prepare URL
-        var adapter = self.store.adapterFor('application'),
+        var adapter = this.store.adapterFor('application'),
           url = [adapter.get('host'), adapter.get('namespace'), 'users', currentUserId, 'change-password'].join('/');
 
         // Update password
-        request({
+        var promise = request({
           type: 'POST',
           url: url,
           data: {
-            newPassword: self.get('password')
+            newPassword: this.get('password')
           }
-        }).then(function() {
-          alertify.success(Ember.I18n.t('notify.informationUpdated'));
-          self.transitionToRoute('index');
-        }).catch(function(err) {
+        });
+
+        promise.then(()=> {
+          alertify.success(this.get('i18n').t('notify.informationUpdated'));
+          this.transitionToRoute('user.edit', currentUserId);
+        });
+
+        promise.catch((err)=> {
           err = err.jqXHR || err;
           throw err;
-        }).finally(function() {
-          self.set('isLoading', false);
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+
+        promise.finally(()=> {
+          this.set('isLoading', false);
+        });
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   },

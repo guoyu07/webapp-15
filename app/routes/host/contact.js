@@ -5,7 +5,7 @@ import Ember from 'ember';
 import request from 'ic-ajax';
 
 export default Ember.Route.extend({
-  renderTemplate: function() {
+  renderTemplate() {
     this.render({ into: 'application' });
   },
 
@@ -20,38 +20,41 @@ export default Ember.Route.extend({
       var host = this.get('controller.model');
 
       // Validate the form
-      var self = this;
-      controller.validate().then(function() {
+      controller.validate().then(()=> {
 
         // Set controller in sending state
         controller.set('isSending', true);
 
         // Prepare URL
-        var adapter = self.store.adapterFor('application'),
+        var adapter = this.store.adapterFor('application'),
           url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
 
         // Send email
-        request({
+        var promise = request({
           type: 'POST',
           url: url,
           data: {
             message: message
           }
-        }).then(function() {
+        });
+
+        promise.then(()=> {
           // Notify user
-          alertify.alert(Ember.I18n.t('notify.messageSent'));
+          alertify.alert(this.get('i18n').t('notify.messageSent'));
 
           // Reset form
           controller.set('message', null);
           controller.resetValidations();
 
           // Go back to host index page
-          self.transitionTo('host.index', host.id);
-        }).finally(function() {
+          this.transitionTo('host.index', host.id);
+        });
+
+        promise.finally(()=> {
           controller.set('isSending', false);
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

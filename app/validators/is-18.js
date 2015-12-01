@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import BaseValidator from 'ember-validations/validators/base';
 
+const { service } = Ember.inject;
+
 export default BaseValidator.extend({
+
+  i18n: service('i18n'),
 
   // Max date is 18 years ago
   maxDate: moment().subtract(18, 'year'),
@@ -12,7 +16,7 @@ export default BaseValidator.extend({
   call: function() {
     var selectedDate = this.model.get(this.property);
     if (!selectedDate || !selectedDate.isValid() || selectedDate.isAfter(this.get('maxDate'))) {
-      this.errors.pushObject(Ember.I18n.t('notify.mustBe18'));
+      this.errors.pushObject(this.get('i18n').t('notify.mustBe18'));
     }
   }
 });

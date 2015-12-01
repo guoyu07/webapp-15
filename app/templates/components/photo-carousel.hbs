@@ -1,15 +1,23 @@
 <ol class="carousel-indicators">
-  {{#each displayedPhotos as |photo|}}
+  {{#each photos as |photo|}}
     <li data-target={{anchorId}} data-slide-to=""></li>
   {{/each}}
 </ol>
 
 <div class="carousel-inner" role="listbox">
-  {{#each displayedPhotos as |photo|}}
+  {{#each photos as |photo|}}
     <div class="item">
       {{#image-thumb url=photo.completeUrl height=300}}
         <div class="carousel-caption">
           {{photo.caption}}
+        </div>
+      {{/image-thumb}}
+    </div>
+  {{else}}
+    <div class="item">
+      {{#image-thumb url='assets/images/wwoof-no-photo.png' height=300}}
+        <div class="carousel-caption">
+          {{t 'host.index.noPhotoCaption'}}
         </div>
       {{/image-thumb}}
     </div>

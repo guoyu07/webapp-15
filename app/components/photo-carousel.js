@@ -2,6 +2,9 @@
  * Ember component to display a bootstrap carousel.
  */
 import Ember from 'ember';
+import { translationMacro as t } from "ember-i18n";
+
+const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'div',
@@ -9,28 +12,11 @@ export default Ember.Component.extend({
   attributeBindings: ['dataRide:data-ride'],
   dataRide: 'carousel',
 
-  anchorId: function() {
+  anchorId: computed('elementId', function () {
     return '#' + this.get('elementId');
-  }.property('elementId'),
+  }),
 
-  /**
-   * Returns the photo to display.
-   * If no photo were provided, return the default wwoof picture.
-   */
-  displayedPhotos: function() {
-    var photos = this.get('photos');
-    if (Ember.isEmpty(photos)) {
-      photos = [
-        {
-          completeUrl: 'assets/images/wwoof-no-photo.png',
-          caption: Ember.I18n.t('host.index.noPhotoCaption')
-        }
-      ];
-    }
-    return photos;
-  }.property('photos'),
-
-  didInsertElement: function() {
+  didInsertElement() {
 
     // Set active class on first photo
     Ember.$('.carousel-inner div.item').first().addClass('active');

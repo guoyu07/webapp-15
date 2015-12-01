@@ -3,7 +3,12 @@
  */
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Service.extend({
+
+  i18n: service('i18n'),
+
   /**
    * Activity ids.
    */
@@ -26,14 +31,14 @@ export default Ember.Service.extend({
   /**
    * List of all activities proposed by the hosts.
    */
-  allActivities: function() {
-    var activities = this.get('activityIds').map(function(item) {
+  allActivities: computed('activityIds.[]', 'i18n.locale', function() {
+    var activities = this.get('activityIds').map((item)=> {
       return Ember.Object.create({
         id: item,
-        label: Ember.I18n.t('activities.' + item)
+        label: this.get('i18n').t('activities.' + item)
       });
     });
 
     return activities;
-  }.property()
+  })
 });

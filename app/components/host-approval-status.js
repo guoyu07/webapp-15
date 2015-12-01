@@ -36,21 +36,21 @@ export default Ember.Component.extend({
       });
 
       // Handle success
-      post.done(function() {
+      post.done(()=> {
         if (isApproved) {
-          alertify.success(Ember.I18n.t('notify.hostApproved'));
+          alertify.success(this.get('i18n').t('notify.hostApproved'));
         } else {
-          alertify.success(Ember.I18n.t('notify.hostRejected'));
+          alertify.success(this.get('i18n').t('notify.hostRejected'));
         }
       });
 
       // Handle failure
-      post.fail(function() {
-        alertify.error(Ember.I18n.t('notify.submissionError'));
+      post.fail(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionError'));
       });
 
       // Always reload host
-      post.always(function() {
+      post.always(()=> {
         host.reload();
       });
     }

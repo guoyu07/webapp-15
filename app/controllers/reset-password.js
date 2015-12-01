@@ -15,43 +15,48 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Resets a user's password then sends the new password to its email address.
      */
-    resetPassword: function() {
+    resetPassword() {
 
       if (this.get('isLoading')) {
         return;
       }
 
-      var self = this;
-      this.validate().then(function() {
+      this.validate().then(()=> {
 
         // Set controller in loading state
-        self.set('isLoading', true);
+        this.set('isLoading', true);
 
         // Prepare URL
-        var adapter = self.store.adapterFor('application'),
+        var adapter = this.store.adapterFor('application'),
           url = [adapter.get('host'), adapter.get('namespace'), 'users/reset-password'].join('/');
 
         // Send email
-        request({
+        var promise = request({
           type: 'POST',
           url: url,
           data: {
-            email: self.get('emailAddress')
+            email: this.get('emailAddress')
           }
-        }).then(function() {
-          self.transitionToRoute('login', { queryParams: { fromReset: true } });
-        }).catch(function(err) {
+        });
+
+        promise.then(()=> {
+          this.transitionToRoute('login', { queryParams: { fromReset: true } });
+        });
+
+        promise.catch((err)=> {
           err = err.jqXHR || err;
           if (err.status === 404) {
-            alertify.error(Ember.I18n.t('notify.userNotFound'));
+            alertify.error(this.get('i18n').t('notify.userNotFound'));
           } else {
             throw err;
           }
-        }).finally(function() {
-          self.set('isLoading', false);
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+
+        promise.finally(()=> {
+          this.set('isLoading', false);
+        });
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   },

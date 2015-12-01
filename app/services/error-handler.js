@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 export default Ember.Service.extend({
 
   session: service('session'),
+  i18n: service('i18n'),
 
   /**
    * Handles HTTP errors.
@@ -26,7 +27,7 @@ export default Ember.Service.extend({
         }
 
         // Notify user
-        alertify.error(Ember.I18n.t('notify.unauthorizedError'));
+        alertify.error(this.get('i18n').t('notify.unauthorizedError'));
 
         // Invalidate session or redirect
         if (this.get('session.isAuthenticated')) {
@@ -38,7 +39,7 @@ export default Ember.Service.extend({
 
       default:
 
-        alertify.error(Ember.I18n.t('notify.submissionError'));
+        alertify.error(this.get('i18n').t('notify.submissionError'));
         trackJs.track(this._convertToError(err));
         Ember.Logger.assert(false, err);
         break;

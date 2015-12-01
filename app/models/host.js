@@ -37,8 +37,10 @@ export default DS.Model.extend(ValidationsMixin, {
   mainPhoto: computed.readOnly('photos.firstObject'),
 
   // Translated activities
-  displayedActivities: computed.map('activities', function(activity) {
-    return Ember.I18n.t('activities.' + activity);
+  displayedActivities: computed('activities.[]', 'i18n.locale', function() {
+    return this.get('activities').map((activity)=> {
+      return this.get('i18n').t('activities.' + activity);
+    });
   }),
 
   /**
@@ -53,7 +55,7 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns a list of all the months of the year.
    * Each month comes with a boolean indicating whether the host is open.
    */
-  openingCalendar: computed('openingMonths.[]', function () {
+  openingCalendar: computed('openingMonths.[]', 'i18n.locale', function () {
     var openingMonths = this.get('openingMonths');
     var months = [];
     for (var i = 0; i <= 11; i++) {

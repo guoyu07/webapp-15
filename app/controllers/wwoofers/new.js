@@ -55,11 +55,11 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
         // Inform and redirect user to payment page
         promise.then(()=> {
-          alertify.success(Ember.I18n.t('notify.wwooferCreated'));
+          alertify.success(this.get('i18n').t('notify.wwooferCreated'));
           this.transitionToRoute('wwoofer.address', wwoofer);
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     },
 

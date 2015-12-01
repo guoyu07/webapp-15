@@ -11,7 +11,7 @@
         <label for="address1" class="col-sm-2 control-label">{{t 'address.form.address1.label'}}</label>
 
         <div class="col-sm-10">
-          {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholderTranslation='address.form.address1.placeholder'}}
+          {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder=(t 'address.form.address1.placeholder')}}
           {{error-display errors=address.fieldErrors.address1}}
         </div>
       </div>
@@ -19,7 +19,7 @@
         <label for="address2" class="col-sm-2 control-label">{{t 'address.form.address2.label'}}</label>
 
         <div class="col-sm-10">
-          {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholderTranslation='address.form.address2.placeholder'}}
+          {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder=(t 'address.form.address2.placeholder')}}
           {{error-display errors=address.fieldErrors.address2}}
         </div>
       </div>
@@ -50,7 +50,7 @@
           selection=address.country
           class="form-control"
           name="country"
-          promptTranslation='address.form.country.prompt'}}
+          prompt=(t 'address.form.country.prompt')}}
           {{error-display errors=address.fieldErrors.country.id}}
         </div>
       </div>
@@ -67,7 +67,7 @@
               selection=address.department
               class="form-control"
               name="department"
-              promptTranslation='address.form.department.prompt'}}
+              prompt=(t 'address.form.department.prompt')}}
               {{error-display errors=address.fieldErrors.department.id}}
             </div>
           {{else}}

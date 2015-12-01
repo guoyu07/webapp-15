@@ -18,7 +18,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     /**
      * Deletes the photo of a wwoofer.
      */
-    deletePhoto: function() {
+    deletePhoto() {
 
       // Get user
       var user = this.get('model.user');
@@ -30,9 +30,9 @@ export default Ember.Controller.extend(ValidationsMixin, {
       });
 
       // Handle success
-      deleteRequest.then(function() {
+      deleteRequest.then(()=> {
         user.set('photo', null);
-        alertify.success(Ember.I18n.t('notify.photoDeleted'));
+        alertify.success(this.get('i18n').t('notify.photoDeleted'));
       });
     }
   }

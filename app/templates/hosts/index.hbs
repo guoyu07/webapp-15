@@ -6,7 +6,7 @@
       <div class="form-group">
         <div class="input-group">
           <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
-          {{input class="form-control" type="search"  id="searchTerm" placeholderTranslation="hosts.index.searchTerm.placeholder" value=searchTerm action="updateHosts"}}
+          {{input class="form-control" type="search"  id="searchTerm" placeholder=(t 'hosts.index.searchTerm.placeholder') value=searchTerm enter="updateHosts"}}
           <a {{action "updateHosts"}} class="btn btn-primary input-group-addon {{if isLoading 'disabled'}}">
             {{#if isLoading}}
               {{t 'literal.loading'}}

@@ -146,10 +146,9 @@ export default Ember.Controller.extend({
       dataRequest = Ember.$.get('/api/host-coordinates', params);
       this.set('dataRequest', dataRequest);
 
-      var self = this;
-      dataRequest.done(function(data) {
-        self.set('hostCoordinates', data);
-        self.set('isLoading', false);
+      dataRequest.done((data)=> {
+        this.set('hostCoordinates', data);
+        this.set('isLoading', false);
       });
     },
 

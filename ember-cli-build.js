@@ -46,10 +46,6 @@ module.exports = function(defaults) {
   app.import('bower_components/jquery-file-upload/js/jquery.iframe-transport.js');
   app.import('bower_components/jquery-file-upload/js/jquery.fileupload.js');
 
-  // Ember i18n
-  app.import('bower_components/ember-i18n/lib/i18n.js');
-  app.import('bower_components/ember-i18n/lib/i18n-plurals.js');
-
   // Ember leaflet
   app.import('bower_components/leaflet/dist/leaflet-src.js');
   app.import('bower_components/leaflet/dist/leaflet.css');

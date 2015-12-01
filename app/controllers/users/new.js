@@ -23,7 +23,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
       // Make sure all checkboxes are checked
       if (!this.get('termsOk') || !this.get('insuranceOk')) {
-        alertify.error(Ember.I18n.t('notify.mustAgreeTerms'));
+        alertify.error(this.get('i18n').t('notify.mustAgreeTerms'));
         return;
       }
 
@@ -43,19 +43,19 @@ export default Ember.Controller.extend(ValidationsMixin, {
           });
 
           // Handle failure
-          auth.catch(function() {
-            alertify.error(Ember.I18n.t('notify.userCannotAuthenticate'));
+          auth.catch(()=> {
+            alertify.error(this.get('i18n').t('notify.userCannotAuthenticate'));
           });
 
         }).catch((err)=> {
           if (Ember.get(err, 'errors.firstObject.status') === '409') {
-            alertify.error(Ember.I18n.t('notify.emailAddressInUse'));
+            alertify.error(this.get('i18n').t('notify.emailAddressInUse'));
           } else {
             throw err;
           }
         });
-      }).catch(function() {
-        alertify.error(Ember.I18n.t('notify.submissionInvalid'));
+      }).catch(()=> {
+        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
       });
     },
 
