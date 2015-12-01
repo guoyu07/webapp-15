@@ -80,7 +80,7 @@
     <p>
       <span class="glyphicon glyphicon-map-marker mrx"></span>
       {{#if canSeeContactInfo}}
-        {{model.address.city}} ({{model.address.zipCode}})
+        {{model.address.city}} ({{model.address.department.name}})
       {{else}}
         {{members-only}}
       {{/if}}
