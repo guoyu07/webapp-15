@@ -18,8 +18,8 @@ export default Ember.Service.extend({
     var months = [];
     for (var i = 0; i <= 11; i++) {
       months.push(Ember.Object.create({
-        id: moment.moment().months(i).format("MM"),
-        label: moment.moment().months(i).format("MMMM")
+        id: moment.moment().month(i).format("MM"),
+        label: moment.moment().month(i).format("MMMM")
       }));
     }
     return months;

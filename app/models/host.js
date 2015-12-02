@@ -62,7 +62,7 @@ export default DS.Model.extend(ValidationsMixin, {
     var openingMonths = this.get('openingMonths');
     var months = [];
     for (var i = 0; i <= 11; i++) {
-      var currentMonth = this.get('moment').moment().months(i);
+      var currentMonth = this.get('moment').moment().month(i);
       months.push({
         label: currentMonth.format("MMMM"),
         isOpen: openingMonths.contains(currentMonth.format("MM"))

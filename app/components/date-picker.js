@@ -31,7 +31,7 @@ export default Ember.Component.extend({
     for (var i = 0; i <= 11; i++) {
       months.push({
         value: i,
-        name: this.get('moment').moment().months(i).format("MMMM")
+        name: this.get('moment').moment().month(i).format("MMMM")
       });
     }
     return months;
