@@ -18,9 +18,9 @@
         {{#each user.wwoofMemberships as |wwoofMembership|}}
           <tr>
             <td>{{wwoofMembership.itemCode}}</td>
-            <td>{{format-date wwoofMembership.createdAt}}</td>
+            <td>{{moment-format wwoofMembership.createdAt}}</td>
             <td>{{wwoofMembership.total}} Euro</td>
-            <td>{{format-date wwoofMembership.expireAt}}</td>
+            <td>{{moment-format wwoofMembership.expireAt}}</td>
           </tr>
         {{/each}}
         </tbody>
@@ -62,9 +62,9 @@
         {{#each user.hostMemberships as |hostMembership|}}
           <tr>
             <td>{{hostMembership.itemCode}}</td>
-            <td>{{format-date hostMembership.createdAt}}</td>
+            <td>{{moment-format hostMembership.createdAt}}</td>
             <td>{{hostMembership.total}} Euro</td>
-            <td>{{format-date hostMembership.expireAt}}</td>
+            <td>{{moment-format hostMembership.expireAt}}</td>
           </tr>
         {{/each}}
         </tbody>

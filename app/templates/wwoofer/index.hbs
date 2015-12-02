@@ -47,7 +47,7 @@
 
             <p>
               <span class="glyphicon glyphicon-star mrx"></span>
-              {{t 'wwoofer.index.memberSince'}} {{format-date model.user.createdAt format='MMMM YYYY'}}
+              {{t 'wwoofer.index.memberSince'}} {{moment-format model.user.createdAt 'MMMM YYYY'}}
             </p>
           </div>
         </div>

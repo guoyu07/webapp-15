@@ -13,7 +13,7 @@
         {{else}}
           {{t 'wwoofer.membership-status.willExpire'}}
         {{/if}}
-        {{format-date user.latestWwoofMembership.expireAt}}.
+        {{moment-format user.latestWwoofMembership.expireAt}}.
         {{t 'wwoofer.membership-status.keepAccess'}}
       </p>
       {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}

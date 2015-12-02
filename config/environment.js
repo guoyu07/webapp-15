@@ -24,6 +24,7 @@ module.exports = function(environment) {
     },
 
     moment: {
+      outputFormat: 'LL',
       includeLocales: ['fr']
     },
 

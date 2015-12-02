@@ -5,11 +5,13 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from 'webapp/mixins/validations';
 import Regex from 'webapp/utils/regex';
-import moment from 'moment';
 
 const { computed } = Ember;
+const { service } = Ember.inject;
 
 export default DS.Model.extend(ValidationsMixin, {
+
+  moment: service('moment'),
 
   // Attributes
   oldHostId: DS.attr('string'),
@@ -56,11 +58,11 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns a list of all the months of the year.
    * Each month comes with a boolean indicating whether the host is open.
    */
-  openingCalendar: computed('openingMonths.[]', 'i18n.locale', function () {
+  openingCalendar: computed('openingMonths.[]', 'moment.locale', function () {
     var openingMonths = this.get('openingMonths');
     var months = [];
     for (var i = 0; i <= 11; i++) {
-      var currentMonth = moment().months(i);
+      var currentMonth = this.get('moment').moment().months(i);
       months.push({
         label: currentMonth.format("MMMM"),
         isOpen: openingMonths.contains(currentMonth.format("MM"))

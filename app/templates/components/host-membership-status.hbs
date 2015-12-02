@@ -10,10 +10,10 @@
         {{t 'host.membership-status.yourHostProfile'}}
         {{#if user.latestHostMembership.isExpired}}
           {{t 'host.membership-status.isDisabledSince'}}
-          {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
+          {{moment-format user.latestHostMembership.expireAt}}. {{t 'host.membership-status.makeVisibleAgain'}}
         {{else}}
           {{t 'host.membership-status.willBeDisabled'}}
-          {{format-date user.latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
+          {{moment-format user.latestHostMembership.expireAt}}. {{t 'host.membership-status.keepVisible'}}
         {{/if}}
         {{t 'host.membership-status.community'}}
       </p>

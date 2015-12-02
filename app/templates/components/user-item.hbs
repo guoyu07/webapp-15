@@ -1,6 +1,6 @@
 <td>{{user.fullName}}</td>
 <td>{{user.email}}</td>
-<td>{{format-date user.createdAt}}</td>
+<td>{{moment-format user.createdAt}}</td>
 <td class="text-center">
   {{#if user.wwoofer}}
     {{#link-to 'wwoofer.edit' user.wwoofer.id}}
