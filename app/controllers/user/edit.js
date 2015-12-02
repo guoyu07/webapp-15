@@ -4,7 +4,11 @@
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
+const { service } = Ember.inject;
+
 export default Ember.Controller.extend(ValidationsMixin, {
+
+  translationsFetcher: service('translations-fetcher'),
 
   /**
    * Indicates whether the user's first name, last name and birth date can be edited.
@@ -32,9 +36,9 @@ export default Ember.Controller.extend(ValidationsMixin, {
         user.save().then(()=> {
           alertify.success(this.get('i18n').t('notify.informationUpdated'));
 
-          // Refresh the page if the user locale was updated
+          // Fetch translations from server if the user locale was updated
           if (this.get('i18n.locale') !== user.get('locale')) {
-            location.reload();
+            this.get('translationsFetcher').fetch();
           }
         });
       }).catch(()=> {

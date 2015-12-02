@@ -19,10 +19,14 @@
       <div class="mbm" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#results" aria-controls="results" role="tab" data-toggle="tab" {{action "updateTab" 'results'}}>Results</a>
+            <a href="#results" aria-controls="results" role="tab" data-toggle="tab" {{action "updateTab" 'results'}}>
+              {{t 'hosts.index.results'}}
+            </a>
           </li>
           <li role="presentation">
-            <a href="#filters" aria-controls="filters" role="tab" data-toggle="tab" {{action "updateTab" 'filters'}}>Filters</a>
+            <a href="#filters" aria-controls="filters" role="tab" data-toggle="tab" {{action "updateTab" 'filters'}}>
+              {{t 'hosts.index.filters'}}
+            </a>
           </li>
         </ul>
         <div id="resultTabContent" class="tab-content">
@@ -58,7 +62,7 @@
             {{#if sessionUser.user.isAdmin}}
               <h4>{{t 'hosts.index.admin'}}</h4>
 
-              <div class="col-md-4 col-sm-12">
+              <div class="col-xs-12 col-sm-4">
                 <div class="radio">
                   {{#radio-button value="pending" groupValue=approvalStatus}}
                     {{t 'hosts.index.pending.label'}}
@@ -75,7 +79,7 @@
                   {{/radio-button}}
                 </div>
               </div>
-              <div class="col-md-4 col-sm-12">
+              <div class="col-xs-12 col-sm-4">
                 <div class="radio">
                   {{#radio-button value="valid" groupValue=membershipStatus}}
                     {{t 'hosts.index.valid.label'}}
@@ -92,7 +96,7 @@
                   {{/radio-button}}
                 </div>
               </div>
-              <div class="col-md-4 col-sm-12">
+              <div class="col-xs-12 col-sm-4">
                 <div class="checkbox">
                   <label>
                     {{input type="checkbox" checked=isSuspended}}

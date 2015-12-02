@@ -4,10 +4,12 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'webapp/config/environment';
-import request from 'ic-ajax';
-import moment from 'moment';
+
+const { service } = Ember.inject;
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
+
+  translationsFetcher: service('translations-fetcher'),
 
   model() {
     // Set trackJs user if authenticated
@@ -17,30 +19,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       });
     }
 
-    // Get locale file from server
-    var promise = request({
-      type: 'GET',
-      url: 'api/translations'
-    });
-
-    // Load translations
-    promise.then((translations)=> {
-
-      // Get the locale cookie set during the call the the translation endpoint
-      var locale = Ember.$.cookie('locale') || window.navigator.userLanguage || window.navigator.language;
-
-      this.set('i18n.locale', locale);
-      this.get('i18n').addTranslations(locale, translations);
-
-      // Set moment locale
-      moment.locale(locale);
-    });
-
-    promise.catch(function() {
-      Ember.Logger.error('Could not load localization file.');
-    });
-
-    return promise;
+    // Fetch translations from server
+    return this.get('translationsFetcher').fetch();
   },
 
   /**
