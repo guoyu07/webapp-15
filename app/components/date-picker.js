@@ -5,8 +5,11 @@ import Ember from 'ember';
 import moment from 'moment';
 
 const { observer, computed } = Ember;
+const { service } = Ember.inject;
 
 export default Ember.Component.extend({
+
+  moment: service('moment'),
 
   _selectedDay: null,
   _selectedMonth: null,
@@ -23,10 +26,13 @@ export default Ember.Component.extend({
     return days;
   }),
 
-  months: computed(function() {
+  months: computed('moment.locale', function() {
     var months = [];
     for (var i = 0; i <= 11; i++) {
-      months.push({ value: i, name: moment().months(i).format("MMMM") });
+      months.push({
+        value: i,
+        name: this.get('moment').moment().months(i).format("MMMM")
+      });
     }
     return months;
   }),
