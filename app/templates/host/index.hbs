@@ -34,10 +34,10 @@
       <table class="table table-striped">
         <tbody>
           <tr>
-            <td class="capitalize">
+            <td>
               <span class="glyphicon glyphicon-user mrx"></span>
               {{#if canSeeContactInfo}}
-                {{model.user.fullName}}
+                <psan class="capitalize">{{model.user.fullName}}</psan>
               {{else}}
                 {{members-only}}
               {{/if}}
@@ -88,10 +88,10 @@
             </td>
           </tr>
           <tr>
-            <td class="capitalize">
+            <td>
               <span class="glyphicon glyphicon-map-marker mrx"></span>
               {{#if canSeeContactInfo}}
-                {{model.address.city}} ({{model.address.department.name}})
+                <psan class="capitalize">{{model.address.city}} ({{model.address.department.name}})</psan>
               {{else}}
                 {{members-only}}
               {{/if}}
@@ -200,8 +200,8 @@
         {{#each model.displayedStays as |stay|}}
           <tr>
             <td>{{stay.label}}</td>
-            <td class="text-center">
-              <span class="glyphicon {{if stay.isOk 'glyphicon-ok text-primary' 'glyphicon-ban-circle'}}"></span>
+            <td class="text-right">
+              <span class="glyphicon prx {{if stay.isOk 'glyphicon-ok text-primary' 'glyphicon-ban-circle'}}"></span>
             </td>
           </tr>
         {{/each}}
