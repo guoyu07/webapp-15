@@ -21,7 +21,7 @@ export default Ember.Component.extend({
     var url = this.get('url');
     var height = this.get('height');
     if (!Ember.isEmpty(url)) {
-      var style = `background:url(${url}) center center; background-size:cover; height: ${height}px;`;
+      var style = `background:url(${url}) center center; background-size:cover; height: ${height}px; border-radius: 3px;`;
       return style.htmlSafe();
     }
   })

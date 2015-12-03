@@ -7,8 +7,7 @@ export default Ember.Controller.extend({
 
   activitiesService: Ember.inject.service('activities'),
   monthsService: Ember.inject.service('months'),
-  countriesService: Ember.inject.service('countries'),
-  departmentsService: Ember.inject.service('departments'),
+  staysService: Ember.inject.service('stays'),
 
   actions: {
     saveHost() {
