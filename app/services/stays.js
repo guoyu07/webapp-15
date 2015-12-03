@@ -11,11 +11,11 @@ export default Ember.Service.extend({
    * Stay ids.
    */
   stayIds: [
-    'single-day',
+    // 'single-day',
     'less-than-a-week',
     'one-two-weeks',
     'three-four-weeks',
-    'two—three-months'
+    'more-than-a-month'
   ],
 
   /**
