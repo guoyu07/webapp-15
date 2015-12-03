@@ -11,7 +11,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
   translationsFetcher: service('translations-fetcher'),
 
-  model() {
+  beforeModel() {
     // Set trackJs user if authenticated
     if (this.get('session.isAuthenticated')) {
       this.get('sessionUser.user').then((user) => {
@@ -34,6 +34,25 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         userId: userId.toString()
       });
     }
+  },
+
+  /**
+   * Performs post-login actions.
+   */
+  sessionAuthenticated() {
+    this.get('sessionUser.user').then((user) => {
+
+      // Fetch translations from server if the preferred locale of the user
+      // is different from the current locale
+      if (this.get('i18n.locale') !== user.get('locale')) {
+        this.get('translationsFetcher').fetch();
+      }
+
+      this.setTrackJsUser(user.get('id'));
+    });
+
+    // Redirect user
+    this._super(...arguments);
   },
 
   /**
