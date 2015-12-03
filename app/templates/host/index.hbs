@@ -13,150 +13,200 @@
   </div>
 {{/if}}
 
-<div class="row">
-  <div class="col-lg-8 host-photos-carousel">
+<div class="row pbm">
+  <div class="col-md-8 host-photos-carousel">
     {{photo-carousel photos=model.photos}}
   </div>
-  <div class="col-lg-4 hidden-xs hidden-sm hidden-md">
+  <div class="col-md-4 hidden-xs hidden-sm">
     {{google-map latitude=model.address.latitude longitude=model.address.longitude}}
   </div>
 </div>
-<hr>
-<div class="row">
+
+<div class="row ptm">
   <div class="col-md-3">
-    <h4>{{t 'host.index.generalInformation'}}</h4>
-  </div>
-  <div class="col-xs-12 col-sm-6 col-md-4">
-    <p>
-      <span class="glyphicon glyphicon-envelope mrx"></span>
-      {{#if canSeeContactInfo}}
-        {{#unless model.noEmail}}
-          {{mail-to model.user.email}}
-        {{/unless}}
-      {{else}}
-        {{members-only}}
-      {{/if}}
-    </p>
-
-    <p>
-      <span class="glyphicon glyphicon-earphone mrx"></span>
-      {{#if canSeeContactInfo}}
-        {{#unless model.noPhone}}
-          {{model.user.phone}}
-        {{/unless}}
-      {{else}}
-        {{members-only}}
-      {{/if}}
-    </p>
-
-    <p>
-      <span class="glyphicon glyphicon-plane mrx"></span>
-      {{model.travelDetails}}
-    </p>
-
-    <p>
-      <span class="glyphicon glyphicon-globe mrx"></span>
-      {{#if canSeeContactInfo}}
-        {{#if model.webSite}}
-          <a href={{model.webSite}} target="_blank">{{model.webSite}}</a>
-        {{else}}
-          {{t 'host.index.noWebsite'}}
-        {{/if}}
-      {{else}}
-        {{members-only}}
-      {{/if}}
-    </p>
-  </div>
-  <div class="col-xs-12 col-sm-6 col-md-4">
-    <p>
-      <span class="glyphicon glyphicon-user mrx"></span>
-      {{#if canSeeContactInfo}}
-        {{model.user.firstName}} {{model.user.lastName}}
-      {{else}}
-        {{members-only}}
-      {{/if}}
-    </p>
-
-    <p>
-      <span class="glyphicon glyphicon-map-marker mrx"></span>
-      {{#if canSeeContactInfo}}
-        {{model.address.city}} ({{model.address.department.name}})
-      {{else}}
-        {{members-only}}
-      {{/if}}
-    </p>
-
-    <p>
-      <span class="glyphicon glyphicon-star mrx"></span>
-      {{t 'host.index.memberSince'}} {{moment-format model.user.createdAt 'MMMM YYYY'}}
-    </p>
-    <p>
-      <span class="glyphicon glyphicon-time mrx"></span>
-      {{t 'host.index.updated'}} {{moment-from-now model.updatedAt}}
-    </p>
-  </div>
-</div>
-<hr>
-{{#if model.activities}}
-  <div class="row">
-    <div class="col-md-3">
-      <h4>{{t 'host.index.activities'}}</h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-pushpin mrx"></span>
+          {{t 'host.index.generalInformation'}}
+        </h3>
+      </div>
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <td class="capitalize">
+              <span class="glyphicon glyphicon-user mrx"></span>
+              {{#if canSeeContactInfo}}
+                {{model.user.fullName}}
+              {{else}}
+                {{members-only}}
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-envelope mrx"></span>
+              {{#if canSeeContactInfo}}
+                {{#if model.noEmail}}
+                  -
+                {{else}}
+                  {{mail-to (truncate model.user.email limit=28)}}
+                {{/if}}
+              {{else}}
+                {{members-only}}
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-earphone mrx"></span>
+              {{#if canSeeContactInfo}}
+                {{#if model.noPhone}}
+                  -
+                {{else}}
+                  {{model.user.phone}}
+                {{/if}}
+              {{else}}
+                {{members-only}}
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-globe mrx"></span>
+              {{#if canSeeContactInfo}}
+                {{#if model.webSite}}
+                  <a href={{model.webSite}} title={{model.webSite}} target="_blank">
+                    {{truncate model.webSite limit=28}}
+                  </a>
+                {{else}}
+                  {{t 'host.index.noWebsite'}}
+                {{/if}}
+              {{else}}
+                {{members-only}}
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <td class="capitalize">
+              <span class="glyphicon glyphicon-map-marker mrx"></span>
+              {{#if canSeeContactInfo}}
+                {{model.address.city}} ({{model.address.department.name}})
+              {{else}}
+                {{members-only}}
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-plane mrx"></span>
+              {{model.travelDetails}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-star mrx"></span>
+              {{t 'host.index.memberSince'}} {{moment-format model.user.createdAt 'MMMM YYYY'}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-time mrx"></span>
+              {{t 'host.index.updated'}} {{moment-from-now model.updatedAt}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="col-md-9">
-      {{#each model.displayedActivities as |activity|}}
-        <span class="label label-activity">{{activity}}</span>
-      {{/each}}
-    </div>
-  </div>
-  <hr>
-{{/if}}
-{{#if model.openingMonths}}
-  <div class="row">
-    <div class="col-md-3">
-      <h4>{{t 'host.index.openingMonths'}}</h4>
-    </div>
-    <div class="col-md-9">
-      {{#each model.openingCalendar as |month|}}
-        <div class="col-xs-4 col-sm-3 col-lg-2 opening-month {{if month.isOpen 'text-primary'}}">
-          <span class="glyphicon {{if month.isOpen 'glyphicon-ok' 'glyphicon-ban-circle'}}"></span>
-          {{month.label}}
+
+    {{#if model.activities}}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <span class="glyphicon glyphicon-grain mrx"></span>
+            {{t 'host.index.activities'}}
+          </h3>
         </div>
-      {{/each}}
+        <table class="table table-striped">
+          <tbody>
+          {{#each model.displayedActivities as |activity|}}
+            <tr>
+              <td>{{activity}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{/if}}
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-pencil mrx"></span>
+          {{t 'host.index.description'}}
+        </h3>
+      </div>
+      <div class="panel-body">
+        {{convert-breaklines model.fullDescription}}
+      </div>
     </div>
   </div>
-  <hr>
-{{/if}}
-{{#if model.stays}}
-  <div class="row">
-    <div class="col-md-3">
-      <h4>{{t 'host.index.stays'}}</h4>
-    </div>
-    <div class="col-md-9">
-      {{#each model.displayedStays as |stay|}}
-        <div class="col-xs-4 col-sm-3 col-lg-2 opening-month {{if stay.isOk 'text-primary'}}">
-          <span class="glyphicon {{if stay.isOk 'glyphicon-ok' 'glyphicon-ban-circle'}}"></span>
-          {{stay.label}}
-        </div>
-      {{/each}}
-    </div>
-  </div>
-  <hr>
-{{/if}}
-<div class="row mbm">
   <div class="col-md-3">
-    <h4>{{t 'host.index.description'}}</h4>
-  </div>
-  <div class="col-md-9">
-    {{expandable-text text=model.fullDescription}}
-    <p class="mtl">
-      {{#unless model.noEmail}}
-        {{#if canSeeContactInfo}}
-          {{#link-to 'host.contact' model.id class="btn btn-primary"}}
-            <span class="glyphicon glyphicon-envelope mrx"></span>
-            {{t 'host.index.contactHost'}}
-          {{/link-to}}
-        {{/if}}
-      {{/unless}}
-    </p>
+    {{#unless model.noEmail}}
+      {{#if canSeeContactInfo}}
+        {{#link-to 'host.contact' model.id class="btn btn-block btn-primary mbm"}}
+          <span class="glyphicon glyphicon-envelope mrx"></span>
+          {{t 'host.index.contactHost'}}
+        {{/link-to}}
+      {{/if}}
+    {{/unless}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-calendar mrx"></span>
+          {{t 'host.index.openingMonths'}}
+        </h3>
+      </div>
+      <table class="table table-striped">
+        <tbody>
+        {{#each model.openingCalendar as |month|}}
+          <tr>
+            <td class="capitalize">
+              {{month.label}}
+            </td>
+            <td class="text-right {{if month.isOpen 'text-primary' 'text-danger'}}">
+              {{#if month.isOpen}}
+                {{t 'host.index.open'}}
+              {{else}}
+                {{t 'host.index.closed'}}
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-bed mrx"></span>
+          {{t 'host.index.stays'}}
+        </h3>
+      </div>
+      <table class="table table-striped">
+        <tbody>
+        {{#each model.displayedStays as |stay|}}
+          <tr>
+            <td>{{stay.label}}</td>
+            <td class="text-center">
+              <span class="glyphicon {{if stay.isOk 'glyphicon-ok text-primary' 'glyphicon-ban-circle'}}"></span>
+            </td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
