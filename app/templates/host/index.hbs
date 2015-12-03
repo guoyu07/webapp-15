@@ -126,6 +126,22 @@
   </div>
   <hr>
 {{/if}}
+{{#if model.stays}}
+  <div class="row">
+    <div class="col-md-3">
+      <h4>{{t 'host.index.stays'}}</h4>
+    </div>
+    <div class="col-md-9">
+      {{#each model.displayedStays as |stay|}}
+        <div class="col-xs-4 col-sm-3 col-lg-2 opening-month {{if stay.isOk 'text-primary'}}">
+          <span class="glyphicon {{if stay.isOk 'glyphicon-ok' 'glyphicon-ban-circle'}}"></span>
+          {{stay.label}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <hr>
+{{/if}}
 <div class="row mbm">
   <div class="col-md-3">
     <h4>{{t 'host.index.description'}}</h4>

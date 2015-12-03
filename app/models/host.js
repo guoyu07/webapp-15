@@ -12,6 +12,7 @@ const { service } = Ember.inject;
 export default DS.Model.extend(ValidationsMixin, {
 
   moment: service('moment'),
+  staysService: service('stays'),
 
   // Attributes
   oldHostId: DS.attr('string'),
@@ -27,6 +28,7 @@ export default DS.Model.extend(ValidationsMixin, {
   isHidden: DS.attr('boolean'),
   activities: DS.attr('array'),
   openingMonths: DS.attr('array'),
+  stays: DS.attr('array'),
   note: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
@@ -39,10 +41,26 @@ export default DS.Model.extend(ValidationsMixin, {
   // First photo
   mainPhoto: computed.readOnly('photos.firstObject'),
 
-  // Translated activities
+  /**
+   * Returns the list of activities offered by the host.
+   */
   displayedActivities: computed('activities.[]', 'i18n.locale', function() {
     return this.get('activities').map((activity)=> {
       return this.get('i18n').t('activities.' + activity);
+    });
+  }),
+
+  /**
+   * Returns the list of stays accepted by the host.
+   */
+  displayedStays: computed('stays.[]', 'i18n.locale', function() {
+    var allStays = this.get('staysService.allStays');
+    var stays = this.get('stays');
+    return allStays.map(function (stay) {
+      return {
+        label: stay.get('label'),
+        isOk: stays.contains(stay.get('id'))
+      }
     });
   }),
 
@@ -110,6 +128,9 @@ export default DS.Model.extend(ValidationsMixin, {
       }
     },
     phone: {
+      presence: true
+    },
+    stays: {
       presence: true
     },
     note: {
