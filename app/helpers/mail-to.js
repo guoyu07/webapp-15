@@ -10,7 +10,7 @@ export function mailTo(params) {
   emailAddress = Ember.Handlebars.Utils.escapeExpression(emailAddress);
   label = Ember.Handlebars.Utils.escapeExpression(label);
 
-  var link = '<a href="mailto:' + emailAddress + '">' + label + '</a>';
+  var link = '<a href="mailto:' + emailAddress + '" title="' + emailAddress + '" >' + label + '</a>';
   return new Ember.Handlebars.SafeString(link);
 }
 

@@ -50,7 +50,7 @@
                 {{#if model.noEmail}}
                   -
                 {{else}}
-                  {{mail-to (truncate model.user.email limit=28)}}
+                  {{mail-to model.user.email (truncate model.user.email limit=28)}}
                 {{/if}}
               {{else}}
                 {{members-only}}
