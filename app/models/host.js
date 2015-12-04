@@ -102,6 +102,14 @@ export default DS.Model.extend(ValidationsMixin, {
   }),
 
   /**
+   * Returns the displayed capacity of the host.
+   * Transforms 4 into 4+.
+   */
+  displayedCapacity: computed('capacity', function () {
+    return this.get('capacity') === 4 ? '4+' : this.get('capacity');
+  }),
+
+  /**
    * $HACK: isPending seems to be conflicting with PromiseProxy.
    * This alias seems to solve the issue.
    */
