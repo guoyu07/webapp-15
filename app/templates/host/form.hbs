@@ -92,7 +92,7 @@
           {{toggle-options values=activitiesService.allActivities selected=model.activities optionValuePath='id'}}
         </div>
       </div>
-      <hr class="col-sm-offset-2 col-sm-9">
+      <hr class="col-sm-offset-2 col-sm-9 mvs">
       <div class="form-group">
         <label class="col-sm-2 control-label">{{t 'host.form.openingMonths'}}</label>
 
@@ -100,7 +100,7 @@
           {{toggle-options values=monthsService.allMonths selected=model.openingMonths optionValuePath='id'}}
         </div>
       </div>
-      <hr class="col-sm-offset-2 col-sm-9">
+      <hr class="col-sm-offset-2 col-sm-9 mvs">
       <div class="form-group {{if model.fieldErrors.stays.length 'has-error'}}">
         <label class="col-sm-2 control-label">{{t 'host.form.stays'}}</label>
 
@@ -109,8 +109,45 @@
         </div>
       </div>
 
+      <hr class="col-sm-offset-2 col-sm-9 mvs">
+      <div class="form-group {{if model.fieldErrors.capacity.length 'has-error'}}">
+        <label class="col-sm-2 control-label">{{t 'host.form.capacity'}}</label>
+
+        <div class="col-sm-10 radio-options-cols">
+          {{#radio-button classNames="radio-inline" value=1 groupValue=model.capacity}}
+            {{t 'host.form.capacity.label' count=1}}
+          {{/radio-button}}
+          {{#radio-button classNames="radio-inline" value=2 groupValue=model.capacity}}
+            {{t 'host.form.capacity.label' count=2}}
+          {{/radio-button}}
+          {{#radio-button classNames="radio-inline" value=3 groupValue=model.capacity}}
+            {{t 'host.form.capacity.label' count=3}}
+          {{/radio-button}}
+          {{#radio-button classNames="radio-inline" value=4 groupValue=model.capacity}}
+            {{t 'host.form.capacity.label' count='4+'}}
+          {{/radio-button}}
+        </div>
+
+        <div class="col-sm-offset-2 col-sm-10 toggle-options-cols">
+          <label for="childrenOk" class="checkbox-inline">
+            {{input type="checkbox" id="childrenOk" checked=model.childrenOk}}
+            {{t 'host.form.childrenOk.label'}}
+          </label>
+          <label for="petsOk" class="checkbox-inline">
+            {{input type="checkbox" id="petsOk" checked=model.petsOk}}
+            {{t 'host.form.petsOk.label'}}
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10">
+        <span class="form-details">
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{t 'host.form.childrenOkDetails'}}
+        </span>
+      </div>
+
       {{#unless model.isNew}}
-        <hr class="col-sm-offset-2 col-sm-9">
+        <hr class="col-sm-offset-2 col-sm-9 mvs">
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">

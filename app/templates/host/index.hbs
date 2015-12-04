@@ -100,7 +100,11 @@
           <tr>
             <td>
               <span class="glyphicon glyphicon-plane mrx"></span>
-              {{model.travelDetails}}
+              {{#if model.travelDetails}}
+                {{model.travelDetails}}
+              {{else}}
+                -
+              {{/if}}
             </td>
           </tr>
           <tr>
@@ -113,6 +117,40 @@
             <td>
               <span class="glyphicon glyphicon-time mrx"></span>
               {{t 'host.index.updated'}} {{moment-from-now model.updatedAt}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-home mrx"></span>
+          {{t 'host.index.accommodation'}}
+        </h3>
+      </div>
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <td>{{t 'host.index.capacity'}}</td>
+            <td class="text-right">
+              {{t 'host.index.displayedCapacity' count=model.displayedCapacity}}
+            </td>
+          </tr>
+          <tr>
+            <td>{{t 'host.index.childrenOk'}}</td>
+            <td class="text-right">
+              <span class="glyphicon prx {{if model.childrenOk 'glyphicon-ok text-primary' 'glyphicon-ban-circle'}}"></span>
+              {{#if model.childrenOk}}
+                {{question-tooltip title=(t 'host.index.childrenOk.tooltip')}}
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <td>{{t 'host.index.petsOk'}}</td>
+            <td class="text-right">
+              <span class="glyphicon prx {{if stay.petsOk 'glyphicon-ok text-primary' 'glyphicon-ban-circle'}}"></span>
             </td>
           </tr>
         </tbody>

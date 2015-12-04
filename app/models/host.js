@@ -29,6 +29,9 @@ export default DS.Model.extend(ValidationsMixin, {
   activities: DS.attr('array'),
   openingMonths: DS.attr('array'),
   stays: DS.attr('array'),
+  capacity: DS.attr('number'),
+  childrenOk: DS.attr('boolean'),
+  petsOk: DS.attr('boolean'),
   note: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
@@ -99,6 +102,14 @@ export default DS.Model.extend(ValidationsMixin, {
   }),
 
   /**
+   * Returns the displayed capacity of the host.
+   * Transforms 4 into 4+.
+   */
+  displayedCapacity: computed('capacity', function () {
+    return this.get('capacity') === 4 ? '4+' : this.get('capacity');
+  }),
+
+  /**
    * $HACK: isPending seems to be conflicting with PromiseProxy.
    * This alias seems to solve the issue.
    */
@@ -131,6 +142,9 @@ export default DS.Model.extend(ValidationsMixin, {
       presence: true
     },
     stays: {
+      presence: true
+    },
+    capacity: {
       presence: true
     },
     note: {
