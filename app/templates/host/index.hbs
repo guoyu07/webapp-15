@@ -128,6 +128,7 @@
         <h3 class="panel-title">
           <span class="glyphicon glyphicon-home mrx"></span>
           {{t 'host.index.accommodation'}}
+          {{tool-tip icon='info-sign' class='pull-right mrx' title=(t 'host.index.recentSection') }}
         </h3>
       </div>
       <table class="table table-striped">
@@ -143,7 +144,7 @@
             <td class="text-right">
               <span class="glyphicon prx {{if model.childrenOk 'glyphicon-ok text-primary' 'glyphicon-ban-circle'}}"></span>
               {{#if model.childrenOk}}
-                {{question-tooltip title=(t 'host.index.childrenOk.tooltip')}}
+                {{tool-tip title=(t 'host.index.childrenOk.tooltip')}}
               {{/if}}
             </td>
           </tr>
@@ -231,6 +232,7 @@
         <h3 class="panel-title">
           <span class="glyphicon glyphicon-bed mrx"></span>
           {{t 'host.index.stays'}}
+          {{tool-tip icon='info-sign' class='pull-right mrx' title=(t 'host.index.recentSection') }}
         </h3>
       </div>
       <table class="table table-striped">

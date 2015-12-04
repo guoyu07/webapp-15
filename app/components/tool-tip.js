@@ -1,13 +1,23 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
   tagName: 'span',
 
-  classNames: ['glyphicon glyphicon-question-sign'],
+  classNames: ['glyphicon'],
+
+  classNameBindings: ['iconClass'],
 
   attributeBindings: ['dataToggle:data-toggle', 'title'],
 
   dataToggle: 'tooltip',
+
+  iconClass: computed('icon', function () {
+    return `glyphicon-${this.get('icon')}`;
+  }),
+
+  icon: 'question-sign',
 
   title: '',
 
