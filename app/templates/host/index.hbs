@@ -142,6 +142,9 @@
             <td>{{t 'host.index.childrenOk'}}</td>
             <td class="text-right">
               <span class="glyphicon prx {{if model.childrenOk 'glyphicon-ok text-primary' 'glyphicon-ban-circle'}}"></span>
+              {{#if model.childrenOk}}
+                {{question-tooltip title=(t 'host.index.childrenOk.tooltip')}}
+              {{/if}}
             </td>
           </tr>
           <tr>
