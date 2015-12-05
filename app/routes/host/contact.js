@@ -40,7 +40,7 @@ export default Ember.Route.extend({
 
         promise.then(()=> {
           // Notify user
-          alertify.alert(this.get('i18n').t('notify.messageSent'));
+          alertify.alert(this.get('i18n').t('notify.messageSent').string);
 
           // Reset form
           controller.set('message', null);
