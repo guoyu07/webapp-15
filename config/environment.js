@@ -77,7 +77,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.urlAfterLogout = 'http://wwoof.fr';
+    ENV.urlAfterLogout = 'http://www.wwoof.fr';
     ENV.googleAnalytics = {
       webPropertyId: 'UA-19885009-2'
     };
