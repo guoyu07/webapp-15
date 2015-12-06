@@ -37,7 +37,7 @@
             <td>
               <span class="glyphicon glyphicon-user mrx"></span>
               {{#if canSeeContactInfo}}
-                <psan class="capitalize">{{model.user.fullName}}</psan>
+                <span class="capitalize">{{model.user.fullName}}</span>
               {{else}}
                 {{members-only}}
               {{/if}}
@@ -91,7 +91,7 @@
             <td>
               <span class="glyphicon glyphicon-map-marker mrx"></span>
               {{#if canSeeContactInfo}}
-                <psan class="capitalize">{{model.address.city}} ({{model.address.department.name}})</psan>
+                <span class="capitalize">{{model.address.city}} ({{model.address.department.name}})</span>
               {{else}}
                 {{members-only}}
               {{/if}}
