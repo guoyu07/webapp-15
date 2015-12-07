@@ -27,15 +27,6 @@ module.exports = function(defaults) {
   // jQuery Cookie
   app.import('bower_components/jquery-cookie/jquery.cookie.js');
 
-  // Alertify
-  var alertify = pickFiles('bower_components/alertify.js/lib', {
-    srcDir: '/',
-    files: ['alertify.js'],
-    destDir: '/assets'
-  });
-  app.import('bower_components/alertify.js/themes/alertify.core.css');
-  app.import('bower_components/alertify.js/themes/alertify.bootstrap.css');
-
   // JQuery file upload
   // See: https://github.com/blueimp/jQuery-File-Upload/wiki/Basic-plugin
   app.import('bower_components/jquery-file-upload/js/vendor/jquery.ui.widget.js');
@@ -59,7 +50,6 @@ module.exports = function(defaults) {
   app.import("bower_components/trackjs/tracker.js");
 
   return mergeTrees([
-    alertify,
     bootstrapFonts,
     bootstrapCssMap,
     leaflet,

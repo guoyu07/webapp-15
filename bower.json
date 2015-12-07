@@ -14,7 +14,6 @@
     "qunit": "~1.18.0",
     "bootstrap": "~3.3.2",
     "jquery-file-upload": "~9.5.8",
-    "alertify.js": "~0.3.11",
     "jquery-cookie": "~1.4.1",
     "leaflet-providers": "~1.0.12",
     "trackjs": "~2.1.11",
