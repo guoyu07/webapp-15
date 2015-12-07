@@ -73,7 +73,7 @@
                 {{/link-to}}
               </li>
               <li>
-                <a href="#" data-toggle="modal" data-target="#impersonationModal">
+                <a href="#" {{action 'toggleImpersonationModal'}}>
                   {{t 'menu.impersonateUser'}}
                 </a>
               </li>
@@ -131,32 +131,17 @@
   {{outlet}}
 </div>
 
-<!-- Impersonation modal box (admins only) -->
-<div class="modal fade" id="impersonationModal" tabindex="-1" role="dialog" aria-labelledby="impersonationModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="impersonationModalLabel">{{t 'impersonate.title'}}</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group {{if fieldErrors.impersonatedUserEmail.length 'has-error'}}">
-          <label for="impersonatedUserEmail" class="control-label">{{t 'impersonate.email.label'}}</label>
-          {{input value=impersonatedUserEmail name="impersonatedUserEmail" type="email" class="form-control" placeholder="someone@domain.com"}}
-          {{error-display errors=fieldErrors.impersonatedUserEmail}}
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{t 'literal.cancel'}}</button>
-        <button type="button" class="btn btn-primary" {{action "impersonateUser"}} disabled={{isLoading}}>{{t 'impersonate.button'}}</button>
-      </div>
-    </div>
-  </div>
-</div>
+{{#if showImpersonationModal}}
+  {{impersonation-modal
+  impersonatedUserEmail=impersonatedUserEmail
+  isLoading=isLoading
+  fieldErrors=fieldErrors
+  impersonate=(action 'impersonateUser')
+  close=(action 'toggleImpersonationModal')}}
+{{/if}}
 
 {{#if showNewUserModal}}
-  {{new-user-modal create=(action 'create') close=(action 'closeModal')}}
+  {{new-user-modal create=(action 'create') close=(action 'closeNewUserModal')}}
 {{/if}}
 
 {{ember-notify messageStyle='bootstrap' closeAfter=4000}}

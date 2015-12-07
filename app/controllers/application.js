@@ -22,6 +22,11 @@ export default Ember.Controller.extend(ValidationsMixin, {
   impersonatedUserEmail: null,
 
   /**
+   * Whether the impersonation modal should be visible.
+   */
+  showImpersonationModal: false,
+
+  /**
    * Whether the new user modal should be visible.
    */
   showNewUserModal: false,
@@ -65,7 +70,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
           auth.finally(()=> {
             this.set('isLoading', false);
-            Ember.$('#impersonationModal').modal('hide');
+            this.toggleProperty('showImpersonationModal');
           });
         });
       }).catch(()=> {
@@ -74,7 +79,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
       });
     },
 
-    closeModal() {
+    closeNewUserModal() {
       this.toggleProperty('showNewUserModal');
     },
 
@@ -83,6 +88,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
       var route = (type === 'W') ? 'wwoofers.new' : 'hosts.new';
       this.transitionToRoute(route);
+    },
+
+    toggleImpersonationModal() {
+      this.toggleProperty('showImpersonationModal');
     }
   },
 
