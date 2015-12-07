@@ -63,7 +63,7 @@ export default DS.Model.extend(ValidationsMixin, {
       return {
         label: stay.get('label'),
         isOk: stays.contains(stay.get('id'))
-      }
+      };
     });
   }),
 

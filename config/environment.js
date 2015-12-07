@@ -50,7 +50,7 @@ module.exports = function(environment) {
 
   // Ember simple auth configuration
   ENV['ember-simple-auth'] = {
-    routeAfterAuthentication: 'index',
+    routeAfterAuthentication: 'hosts.index',
     authenticationRoute: 'login'
   };
 
