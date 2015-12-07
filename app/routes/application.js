@@ -23,6 +23,29 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     return this.get('translationsFetcher').fetch();
   },
 
+  setupController() {
+    if (this.get('session.isAuthenticated')) {
+      this.processNewUserModalVisibility();
+    }
+  },
+
+  /**
+   * Processes whether the new user modal should be visible.
+   */
+  processNewUserModalVisibility() {
+    this.get('sessionUser.user').then((user)=> {
+      var promise = Ember.RSVP.hash({
+        host: user.get('host'),
+        wwoofer: user.get('wwoofer')
+      });
+
+      promise.then((results)=> {
+        var showModal = Ember.isEmpty(results.host) && Ember.isEmpty(results.wwoofer);
+        this.controller.set('showNewUserModal', showModal);
+      });
+    });
+  },
+
   /**
    * Sets the current user ID for track JS.
    * @param userId
@@ -49,6 +72,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       }
 
       this.setTrackJsUser(user.get('id'));
+
+      this.processNewUserModalVisibility();
     });
 
     // Redirect user

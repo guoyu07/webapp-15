@@ -17,14 +17,14 @@ export default Ember.Controller.extend(ValidationsMixin, {
   canSeeWwoofersLink: Ember.computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
 
   /**
-   * Indicates whether the current user as at least one profile.
-   */
-  hasWwooferOrHostProfile: Ember.computed.or('sessionUser.user.wwoofer.id', 'sessionUser.user.host.id'),
-
-  /**
    * Email address of the user to impersonate (admins only).
    */
   impersonatedUserEmail: null,
+
+  /**
+   * Whether the new user modal should be visible.
+   */
+  showNewUserModal: false,
 
   actions: {
     impersonateUser() {
@@ -72,6 +72,17 @@ export default Ember.Controller.extend(ValidationsMixin, {
         this.set('isLoading', false);
         this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
+    },
+
+    closeModal() {
+      this.toggleProperty('showNewUserModal');
+    },
+
+    create(type) {
+      this.toggleProperty('showNewUserModal');
+
+      var route = (type === 'W') ? 'wwoofers.new' : 'hosts.new';
+      this.transitionToRoute(route);
     }
   },
 

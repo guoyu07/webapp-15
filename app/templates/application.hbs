@@ -154,8 +154,9 @@
     </div>
   </div>
 </div>
-{{#unless hasWwooferOrHostProfile}}
-  {{create-profile-modal}}
-{{/unless}}
+
+{{#if showNewUserModal}}
+  {{new-user-modal create=(action 'create') close=(action 'closeModal')}}
+{{/if}}
 
 {{ember-notify messageStyle='bootstrap' closeAfter=4000}}
