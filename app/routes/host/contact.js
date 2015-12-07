@@ -54,7 +54,7 @@ export default Ember.Route.extend({
           controller.set('isSending', false);
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

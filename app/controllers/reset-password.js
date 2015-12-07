@@ -46,7 +46,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
         promise.catch((err)=> {
           err = err.jqXHR || err;
           if (err.status === 404) {
-            alertify.error(this.get('i18n').t('notify.userNotFound'));
+            this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
           } else {
             throw err;
           }
@@ -56,7 +56,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
           this.set('isLoading', false);
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   },

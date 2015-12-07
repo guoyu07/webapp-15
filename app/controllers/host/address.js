@@ -36,13 +36,13 @@ export default Ember.Controller.extend({
         }
 
         promise.then(()=> {
-          alertify.success(this.get('i18n').t('notify.addressSaved'));
+          this.get('notify').success(this.get('i18n').t('notify.addressSaved'));
           if (isNewAddress) {
             this.transitionToRoute('host.photos', host);
           }
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

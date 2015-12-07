@@ -16,7 +16,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
       // Do not continue if no item code was specified
       if (!itemCode) {
-        alertify.error(this.get('i18n').t('notify.noItemCode'));
+        this.get('notify').error(this.get('i18n').t('notify.noItemCode'));
         return;
       }
 

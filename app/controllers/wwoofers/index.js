@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
         if (wwoofers.get('content').length) {
           this.get('content').addObjects(wwoofers.get('content'));
         } else {
-          alertify.log(this.get('i18n').t('notify.noMoreWwoofers'));
+          this.get('notify').log(this.get('i18n').t('notify.noMoreWwoofers'));
         }
       }).finally(()=> {
         this.set('isLoadingMore', false);

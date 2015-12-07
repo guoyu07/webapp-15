@@ -46,7 +46,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
           var users = result.get('content');
           if (!Ember.isArray(users) || Ember.isEmpty(users)) {
             this.set('isLoading', false);
-            alertify.error(this.get('i18n').t('notify.userNotFound'));
+            this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
             return;
           }
 
@@ -57,7 +57,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
           // Handle success
           auth.then(()=> {
-            alertify.success(this.get('i18n').t('notify.userImpersonated', { email: impersonatedUserEmail }));
+            this.get('notify').success(this.get('i18n').t('notify.userImpersonated', { email: impersonatedUserEmail }));
 
             // Refresh the route
             this.send('userImpersonated');
@@ -70,7 +70,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
         });
       }).catch(()=> {
         this.set('isLoading', false);
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   },

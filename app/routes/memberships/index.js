@@ -126,7 +126,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
       // Notify user
       promise.then(()=> {
-        alertify.success(this.get('i18n').t('notify.reminderSent'));
+        this.get('notify').success(this.get('i18n').t('notify.reminderSent'));
       });
 
       // Refresh the memberships

@@ -35,11 +35,11 @@ export default Ember.Controller.extend({
 
           // Update host and address
           Ember.RSVP.all(updates).then(()=> {
-            alertify.success(this.get('i18n').t('notify.informationUpdated'));
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
             window.scrollTo(0, 0);
           });
         }).catch(()=> {
-          alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
           window.scrollTo(0, 0);
         });
       });
