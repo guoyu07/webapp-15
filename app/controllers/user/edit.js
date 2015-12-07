@@ -34,7 +34,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
       // Save the user
       Ember.RSVP.all(validations).then(()=> {
         user.save().then(()=> {
-          alertify.success(this.get('i18n').t('notify.informationUpdated'));
+          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
 
           // Fetch translations from server if the user locale was updated
           if (this.get('i18n.locale') !== user.get('locale')) {
@@ -42,7 +42,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
           }
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     },
 

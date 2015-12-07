@@ -38,15 +38,15 @@ export default Ember.Component.extend({
       // Handle success
       post.done(()=> {
         if (isApproved) {
-          alertify.success(this.get('i18n').t('notify.hostApproved'));
+          this.get('notify').success(this.get('i18n').t('notify.hostApproved'));
         } else {
-          alertify.success(this.get('i18n').t('notify.hostRejected'));
+          this.get('notify').success(this.get('i18n').t('notify.hostRejected'));
         }
       });
 
       // Handle failure
       post.fail(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionError'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionError'));
       });
 
       // Always reload host

@@ -9,16 +9,16 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     savePhoto(photo) {
       photo.validate().then(()=> {
         photo.save().then(()=> {
-          alertify.success(this.get('i18n').t('notify.informationUpdated'));
+          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     },
 
     deletePhoto(photo) {
       photo.destroyRecord().then(()=> {
-        alertify.success(this.get('i18n').t('notify.photoDeleted'));
+        this.get('notify').success(this.get('i18n').t('notify.photoDeleted'));
       }).catch((err)=> {
         photo.rollback();
         throw err;

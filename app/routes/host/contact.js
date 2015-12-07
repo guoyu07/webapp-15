@@ -16,8 +16,8 @@ export default Ember.Route.extend({
     sendMessage() {
 
       var controller = this.get('controller');
-      var message = this.get('controller.message');
-      var host = this.get('controller.model');
+      var message = controller.get('message');
+      var host = controller.get('model');
 
       // Validate the form
       controller.validate().then(()=> {
@@ -39,22 +39,19 @@ export default Ember.Route.extend({
         });
 
         promise.then(()=> {
-          // Notify user
-          alertify.alert(this.get('i18n').t('notify.messageSent').string);
-
           // Reset form
           controller.set('message', null);
           controller.resetValidations();
 
-          // Go back to host index page
-          this.transitionTo('host.index', host.id);
+          // Notify user
+          controller.toggleProperty('showMessageSentModal');
         });
 
         promise.finally(()=> {
           controller.set('isSending', false);
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

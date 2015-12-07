@@ -45,7 +45,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
         });
 
         promise.then(()=> {
-          alertify.success(this.get('i18n').t('notify.informationUpdated'));
+          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
           this.transitionToRoute('user.edit', currentUserId);
         });
 
@@ -58,7 +58,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
           this.set('isLoading', false);
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   },

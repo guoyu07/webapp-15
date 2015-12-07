@@ -17,14 +17,19 @@ export default Ember.Controller.extend(ValidationsMixin, {
   canSeeWwoofersLink: Ember.computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
 
   /**
-   * Indicates whether the current user as at least one profile.
-   */
-  hasWwooferOrHostProfile: Ember.computed.or('sessionUser.user.wwoofer.id', 'sessionUser.user.host.id'),
-
-  /**
    * Email address of the user to impersonate (admins only).
    */
   impersonatedUserEmail: null,
+
+  /**
+   * Whether the impersonation modal should be visible.
+   */
+  showImpersonationModal: false,
+
+  /**
+   * Whether the new user modal should be visible.
+   */
+  showNewUserModal: false,
 
   actions: {
     impersonateUser() {
@@ -46,7 +51,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
           var users = result.get('content');
           if (!Ember.isArray(users) || Ember.isEmpty(users)) {
             this.set('isLoading', false);
-            alertify.error(this.get('i18n').t('notify.userNotFound'));
+            this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
             return;
           }
 
@@ -57,7 +62,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
           // Handle success
           auth.then(()=> {
-            alertify.success(this.get('i18n').t('notify.userImpersonated', { email: impersonatedUserEmail }));
+            this.get('notify').success(this.get('i18n').t('notify.userImpersonated', { email: impersonatedUserEmail }));
 
             // Refresh the route
             this.send('userImpersonated');
@@ -65,13 +70,28 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
           auth.finally(()=> {
             this.set('isLoading', false);
-            Ember.$('#impersonationModal').modal('hide');
+            this.toggleProperty('showImpersonationModal');
           });
         });
       }).catch(()=> {
         this.set('isLoading', false);
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
+    },
+
+    closeNewUserModal() {
+      this.toggleProperty('showNewUserModal');
+    },
+
+    create(type) {
+      this.toggleProperty('showNewUserModal');
+
+      var route = (type === 'W') ? 'wwoofers.new' : 'hosts.new';
+      this.transitionToRoute(route);
+    },
+
+    toggleImpersonationModal() {
+      this.toggleProperty('showImpersonationModal');
     }
   },
 

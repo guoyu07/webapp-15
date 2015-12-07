@@ -36,14 +36,14 @@ export default Ember.Controller.extend({
         }
 
         promise.then(()=> {
-          alertify.success(this.get('i18n').t('notify.addressSaved'));
+          this.get('notify').success(this.get('i18n').t('notify.addressSaved'));
           if (isNewAddress) {
             var itemCode = Ember.isPresent(wwoofer.get('lastName2')) ? 'WO2' : 'WO1';
             this.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
           }
         });
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

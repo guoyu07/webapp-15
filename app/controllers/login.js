@@ -2,8 +2,8 @@
  * Ember controller for login.
  */
 import Ember from 'ember';
-import ValidationsMixin from '../mixins/validations';
-import Regex from '../utils/regex';
+import ValidationsMixin from 'webapp/mixins/validations';
+import Regex from 'webapp/utils/regex';
 
 export default Ember.Controller.extend(ValidationsMixin, {
 
@@ -39,7 +39,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
         // Handle failure
         auth.catch(()=> {
-          alertify.error(this.get('i18n').t('notify.userCannotAuthenticate'));
+          this.get('notify').error(this.get('i18n').t('notify.userCannotAuthenticate'));
         });
 
         auth.finally(() => {
@@ -47,7 +47,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
         });
 
       }).catch(()=> {
-        alertify.error(this.get('i18n').t('notify.submissionInvalid'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   },

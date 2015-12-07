@@ -27,7 +27,7 @@ export default Ember.Service.extend({
         }
 
         // Notify user
-        alertify.error(this.get('i18n').t('notify.unauthorizedError'));
+        this.get('notify').error(this.get('i18n').t('notify.unauthorizedError'));
 
         // Invalidate session or redirect
         if (this.get('session.isAuthenticated')) {
@@ -39,7 +39,7 @@ export default Ember.Service.extend({
 
       default:
 
-        alertify.error(this.get('i18n').t('notify.submissionError'));
+        this.get('notify').error(this.get('i18n').t('notify.submissionError'));
         trackJs.track(this._convertToError(err));
         Ember.Logger.assert(false, err);
         break;
