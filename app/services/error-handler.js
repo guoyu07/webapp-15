@@ -6,6 +6,7 @@ export default Ember.Service.extend({
 
   session: service('session'),
   i18n: service('i18n'),
+  notify: service('notify'),
 
   /**
    * Handles HTTP errors.
