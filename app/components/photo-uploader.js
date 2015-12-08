@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 export default Ember.Component.extend({
 
   store: service('store'),
+  notify: service('notify'),
 
   /**
    * Data-url where the photo will be posted

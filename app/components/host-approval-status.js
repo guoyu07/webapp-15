@@ -1,10 +1,11 @@
-/**
- * Ember component for host approval status.
- */
 import Ember from 'ember';
 import config from 'webapp/config/environment';
 
+const { service } = Ember.inject;
+
 export default Ember.Component.extend({
+
+  notify: service('notify'),
 
   host: null,
 
