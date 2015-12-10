@@ -200,6 +200,13 @@
         {{/link-to}}
       {{/if}}
     {{/unless}}
+    {{#if showEditProfileButton}}
+      {{#link-to 'host.edit' model.id class="btn btn-block btn-default mbm"}}
+        <span class="glyphicon glyphicon-pencil mrx"></span>
+        {{t 'literal.editProfile'}}
+      {{/link-to}}
+    {{/if}}
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
