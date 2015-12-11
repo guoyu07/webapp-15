@@ -123,6 +123,26 @@
       </table>
     </div>
 
+    {{#if model.activities}}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <span class="glyphicon glyphicon-grain mrx"></span>
+            {{t 'host.index.activities'}}
+          </h3>
+        </div>
+        <table class="table table-striped">
+          <tbody>
+          {{#each model.displayedActivities as |activity|}}
+            <tr>
+              <td>{{activity}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{/if}}
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
@@ -157,26 +177,6 @@
         </tbody>
       </table>
     </div>
-
-    {{#if model.activities}}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <span class="glyphicon glyphicon-grain mrx"></span>
-            {{t 'host.index.activities'}}
-          </h3>
-        </div>
-        <table class="table table-striped">
-          <tbody>
-          {{#each model.displayedActivities as |activity|}}
-            <tr>
-              <td>{{activity}}</td>
-            </tr>
-          {{/each}}
-          </tbody>
-        </table>
-      </div>
-    {{/if}}
   </div>
   <div class="col-md-6">
     <div class="panel panel-default">
