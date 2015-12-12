@@ -21,13 +21,13 @@ Thumbs.db
 .idea
 *.iml
 
-# Dependencies
-/node_modules
-/bower_components/*
-
 # Compiled output
 /dist
 /tmp
+
+# Dependencies
+/node_modules
+/bower_components
 
 # Misc
 /.sass-cache

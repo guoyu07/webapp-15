@@ -1,3 +1,4 @@
+/*jshint node:true*/
 /* global require, module */
 var mergeTrees = require('broccoli-merge-trees');
 var pickFiles = require('broccoli-static-compiler');
