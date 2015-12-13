@@ -1,17 +1,17 @@
-/**
- * Ember controller for hosts index.
- */
 import Ember from 'ember';
+
+const { computed } = Ember;
+const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
 
-  activitiesService: Ember.inject.service('activities'),
-  monthsService: Ember.inject.service('months'),
+  activitiesService: service('activities'),
+  monthsService: service('months'),
 
   // Query parameters bound with the URL
   queryParams: [
     'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'mapZoom',
-    'isSuspended', 'isHidden', 'membershipStatus', 'months'
+    'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId'
   ],
 
   // Whether the controller is in loading state
@@ -23,18 +23,19 @@ export default Ember.Controller.extend({
    * Indicates whether the map should be showed.
    * The map is always visible unless the active tabs is 'filters' and the list is hidden (small devices),
    */
-  showMap: function() {
+  showMap: computed('activeTab', function() {
     var showMap = true;
     if (Ember.$('#resultList').is(':hidden') && this.get('activeTab') === 'filters') {
       showMap = false;
     }
     return showMap;
-  }.property('activeTab'),
+  }),
 
   // Search filters
   searchTerm: '',
   activities: [],
   months: [],
+  dptId: null,
   approvalStatus: "approved",
   membershipStatus: "valid",
   isSuspended: false,
@@ -75,54 +76,55 @@ export default Ember.Controller.extend({
    */
   dataRequest: null,
 
+  department: null,
+
   // Query parameters
-  parameters: function() {
+  parameters: computed('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months', 'dptId', function() {
     return {
-      'searchTerm': Ember.$.trim(this.get('searchTerm')),
-      'approvalStatus': this.get('approvalStatus') || null,
-      'activities': this.get('activities') || null,
-      'membershipStatus': this.get('membershipStatus') || null,
-      'isSuspended': this.get('isSuspended'),
-      'isHidden': this.get('isHidden'),
-      'months': this.get('months') || null
+      searchTerm: Ember.$.trim(this.get('searchTerm')),
+      approvalStatus: this.get('approvalStatus') || null,
+      activities: this.get('activities') || null,
+      membershipStatus: this.get('membershipStatus') || null,
+      isSuspended: this.get('isSuspended'),
+      isHidden: this.get('isHidden'),
+      months: this.get('months') || null,
+      dptId: this.get('dptId') || null
     };
-  }.property('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
+  }),
 
   /**
    * Indicates whether we can load more hosts.
    */
-  cannotLoadMore: function() {
+  cannotLoadMore: computed('isLoadingMore', 'currentDisplayedFeatureCount', 'visibleFeatures.length', function() {
     return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('visibleFeatures.length');
-  }.property('isLoadingMore', 'currentDisplayedFeatureCount', 'visibleFeatures.length'),
+  }),
 
   /**
    * Observes changes on filters then send an event to refresh the hosts.
    */
   mapShouldRefresh: function() {
     this.send('updateHosts');
-  }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
+  }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months', 'dptId'),
 
   /**
    * Whether the map has visible features.
    */
-  hasVisibleFeatures: Ember.computed.notEmpty('visibleFeatures'),
+  hasVisibleFeatures: computed.notEmpty('visibleFeatures'),
 
   /**
    * Returns the list of features displayed in the list.
    */
-  displayedFeatures: function() {
+  displayedFeatures: computed('visibleFeatures.[]', 'currentDisplayedFeatureCount', function() {
+    let visibleFeatures = this.get('visibleFeatures');
+    let displayedFeatures = [];
 
-    var visibleFeatures = this.get('visibleFeatures');
-
-    if (!visibleFeatures) {
-      return;
+    if (visibleFeatures) {
+      let end = Math.min(this.get('currentDisplayedFeatureCount'), visibleFeatures.length);
+      displayedFeatures = visibleFeatures.slice(0, end);
     }
 
-    var end = Math.min(this.get('currentDisplayedFeatureCount'), visibleFeatures.length);
-
-    return visibleFeatures.slice(0, end);
-
-  }.property('visibleFeatures.length', 'currentDisplayedFeatureCount'),
+    return displayedFeatures;
+  }),
 
   actions: {
     /**
@@ -184,6 +186,11 @@ export default Ember.Controller.extend({
      */
     moreHosts() {
       this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + 10);
+    },
+
+    chooseDepartment(department) {
+      this.set('department', department);
+      this.set('dptId', department.id);
     }
   }
 });

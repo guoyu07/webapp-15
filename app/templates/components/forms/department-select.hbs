@@ -1,0 +1,8 @@
+{{#power-select
+selected=department
+options=departmentsService.groupedDepartments
+searchField='displayedName'
+onchange=onchange
+as |department|}}
+  {{department.displayedName}}
+{{/power-select}}

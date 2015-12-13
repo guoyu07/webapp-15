@@ -1,6 +1,6 @@
 <div class="row host-index-row">
   <div class="col-md-6">
-    <div class="form" role="form">
+    <form class="form-horizontal">
       <h4 class="sr-only">{{t 'hosts.index.find'}}</h4>
 
       <div class="form-group">
@@ -48,66 +48,88 @@
               {{/if}}
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane fade" id="filters">
-            <h4 class="mtm">{{t 'hosts.index.activities'}}</h4>
+          <div role="tabpanel" class="tab-pane fade ptm" id="filters">
 
-            <div class="form-group toggle-options-cols mtm">
-              {{toggle-options values=activitiesService.allActivities selected=activities optionValuePath='id'}}
+            <div class="form-group">
+              <label class="col-sm-2 control-label">
+                Region
+              </label>
+              <div class="col-sm-10">
+                {{forms/department-select department=department onchange=(action 'chooseDepartment')}}
+              </div>
             </div>
-            <h4 class="mtm">{{t 'hosts.index.openingMonths'}}</h4>
-
-            <div class="form-group toggle-options-cols capitalize mtm">
-              {{toggle-options values=monthsService.allMonths selected=months optionValuePath='id'}}
+            <div class="form-group">
+              <label class="col-sm-2 control-label">
+                {{t 'hosts.index.activities'}}
+              </label>
+              <div class="col-sm-10 toggle-options-cols">
+                {{toggle-options values=activitiesService.allActivities selected=activities optionValuePath='id'}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">
+                {{t 'hosts.index.openingMonths'}}
+              </label>
+              <div class="col-sm-10 toggle-options-cols">
+                {{toggle-options values=monthsService.allMonths selected=months optionValuePath='id'}}
+              </div>
             </div>
             {{#if sessionUser.user.isAdmin}}
-              <h4>{{t 'hosts.index.admin'}}</h4>
-
-              <div class="col-xs-12 col-sm-4">
-                <div class="radio">
-                  {{#radio-button value="pending" groupValue=approvalStatus}}
-                    {{t 'hosts.index.pending.label'}}
-                  {{/radio-button}}
-                </div>
-                <div class="radio">
-                  {{#radio-button value="approved" groupValue=approvalStatus}}
-                    {{t 'hosts.index.approved.label'}}
-                  {{/radio-button}}
-                </div>
-                <div class="radio">
-                  {{#radio-button value="rejected" groupValue=approvalStatus}}
-                    {{t 'hosts.index.rejected.label'}}
-                  {{/radio-button}}
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="radio">
-                  {{#radio-button value="valid" groupValue=membershipStatus}}
-                    {{t 'hosts.index.valid.label'}}
-                  {{/radio-button}}
-                </div>
-                <div class="radio">
-                  {{#radio-button value="expired" groupValue=membershipStatus}}
-                    {{t 'hosts.index.expired.label'}}
-                  {{/radio-button}}
-                </div>
-                <div class="radio">
-                  {{#radio-button value="none" groupValue=membershipStatus}}
-                    {{t 'hosts.index.none.label'}}
-                  {{/radio-button}}
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="checkbox">
-                  <label>
-                    {{input type="checkbox" checked=isSuspended}}
-                    {{t 'hosts.index.suspended.label'}}
-                  </label>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    {{input type="checkbox" checked=isHidden}}
-                    {{t 'hosts.index.hidden.label'}}
-                  </label>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  {{t 'hosts.index.admin'}}
+                </label>
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                      <div class="radio">
+                        {{#radio-button value="pending" groupValue=approvalStatus}}
+                          {{t 'hosts.index.pending.label'}}
+                        {{/radio-button}}
+                      </div>
+                      <div class="radio">
+                        {{#radio-button value="approved" groupValue=approvalStatus}}
+                          {{t 'hosts.index.approved.label'}}
+                        {{/radio-button}}
+                      </div>
+                      <div class="radio">
+                        {{#radio-button value="rejected" groupValue=approvalStatus}}
+                          {{t 'hosts.index.rejected.label'}}
+                        {{/radio-button}}
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                      <div class="radio">
+                        {{#radio-button value="valid" groupValue=membershipStatus}}
+                          {{t 'hosts.index.valid.label'}}
+                        {{/radio-button}}
+                      </div>
+                      <div class="radio">
+                        {{#radio-button value="expired" groupValue=membershipStatus}}
+                          {{t 'hosts.index.expired.label'}}
+                        {{/radio-button}}
+                      </div>
+                      <div class="radio">
+                        {{#radio-button value="none" groupValue=membershipStatus}}
+                          {{t 'hosts.index.none.label'}}
+                        {{/radio-button}}
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                      <div class="checkbox">
+                        <label>
+                          {{input type="checkbox" checked=isSuspended}}
+                          {{t 'hosts.index.suspended.label'}}
+                        </label>
+                      </div>
+                      <div class="checkbox">
+                        <label>
+                          {{input type="checkbox" checked=isHidden}}
+                          {{t 'hosts.index.hidden.label'}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             {{/if}}
@@ -117,7 +139,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
   <div class="col-md-6 {{if showMap 'show' 'hidden'}}">
     {{leaflet-map
