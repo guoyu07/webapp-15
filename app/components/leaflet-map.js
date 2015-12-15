@@ -151,13 +151,13 @@ export default Ember.Component.extend({
 
       // Resize Map for mobile
       if (Ember.$(".leaflet-container")) {
-        Ember.$(".leaflet-container").height(windowHeight - listTopOffset - 30);
+        Ember.$(".leaflet-container").height(windowHeight - listTopOffset - 10);
       }
     } else {
 
       // Resize Map for desktop
       if (Ember.$(".leaflet-container")) {
-        Ember.$(".leaflet-container").height(windowHeight - mapTopOffset - 20);
+        Ember.$(".leaflet-container").height(windowHeight - mapTopOffset);
       }
 
       if (Ember.$("#resultList")) {

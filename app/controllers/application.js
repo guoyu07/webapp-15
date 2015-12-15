@@ -5,16 +5,16 @@ import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
 
+const { computed } = Ember;
+
 export default Ember.Controller.extend(ValidationsMixin, {
 
-  setMaxWith: function() {
-    return this.get('currentRouteName') !== 'hosts.index';
-  }.property('currentRouteName'),
+  isHostsIndexRoute: computed.equal('currentRouteName', 'hosts.index'),
 
   /**
    * Indicates whether the current user can see the "Wwoofers" link in the main menu.
    */
-  canSeeWwoofersLink: Ember.computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
+  canSeeWwoofersLink: computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
 
   /**
    * Email address of the user to impersonate (admins only).

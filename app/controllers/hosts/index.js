@@ -7,11 +7,14 @@ export default Ember.Controller.extend({
 
   activitiesService: service('activities'),
   monthsService: service('months'),
+  capacitiesService: service('capacities'),
+  staysService: service('stays'),
+  departmentsService: service('departments'),
 
   // Query parameters bound with the URL
   queryParams: [
     'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'mapZoom',
-    'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId'
+    'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay'
   ],
 
   // Whether the controller is in loading state
@@ -36,8 +39,10 @@ export default Ember.Controller.extend({
   activities: [],
   months: [],
   dptId: null,
-  approvalStatus: "approved",
-  membershipStatus: "valid",
+  capacity: '1',
+  stay: 'one-two-weeks',
+  approvalStatus: 'approved',
+  membershipStatus: 'valid',
   isSuspended: false,
   isHidden: false,
 
@@ -126,6 +131,28 @@ export default Ember.Controller.extend({
     return displayedFeatures;
   }),
 
+  selectedMonths: computed('months.[]', function () {
+    let months = this.get('months');
+    return this.get('monthsService.allMonths').filter(function (month) {
+      return months.contains(month.id);
+    });
+  }),
+
+  selectedCapacity: computed('capacity', function () {
+    let capacity = this.get('capacity');
+    return this.get('capacitiesService.allCapacities').findBy('id', capacity);
+  }),
+
+  selectedStay: computed('stay', function () {
+    let stay = this.get('stay');
+    return this.get('staysService.allStays').findBy('id', stay);
+  }),
+
+  selectedDepartment: computed('dptId', function () {
+    let dptId = this.get('dptId');
+    return dptId ? this.store.find('department', dptId) : null;
+  }),
+
   actions: {
     /**
      * Update the hosts features.
@@ -189,8 +216,20 @@ export default Ember.Controller.extend({
     },
 
     chooseDepartment(department) {
-      this.set('department', department);
-      this.set('dptId', department.id);
+      var id = department ? department.id : null;
+      this.set('dptId', id);
+    },
+
+    chooseMonths(months) {
+      this.set('months', months.mapBy('id'));
+    },
+
+    chooseCapacity(capacity) {
+      this.set('capacity', capacity.id);
+    },
+
+    chooseStay(stay) {
+      this.set('stay', stay.id);
     }
   }
 });

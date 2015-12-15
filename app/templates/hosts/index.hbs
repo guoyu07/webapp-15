@@ -1,147 +1,151 @@
 <div class="row host-index-row">
-  <div class="col-md-6">
+  <div class="col-md-7 mtm">
     <form class="form-horizontal">
+
       <h4 class="sr-only">{{t 'hosts.index.find'}}</h4>
 
       <div class="form-group">
-        <div class="input-group">
-          <label class="sr-only" for="searchTerm">{{t 'literal.search'}}</label>
-          {{input class="form-control" type="search"  id="searchTerm" placeholder=(t 'hosts.index.searchTerm.placeholder') value=searchTerm enter="updateHosts"}}
-          <a {{action "updateHosts"}} class="btn btn-primary input-group-addon {{if isLoading 'disabled'}}">
-            {{#if isLoading}}
-              {{t 'literal.loading'}}
-            {{else}}
-              {{t 'literal.search'}}
-            {{/if}}
-          </a>
+        <label class="col-sm-2 control-label">
+          Dates
+        </label>
+        <div class="col-sm-4">
+          {{#power-select
+          selected=selectedMonths
+          options=monthsService.allMonths
+          searchField='label'
+          onchange=(action 'chooseMonths')
+          multiple=true
+          as |month|}}
+            <span class="text-capitalize">{{month.label}}</span>
+          {{/power-select}}
+        </div>
+        <div class="col-sm-3">
+          {{#power-select
+          selected=selectedCapacity
+          options=capacitiesService.allCapacities
+          searchEnabled=false
+          onchange=(action 'chooseCapacity')
+          as |capacity|}}
+            <span class="text-capitalize">{{capacity.label}}</span>
+          {{/power-select}}
+        </div>
+        <div class="col-sm-3">
+          {{#power-select
+          selected=selectedStay
+          options=staysService.allStays
+          searchEnabled=false
+          onchange=(action 'chooseStay')
+          as |stay|}}
+            <span class="text-capitalize">{{stay.label}}</span>
+          {{/power-select}}
         </div>
       </div>
-      <div class="mbm" role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#results" aria-controls="results" role="tab" data-toggle="tab" {{action "updateTab" 'results'}}>
-              {{t 'hosts.index.results'}}
-            </a>
-          </li>
-          <li role="presentation">
-            <a href="#filters" aria-controls="filters" role="tab" data-toggle="tab" {{action "updateTab" 'filters'}}>
-              {{t 'hosts.index.filters'}}
-            </a>
-          </li>
-        </ul>
-        <div id="resultTabContent" class="tab-content">
-          <div role="tabpanel" class="tab-pane fade in active" id="results">
-            <div id="resultList" class="hidden-sm hidden-xs">
-              {{#if isLoading}}
-                {{partial 'loading'}}
-              {{else}}
-                {{#if hasVisibleFeatures}}
-                  {{#each displayedFeatures as |feature|}}
-                    {{host-item host=feature}}
-                  {{/each}}
-                  <button {{action "moreHosts"}} class="btn btn-default center-block" disabled={{cannotLoadMore}}>
-                    {{t 'literal.loadMore'}}
-                  </button>
-                {{else}}
-                  <p class="text-center"><strong>{{t 'hosts.index.noResults'}}</strong></p>
-                {{/if}}
-              {{/if}}
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane fade ptm" id="filters">
+      <hr>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          {{t 'hosts.index.activities'}}
+        </label>
+        <div class="col-sm-10 toggle-options-cols">
+          {{toggle-options values=activitiesService.allActivities selected=activities optionValuePath='id'}}
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          Region
+        </label>
+        <div class="col-sm-10">
+          {{forms/department-select
+          department=selectedDepartment
+          allowClear=true
+          onchange=(action 'chooseDepartment')}}
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label for="searchTerm" class="col-sm-2 control-label">
+          {{t 'literal.search'}}
+        </label>
+        <div class="col-sm-10">
+          {{input class="form-control" type="search"  id="searchTerm" placeholder=(t 'hosts.index.searchTerm.placeholder') value=searchTerm enter="updateHosts"}}
+        </div>
+      </div>
 
-            <div class="form-group">
-              <label class="col-sm-2 control-label">
-                Region
-              </label>
-              <div class="col-sm-10">
-                {{forms/department-select department=department onchange=(action 'chooseDepartment')}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">
-                {{t 'hosts.index.activities'}}
-              </label>
-              <div class="col-sm-10 toggle-options-cols">
-                {{toggle-options values=activitiesService.allActivities selected=activities optionValuePath='id'}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label">
-                {{t 'hosts.index.openingMonths'}}
-              </label>
-              <div class="col-sm-10 toggle-options-cols">
-                {{toggle-options values=monthsService.allMonths selected=months optionValuePath='id'}}
-              </div>
-            </div>
-            {{#if sessionUser.user.isAdmin}}
-              <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  {{t 'hosts.index.admin'}}
-                </label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-4">
-                      <div class="radio">
-                        {{#radio-button value="pending" groupValue=approvalStatus}}
-                          {{t 'hosts.index.pending.label'}}
-                        {{/radio-button}}
-                      </div>
-                      <div class="radio">
-                        {{#radio-button value="approved" groupValue=approvalStatus}}
-                          {{t 'hosts.index.approved.label'}}
-                        {{/radio-button}}
-                      </div>
-                      <div class="radio">
-                        {{#radio-button value="rejected" groupValue=approvalStatus}}
-                          {{t 'hosts.index.rejected.label'}}
-                        {{/radio-button}}
-                      </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                      <div class="radio">
-                        {{#radio-button value="valid" groupValue=membershipStatus}}
-                          {{t 'hosts.index.valid.label'}}
-                        {{/radio-button}}
-                      </div>
-                      <div class="radio">
-                        {{#radio-button value="expired" groupValue=membershipStatus}}
-                          {{t 'hosts.index.expired.label'}}
-                        {{/radio-button}}
-                      </div>
-                      <div class="radio">
-                        {{#radio-button value="none" groupValue=membershipStatus}}
-                          {{t 'hosts.index.none.label'}}
-                        {{/radio-button}}
-                      </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                      <div class="checkbox">
-                        <label>
-                          {{input type="checkbox" checked=isSuspended}}
-                          {{t 'hosts.index.suspended.label'}}
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          {{input type="checkbox" checked=isHidden}}
-                          {{t 'hosts.index.hidden.label'}}
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {{/if}}
-            <div class="hidden">
-              <button {{action "updateHosts"}} disabled={{isLoading}}></button>
-            </div>
+      {{#if sessionUser.user.isAdmin}}
+        <hr>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">
+            Status
+          </label>
+          <div class="col-sm-10 radio-options-cols">
+              {{#radio-button value="pending" groupValue=approvalStatus classNames="radio-inline"}}
+                {{t 'hosts.index.pending.label'}}
+              {{/radio-button}}
+              {{#radio-button value="approved" groupValue=approvalStatus classNames="radio-inline"}}
+                {{t 'hosts.index.approved.label'}}
+              {{/radio-button}}
+              {{#radio-button value="rejected" groupValue=approvalStatus classNames="radio-inline"}}
+                {{t 'hosts.index.rejected.label'}}
+              {{/radio-button}}
           </div>
         </div>
+        <hr>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">
+            Membership
+          </label>
+          <div class="col-sm-10 radio-options-cols">
+            {{#radio-button value="valid" groupValue=membershipStatus classNames="radio-inline"}}
+              {{t 'hosts.index.valid.label'}}
+            {{/radio-button}}
+            {{#radio-button value="expired" groupValue=membershipStatus classNames="radio-inline"}}
+              {{t 'hosts.index.expired.label'}}
+            {{/radio-button}}
+            {{#radio-button value="none" groupValue=membershipStatus classNames="radio-inline"}}
+              {{t 'hosts.index.none.label'}}
+            {{/radio-button}}
+          </div>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">
+            Flags
+          </label>
+          <div class="col-sm-10 toggle-options-cols">
+            <label for="isSuspended" class="checkbox-inline">
+              {{input type="checkbox" id="isSuspended" checked=isSuspended}}
+              {{t 'hosts.index.suspended.label'}}
+            </label>
+            <label for="isHidden" class="checkbox-inline">
+              {{input type="checkbox" id="isHidden" checked=isHidden}}
+              {{t 'hosts.index.hidden.label'}}
+            </label>
+          </div>
+        </div>
+      {{/if}}
+      <div class="hidden">
+        <button {{action "updateHosts"}} disabled={{isLoading}}></button>
       </div>
     </form>
+
+    <div class="hidden-sm hidden-xs">
+      {{#if isLoading}}
+        {{partial 'loading'}}
+      {{else}}
+        {{#if hasVisibleFeatures}}
+          {{#each displayedFeatures as |feature|}}
+            {{host-item host=feature}}
+          {{/each}}
+          <button {{action "moreHosts"}} class="btn btn-default center-block" disabled={{cannotLoadMore}}>
+            {{t 'literal.loadMore'}}
+          </button>
+        {{else}}
+          <p class="text-center"><strong>{{t 'hosts.index.noResults'}}</strong></p>
+        {{/if}}
+      {{/if}}
+    </div>
   </div>
-  <div class="col-md-6 {{if showMap 'show' 'hidden'}}">
+  <div class="col-md-5 prn {{if showMap 'show' 'hidden'}}">
     {{leaflet-map
     markers=hostCoordinates
     longitude=lon
