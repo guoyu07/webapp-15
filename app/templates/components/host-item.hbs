@@ -1,19 +1,11 @@
-<div class="row">
-  <div class="hidden-xs hidden-sm hidden-md col-lg-5 col-host-thumb">
-    {{image-thumb url=photoUrl height=200}}
-  </div>
-  <div class="col-sm-12 col-lg-7">
-    <h4>{{farmName}}</h4>
-
-    <p>{{description}}</p>
-    {{#link-to "host" hostId title=farmName class="btn btn-primary"}}
-      {{t 'literal.view'}}
+<div class="col-xs-6">
+  <div class="thumbnail">
+    {{#link-to 'host' hostId title=farmName}}
+      {{image-thumb url=photoUrl height=250}}
     {{/link-to}}
-    {{#if sessionUser.user.isAdmin}}
-      {{#link-to "host.edit" hostId class="btn btn-default mlx" }}
-        {{t 'literal.edit'}}
-      {{/link-to}}
-    {{/if}}
+    <div class="caption host-item-caption">
+      <h3 class="overflow-ellipsis">{{farmName}}</h3>
+      <p>{{description}}</p>
+    </div>
   </div>
 </div>
-<hr class="hr-wider"/>

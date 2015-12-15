@@ -1,12 +1,38 @@
 #resultList {
+  position: fixed;
+  top: @navbar-height;
+  bottom: 0;
   padding-top: 20px;
-  overflow-x: hidden;
   overflow-y: auto;
-  clear: both;
+}
+
+#resultMap {
+  position: fixed;
+  top: @navbar-height;
+  bottom: 0;
+  right: 0;
 }
 
 .col-host-thumb {
   margin: -15px 0 -15px -15px;
+}
+
+.overflow-ellipsis {
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.host-item-caption h3 {
+  line-height: normal;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.search-control-label {
+  margin-bottom: 0;
+  padding-top: 9px;
 }
 
 .toggle-options-cols {
@@ -23,6 +49,10 @@
     margin-left: 0;
     margin-right: 20px;
   }
+}
+
+.leaflet-container {
+  height: 100%;
 }
 
 .leaflet-popup-content-wrapper {

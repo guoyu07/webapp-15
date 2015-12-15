@@ -1,7 +1,6 @@
-/**
- * Ember component for host item renderer.
- */
 import Ember from 'ember';
+
+const { computed } = Ember;
 
 export default Ember.Component.extend({
 
@@ -13,22 +12,24 @@ export default Ember.Component.extend({
   /**
    * Host Id
    */
-  hostId: Ember.computed.readOnly('host.properties.hostId'),
+  hostId: computed.readOnly('host.properties.hostId'),
 
   /**
    * Host farm name
    */
-  farmName: Ember.computed.readOnly('host.properties.farmName'),
+  farmName: computed('host.properties.farmName', function () {
+    return this.get('host.properties.farmName') || 'Unnamed Farm';
+  }),
 
   /**
    * Host description
    */
-  description: Ember.computed.readOnly('host.properties.description'),
+  description: computed.readOnly('host.properties.description'),
 
   /**
    * Returns the photo URL to display based on the photo property.
    */
-  photoUrl: function() {
+  photoUrl: computed('host.properties.photo', function() {
     var photo = this.get('host.properties.photo');
     var photoUrl;
     if (Ember.isEmpty(photo)) {
@@ -37,5 +38,5 @@ export default Ember.Component.extend({
       photoUrl = "https://s3.amazonaws.com/wwoof-france/photos/hosts/" + photo;
     }
     return photoUrl;
-  }.property('host.properties.photo')
+  })
 });

@@ -13,14 +13,14 @@ export default Ember.Controller.extend({
 
   // Query parameters bound with the URL
   queryParams: [
-    'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'mapZoom',
+    'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'mapZoom', 'showMoreFilter',
     'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay'
   ],
 
   // Whether the controller is in loading state
   isLoading: false,
   isLoadingMore: false,
-  activeTab: 'results',
+  showMoreFilter: false,
 
   /**
    * Indicates whether the map should be showed.
@@ -230,6 +230,10 @@ export default Ember.Controller.extend({
 
     chooseStay(stay) {
       this.set('stay', stay.id);
+    },
+
+    toggleFilters() {
+      this.toggleProperty('showMoreFilter');
     }
   }
 });

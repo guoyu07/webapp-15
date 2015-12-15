@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   markerClusterGroup: null,
   geoJsonLayer: null,
 
-  didInsertElement: function() {
+  didInsertElement() {
 
     // Create the map
     this.map = L.map(this.get('element'), { minZoom: 3, maxZoom: 12 });
@@ -38,11 +38,6 @@ export default Ember.Component.extend({
     this.map.on('dragend', this.mapDidMove, this);
     this.map.on('zoomend', this.mapDidMove, this);
 
-    // Resize containers to fit the screen size
-    this.resizeContainers();
-    Ember.$(window).on('resize', this.resizeContainers);
-    this.map.invalidateSize();
-
     // Adjust map to display France
     this.centerMap();
   },
@@ -50,7 +45,7 @@ export default Ember.Component.extend({
   /**
    * Centers the map in the middle of France.
    */
-  centerMap: function() {
+  centerMap() {
 
     var latitude = this.get('latitude');
     var longitude = this.get('longitude');
@@ -90,7 +85,7 @@ export default Ember.Component.extend({
   /**
    * Cleans the layers/events up.
    */
-  willDestroyElement: function() {
+  willDestroyElement() {
     if (this.map) {
       this.map.remove();
     }
@@ -105,7 +100,7 @@ export default Ember.Component.extend({
   /**
    * Handles moves on the map.
    */
-  mapDidMove: function() {
+  mapDidMove() {
 
     var center = this.map.getCenter();
     var zoom = this.map.getZoom();
@@ -118,7 +113,7 @@ export default Ember.Component.extend({
   /**
    * Computes the visibility of the features based on map bounds.
    */
-  updateVisibleFeatures: function() {
+  updateVisibleFeatures() {
 
     if (!this.map || !this.geoJsonLayer) {
       return;
@@ -134,36 +129,6 @@ export default Ember.Component.extend({
     });
 
     this.sendAction('visibleFeaturesChanged', visibleFeatures);
-  },
-
-  /**
-   * Updates the size of the map/list containers based on the window size.
-   */
-  resizeContainers: function() {
-
-    var hostIndexRow = Ember.$('.host-index-row');
-    var resultTabContent = Ember.$('#resultTabContent');
-    var windowHeight = Ember.$(window).height();
-    var mapTopOffset = hostIndexRow.offset() ? hostIndexRow.offset().top : 0;
-    var listTopOffset = resultTabContent.offset() ? resultTabContent.offset().top : 0;
-
-    if (Ember.$('#resultList').is(':hidden')) {
-
-      // Resize Map for mobile
-      if (Ember.$(".leaflet-container")) {
-        Ember.$(".leaflet-container").height(windowHeight - listTopOffset - 10);
-      }
-    } else {
-
-      // Resize Map for desktop
-      if (Ember.$(".leaflet-container")) {
-        Ember.$(".leaflet-container").height(windowHeight - mapTopOffset);
-      }
-
-      if (Ember.$("#resultList")) {
-        Ember.$("#resultList").height(windowHeight - listTopOffset - 40);
-      }
-    }
   },
 
   /**
