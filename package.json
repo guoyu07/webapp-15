@@ -49,6 +49,7 @@
     "ember-notify": "4.3.1",
     "ember-power-select": "0.6.5",
     "ember-radio-button": "1.0.7",
+    "ember-responsive": "1.2.3",
     "ember-simple-auth": "1.0.1",
     "ember-validations": "2.0.0-alpha.3"
   }

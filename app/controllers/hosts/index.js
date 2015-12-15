@@ -24,15 +24,8 @@ export default Ember.Controller.extend({
 
   /**
    * Indicates whether the map should be showed.
-   * The map is always visible unless the active tabs is 'filters' and the list is hidden (small devices),
    */
-  showMap: computed('activeTab', function() {
-    var showMap = true;
-    if (Ember.$('#resultList').is(':hidden') && this.get('activeTab') === 'filters') {
-      showMap = false;
-    }
-    return showMap;
-  }),
+  showMap: computed.or('media.isDesktop', 'media.isJumbo'),
 
   // Search filters
   searchTerm: '',
@@ -69,7 +62,7 @@ export default Ember.Controller.extend({
   /**
    * List of features currently displayed in the list.
    */
-  currentDisplayedFeatureCount: 0,
+  currentDisplayedFeatureCount: 10,
 
   /**
    * List of visible features on the map.
@@ -114,13 +107,18 @@ export default Ember.Controller.extend({
   /**
    * Whether the map has visible features.
    */
-  hasVisibleFeatures: computed.notEmpty('visibleFeatures'),
+  hasVisibleFeatures: computed.notEmpty('displayedFeatures'),
 
   /**
    * Returns the list of features displayed in the list.
    */
-  displayedFeatures: computed('visibleFeatures.[]', 'currentDisplayedFeatureCount', function() {
+  displayedFeatures: computed('visibleFeatures.[]', 'hostCoordinates.features.[]', 'currentDisplayedFeatureCount', 'showMap', function() {
     let visibleFeatures = this.get('visibleFeatures');
+
+    if (!this.get('showMap')) {
+      visibleFeatures = this.get('hostCoordinates.features');
+    }
+
     let displayedFeatures = [];
 
     if (visibleFeatures) {
@@ -198,14 +196,6 @@ export default Ember.Controller.extend({
         lon: longitude,
         mapZoom: zoom
       });
-    },
-
-    /**
-     * Updates the active tab.
-     * @param {String} tab
-     */
-    updateTab(tab) {
-      this.set('activeTab', tab);
     },
 
     /**

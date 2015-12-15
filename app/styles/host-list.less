@@ -1,9 +1,12 @@
 #resultList {
-  position: fixed;
-  top: @navbar-height;
-  bottom: 0;
   padding-top: 20px;
-  overflow-y: auto;
+
+  @media (min-width: @screen-md-min) {
+    position: fixed;
+    top: @navbar-height;
+    bottom: 0;
+    overflow-y: auto;
+  }
 }
 
 #resultMap {
