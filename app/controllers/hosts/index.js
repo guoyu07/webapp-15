@@ -67,7 +67,7 @@ export default Ember.Controller.extend({
   /**
    * List of visible features on the map.
    */
-  visibleFeatures: [],
+  featuresOnMap: [],
 
   /**
    * The latest host-coordinates XHR request.
@@ -93,8 +93,8 @@ export default Ember.Controller.extend({
   /**
    * Indicates whether we can load more hosts.
    */
-  cannotLoadMore: computed('isLoadingMore', 'currentDisplayedFeatureCount', 'visibleFeatures.length', function() {
-    return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('visibleFeatures.length');
+  cannotLoadMore: computed('isLoadingMore', 'currentDisplayedFeatureCount', 'featuresOnMap.length', function() {
+    return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('featuresOnMap.length');
   }),
 
   /**
@@ -107,26 +107,27 @@ export default Ember.Controller.extend({
   /**
    * Whether the map has visible features.
    */
-  hasVisibleFeatures: computed.notEmpty('displayedFeatures'),
+  hasVisibleFeatures: computed.notEmpty('featuresInList'),
 
   /**
    * Returns the list of features displayed in the list.
    */
-  displayedFeatures: computed('visibleFeatures.[]', 'hostCoordinates.features.[]', 'currentDisplayedFeatureCount', 'showMap', function() {
-    let visibleFeatures = this.get('visibleFeatures');
+  featuresInList: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'currentDisplayedFeatureCount', 'showMap', function() {
+    let featuresInList = null;
+    let features = [];
 
-    if (!this.get('showMap')) {
-      visibleFeatures = this.get('hostCoordinates.features');
+    if (this.get('showMap')) {
+      features = this.get('featuresOnMap');
+    } else {
+      features = this.get('hostCoordinates.features');
     }
 
-    let displayedFeatures = [];
-
-    if (visibleFeatures) {
-      let end = Math.min(this.get('currentDisplayedFeatureCount'), visibleFeatures.length);
-      displayedFeatures = visibleFeatures.slice(0, end);
+    if (Ember.isPresent(features)) {
+      let end = Math.min(this.get('currentDisplayedFeatureCount'), features.length);
+      featuresInList = features.slice(0, end);
     }
 
-    return displayedFeatures;
+    return featuresInList;
   }),
 
   selectedMonths: computed('months.[]', function () {
@@ -183,7 +184,7 @@ export default Ember.Controller.extend({
      * Refreshes the list of visible features when yhe map is loaded or was moved.
      */
     visibleFeaturesChanged(visibleFeatures) {
-      this.set('visibleFeatures', visibleFeatures);
+      this.set('featuresOnMap', visibleFeatures);
       this.set('currentDisplayedFeatureCount', this.get('defaultDisplayedFeatureCount'));
     },
 
