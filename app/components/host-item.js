@@ -4,6 +4,8 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
 
+  classNames: ['thumbnail'],
+
   /**
    * Host features
    */
@@ -18,7 +20,7 @@ export default Ember.Component.extend({
    * Host farm name
    */
   farmName: computed('host.properties.farmName', function () {
-    return this.get('host.properties.farmName') || 'Unnamed Farm';
+    return this.get('host.properties.farmName') || '[Unnamed Farm]';
   }),
 
   /**

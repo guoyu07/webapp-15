@@ -171,7 +171,9 @@
         {{#if hasVisibleFeatures}}
           <div class="row">
             {{#each featuresInList as |feature|}}
-              {{host-item host=feature}}
+              <div class="col-xs-12 col-sm-6 col-host-item">
+                {{host-item host=feature}}
+              </div>
             {{/each}}
           </div>
           <p>

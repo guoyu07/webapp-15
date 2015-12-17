@@ -1,11 +1,7 @@
-<div class="col-xs-12 col-sm-6">
-  <div class="thumbnail">
-    {{#link-to 'host' hostId title=farmName}}
-      {{image-thumb url=photoUrl height=250}}
-    {{/link-to}}
-    <div class="caption host-item-caption">
-      <h3 class="overflow-ellipsis">{{farmName}}</h3>
-      <p>{{description}}</p>
-    </div>
-  </div>
+{{#link-to 'host' hostId title=farmName}}
+  {{image-thumb url=photoUrl height=250}}
+{{/link-to}}
+<div class="caption host-item-caption">
+  <h3 class="overflow-ellipsis">{{farmName}}</h3>
+  <p>{{description}}</p>
 </div>
