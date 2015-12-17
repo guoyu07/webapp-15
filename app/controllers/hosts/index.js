@@ -93,8 +93,8 @@ export default Ember.Controller.extend({
   /**
    * Indicates whether we can load more hosts.
    */
-  cannotLoadMore: computed('isLoadingMore', 'currentDisplayedFeatureCount', 'featuresOnMap.length', function() {
-    return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('featuresOnMap.length');
+  cannotLoadMore: computed('isLoadingMore', 'currentDisplayedFeatureCount', 'features.length', function() {
+    return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('features.length');
   }),
 
   /**
@@ -105,15 +105,9 @@ export default Ember.Controller.extend({
   }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months', 'dptId'),
 
   /**
-   * Whether the map has visible features.
+   * Returns the list of features that can be displayed in the list.
    */
-  hasVisibleFeatures: computed.notEmpty('featuresInList'),
-
-  /**
-   * Returns the list of features displayed in the list.
-   */
-  featuresInList: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'currentDisplayedFeatureCount', 'showMap', function() {
-    let featuresInList = null;
+  features: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'showMap', function () {
     let features = [];
 
     if (this.get('showMap')) {
@@ -121,6 +115,21 @@ export default Ember.Controller.extend({
     } else {
       features = this.get('hostCoordinates.features');
     }
+
+    return features;
+  }),
+
+  /**
+   * Whether the list has visible features.
+   */
+  hasVisibleFeatures: computed.notEmpty('featuresInList'),
+
+  /**
+   * Returns the list of features that are displayed in the list.
+   */
+  featuresInList: computed('features.[]', 'currentDisplayedFeatureCount', function() {
+    let featuresInList = null;
+    let features = this.get('features');
 
     if (Ember.isPresent(features)) {
       let end = Math.min(this.get('currentDisplayedFeatureCount'), features.length);
