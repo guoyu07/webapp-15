@@ -3,6 +3,8 @@ import Ember from 'ember';
 const { computed } = Ember;
 const { service } = Ember.inject;
 
+const featurePageSize = 10;
+
 export default Ember.Controller.extend({
 
   activitiesService: service('activities'),
@@ -13,56 +15,62 @@ export default Ember.Controller.extend({
 
   // Query parameters bound with the URL
   queryParams: [
-    'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'mapZoom', 'showMoreFilter',
-    'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay'
+    'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'zoom', 'showMoreFilter',
+    'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay',
+    'childrenOk', 'petsOk'
   ],
 
-  // Whether the controller is in loading state
-  isLoading: false,
-  isLoadingMore: false,
-  showMoreFilter: false,
-
   /**
-   * Indicates whether the map should be showed.
+   * Search filters.
    */
-  showMap: computed.or('media.isDesktop', 'media.isJumbo'),
-
-  // Search filters
-  searchTerm: '',
-  activities: [],
   months: [],
-  dptId: null,
   capacity: '1',
   stay: 'one-two-weeks',
+  activities: [],
+
+  /**
+   * Advanced search filters.
+   */
+  searchTerm: '',
+  dptId: null,
+  childrenOk: false,
+  petsOk: false,
+
+  /**
+   * Admin search filters.
+   */
   approvalStatus: 'approved',
   membershipStatus: 'valid',
   isSuspended: false,
   isHidden: false,
 
   /**
-   * Current map longitude.
+   * Map longitude/latitude/zoom.
    */
   lon: null,
-
-  /**
-   * Current map Latitude.
-   */
   lat: null,
+  zoom: null,
 
   /**
-   * Current map Zoom.
+   * Indicates whether the controller is in loading state.
    */
-  mapZoom: null,
+  isLoading: false,
+  isLoadingMore: false,
 
   /**
-   * Number of features that are displayed by default.
+   * Indicates whether advanced filters are visible.
    */
-  defaultDisplayedFeatureCount: 10,
+  showMoreFilter: false,
+
+  /**
+   * Indicates whether the map is visible.
+   */
+  showMap: computed.or('media.isDesktop', 'media.isJumbo'),
 
   /**
    * List of features currently displayed in the list.
    */
-  currentDisplayedFeatureCount: 10,
+  currentDisplayedFeatureCount: featurePageSize,
 
   /**
    * List of visible features on the map.
@@ -77,17 +85,10 @@ export default Ember.Controller.extend({
   department: null,
 
   // Query parameters
-  parameters: computed('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months', 'dptId', function() {
-    return {
-      searchTerm: Ember.$.trim(this.get('searchTerm')),
-      approvalStatus: this.get('approvalStatus') || null,
-      activities: this.get('activities') || null,
-      membershipStatus: this.get('membershipStatus') || null,
-      isSuspended: this.get('isSuspended'),
-      isHidden: this.get('isHidden'),
-      months: this.get('months') || null,
-      dptId: this.get('dptId') || null
-    };
+  parameters: computed('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
+    'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk', function() {
+     return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
+      'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
   }),
 
   /**
@@ -102,7 +103,8 @@ export default Ember.Controller.extend({
    */
   mapShouldRefresh: function() {
     this.send('updateHosts');
-  }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months', 'dptId'),
+  }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
+    'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk'),
 
   /**
    * Returns the list of features that can be displayed in the list.
@@ -194,7 +196,7 @@ export default Ember.Controller.extend({
      */
     visibleFeaturesChanged(visibleFeatures) {
       this.set('featuresOnMap', visibleFeatures);
-      this.set('currentDisplayedFeatureCount', this.get('defaultDisplayedFeatureCount'));
+      this.set('currentDisplayedFeatureCount', featurePageSize);
     },
 
     /**
@@ -204,15 +206,15 @@ export default Ember.Controller.extend({
       this.setProperties({
         lat: latitude,
         lon: longitude,
-        mapZoom: zoom
+        zoom: zoom
       });
     },
 
     /**
-     * Display more hosts in the host list.
+     * Displays more hosts in the host list.
      */
     moreHosts() {
-      this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + 10);
+      this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + featurePageSize);
     },
 
     chooseDepartment(department) {
@@ -232,7 +234,7 @@ export default Ember.Controller.extend({
       this.set('stay', stay.id);
     },
 
-    toggleFilters() {
+    toggleAdvancedFilters() {
       this.toggleProperty('showMoreFilter');
     }
   }

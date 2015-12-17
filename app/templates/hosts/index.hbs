@@ -136,7 +136,7 @@
         {{/if}}
         <div class="form-group">
           <div class="col-xs-12">
-            <button {{action 'toggleFilters'}} class="btn btn-default pull-right">
+            <button type="button" {{action 'toggleAdvancedFilters'}} class="btn btn-default pull-right">
               Cancel
             </button>
           </div>
@@ -144,7 +144,7 @@
       {{else}}
         <hr class="mvs">
         <p>
-          <button {{action 'toggleFilters'}} class="btn btn-primary">
+          <button {{action 'toggleAdvancedFilters'}} class="btn btn-primary">
             More Filters
           </button>
           <button {{action 'moreHosts'}} class="btn btn-default">
@@ -187,7 +187,7 @@
       markers=hostCoordinates
       longitude=lon
       latitude=lat
-      zoom=mapZoom
+      zoom=zoom
       mapMoved='mapMoved'
       visibleFeaturesChanged='visibleFeaturesChanged'}}
     </div>
