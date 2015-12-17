@@ -8,7 +8,7 @@
         <label class="col-sm-2 control-label">
           Dates
         </label>
-        <div class="col-xs-12 col-sm-4 form-control-margin-bottom-xs">
+        <div class="col-xs-12 col-sm-4 form-control-search-months">
           {{#power-select
           selected=selectedMonths
           options=monthsService.allMonths
@@ -19,7 +19,7 @@
             <span class="text-capitalize">{{month.label}}</span>
           {{/power-select}}
         </div>
-        <div class="col-xs-6 col-sm-3">
+        <div class="col-xs-6 col-sm-3 form-control-search-capacity">
           {{#power-select
           selected=selectedCapacity
           options=capacitiesService.allCapacities
@@ -29,7 +29,7 @@
             <span class="text-capitalize">{{capacity.label}}</span>
           {{/power-select}}
         </div>
-        <div class="col-xs-6 col-sm-3">
+        <div class="col-xs-6 col-sm-3 plx">
           {{#power-select
           selected=selectedStay
           options=staysService.allStays

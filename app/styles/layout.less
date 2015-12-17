@@ -103,9 +103,24 @@ h3.ruled span {
   cursor: pointer;
 }
 
-// Add bottom margin on horizontal forms for small devices
-.form-control-margin-bottom-xs {
+// Months filter
+.form-control-search-months {
+  // Reduce the right padding for tablets and above
+  @media (min-width: @screen-sm-min) {
+    padding-right: @padding-x;
+  }
+  // Add bottom margin on horizontal forms for mobiles
   @media (max-width: @screen-xs-max) {
     margin-bottom: @form-group-margin-bottom;
+  }
+}
+
+// Capacity filter
+.form-control-search-capacity {
+  padding-right: @padding-x;
+
+  // Reduce the left padding for tablets and above
+  @media (min-width: @screen-sm-min) {
+    padding-left: @padding-x;
   }
 }
