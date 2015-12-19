@@ -9,7 +9,7 @@ export default Ember.Component.extend({
 
   classNameBindings: ['iconClass'],
 
-  attributeBindings: ['dataToggle:data-toggle', 'title'],
+  attributeBindings: ['dataToggle:data-toggle', 'title', 'position:data-placement'],
 
   dataToggle: 'tooltip',
 
@@ -20,6 +20,8 @@ export default Ember.Component.extend({
   icon: 'question-sign',
 
   title: '',
+
+  position: null,
 
   didRender() {
     this.$().tooltip();

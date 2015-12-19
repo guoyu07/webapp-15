@@ -70,6 +70,7 @@
             <label for="childrenOk" class="checkbox-inline">
               {{input type="checkbox" id="childrenOk" checked=childrenOk}}
               {{t 'hosts.index.childrenOk.label'}}
+              {{tool-tip title=(t 'host.index.childrenOk.tooltip') class='mlx'}}
             </label>
             <label for="petsOk" class="checkbox-inline">
               {{input type="checkbox" id="petsOk" checked=petsOk}}
@@ -144,16 +145,18 @@
         </div>
       {{else}}
         <hr class="mvs">
-        <p>
-          <button {{action 'toggleAdvancedFilters'}} class="btn btn-primary">
-            {{t 'hosts.index.moreFilters'}}
-          </button>
-          <ul class="pull-right mts nav nav-pills" role="tablist">
-            <li role="presentation" class="active">
-              <strong>Search returned <span class="badge">{{hostCoordinates.features.length}}</span> hosts.</strong>
-            </li>
-          </ul>
-        </p>
+        <div class="row mbs">
+          <div class="col-xs-12">
+            <button {{action 'toggleAdvancedFilters'}} class="btn btn-primary">
+              {{t 'hosts.index.moreFilters'}}
+            </button>
+            <ul class="pull-right mts nav nav-pills" role="tablist">
+              <li role="presentation" class="active">
+                {{t 'hosts.index.resultCount' count=hostCoordinates.features.length}}
+              </li>
+            </ul>
+          </div>
+        </div>
       {{/if}}
     </form>
     {{#unless showMoreFilter}}
@@ -169,25 +172,38 @@
             {{/each}}
           </div>
           <p>
-            <button {{action "moreHosts"}} class="btn btn-primary center-block" disabled={{cannotLoadMore}}>
-              {{t 'literal.loadMore'}}
+            <button {{action 'moreHosts'}} class="btn btn-primary center-block" disabled={{cannotLoadMore}}>
+              {{t 'literal.showMore'}}
             </button>
           </p>
         {{else}}
-          <p class="text-center"><strong>{{t 'hosts.index.noResults'}}</strong></p>
+          <p class="text-center mtl"><strong>{{t 'hosts.index.noResults'}}</strong></p>
+          {{#if showDisableSyncButton}}
+            <button class="btn btn-sm btn-default center-block" {{action 'toggleSyncMapAndList'}}>
+              {{t 'hosts.index.disableMapAndListSync'}}
+            </button>
+          {{/if}}
         {{/if}}
       {{/if}}
     {{/unless}}
   </div>
   {{#if showMap}}
     <div id="resultMap" class="col-md-5 phn">
-      {{leaflet-map
+      {{#leaflet-map
       markers=hostCoordinates
       longitude=lon
       latitude=lat
       zoom=zoom
       mapMoved='mapMoved'
       visibleFeaturesChanged='visibleFeaturesChanged'}}
+        <div class="checkbox leaflet-map-checkbox">
+          <label for="syncMapAndList">
+            {{input type="checkbox" id="syncMapAndList" checked=syncMapAndList}}
+            {{t 'hosts.index.syncMapAndList.label' count=featuresOnMap.length}}
+          </label>
+          {{tool-tip title=(t 'hosts.index.syncMapAndList.tooltip') position='bottom' class='mlx'}}
+        </div>
+      {{/leaflet-map}}
     </div>
   {{/if}}
 </div>

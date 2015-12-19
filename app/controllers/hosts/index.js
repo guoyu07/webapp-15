@@ -78,6 +78,11 @@ export default Ember.Controller.extend({
   featuresOnMap: [],
 
   /**
+   * Indicates whether the list should only show the hosts visible on map.
+   */
+  syncMapAndList: true,
+
+  /**
    * The latest host-coordinates XHR request.
    */
   dataRequest: null,
@@ -109,16 +114,23 @@ export default Ember.Controller.extend({
   /**
    * Returns the list of features that can be displayed in the list.
    */
-  features: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'showMap', function () {
+  features: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'showMap', 'syncMapAndList', function () {
     let features = [];
 
-    if (this.get('showMap')) {
+    if (this.get('showMap') && this.get('syncMapAndList')) {
       features = this.get('featuresOnMap');
     } else {
       features = this.get('hostCoordinates.features');
     }
 
     return features;
+  }),
+
+  /**
+   * Indicates whether the "Show Hosts Not on Map" button should be displayed.
+   */
+  showDisableSyncButton: computed('syncMapAndList', 'hostCoordinates.features.length', function () {
+    return this.get('syncMapAndList') && this.get('hostCoordinates.features.length') > 0;
   }),
 
   /**
@@ -247,10 +259,17 @@ export default Ember.Controller.extend({
     },
 
     /**
-     * Toggles the advanced filters visibility
+     * Toggles the advanced filters visibility.
      */
     toggleAdvancedFilters() {
       this.toggleProperty('showMoreFilter');
+    },
+
+    /**
+     * Toggles the synchronisation of the map and the list.
+     */
+    toggleSyncMapAndList() {
+      this.toggleProperty('syncMapAndList');
     }
   }
 });
