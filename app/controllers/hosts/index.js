@@ -163,32 +163,44 @@ export default Ember.Controller.extend({
     return dptId ? this.store.find('department', dptId) : null;
   }),
 
+  retrieveHosts() {
+    this.set('isLoading', true);
+    this.set('hostCoordinates', { features: [] });
+
+    // Abort any potential previous request to avoid racing issues
+    var dataRequest = this.get('dataRequest');
+    if (dataRequest) {
+      dataRequest.abort();
+    }
+
+    // Prepare params
+    var params = this.get('parameters');
+    params.limit = 5000;
+
+    // Create GET request
+    dataRequest = Ember.$.get('/api/host-coordinates', params);
+    this.set('dataRequest', dataRequest);
+
+    dataRequest.done((data)=> {
+      this.set('hostCoordinates', data);
+      this.set('isLoading', false);
+    });
+  },
+
   actions: {
     /**
-     * Update the hosts features.
+     * Updates the hosts features.
      */
     updateHosts() {
+      this.retrieveHosts();
+    },
 
-      this.set('isLoading', true);
-
-      // Abort any potential previous request to avoid racing issues
-      var dataRequest = this.get('dataRequest');
-      if (dataRequest) {
-        dataRequest.abort();
-      }
-
-      // Prepare params
-      var params = this.get('parameters');
-      params.limit = 5000;
-
-      // Create GET request
-      dataRequest = Ember.$.get('/api/host-coordinates', params);
-      this.set('dataRequest', dataRequest);
-
-      dataRequest.done((data)=> {
-        this.set('hostCoordinates', data);
-        this.set('isLoading', false);
-      });
+    /**
+     * Updates the host features and toggles the advanced filters visibility.
+     */
+    applyFilters() {
+      this.retrieveHosts();
+      this.toggleProperty('showMoreFilter');
     },
 
     /**
@@ -200,7 +212,7 @@ export default Ember.Controller.extend({
     },
 
     /**
-     * The map position/zoom has changed.
+     * Updates map position/zoom.
      */
     mapMoved(latitude, longitude, zoom) {
       this.setProperties({
@@ -234,6 +246,9 @@ export default Ember.Controller.extend({
       this.set('stay', stay.id);
     },
 
+    /**
+     * Toggles the advanced filters visibility
+     */
     toggleAdvancedFilters() {
       this.toggleProperty('showMoreFilter');
     }
