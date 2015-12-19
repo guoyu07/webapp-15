@@ -46,7 +46,11 @@
           {{t 'hosts.index.activities'}}
         </label>
         <div class="col-sm-10 toggle-options-cols">
-          {{toggle-options values=activitiesService.allActivities selected=activities optionValuePath='id'}}
+          {{toggle-options
+          values=activitiesService.allActivities
+          selected=activities
+          optionValuePath='id'
+          onchange='updateHosts'}}
         </div>
       </div>
       {{#if showMoreFilter}}
@@ -64,16 +68,16 @@
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">
-            Lodging
+            {{t 'hosts.index.lodging.label'}}
           </label>
           <div class="col-sm-10 toggle-options-cols">
             <label for="childrenOk" class="checkbox-inline">
-              {{input type="checkbox" id="childrenOk" checked=childrenOk}}
+              <input type="checkbox" id="childrenOk" checked={{childrenOk}} onclick={{action "toggleChildrenOk"}} />
               {{t 'hosts.index.childrenOk.label'}}
               {{tool-tip title=(t 'host.index.childrenOk.tooltip') class='mlx'}}
             </label>
             <label for="petsOk" class="checkbox-inline">
-              {{input type="checkbox" id="petsOk" checked=petsOk}}
+              <input type="checkbox" id="petsOk" checked={{petsOk}} onclick={{action "togglePetsOk"}} />
               {{t 'hosts.index.petsOk.label'}}
             </label>
           </div>
@@ -83,7 +87,12 @@
             {{t 'literal.search'}}
           </label>
           <div class="col-sm-10">
-            {{input class="form-control" type="search"  id="searchTerm" placeholder=(t 'hosts.index.searchTerm.placeholder') value=searchTerm enter="updateHosts"}}
+            {{input class="form-control"
+            type="search"
+            id="searchTerm"
+            placeholder=(t 'hosts.index.searchTerm.placeholder')
+            value=searchTerm
+            enter='updateHosts'}}
           </div>
         </div>
 
@@ -93,13 +102,13 @@
               {{t 'hosts.index.approvalStatus.label'}}
             </label>
             <div class="col-sm-10 radio-options-cols">
-              {{#radio-button value="approved" groupValue=approvalStatus classNames="radio-inline"}}
+              {{#radio-button value="approved" groupValue=approvalStatus changed='updateHosts' classNames="radio-inline"}}
                 {{t 'hosts.index.approved.label'}}
               {{/radio-button}}
-              {{#radio-button value="rejected" groupValue=approvalStatus classNames="radio-inline"}}
+              {{#radio-button value="rejected" groupValue=approvalStatus changed='updateHosts' classNames="radio-inline"}}
                 {{t 'hosts.index.rejected.label'}}
               {{/radio-button}}
-              {{#radio-button value="pending" groupValue=approvalStatus classNames="radio-inline"}}
+              {{#radio-button value="pending" groupValue=approvalStatus changed='updateHosts' classNames="radio-inline"}}
                 {{t 'hosts.index.pending.label'}}
               {{/radio-button}}
             </div>
@@ -109,13 +118,13 @@
               {{t 'hosts.index.membershipStatus.label'}}
             </label>
             <div class="col-sm-10 radio-options-cols">
-              {{#radio-button value="valid" groupValue=membershipStatus classNames="radio-inline"}}
+              {{#radio-button value="valid" groupValue=membershipStatus changed='updateHosts' classNames="radio-inline"}}
                 {{t 'hosts.index.valid.label'}}
               {{/radio-button}}
-              {{#radio-button value="expired" groupValue=membershipStatus classNames="radio-inline"}}
+              {{#radio-button value="expired" groupValue=membershipStatus changed='updateHosts' classNames="radio-inline"}}
                 {{t 'hosts.index.expired.label'}}
               {{/radio-button}}
-              {{#radio-button value="none" groupValue=membershipStatus classNames="radio-inline"}}
+              {{#radio-button value="none" groupValue=membershipStatus changed='updateHosts' classNames="radio-inline"}}
                 {{t 'hosts.index.none.label'}}
               {{/radio-button}}
             </div>
@@ -126,11 +135,11 @@
             </label>
             <div class="col-sm-10 toggle-options-cols">
               <label for="isSuspended" class="checkbox-inline">
-                {{input type="checkbox" id="isSuspended" checked=isSuspended}}
+                <input type="checkbox" id="isSuspended" checked={{isSuspended}} onclick={{action "toggleIsSuspended"}} />
                 {{t 'hosts.index.suspended.label'}}
               </label>
               <label for="isHidden" class="checkbox-inline">
-                {{input type="checkbox" id="isHidden" checked=isHidden}}
+                <input type="checkbox" id="isHidden" checked={{isHidden}} onclick={{action "toggleIsHidden"}} />
                 {{t 'hosts.index.hidden.label'}}
               </label>
             </div>

@@ -94,7 +94,7 @@ export default Ember.Component.extend({
      * Clears the current selection.
      * @method clear
      */
-    clear: function() {
+    clear() {
       var isSingle = this.get('selectOne');
       this.set('selected', isSingle ? null : Ember.A());
     },
@@ -105,7 +105,7 @@ export default Ember.Component.extend({
      * @method select
      * @param {Object} option Option to switch on.
      */
-    select: function(option) {
+    select(option) {
       var selected = this.get('selected');
       var newSelection = option.get('value');
       var isSingle = this.get('selectOne');
@@ -122,6 +122,8 @@ export default Ember.Component.extend({
         this.set('selected', selected);
       }
       this.triggerAction();
+
+      this.sendAction('onchange');
     }
   }
 });

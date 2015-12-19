@@ -63,11 +63,6 @@ export default Ember.Controller.extend({
   showMoreFilter: false,
 
   /**
-   * Indicates whether the map is visible.
-   */
-  showMap: computed.or('media.isDesktop', 'media.isJumbo'),
-
-  /**
    * List of features currently displayed in the list.
    */
   currentDisplayedFeatureCount: featurePageSize,
@@ -87,7 +82,10 @@ export default Ember.Controller.extend({
    */
   dataRequest: null,
 
-  department: null,
+  /**
+   * Indicates whether the map is visible.
+   */
+  showMap: computed.or('media.isDesktop', 'media.isJumbo'),
 
   // Query parameters
   parameters: computed('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
@@ -102,14 +100,6 @@ export default Ember.Controller.extend({
   cannotLoadMore: computed('isLoadingMore', 'currentDisplayedFeatureCount', 'features.length', function() {
     return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('features.length');
   }),
-
-  /**
-   * Observes changes on filters then send an event to refresh the hosts.
-   */
-  mapShouldRefresh: function() {
-    this.send('updateHosts');
-  }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
-    'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk'),
 
   /**
    * Returns the list of features that can be displayed in the list.
@@ -244,18 +234,22 @@ export default Ember.Controller.extend({
     chooseDepartment(department) {
       var id = department ? department.id : null;
       this.set('dptId', id);
+      this.retrieveHosts();
     },
 
     chooseMonths(months) {
       this.set('months', months.mapBy('id'));
+      this.retrieveHosts();
     },
 
     chooseCapacity(capacity) {
       this.set('capacity', capacity.id);
+      this.retrieveHosts();
     },
 
     chooseStay(stay) {
       this.set('stay', stay.id);
+      this.retrieveHosts();
     },
 
     /**
@@ -270,6 +264,26 @@ export default Ember.Controller.extend({
      */
     toggleSyncMapAndList() {
       this.toggleProperty('syncMapAndList');
+    },
+
+    toggleIsSuspended() {
+      this.toggleProperty('isSuspended');
+      this.retrieveHosts();
+    },
+
+    toggleIsHidden() {
+      this.toggleProperty('isHidden');
+      this.retrieveHosts();
+    },
+
+    toggleChildrenOk() {
+      this.toggleProperty('childrenOk');
+      this.retrieveHosts();
+    },
+
+    togglePetsOk () {
+      this.toggleProperty('petsOk');
+      this.retrieveHosts();
     }
   }
 });
