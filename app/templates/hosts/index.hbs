@@ -6,13 +6,14 @@
 
       <div class="form-group">
         <label class="col-sm-2 control-label">
-          Dates
+          {{t 'hosts.index.dates'}}
         </label>
         <div class="col-xs-12 col-sm-4 form-control-search-months">
           {{#power-select
           selected=selectedMonths
           options=monthsService.allMonths
           searchField='label'
+          placeholder=(t 'hosts.index.months.prompt')
           onchange=(action 'chooseMonths')
           multiple=true
           as |month|}}
@@ -52,7 +53,7 @@
 
         <div class="form-group">
           <label class="col-sm-2 control-label">
-            Region
+            {{t 'hosts.index.department.label'}}
           </label>
           <div class="col-xs-12 col-sm-10">
             {{forms/department-select
@@ -88,23 +89,23 @@
         {{#if sessionUser.user.isAdmin}}
           <div class="form-group">
             <label class="col-sm-2 control-label">
-              Status
+              {{t 'hosts.index.approvalStatus.label'}}
             </label>
             <div class="col-sm-10 radio-options-cols">
-                {{#radio-button value="pending" groupValue=approvalStatus classNames="radio-inline"}}
-                  {{t 'hosts.index.pending.label'}}
-                {{/radio-button}}
-                {{#radio-button value="approved" groupValue=approvalStatus classNames="radio-inline"}}
-                  {{t 'hosts.index.approved.label'}}
-                {{/radio-button}}
-                {{#radio-button value="rejected" groupValue=approvalStatus classNames="radio-inline"}}
-                  {{t 'hosts.index.rejected.label'}}
-                {{/radio-button}}
+              {{#radio-button value="approved" groupValue=approvalStatus classNames="radio-inline"}}
+                {{t 'hosts.index.approved.label'}}
+              {{/radio-button}}
+              {{#radio-button value="rejected" groupValue=approvalStatus classNames="radio-inline"}}
+                {{t 'hosts.index.rejected.label'}}
+              {{/radio-button}}
+              {{#radio-button value="pending" groupValue=approvalStatus classNames="radio-inline"}}
+                {{t 'hosts.index.pending.label'}}
+              {{/radio-button}}
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">
-              Membership
+              {{t 'hosts.index.membershipStatus.label'}}
             </label>
             <div class="col-sm-10 radio-options-cols">
               {{#radio-button value="valid" groupValue=membershipStatus classNames="radio-inline"}}
@@ -120,7 +121,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">
-              Flags
+              {{t 'hosts.index.flags.label'}}
             </label>
             <div class="col-sm-10 toggle-options-cols">
               <label for="isSuspended" class="checkbox-inline">
@@ -145,7 +146,7 @@
         <hr class="mvs">
         <p>
           <button {{action 'toggleAdvancedFilters'}} class="btn btn-primary">
-            More Filters
+            {{t 'hosts.index.moreFilters'}}
           </button>
           <button {{action 'moreHosts'}} class="btn btn-default">
             Reset
@@ -171,7 +172,7 @@
             {{/each}}
           </div>
           <p>
-            <button {{action "moreHosts"}} class="btn btn-default center-block" disabled={{cannotLoadMore}}>
+            <button {{action "moreHosts"}} class="btn btn-primary center-block" disabled={{cannotLoadMore}}>
               {{t 'literal.loadMore'}}
             </button>
           </p>
