@@ -65,7 +65,7 @@ export default Ember.Controller.extend({
   /**
    * List of features currently displayed in the list.
    */
-  currentDisplayedFeatureCount: featurePageSize,
+  displayedFeatureCount: featurePageSize,
 
   /**
    * List of visible features on the map.
@@ -97,8 +97,8 @@ export default Ember.Controller.extend({
   /**
    * Indicates whether we can load more hosts.
    */
-  cannotLoadMore: computed('isLoadingMore', 'currentDisplayedFeatureCount', 'features.length', function() {
-    return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('features.length');
+  cannotLoadMore: computed('isLoadingMore', 'displayedFeatureCount', 'features.length', function() {
+    return this.get('isLoadingMore') || this.get('displayedFeatureCount') >= this.get('features.length');
   }),
 
   /**
@@ -131,31 +131,31 @@ export default Ember.Controller.extend({
   /**
    * Returns the list of features that are displayed in the list.
    */
-  featuresInList: computed('features.[]', 'currentDisplayedFeatureCount', function() {
+  featuresInList: computed('features.[]', 'displayedFeatureCount', function() {
     let featuresInList = null;
     let features = this.get('features');
 
     if (Ember.isPresent(features)) {
-      let end = Math.min(this.get('currentDisplayedFeatureCount'), features.length);
+      let end = Math.min(this.get('displayedFeatureCount'), features.length);
       featuresInList = features.slice(0, end);
     }
 
     return featuresInList;
   }),
 
-  selectedMonths: computed('months.[]', function () {
+  selectedMonths: computed('months.[]', 'monthsService.allMonths.[]', function () {
     let months = this.get('months');
     return this.get('monthsService.allMonths').filter(function (month) {
       return months.contains(month.id);
     });
   }),
 
-  selectedCapacity: computed('capacity', function () {
+  selectedCapacity: computed('capacity', 'capacitiesService.allCapacities.[]', function () {
     let capacity = this.get('capacity');
     return this.get('capacitiesService.allCapacities').findBy('id', capacity);
   }),
 
-  selectedStay: computed('stay', function () {
+  selectedStay: computed('stay', 'staysService.allStays.[]', function () {
     let stay = this.get('stay');
     return this.get('staysService.allStays').findBy('id', stay);
   }),
@@ -210,7 +210,7 @@ export default Ember.Controller.extend({
      */
     visibleFeaturesChanged(visibleFeatures) {
       this.set('featuresOnMap', visibleFeatures);
-      this.set('currentDisplayedFeatureCount', featurePageSize);
+      this.set('displayedFeatureCount', featurePageSize);
     },
 
     /**
@@ -228,7 +228,7 @@ export default Ember.Controller.extend({
      * Displays more hosts in the host list.
      */
     moreHosts() {
-      this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + featurePageSize);
+      this.set('displayedFeatureCount', this.get('displayedFeatureCount') + featurePageSize);
     },
 
     chooseDepartment(department) {
