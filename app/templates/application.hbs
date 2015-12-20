@@ -1,5 +1,5 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid {{if setMaxWith 'main-container'}}">
+  <div class="container-fluid {{unless isHostsIndexRoute 'main-container'}}">
     <div class="navbar-header">
       {{#link-to 'index' class="navbar-brand logo"}}
         <img src="assets/images/wwoof-fr-logo.png">
@@ -127,7 +127,7 @@
     </div>
   </div>
 </nav>
-<div class="container-fluid {{if setMaxWith 'main-container mbm'}}">
+<div class="container-fluid {{unless isHostsIndexRoute 'main-container mtm mbm'}}">
   {{outlet}}
 </div>
 

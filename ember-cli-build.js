@@ -8,6 +8,9 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     fingerprint: {
       prepend: 'https://d50ylagdb72pm.cloudfront.net/'
+    },
+    'ember-power-select': {
+      theme: 'bootstrap'
     }
   });
 

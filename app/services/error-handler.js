@@ -40,7 +40,7 @@ export default Ember.Service.extend({
 
       default:
 
-        this.get('notify').error(this.get('i18n').t('notify.submissionError'));
+        this.get('notify').error(this.get('i18n').t({ html: 'notify.submissionError' }));
         trackJs.track(this._convertToError(err));
         Ember.Logger.assert(false, err);
         break;

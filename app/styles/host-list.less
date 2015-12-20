@@ -1,12 +1,32 @@
 #resultList {
   padding-top: 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  clear: both;
+
+  @media (min-width: @screen-md-min) {
+    position: fixed;
+    top: @navbar-height;
+    bottom: 0;
+    overflow-y: auto;
+  }
 }
 
-.col-host-thumb {
-  margin: -15px 0 -15px -15px;
+#resultMap {
+  position: fixed;
+  top: @navbar-height;
+  bottom: 0;
+  right: 0;
+}
+
+.overflow-ellipsis {
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.host-item-caption h3 {
+  line-height: normal;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .toggle-options-cols {
@@ -25,24 +45,6 @@
   }
 }
 
-.leaflet-popup-content-wrapper {
-  border-radius: 4px;
-  background-color: @body-bg;
-}
-
-.leaflet-popup {
-  width: 250px;
-}
-
-.leaflet-popup-content {
-  margin: 10px;
-}
-
-.leaflet-popup-farm-name {
-  font-weight: bold;
-  color: @gray-light;
-}
-
-.hr-wider {
-  border-width: 4px;
+.col-host-item:nth-child(odd) {
+  clear: left;
 }

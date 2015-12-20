@@ -1,0 +1,10 @@
+{{#power-select
+selected=department
+options=departmentsService.groupedDepartments
+searchField='displayedName'
+placeholder=(t 'department-select.prompt')
+allowClear=allowClear
+onchange=onchange
+as |department|}}
+  {{department.displayedName}}
+{{/power-select}}

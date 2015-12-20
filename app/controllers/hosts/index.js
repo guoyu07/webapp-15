@@ -1,189 +1,289 @@
-/**
- * Ember controller for hosts index.
- */
 import Ember from 'ember';
+
+const { computed } = Ember;
+const { service } = Ember.inject;
+
+const featurePageSize = 10;
 
 export default Ember.Controller.extend({
 
-  activitiesService: Ember.inject.service('activities'),
-  monthsService: Ember.inject.service('months'),
+  activitiesService: service('activities'),
+  monthsService: service('months'),
+  capacitiesService: service('capacities'),
+  staysService: service('stays'),
+  departmentsService: service('departments'),
 
   // Query parameters bound with the URL
   queryParams: [
-    'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'mapZoom',
-    'isSuspended', 'isHidden', 'membershipStatus', 'months'
+    'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'zoom', 'showMoreFilter',
+    'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay',
+    'childrenOk', 'petsOk'
   ],
 
-  // Whether the controller is in loading state
-  isLoading: false,
-  isLoadingMore: false,
-  activeTab: 'results',
+  /**
+   * Search filters.
+   */
+  months: [],
+  capacity: '1',
+  stay: 'one-two-weeks',
+  activities: [],
 
   /**
-   * Indicates whether the map should be showed.
-   * The map is always visible unless the active tabs is 'filters' and the list is hidden (small devices),
+   * Advanced search filters.
    */
-  showMap: function() {
-    var showMap = true;
-    if (Ember.$('#resultList').is(':hidden') && this.get('activeTab') === 'filters') {
-      showMap = false;
-    }
-    return showMap;
-  }.property('activeTab'),
-
-  // Search filters
   searchTerm: '',
-  activities: [],
-  months: [],
-  approvalStatus: "approved",
-  membershipStatus: "valid",
+  dptId: null,
+  childrenOk: false,
+  petsOk: false,
+
+  /**
+   * Admin search filters.
+   */
+  approvalStatus: 'approved',
+  membershipStatus: 'valid',
   isSuspended: false,
   isHidden: false,
 
   /**
-   * Current map longitude.
+   * Map longitude/latitude/zoom.
    */
   lon: null,
-
-  /**
-   * Current map Latitude.
-   */
   lat: null,
+  zoom: null,
 
   /**
-   * Current map Zoom.
+   * Indicates whether the controller is in loading state.
    */
-  mapZoom: null,
+  isLoading: false,
+  isLoadingMore: false,
 
   /**
-   * Number of features that are displayed by default.
+   * Indicates whether advanced filters are visible.
    */
-  defaultDisplayedFeatureCount: 10,
+  showMoreFilter: false,
 
   /**
    * List of features currently displayed in the list.
    */
-  currentDisplayedFeatureCount: 0,
+  displayedFeatureCount: featurePageSize,
 
   /**
    * List of visible features on the map.
    */
-  visibleFeatures: [],
+  featuresOnMap: [],
+
+  /**
+   * Indicates whether the list should only show the hosts visible on map.
+   */
+  syncMapAndList: true,
 
   /**
    * The latest host-coordinates XHR request.
    */
   dataRequest: null,
 
+  /**
+   * Indicates whether the map is visible.
+   */
+  showMap: computed.or('media.isDesktop', 'media.isJumbo'),
+
   // Query parameters
-  parameters: function() {
-    return {
-      'searchTerm': Ember.$.trim(this.get('searchTerm')),
-      'approvalStatus': this.get('approvalStatus') || null,
-      'activities': this.get('activities') || null,
-      'membershipStatus': this.get('membershipStatus') || null,
-      'isSuspended': this.get('isSuspended'),
-      'isHidden': this.get('isHidden'),
-      'months': this.get('months') || null
-    };
-  }.property('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
+  parameters: computed('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
+    'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk', function() {
+     return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
+      'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
+  }),
 
   /**
    * Indicates whether we can load more hosts.
    */
-  cannotLoadMore: function() {
-    return this.get('isLoadingMore') || this.get('currentDisplayedFeatureCount') >= this.get('visibleFeatures.length');
-  }.property('isLoadingMore', 'currentDisplayedFeatureCount', 'visibleFeatures.length'),
+  cannotLoadMore: computed('isLoadingMore', 'displayedFeatureCount', 'features.length', function() {
+    return this.get('isLoadingMore') || this.get('displayedFeatureCount') >= this.get('features.length');
+  }),
 
   /**
-   * Observes changes on filters then send an event to refresh the hosts.
+   * Returns the list of features that can be displayed in the list.
    */
-  mapShouldRefresh: function() {
-    this.send('updateHosts');
-  }.observes('approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden', 'months'),
+  features: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'showMap', 'syncMapAndList', function () {
+    let features = [];
 
-  /**
-   * Whether the map has visible features.
-   */
-  hasVisibleFeatures: Ember.computed.notEmpty('visibleFeatures'),
-
-  /**
-   * Returns the list of features displayed in the list.
-   */
-  displayedFeatures: function() {
-
-    var visibleFeatures = this.get('visibleFeatures');
-
-    if (!visibleFeatures) {
-      return;
+    if (this.get('showMap') && this.get('syncMapAndList')) {
+      features = this.get('featuresOnMap');
+    } else {
+      features = this.get('hostCoordinates.features');
     }
 
-    var end = Math.min(this.get('currentDisplayedFeatureCount'), visibleFeatures.length);
+    return features;
+  }),
 
-    return visibleFeatures.slice(0, end);
+  /**
+   * Indicates whether the "Show Hosts Not on Map" button should be displayed.
+   */
+  showDisableSyncButton: computed('syncMapAndList', 'hostCoordinates.features.length', function () {
+    return this.get('syncMapAndList') && this.get('hostCoordinates.features.length') > 0;
+  }),
 
-  }.property('visibleFeatures.length', 'currentDisplayedFeatureCount'),
+  /**
+   * Whether the list has visible features.
+   */
+  hasVisibleFeatures: computed.notEmpty('featuresInList'),
+
+  /**
+   * Returns the list of features that are displayed in the list.
+   */
+  featuresInList: computed('features.[]', 'displayedFeatureCount', function() {
+    let featuresInList = null;
+    let features = this.get('features');
+
+    if (Ember.isPresent(features)) {
+      let end = Math.min(this.get('displayedFeatureCount'), features.length);
+      featuresInList = features.slice(0, end);
+    }
+
+    return featuresInList;
+  }),
+
+  selectedMonths: computed('months.[]', 'monthsService.allMonths.[]', function () {
+    let months = this.get('months');
+    return this.get('monthsService.allMonths').filter(function (month) {
+      return months.contains(month.id);
+    });
+  }),
+
+  selectedCapacity: computed('capacity', 'capacitiesService.allCapacities.[]', function () {
+    let capacity = this.get('capacity');
+    return this.get('capacitiesService.allCapacities').findBy('id', capacity);
+  }),
+
+  selectedStay: computed('stay', 'staysService.allStays.[]', function () {
+    let stay = this.get('stay');
+    return this.get('staysService.allStays').findBy('id', stay);
+  }),
+
+  selectedDepartment: computed('dptId', function () {
+    let dptId = this.get('dptId');
+    return dptId ? this.store.find('department', dptId) : null;
+  }),
+
+  retrieveHosts() {
+    this.set('isLoading', true);
+    this.set('hostCoordinates', { features: [] });
+
+    // Abort any potential previous request to avoid racing issues
+    var dataRequest = this.get('dataRequest');
+    if (dataRequest) {
+      dataRequest.abort();
+    }
+
+    // Prepare params
+    var params = this.get('parameters');
+    params.limit = 5000;
+
+    // Create GET request
+    dataRequest = Ember.$.get('/api/host-coordinates', params);
+    this.set('dataRequest', dataRequest);
+
+    dataRequest.done((data)=> {
+      this.set('hostCoordinates', data);
+      this.set('isLoading', false);
+    });
+  },
 
   actions: {
     /**
-     * Update the hosts features.
+     * Updates the hosts features.
      */
     updateHosts() {
+      this.retrieveHosts();
+    },
 
-      this.set('isLoading', true);
-
-      // Abort any potential previous request to avoid racing issues
-      var dataRequest = this.get('dataRequest');
-      if (dataRequest) {
-        dataRequest.abort();
-      }
-
-      // Prepare params
-      var params = this.get('parameters');
-      params.limit = 5000;
-
-      // Create GET request
-      dataRequest = Ember.$.get('/api/host-coordinates', params);
-      this.set('dataRequest', dataRequest);
-
-      dataRequest.done((data)=> {
-        this.set('hostCoordinates', data);
-        this.set('isLoading', false);
-      });
+    /**
+     * Updates the host features and toggles the advanced filters visibility.
+     */
+    applyFilters() {
+      this.retrieveHosts();
+      this.toggleProperty('showMoreFilter');
     },
 
     /**
      * Refreshes the list of visible features when yhe map is loaded or was moved.
      */
     visibleFeaturesChanged(visibleFeatures) {
-      this.set('visibleFeatures', visibleFeatures);
-      this.set('currentDisplayedFeatureCount', this.get('defaultDisplayedFeatureCount'));
+      this.set('featuresOnMap', visibleFeatures);
+      this.set('displayedFeatureCount', featurePageSize);
     },
 
     /**
-     * The map position/zoom has changed.
+     * Updates map position/zoom.
      */
     mapMoved(latitude, longitude, zoom) {
       this.setProperties({
         lat: latitude,
         lon: longitude,
-        mapZoom: zoom
+        zoom: zoom
       });
     },
 
     /**
-     * Updates the active tab.
-     * @param {String} tab
+     * Displays more hosts in the host list.
      */
-    updateTab(tab) {
-      this.set('activeTab', tab);
+    moreHosts() {
+      this.set('displayedFeatureCount', this.get('displayedFeatureCount') + featurePageSize);
+    },
+
+    chooseDepartment(department) {
+      var id = department ? department.id : null;
+      this.set('dptId', id);
+      this.retrieveHosts();
+    },
+
+    chooseMonths(months) {
+      this.set('months', months.mapBy('id'));
+      this.retrieveHosts();
+    },
+
+    chooseCapacity(capacity) {
+      this.set('capacity', capacity.id);
+      this.retrieveHosts();
+    },
+
+    chooseStay(stay) {
+      this.set('stay', stay.id);
+      this.retrieveHosts();
     },
 
     /**
-     * Display more hosts in the host list.
+     * Toggles the advanced filters visibility.
      */
-    moreHosts() {
-      this.set('currentDisplayedFeatureCount', this.get('currentDisplayedFeatureCount') + 10);
+    toggleAdvancedFilters() {
+      this.toggleProperty('showMoreFilter');
+    },
+
+    /**
+     * Toggles the synchronisation of the map and the list.
+     */
+    toggleSyncMapAndList() {
+      this.toggleProperty('syncMapAndList');
+    },
+
+    toggleIsSuspended() {
+      this.toggleProperty('isSuspended');
+      this.retrieveHosts();
+    },
+
+    toggleIsHidden() {
+      this.toggleProperty('isHidden');
+      this.retrieveHosts();
+    },
+
+    toggleChildrenOk() {
+      this.toggleProperty('childrenOk');
+      this.retrieveHosts();
+    },
+
+    togglePetsOk () {
+      this.toggleProperty('petsOk');
+      this.retrieveHosts();
     }
   }
 });

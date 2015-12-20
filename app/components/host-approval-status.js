@@ -47,7 +47,7 @@ export default Ember.Component.extend({
 
       // Handle failure
       post.fail(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionError'));
+        this.get('notify').error(this.get('i18n').t({ html: 'notify.submissionError' }));
       });
 
       // Always reload host

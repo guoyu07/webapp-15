@@ -11,10 +11,32 @@ export default Ember.Component.extend({
   markerClusterGroup: null,
   geoJsonLayer: null,
 
-  didInsertElement: function() {
+  didInsertElement() {
+    // Draw the map
+    this.drawMap();
 
+    // Center the map on France
+    this.centerMap();
+
+    // If markers are available, show them on the map
+    let markers = this.get('markers');
+    if (markers) {
+      this.setMarkers(markers);
+    }
+  },
+
+  didReceiveAttrs() {
+    let markers = this.getAttr('markers');
+
+    // If markers are available, show them on the map
+    if (markers) {
+      this.setMarkers(markers);
+    }
+  },
+
+  drawMap() {
     // Create the map
-    this.map = L.map(this.get('element'), { minZoom: 3, maxZoom: 12 });
+    this.map = L.map(this.get('elementId'), { minZoom: 3, maxZoom: 12 });
 
     // Prepare the cluster group
     this.markerClusterGroup = L.markerClusterGroup({ disableClusteringAtZoom: 10 });
@@ -37,21 +59,12 @@ export default Ember.Component.extend({
     // Attach events to the map
     this.map.on('dragend', this.mapDidMove, this);
     this.map.on('zoomend', this.mapDidMove, this);
-
-    // Resize containers to fit the screen size
-    this.resizeContainers();
-    Ember.$(window).on('resize', this.resizeContainers);
-    this.map.invalidateSize();
-
-    // Adjust map to display France
-    this.centerMap();
   },
 
   /**
    * Centers the map in the middle of France.
    */
-  centerMap: function() {
-
+  centerMap() {
     var latitude = this.get('latitude');
     var longitude = this.get('longitude');
     var zoom = this.get('zoom');
@@ -69,9 +82,10 @@ export default Ember.Component.extend({
   /**
    * Set the markers on the map.
    */
-  setMarkers: function() {
+  setMarkers(markers) {
 
-    if (!this.get('markers')) {
+    // Only show the markers if the map is ready
+    if (!markers || !this.markerClusterGroup || !this.geoJsonLayer) {
       return;
     }
 
@@ -80,17 +94,16 @@ export default Ember.Component.extend({
     this.geoJsonLayer.clearLayers();
 
     // Add new data to the layers
-    this.geoJsonLayer.addData(this.get('markers'));
+    this.geoJsonLayer.addData(markers);
     this.markerClusterGroup.addLayer(this.geoJsonLayer);
 
     this.updateVisibleFeatures();
-
-  }.observes('markers.features.[]'),
+  },
 
   /**
    * Cleans the layers/events up.
    */
-  willDestroyElement: function() {
+  willDestroyElement() {
     if (this.map) {
       this.map.remove();
     }
@@ -105,8 +118,7 @@ export default Ember.Component.extend({
   /**
    * Handles moves on the map.
    */
-  mapDidMove: function() {
-
+  mapDidMove() {
     var center = this.map.getCenter();
     var zoom = this.map.getZoom();
 
@@ -118,7 +130,7 @@ export default Ember.Component.extend({
   /**
    * Computes the visibility of the features based on map bounds.
    */
-  updateVisibleFeatures: function() {
+  updateVisibleFeatures() {
 
     if (!this.map || !this.geoJsonLayer) {
       return;
@@ -127,43 +139,13 @@ export default Ember.Component.extend({
     // Find visible features
     var visibleFeatures = [];
     var mapBounds = this.map.getBounds();
-    this.geoJsonLayer.eachLayer(function(marker) {
-      if (mapBounds.contains(marker.getLatLng())) {
-        visibleFeatures.push(marker.feature);
+    this.geoJsonLayer.eachLayer(function(layer) {
+      if (mapBounds.contains(layer.getLatLng())) {
+        visibleFeatures.push(layer.feature);
       }
     });
 
     this.sendAction('visibleFeaturesChanged', visibleFeatures);
-  },
-
-  /**
-   * Updates the size of the map/list containers based on the window size.
-   */
-  resizeContainers: function() {
-
-    var hostIndexRow = Ember.$('.host-index-row');
-    var resultTabContent = Ember.$('#resultTabContent');
-    var windowHeight = Ember.$(window).height();
-    var mapTopOffset = hostIndexRow.offset() ? hostIndexRow.offset().top : 0;
-    var listTopOffset = resultTabContent.offset() ? resultTabContent.offset().top : 0;
-
-    if (Ember.$('#resultList').is(':hidden')) {
-
-      // Resize Map for mobile
-      if (Ember.$(".leaflet-container")) {
-        Ember.$(".leaflet-container").height(windowHeight - listTopOffset - 30);
-      }
-    } else {
-
-      // Resize Map for desktop
-      if (Ember.$(".leaflet-container")) {
-        Ember.$(".leaflet-container").height(windowHeight - mapTopOffset - 20);
-      }
-
-      if (Ember.$("#resultList")) {
-        Ember.$("#resultList").height(windowHeight - listTopOffset - 40);
-      }
-    }
   },
 
   /**
