@@ -1,6 +1,3 @@
-/**
- * Ember route for the application.
- */
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import config from 'webapp/config/environment';
@@ -52,8 +49,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
    */
   setTrackJsUser(userId) {
     Ember.assert('User id required to set trackJs user.', userId);
-    if (userId && trackJs) {
-      trackJs.configure({
+    if (userId && this.trackjs) {
+      this.trackjs.configure({
         userId: userId.toString()
       });
     }
@@ -96,7 +93,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       this.refresh();
     },
     error(err) {
-      this.errorHandler.handleError(err);
+      this.trackjs.track(err);
     }
   }
 });

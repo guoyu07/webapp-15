@@ -16,7 +16,7 @@
     "jquery-file-upload": "~9.5.8",
     "jquery-cookie": "~1.4.1",
     "leaflet-providers": "~1.0.12",
-    "trackjs": "~2.1.11",
+    "trackjs": "~2.1.13",
     "leaflet.markercluster": "~0.4.0",
     "moment": ">= 2.8.0",
     "moment-timezone": ">= 0.1.0"

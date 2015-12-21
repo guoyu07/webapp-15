@@ -1,6 +1,3 @@
-/**
- * Ember controller for host contact.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 

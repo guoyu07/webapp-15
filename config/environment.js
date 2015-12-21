@@ -9,7 +9,7 @@ module.exports = function(environment) {
     SERVER_BASE_URL: '',
     apiHost: '',
     apiNamespace: 'api',
-    urlAfterLogout: '/',
+    urlAfterLogout: '/login',
     EmberENV: {
 
     },
@@ -28,10 +28,10 @@ module.exports = function(environment) {
       includeLocales: ['fr']
     },
 
-    map: {
-      defaultLat: 46.78,
-      defaultLon: 1.95,
-      defaultZoom: 6
+    trackJs: {
+      config: {
+        token: '48bf177fb24447f19be94f292931ff05'
+      }
     },
 
     // Configure content security policy headers
@@ -74,10 +74,11 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+
+    ENV.trackJs.config.enabled = false;
   }
 
   if (environment === 'production') {
-    ENV.urlAfterLogout = 'http://www.wwoof.fr';
     ENV.googleAnalytics = {
       webPropertyId: 'UA-19885009-2'
     };

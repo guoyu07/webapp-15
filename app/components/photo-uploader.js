@@ -51,7 +51,7 @@ export default Ember.Component.extend({
         }
       },
       error: function() {
-        self.get('notify').error(self.get('i18n').t({ html: 'notify.submissionError' }));
+        self.get('notify').error({ html: self.get('i18n').t('notify.submissionError') });
       },
       progressall: function(e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
