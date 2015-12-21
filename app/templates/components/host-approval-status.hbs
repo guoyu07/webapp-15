@@ -7,10 +7,10 @@
       <p>
         {{t 'host.validation-status.adminPending'}}
       </p>
-      <button {{action "approveHost" true}} class="btn btn-primary">
+      <button {{action "approveHost" true}} class="btn btn-primary" disabled={{isProcessing}}>
         {{t 'host.validation-status.adminApprove'}}
       </button>
-      <button {{action "approveHost" false}} class="btn btn-default">
+      <button {{action "approveHost" false}} class="btn btn-default" disabled={{isProcessing}}>
         {{t 'host.validation-status.adminReject'}}
       </button>
     {{else}}

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import config from 'webapp/config/environment';
+import request from 'ic-ajax';
 
 const { service } = Ember.inject;
 
@@ -19,25 +20,24 @@ export default Ember.Component.extend({
     approveHost(isApproved) {
 
       // Get host
-      var host = this.get('host');
+      let host = this.get('host');
 
-      // Set the values on the model
-      host.set('isPendingApproval', false);
-      host.set('isApproved', isApproved);
+      this.set('isProcessing', true);
 
       // Prepare URL
-      var url = [config.apiHost, config.apiNamespace, 'hosts', host.get('id'), 'approve'].join('/');
+      let url = [config.apiHost, config.apiNamespace, 'hosts', host.get('id'), 'approve'].join('/');
 
-      // Update approve the host
-      var post = Ember.$.ajax({
-        contentType: 'application/json; charset=utf-8',
+      // Approve/reject the host
+      let promise = request({
         type: 'POST',
         url: url,
-        data: JSON.stringify({ isApproved: isApproved })
+        data: {
+          isApproved: isApproved
+        }
       });
 
       // Handle success
-      post.done(()=> {
+      promise.then(()=> {
         if (isApproved) {
           this.get('notify').success(this.get('i18n').t('notify.hostApproved'));
         } else {
@@ -45,14 +45,10 @@ export default Ember.Component.extend({
         }
       });
 
-      // Handle failure
-      post.fail(()=> {
-        this.get('notify').error({ html: this.get('i18n').t('notify.submissionError') });
-      });
-
       // Always reload host
-      post.always(()=> {
+      promise.finally(()=> {
         host.reload();
+        this.set('isProcessing', false);
       });
     }
   }
