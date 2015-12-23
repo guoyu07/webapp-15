@@ -38,7 +38,7 @@ module.exports = function(environment) {
     contentSecurityPolicyHeader: 'Content-Security-Policy',
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'font-src': "'self' fonts.gstatic.com d50ylagdb72pm.cloudfront.net",
+      'font-src': "'self' fonts.gstatic.com",
       'connect-src': "'self' capture.trackjs.com",
       'img-src': "'self' data: https://app.wwoof.fr https://maps.googleapis.com www.google-analytics.com " +
       "https://*.mqcdn.com https://usage.trackjs.com https://s3.amazonaws.com/wwoof-france/",

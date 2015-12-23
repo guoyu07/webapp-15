@@ -7,7 +7,7 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     fingerprint: {
-      prepend: 'https://d50ylagdb72pm.cloudfront.net/'
+      prepend: 'https://d2ede2tjxuzdo4.cloudfront.net/'
     },
     'ember-power-select': {
       theme: 'bootstrap'
