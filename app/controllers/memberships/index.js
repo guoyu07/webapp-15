@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
    * Selected memberships for which no reminder was sent.
    */
   remindableMemberships: Ember.computed.filter('selectedMemberships', function(membership) {
-    return membership.get('expiresWithinAMonth') && !membership.get('reminderAlreadySent');
+    return membership.get('expiresWithinAMonth') && !membership.get('reminderAlreadySent') && !membership.get('user.isSuspended');
   }),
 
   remindableMembershipCount: Ember.computed.readOnly('remindableMemberships.length'),

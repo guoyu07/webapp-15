@@ -1,10 +1,10 @@
 <td>{{input type="checkbox" checked=checked}}</td>
 <td>{{membership.user.fullName}}</td>
 <td>{{membership.itemCode}}</td>
-<td>{{moment-format membership.createdAt}}</td>
-<td>{{membership.total}} Euro</td>
 <td>{{membership.paymentType}}</td>
-<td class={{expireAtClass}}>{{moment-format membership.expireAt}}</td>
+<td>{{membership.total}} Euro</td>
+<td>{{moment-format membership.createdAt 'll'}}</td>
+<td class={{expireAtClass}}>{{moment-format membership.expireAt 'll'}}</td>
 <td>
   {{#if membership.reminderSentAt}}
     <span class="glyphicon glyphicon-ok" title={{moment-format membership.reminderSentAt}}></span>

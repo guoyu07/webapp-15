@@ -56,6 +56,7 @@ export default DS.Model.extend(ValidationsMixin, {
    */
   hasMemberships: computed.notEmpty('sortedMemberships'),
   latestMembership: computed.readOnly('sortedMemberships.firstObject'),
+  firstMembership: computed.readOnly('sortedMemberships.lastObject'),
   hasNonExpiredMembership: computed.and('hasMemberships', 'latestMembership.isNotExpired'),
 
   /**
