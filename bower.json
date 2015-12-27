@@ -19,6 +19,7 @@
     "trackjs": "~2.1.13",
     "leaflet.markercluster": "~0.4.0",
     "moment": ">= 2.8.0",
-    "moment-timezone": ">= 0.1.0"
+    "moment-timezone": ">= 0.1.0",
+    "leaflet": "~0.7.7"
   }
 }
