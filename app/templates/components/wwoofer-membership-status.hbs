@@ -2,18 +2,18 @@
   {{t 'wwoofer.membership-status.title'}}
 </div>
 <div class="panel-body">
-  {{#if user.hasWwoofMemberships}}
-    {{#if user.latestWwoofMembership.isStillValidInAMonth}}
+  {{#if user.hasWwooferMemberships}}
+    {{#if user.latestWwooferMembership.isStillValidInAMonth}}
       {{t 'wwoofer.membership-status.valid'}}
     {{else}}
       <p>
         {{t 'wwoofer.membership-status.yourWwooferMembership'}}
-        {{#if user.latestWwoofMembership.isExpired}}
+        {{#if user.latestWwooferMembership.isExpired}}
           {{t 'wwoofer.membership-status.isExpiredSince'}}
         {{else}}
           {{t 'wwoofer.membership-status.willExpire'}}
         {{/if}}
-        {{moment-format user.latestWwoofMembership.expireAt}}.
+        {{moment-format user.latestWwooferMembership.expireAt}}.
         {{t 'wwoofer.membership-status.keepAccess'}}
       </p>
       {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1') class="btn btn-warning btn-block"}}

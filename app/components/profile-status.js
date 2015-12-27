@@ -1,6 +1,3 @@
-/**
- * Ember component for profile status icon
- */
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -22,15 +19,15 @@ export default Ember.Component.extend({
    */
   wwooferProfileClass: function() {
     // Host has no active membership: warning
-    var hasValidMembership = this.get('user.hasNonExpiredWwoofMembership');
-    var isStillValidInAMonth = this.get('user.latestWwoofMembership.isStillValidInAMonth');
+    var hasValidMembership = this.get('user.hasNonExpiredWwooferMembership');
+    var isStillValidInAMonth = this.get('user.latestWwooferMembership.isStillValidInAMonth');
     if (!hasValidMembership || !isStillValidInAMonth) {
       return 'glyphicon glyphicon-warning-sign';
     }
 
     // Membership status ok
     return 'glyphicon glyphicon-ok';
-  }.property('user.hasWwoofMemberships', 'user.latestWwoofMembership.isStillValidInAMonth'),
+  }.property('user.hasNonExpiredWwooferMembership', 'user.latestWwooferMembership.isStillValidInAMonth'),
 
   /**
    * Provides the class name to style the component for host profile

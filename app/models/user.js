@@ -1,10 +1,9 @@
-/**
- * Ember model for users.
- */
 import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
+
+const { computed } = Ember;
 
 export default DS.Model.extend(ValidationsMixin, {
 
@@ -28,16 +27,16 @@ export default DS.Model.extend(ValidationsMixin, {
   memberships: DS.hasMany('membership', { async: true }),
 
   // Computed properties
-  completePhotoUrl: function() {
+  completePhotoUrl: computed('photo', function() {
     var photo = this.get('photo');
-    if (!Ember.isEmpty(photo)) {
+    if (Ember.isPresent(photo)) {
       return 'https://s3.amazonaws.com/wwoof-france/photos/users/' + encodeURIComponent(photo);
     } else {
       return '../assets/images/no-photo.png';
     }
-  }.property('photo'),
+  }),
 
-  isNotAdmin: Ember.computed.not('isAdmin'),
+  isNotAdmin: computed.not('isAdmin'),
 
   /**
    * Returns the full name of the user.
@@ -46,49 +45,36 @@ export default DS.Model.extend(ValidationsMixin, {
     return this.get('firstName') + ' ' + this.get('lastName');
   }.property('firstName', 'lastName'),
 
-  // Order memberships by expiration date (most recent first)
+  /**
+   * Order memberships by expiration date (most recent first).
+   */
   expireAtSortingDesc: ['expireAt:desc'],
-  sortedMemberships: Ember.computed.sort('memberships', 'expireAtSortingDesc'),
-
-  wwoofMemberships: Ember.computed.filterBy('sortedMemberships', 'type', 'W'),
-
-  hostMemberships: Ember.computed.filterBy('sortedMemberships', 'type', 'H'),
-
-  hasMemberships: Ember.computed.notEmpty('sortedMemberships'),
-
-  hasWwoofMemberships: Ember.computed.notEmpty('wwoofMemberships'),
-
-  hasHostMemberships: Ember.computed.notEmpty('hostMemberships'),
+  sortedMemberships: computed.sort('memberships', 'expireAtSortingDesc'),
 
   /**
-   * Returns the user's most recent membership.
+   * All memberships computed properties.
    */
-  latestMembership: Ember.computed.alias('sortedMemberships.firstObject'),
+  hasMemberships: computed.notEmpty('sortedMemberships'),
+  latestMembership: computed.readOnly('sortedMemberships.firstObject'),
+  hasNonExpiredMembership: computed.and('hasMemberships', 'latestMembership.isNotExpired'),
 
   /**
-   * Returns the user's most recent Wwoof membership.
+   * Wwoofer memberships computed properties.
    */
-  latestWwoofMembership: Ember.computed.alias('wwoofMemberships.firstObject'),
+  wwooferMemberships: computed.filterBy('sortedMemberships', 'type', 'W'),
+  hasWwooferMemberships: computed.notEmpty('wwooferMemberships'),
+  latestWwooferMembership: computed.readOnly('wwooferMemberships.firstObject'),
+  firstWwooferMembership: computed.readOnly('wwooferMemberships.lastObject'),
+  hasNonExpiredWwooferMembership: computed.and('hasWwooferMemberships', 'latestWwooferMembership.isNotExpired'),
 
   /**
-   * Returns the user's most recent Host membership.
+   * Host memberships computed properties.
    */
-  latestHostMembership: Ember.computed.alias('hostMemberships.firstObject'),
-
-  /**
-   * Indicates whether the user's most recent Wwoof membership is not expired.
-   */
-  hasNonExpiredWwoofMembership: Ember.computed.and('hasWwoofMemberships', 'latestWwoofMembership.isNotExpired'),
-
-  /**
-   * Indicates whether the user's most recent Host membership is not expired.
-   */
-  hasNonExpiredHostMembership: Ember.computed.and('hasHostMemberships', 'latestHostMembership.isNotExpired'),
-
-  /**
-   * Indicates whether the user's most recent membership is not expired.
-   */
-  hasNonExpiredMembership: Ember.computed.and('hasMemberships', 'latestMembership.isNotExpired'),
+  hostMemberships: computed.filterBy('sortedMemberships', 'type', 'H'),
+  hasHostMemberships: computed.notEmpty('hostMemberships'),
+  latestHostMembership: computed.readOnly('hostMemberships.firstObject'),
+  firstHostMembership: computed.readOnly('hostMemberships.lastObject'),
+  hasNonExpiredHostMembership: computed.and('hasHostMemberships', 'latestHostMembership.isNotExpired'),
 
   // Validations
   validations: {

@@ -3,7 +3,7 @@
     <h3 class="panel-title">{{t 'user.memberships.wwoofer'}}</h3>
   </div>
   <div class="panel-body">
-    {{#if user.hasWwoofMemberships}}
+    {{#if user.hasWwooferMemberships}}
       {{wwoofer-membership-status user=user}}
       <table class="table table-hover">
         <thead>
@@ -15,12 +15,12 @@
         </tr>
         </thead>
         <tbody>
-        {{#each user.wwoofMemberships as |wwoofMembership|}}
+        {{#each user.wwooferMemberships as |wwooferMembership|}}
           <tr>
-            <td>{{wwoofMembership.itemCode}}</td>
-            <td>{{moment-format wwoofMembership.createdAt}}</td>
-            <td>{{wwoofMembership.total}} Euro</td>
-            <td>{{moment-format wwoofMembership.expireAt}}</td>
+            <td>{{wwooferMembership.itemCode}}</td>
+            <td>{{moment-format wwooferMembership.createdAt}}</td>
+            <td>{{wwooferMembership.total}} Euro</td>
+            <td>{{moment-format wwooferMembership.expireAt}}</td>
           </tr>
         {{/each}}
         </tbody>
@@ -28,13 +28,13 @@
       <small>{{t 'user.memberships.renewalInstructions'}}</small>
     {{else}}
       {{t 'user.memberships.noWwooferMemberships'}}
-      {{#if showGetWwoofMembershipLink}}
+      {{#if showGetwwooferMembershipLink}}
         {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1')}}
           {{t 'user.memberships.getNow'}}
         {{/link-to}}
       {{/if}}
     {{/if}}
-    {{#if showCreateWwoofMembershipLink}}
+    {{#if showCreateWwooferMembershipLink}}
       {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1' userId=user.id)}}
         {{t 'user.memberships.create'}}
       {{/link-to}}
