@@ -90,6 +90,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       this.get('session').invalidate();
     },
     userImpersonated() {
+      this.store.unloadAll();
+      this.transitionTo('hosts.index');
       this.refresh();
     },
     error(err) {

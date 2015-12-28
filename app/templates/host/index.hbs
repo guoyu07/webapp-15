@@ -110,8 +110,8 @@
           <tr>
             <td>
               <span class="glyphicon glyphicon-star mrx"></span>
-              {{#if model.user.createdAt}}
-                {{t 'host.index.memberSince'}} {{moment-format model.user.createdAt 'MMMM YYYY'}}
+              {{#if model.user.hasHostMemberships}}
+                {{t 'host.index.memberSince'}} {{moment-format model.user.firstHostMembership.createdAt 'MMMM YYYY'}}
               {{else}}
                 {{t 'host.index.notAMember'}}
               {{/if}}
