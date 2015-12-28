@@ -1,51 +1,40 @@
-/**
- * Ember controller for wwoofers index.
- */
 import Ember from 'ember';
+
+const { computed } = Ember;
 
 export default Ember.Controller.extend({
 
   countriesService: Ember.inject.service('countries'),
 
-  // Query parameters bound with the URL
-  queryParams: ['searchTerm', 'country'],
+  queryParams: ['page', 'itemsPerPage', 'searchTerm', 'country'],
 
-  // Whether the controller is in loading state
+  /**
+   * The current page.
+   */
+  page: 1,
+
+  /**
+   * Number of users displayed per page.
+   */
+  itemsPerPage: 20,
+
+  /**
+   * Whether the controller is in loading state.
+   */
   isLoading: false,
-  isLoadingMore: false,
 
-  // Search filters
+  /**
+   * Search filters.
+   */
   searchTerm: '',
   country: null,
 
-  // Query parameters
-  parameters: function() {
-    return {
-      'searchTerm': this.get('searchTerm') || null,
-      'country': this.get('country') || null
-    };
-  }.property('searchTerm', 'country'),
-
-  actions: {
-    loadMoreWwoofers() {
-
-      // Set controller loading state
-      this.set('isLoadingMore', true);
-
-      // Initialize variables
-      var newOffset = this.store.metadataFor('wwoofer').offset + 20;
-      var params = Ember.$.extend(true, this.get('parameters') || {}, { offset: newOffset });
-
-      // Find next page of content and update
-      this.store.find('wwoofer', params).then((wwoofers)=> {
-        if (wwoofers.get('content').length) {
-          this.get('content').addObjects(wwoofers.get('content'));
-        } else {
-          this.get('notify').log(this.get('i18n').t('notify.noMoreWwoofers'));
-        }
-      }).finally(()=> {
-        this.set('isLoadingMore', false);
-      });
-    }
-  }
+  /**
+   * Process the total number of pages that can be displayed.
+   */
+  totalPages: computed('wwoofers.meta.total', 'itemsPerPage', function() {
+    var totalItems = this.get('wwoofers.meta.total');
+    var itemsPerPage = this.get('itemsPerPage');
+    return Math.ceil(totalItems / itemsPerPage);
+  })
 });

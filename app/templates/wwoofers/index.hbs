@@ -18,7 +18,7 @@
         id="searchTerm"
         placeholder=(t 'wwoofers.index.search.placeholder')
         value=searchTerm
-        enter="searchWwoofers"}}
+        enter='search'}}
       </div>
       <div class="form-group">
         <label for="country" class="sr-only">{{t 'address.form.country.label'}}</label>
@@ -31,7 +31,7 @@
         name="country"
         prompt=(t 'wwoofers.index.country.prompt')}}
       </div>
-      <button {{action "searchWwoofers"}} class="btn btn-primary" disabled={{isLoading}}>
+      <button {{action 'search'}} class="btn btn-primary" disabled={{isLoading}}>
       {{t 'literal.search'}}
       </button>
     </form>
@@ -43,7 +43,7 @@
     {{#if isLoading}}
       {{partial 'loading'}}
     {{else}}
-      {{#if model}}
+      {{#if wwoofers}}
         <div class="table-responsive">
           <table class="table table-striped table-hover">
             <thead>
@@ -57,7 +57,7 @@
             </tr>
             </thead>
             <tbody>
-            {{#each model as |wwoofer|}}
+            {{#each wwoofers as |wwoofer|}}
               <tr>
                 <td>{{wwoofer.user.fullName}}</td>
                 <td>{{wwoofer.fullName2}}</td>
@@ -77,13 +77,10 @@
             {{/each}}
             </tbody>
           </table>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-4 col-md-2">
-            <button {{action "loadMoreWwoofers"}} class="btn btn-default btn-block" disabled={{isLoadingMore}}>
-            {{t 'literal.showMore'}}
-            </button>
-          </div>
+
+          <p class="text-center">
+            {{list-pagination currentPage=page totalPages=totalPages targetRoute='wwoofers'}}
+          </p>
         </div>
       {{else}}
         {{t 'wwoofers.index.noResults'}}

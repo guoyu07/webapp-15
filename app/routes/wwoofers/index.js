@@ -1,33 +1,52 @@
-/**
- * Ember route for wwoofers index.
- */
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
+  queryParams: {
+    page: {
+      refreshModel: true
+    },
+    country: {
+      refreshModel: true
+    }
+  },
+
   countriesService: Ember.inject.service('countries'),
 
-  beforeModel: function(transition) {
+  beforeModel(transition) {
     this._super(transition);
     this.controllerFor('wwoofers.index').set('isLoading', true);
   },
-  model: function(params) {
+
+  model(params) {
+
+    var page = params.page || 1;
+    var limit = params.itemsPerPage || 20;
+    var offset = (page - 1) * limit;
+    var wwooferParams = Ember.merge(params, {
+      offset: offset,
+      limit: limit
+    });
+
     return Ember.RSVP.hash({
-      wwoofers: this.store.find('wwoofer', params),
+      wwoofers: this.store.find('wwoofer', wwooferParams),
       // Pre-load the countries so the queryParams binding
       // with the select menu work properly
       countries: this.get('countriesService.countries')
     });
   },
-  afterModel: function() {
+
+  afterModel() {
     this.controllerFor('wwoofers.index').set('isLoading', false);
   },
+
   setupController(controller, results) {
-    controller.set('model', results.wwoofers);
+    controller.set('wwoofers', results.wwoofers);
   },
+
   actions: {
-    searchWwoofers: function() {
+    search() {
       this.refresh();
     }
   }
