@@ -287,15 +287,23 @@ export default Ember.Controller.extend({
     },
 
     addFavorite(host) {
-      this.get('sessionUser.user').then((user)=> {
-        this.send('addUserFavorite', host, user);
-      });
+      if (this.get('session.isAuthenticated')) {
+        this.get('sessionUser.user').then((user)=> {
+          this.send('addUserFavorite', host, user);
+        });
+      } else {
+        this.send('addUserFavorite', host);
+      }
     },
 
     removeFavorite(host) {
-      this.get('sessionUser.user').then((user)=> {
-        this.send('removeUserFavorite', host, user);
-      });
+      if (this.get('session.isAuthenticated')) {
+        this.get('sessionUser.user').then((user)=> {
+          this.send('removeUserFavorite', host, user);
+        });
+      } else {
+        this.send('addUserFavorite', host);
+      }
     }
   }
 });
