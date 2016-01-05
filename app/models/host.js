@@ -41,8 +41,8 @@ export default DS.Model.extend(ValidationsMixin, {
   user: DS.belongsTo('user', { async: true }),
   address: DS.belongsTo('address'),
   photos: DS.hasMany('photo'),
-  bookmarks: DS.hasMany('user', {
-    inverse: 'bookmarks'
+  followers: DS.hasMany('user', {
+    inverse: 'favorites'
   }),
 
   // First photo

@@ -1,10 +1,10 @@
-{{#each user.bookmarks as |bookmark|}}
+{{#each user.favorites as |favorite|}}
   <div class="col-xs-12 col-sm-6 col-host-item">
     {{host-item
-    hostId=bookmark.id
-    userBookmarks=user.bookmarks
-    addBookmark='addBookmark'
-    removeBookmark='removeBookmark'}}
+    hostId=favorite.id
+    userFavorites=user.favorites
+    addFavorite='addFavorite'
+    removeFavorite='removeFavorite'}}
   </div>
 {{else}}
   <p class="lead text-center mtl">{{t 'user.favorites.noFavorites'}}</p>

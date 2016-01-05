@@ -2,7 +2,7 @@
   {{image-thumb url=host.firstPhotoUrl height=250}}
 {{/link-to}}
 
-{{#if isBookmarked}}
+{{#if isFavorite}}
   <span class="glyphicon glyphicon-larger glyphicon-heart text-primary" {{action 'remove' host}}></span>
 {{else}}
   <span class="glyphicon glyphicon-larger glyphicon-heart-empty text-primary" {{action 'add' host}}></span>

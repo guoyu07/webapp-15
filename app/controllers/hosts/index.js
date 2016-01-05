@@ -286,15 +286,15 @@ export default Ember.Controller.extend({
       this.retrieveHosts();
     },
 
-    addBookmark(host) {
+    addFavorite(host) {
       this.get('sessionUser.user').then((user)=> {
-        this.send('addUserBookmark', host, user);
+        this.send('addUserFavorite', host, user);
       });
     },
 
-    removeBookmark(host) {
+    removeFavorite(host) {
       this.get('sessionUser.user').then((user)=> {
-        this.send('removeUserBookmark', host, user);
+        this.send('removeUserFavorite', host, user);
       });
     }
   }

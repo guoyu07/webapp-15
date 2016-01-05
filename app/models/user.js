@@ -25,8 +25,8 @@ export default DS.Model.extend(ValidationsMixin, {
   host: DS.belongsTo('host', { async: true }),
   wwoofer: DS.belongsTo('wwoofer', { async: true }),
   memberships: DS.hasMany('membership', { async: true }),
-  bookmarks: DS.hasMany('host', {
-    inverse: 'bookmarks',
+  favorites: DS.hasMany('host', {
+    inverse: 'followers',
     async: true
   }),
 

@@ -6,12 +6,12 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    addBookmark(host) {
-      this.send('addUserBookmark', host, this.controller.get('model'));
+    addFavorite(host) {
+      this.send('addUserFavorite', host, this.controller.get('model'));
     },
 
-    removeBookmark(host) {
-      this.send('removeUserBookmark', host, this.controller.get('model'));
+    removeFavorite(host) {
+      this.send('removeUserFavorite', host, this.controller.get('model'));
     }
   }
 });

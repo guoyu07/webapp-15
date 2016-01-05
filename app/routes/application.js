@@ -87,7 +87,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
 
   getUrl(userId, hostId) {
-    return ['api/users', userId, 'bookmarks', hostId].join('/');
+    return ['api/users', userId, 'favorites', hostId].join('/');
   },
 
   actions: {
@@ -99,7 +99,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       this.transitionTo('hosts.index');
       this.refresh();
     },
-    addUserBookmark(host, user) {
+    addUserFavorite(host, user) {
       if (!user) {
         this.transitionTo('login');
       } else {
@@ -109,11 +109,11 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
 
         promise.then(() => {
-          user.get('bookmarks').pushObject(host);
+          user.get('favorites').pushObject(host);
         });
       }
     },
-    removeUserBookmark(host, user) {
+    removeUserFavorite(host, user) {
       if (!user) {
         this.transitionTo('login');
       } else {
@@ -123,7 +123,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
 
         promise.then(()=> {
-          user.get('bookmarks').removeObject(host);
+          user.get('favorites').removeObject(host);
         });
       }
     },
