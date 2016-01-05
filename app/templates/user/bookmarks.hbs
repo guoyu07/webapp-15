@@ -1,0 +1,8 @@
+{{#each user.bookmarks as |bookmark|}}
+  <div class="col-xs-12 col-sm-6 col-host-item">
+    {{host-item
+    hostId=bookmark.id
+    addBookmark='addBookmark'
+    removeBookmark='removeBookmark'}}
+  </div>
+{{/each}}

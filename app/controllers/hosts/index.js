@@ -281,9 +281,21 @@ export default Ember.Controller.extend({
       this.retrieveHosts();
     },
 
-    togglePetsOk () {
+    togglePetsOk() {
       this.toggleProperty('petsOk');
       this.retrieveHosts();
+    },
+
+    addBookmark(host) {
+      this.get('sessionUser.user').then((user)=> {
+        this.send('addUserBookmark', host, user);
+      });
+    },
+
+    removeBookmark(host) {
+      this.get('sessionUser.user').then((user)=> {
+        this.send('removeUserBookmark', host, user);
+      });
     }
   }
 });

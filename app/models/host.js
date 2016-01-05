@@ -13,6 +13,7 @@ export default DS.Model.extend(ValidationsMixin, {
 
   moment: service('moment'),
   staysService: service('stays'),
+  sessionUser: service('sessionUser'),
 
   // Attributes
   oldHostId: DS.attr('string'),
@@ -40,6 +41,9 @@ export default DS.Model.extend(ValidationsMixin, {
   user: DS.belongsTo('user', { async: true }),
   address: DS.belongsTo('address'),
   photos: DS.hasMany('photo'),
+  bookmarks: DS.hasMany('user', {
+    inverse: 'bookmarks'
+  }),
 
   // First photo
   mainPhoto: computed.readOnly('photos.firstObject'),
@@ -114,6 +118,36 @@ export default DS.Model.extend(ValidationsMixin, {
    * This alias seems to solve the issue.
    */
   isPendingApproval: computed.alias('isPending'),
+
+  /**
+   * Indicates whether the host is bookmarked by the current user.
+   */
+  isBookmarked: computed('sessionUser.user.bookmarks.[]', function() {
+    let bookmarks = this.get('sessionUser.user.bookmarks');
+    let isBookmarked = false;
+    if (bookmarks) {
+      isBookmarked = bookmarks.contains(this);
+    }
+    return isBookmarked;
+  }),
+
+  /**
+   * Returns the host's displayed name.
+   */
+  displayedFarmName: computed('farmName', 'shortDescription', function () {
+    return this.get('farmName') || this.get('shortDescription') || '[Unnamed Farm]';
+  }),
+
+  /**
+   * Returns the host's first photo URL.
+   */
+  firstPhotoUrl: computed('photos.firstObject.completeUrl', function() {
+    var photoUrl = this.get('photos.firstObject.completeUrl');
+    if (Ember.isEmpty(photoUrl)) {
+      photoUrl = 'assets/images/wwoof-no-photo.png';
+    }
+    return photoUrl;
+  }),
 
   // Phone is mandatory for hosts, this binding is used for validation
   phone: computed.readOnly('user.phone'),

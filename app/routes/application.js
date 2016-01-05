@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
+import request from 'ic-ajax';
 import config from 'webapp/config/environment';
 
 const { service } = Ember.inject;
@@ -85,6 +86,10 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     window.location.replace(config.urlAfterLogout);
   },
 
+  getUrl(userId, hostId) {
+    return ['api/users', userId, 'bookmarks', hostId].join('/');
+  },
+
   actions: {
     invalidateSession() {
       this.get('session').invalidate();
@@ -93,6 +98,34 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       this.store.unloadAll();
       this.transitionTo('hosts.index');
       this.refresh();
+    },
+    addUserBookmark(host, user) {
+      if (!user) {
+        this.transitionTo('login');
+      } else {
+        let promise = request({
+          type: 'PUT',
+          url: this.getUrl(user.get('id'), host.get('id'))
+        });
+
+        promise.then(() => {
+          user.get('bookmarks').pushObject(host);
+        });
+      }
+    },
+    removeUserBookmark(host, user) {
+      if (!user) {
+        this.transitionTo('login');
+      } else {
+        let promise = request({
+          type: 'DELETE',
+          url: this.getUrl(user.get('id'), host.get('id'))
+        });
+
+        promise.then(()=> {
+          user.get('bookmarks').removeObject(host);
+        });
+      }
     },
     error(err) {
       this.trackjs.track(err);

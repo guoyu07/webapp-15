@@ -96,7 +96,12 @@
               </li>
               <li>
                 {{#link-to 'user.memberships' sessionUser.user.id}}
-                  {{t 'menu.myMemberships'}}
+                  {{t 'menu.memberships'}}
+                {{/link-to}}
+              </li>
+              <li>
+                {{#link-to 'user.bookmarks' sessionUser.user.id}}
+                  {{t 'menu.favorites'}}
                 {{/link-to}}
               </li>
               <li class="divider hidden-xs"></li>
