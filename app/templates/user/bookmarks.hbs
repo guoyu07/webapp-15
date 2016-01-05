@@ -2,7 +2,10 @@
   <div class="col-xs-12 col-sm-6 col-host-item">
     {{host-item
     hostId=bookmark.id
+    userBookmarks=user.bookmarks
     addBookmark='addBookmark'
     removeBookmark='removeBookmark'}}
   </div>
+{{else}}
+  <p class="lead text-center mtl">{{t 'user.bookmarks.noFavorites'}}</p>
 {{/each}}

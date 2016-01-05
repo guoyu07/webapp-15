@@ -18,6 +18,23 @@ export default Ember.Component.extend({
     return this.get('store').findRecord('host', this.get('hostId'));
   }),
 
+  userBookmarks: [],
+
+  bookmarksIds: computed.mapBy('userBookmarks', 'id'),
+
+  /**
+   * Indicates whether the host is bookmarked by the provided user.
+   */
+  isBookmarked: computed('bookmarksIds.[]', 'host.id', function() {
+    let bookmarksIds = this.get('bookmarksIds');
+    let hostId = this.get('host.id');
+    let isBookmarked = false;
+    if (bookmarksIds && hostId) {
+      isBookmarked = bookmarksIds.contains(hostId);
+    }
+    return isBookmarked;
+  }),
+
   actions: {
     add(host) {
       host.then((hostModel)=> {

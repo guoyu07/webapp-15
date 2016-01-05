@@ -120,18 +120,6 @@ export default DS.Model.extend(ValidationsMixin, {
   isPendingApproval: computed.alias('isPending'),
 
   /**
-   * Indicates whether the host is bookmarked by the current user.
-   */
-  isBookmarked: computed('sessionUser.user.bookmarks.[]', function() {
-    let bookmarks = this.get('sessionUser.user.bookmarks');
-    let isBookmarked = false;
-    if (bookmarks) {
-      isBookmarked = bookmarks.contains(this);
-    }
-    return isBookmarked;
-  }),
-
-  /**
    * Returns the host's displayed name.
    */
   displayedFarmName: computed('farmName', 'shortDescription', function () {
