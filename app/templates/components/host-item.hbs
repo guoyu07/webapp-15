@@ -3,9 +3,9 @@
 {{/link-to}}
 
 {{#if isFavorite}}
-  <span class="glyphicon glyphicon-larger glyphicon-heart text-primary" {{action 'remove' host}}></span>
+  <span class="glyphicon glyphicon-larger glyphicon-heart text-primary" title={{t 'common.removeFavorite'}} {{action 'remove' host}}></span>
 {{else}}
-  <span class="glyphicon glyphicon-larger glyphicon-heart-empty text-primary" {{action 'add' host}}></span>
+  <span class="glyphicon glyphicon-larger glyphicon-heart-empty text-primary" title={{t 'common.addFavorite'}} {{action 'add' host}}></span>
 {{/if}}
 
 <div class="caption host-item-caption">
