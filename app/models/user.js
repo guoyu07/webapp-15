@@ -25,6 +25,10 @@ export default DS.Model.extend(ValidationsMixin, {
   host: DS.belongsTo('host', { async: true }),
   wwoofer: DS.belongsTo('wwoofer', { async: true }),
   memberships: DS.hasMany('membership', { async: true }),
+  favorites: DS.hasMany('host', {
+    inverse: 'followers',
+    async: true
+  }),
 
   // Computed properties
   completePhotoUrl: computed('photo', function() {
@@ -41,9 +45,9 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Returns the full name of the user.
    */
-  fullName: function() {
+  fullName: computed('firstName', 'lastName', function() {
     return this.get('firstName') + ' ' + this.get('lastName');
-  }.property('firstName', 'lastName'),
+  }),
 
   /**
    * Order memberships by expiration date (most recent first).

@@ -281,9 +281,29 @@ export default Ember.Controller.extend({
       this.retrieveHosts();
     },
 
-    togglePetsOk () {
+    togglePetsOk() {
       this.toggleProperty('petsOk');
       this.retrieveHosts();
+    },
+
+    addFavorite(host) {
+      if (this.get('session.isAuthenticated')) {
+        this.get('sessionUser.user').then((user)=> {
+          this.send('addUserFavorite', host, user);
+        });
+      } else {
+        this.send('addUserFavorite', host);
+      }
+    },
+
+    removeFavorite(host) {
+      if (this.get('session.isAuthenticated')) {
+        this.get('sessionUser.user').then((user)=> {
+          this.send('removeUserFavorite', host, user);
+        });
+      } else {
+        this.send('addUserFavorite', host);
+      }
     }
   }
 });

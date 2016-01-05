@@ -148,7 +148,7 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="button" {{action 'applyFilters'}} class="btn btn-primary">
-              Done
+              {{t 'literal.done'}}
             </button>
           </div>
         </div>
@@ -176,7 +176,11 @@
           <div class="row">
             {{#each featuresInList as |feature|}}
               <div class="col-xs-12 col-sm-6 col-host-item">
-                {{host-item host=feature}}
+                {{host-item
+                hostId=feature.properties.hostId
+                userFavorites=sessionUser.user.favorites
+                addFavorite='addFavorite'
+                removeFavorite='removeFavorite'}}
               </div>
             {{/each}}
           </div>

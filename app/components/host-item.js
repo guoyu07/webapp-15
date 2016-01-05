@@ -1,44 +1,50 @@
 import Ember from 'ember';
 
 const { computed } = Ember;
+const { service } = Ember.inject;
 
 export default Ember.Component.extend({
 
-  classNames: ['thumbnail'],
+  store: service('store'),
+
+  classNames: ['thumbnail host-item'],
+
+  hostId: null,
 
   /**
-   * Host features
+   * Returns the current host.
    */
-  host: null,
-
-  /**
-   * Host Id
-   */
-  hostId: computed.readOnly('host.properties.hostId'),
-
-  /**
-   * Host farm name
-   */
-  farmName: computed('host.properties.farmName', function () {
-    return this.get('host.properties.farmName') || '[Unnamed Farm]';
+  host: computed('hostId', function () {
+    return this.get('store').findRecord('host', this.get('hostId'));
   }),
 
-  /**
-   * Host description
-   */
-  description: computed.readOnly('host.properties.description'),
+  userFavorites: [],
+
+  favoritesIds: computed.mapBy('userFavorites', 'id'),
 
   /**
-   * Returns the photo URL to display based on the photo property.
+   * Indicates whether the host is a favorite.
    */
-  photoUrl: computed('host.properties.photo', function() {
-    var photo = this.get('host.properties.photo');
-    var photoUrl;
-    if (Ember.isEmpty(photo)) {
-      photoUrl = "assets/images/wwoof-no-photo.png";
-    } else {
-      photoUrl = "https://s3.amazonaws.com/wwoof-france/photos/hosts/" + photo;
+  isFavorite: computed('favoritesIds.[]', 'host.id', function() {
+    let favoritesIds = this.get('favoritesIds');
+    let hostId = this.get('host.id');
+    let isFavorite = false;
+    if (favoritesIds && hostId) {
+      isFavorite = favoritesIds.contains(hostId);
     }
-    return photoUrl;
-  })
+    return isFavorite;
+  }),
+
+  actions: {
+    add(host) {
+      host.then((hostModel)=> {
+        this.sendAction('addFavorite', hostModel);
+      });
+    },
+    remove(host) {
+      host.then((hostModel)=> {
+        this.sendAction('removeFavorite', hostModel);
+      });
+    }
+  }
 });

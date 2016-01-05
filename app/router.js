@@ -34,6 +34,7 @@ Router.map(function() {
     this.route('edit');
     this.route('change-password');
     this.route('memberships');
+    this.route('favorites');
   });
   this.resource('memberships', function() {
     this.route('new');

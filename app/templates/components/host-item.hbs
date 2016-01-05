@@ -1,7 +1,14 @@
-{{#link-to 'host' hostId title=farmName}}
-  {{image-thumb url=photoUrl height=250}}
+{{#link-to 'host' host.id title=host.displayedFarmName}}
+  {{image-thumb url=host.firstPhotoUrl height=250}}
 {{/link-to}}
+
+{{#if isFavorite}}
+  <span class="glyphicon glyphicon-larger glyphicon-heart text-primary" title={{t 'common.removeFavorite'}} {{action 'remove' host}}></span>
+{{else}}
+  <span class="glyphicon glyphicon-larger glyphicon-heart-empty text-primary" title={{t 'common.addFavorite'}} {{action 'add' host}}></span>
+{{/if}}
+
 <div class="caption host-item-caption">
-  <h3 class="overflow-ellipsis">{{farmName}}</h3>
-  <p>{{description}}</p>
+  <h3 class="overflow-ellipsis">{{host.displayedFarmName}}</h3>
+  <p>{{truncate host.fullDescription limit=200}}</p>
 </div>

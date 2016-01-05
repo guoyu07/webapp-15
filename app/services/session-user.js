@@ -14,7 +14,7 @@ export default Ember.Service.extend({
     const userId = this.get('session.data.authenticated.user.id');
     if (!Ember.isEmpty(userId)) {
       return DS.PromiseObject.create({
-        promise: this.get('store').find('user', userId)
+        promise: this.get('store').findRecord('user', userId)
       });
     }
   })
