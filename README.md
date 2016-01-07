@@ -1,6 +1,6 @@
 # Wwoof France
 
-This application is intended to facilitate the meeting of WWOOFers from all over the world with organic farmers in France.
+This application is intended to facilitate the placement of volunteers from all over the world on organic farms in France.
 
 The development of this application is done by volunteers and accessible via the [WWOOF France](http://app.wwoof.fr) website.
 
