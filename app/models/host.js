@@ -137,6 +137,19 @@ export default DS.Model.extend(ValidationsMixin, {
     return photoUrl;
   }),
 
+  /**
+   * Indicates whether the host is a favorite of the authenticated user.
+   */
+  isFavorite: computed('followers.[]', 'sessionUser.user.id', function() {
+    let followersIds = this.get('followers').mapBy('id');
+    let userId = this.get('sessionUser.user.id');
+    let isFavorite = false;
+    if (followersIds && userId) {
+      isFavorite = followersIds.contains(userId);
+    }
+    return isFavorite;
+  }),
+
   // Phone is mandatory for hosts, this binding is used for validation
   phone: computed.readOnly('user.phone'),
 

@@ -197,18 +197,26 @@
   </div>
   <div class="col-md-3">
     {{#unless model.noEmail}}
-      {{#if canSeeContactInfo}}
-        {{#link-to 'host.contact' model.id class="btn btn-block btn-primary mbm"}}
-          <span class="glyphicon glyphicon-envelope mrx"></span>
-          {{t 'host.index.contactHost'}}
-        {{/link-to}}
-      {{/if}}
+      {{#link-to 'host.contact' model.id class="btn btn-block btn-primary mbm"}}
+        <span class="glyphicon glyphicon-envelope mrx"></span>
+        {{t 'host.index.contactHost'}}
+      {{/link-to}}
     {{/unless}}
-    {{#if showEditProfileButton}}
+    {{#if showEditProfileButtonn}}
       {{#link-to 'host.edit' model.id class="btn btn-block btn-default mbm"}}
         <span class="glyphicon glyphicon-pencil mrx"></span>
         {{t 'literal.editProfile'}}
       {{/link-to}}
+    {{else}}
+      <button class="btn btn-block btn-default mbm" {{action 'toggleFavorites' model sessionUser.user}}>
+        {{#if model.isFavorite}}
+          <span class="glyphicon glyphicon-heart mrx"></span>
+          {{t 'common.removeFavorite'}}
+        {{else}}
+          <span class="glyphicon glyphicon-heart-empty mrx"></span>
+          {{t 'common.addFavorite'}}
+        {{/if}}
+      </button>
     {{/if}}
 
     <div class="panel panel-default">

@@ -24,5 +24,18 @@ export default Ember.Controller.extend({
   /**
    * Indicates whether the edit profile buttons should be displayed.
    */
-  showEditProfileButton: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile')
+  showEditProfileButton: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile'),
+
+  actions: {
+    /**
+     * Adds or removes the host to the user's favorites.
+     */
+    toggleFavorites(host, user) {
+      if (host.get('isFavorite')) {
+        this.send('removeUserFavorite', host, user);
+      } else {
+        this.send('addUserFavorite', host, user);
+      }
+    }
+  }
 });

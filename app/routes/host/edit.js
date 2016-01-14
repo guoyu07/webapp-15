@@ -1,6 +1,3 @@
-/**
- * Ember route for host edition.
- */
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 

@@ -1,11 +1,15 @@
 {{#if session.isAuthenticated}}
-  {{#if sessionUser.user.wwoofer}}
+  {{#if sessionUser.user.wwoofer.id}}
     {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1')}}
       {{t 'host.index.membersOnly'}}
     {{/link-to}}
   {{else}}
-    <i>{{t 'host.index.membersOnly'}}</i>
+    {{#link-to 'wwoofers.new'}}
+      {{t 'host.index.membersOnly'}}
+    {{/link-to}}
   {{/if}}
 {{else}}
-  {{#link-to 'users.new'}}{{t 'host.index.membersOnly'}}{{/link-to}}
+  {{#link-to 'users.new'}}
+    {{t 'host.index.membersOnly'}}
+  {{/link-to}}
 {{/if}}
