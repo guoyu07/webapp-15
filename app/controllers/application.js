@@ -31,6 +31,12 @@ export default Ember.Controller.extend(ValidationsMixin, {
    */
   showNewUserModal: false,
 
+  /**
+   * Indicates whether the hosts/wwoofers nav item should be marked as active.
+   */
+  hostsIsActive: computed.match('currentRouteName', /host.index|host.contact/),
+  wwoofersIsActive: computed.match('currentRouteName', /wwoofer.index/),
+
   actions: {
     impersonateUser() {
 
