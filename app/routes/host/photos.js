@@ -1,10 +1,11 @@
-/**
- * Ember route for host photos.
- */
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  titleToken() {
+    return this.get('i18n').t('titles.host.photos');
+  },
+
   actions: {
     savePhoto(photo) {
       photo.validate().then(()=> {

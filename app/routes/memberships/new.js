@@ -1,11 +1,12 @@
-/**
- * Ember route for memberships (admin).
- */
 import Ember from 'ember';
 import config from 'webapp/config/environment';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  titleToken() {
+    return this.get('i18n').t('titles.memberships.new');
+  },
+
   actions: {
     /**
      * Initializes a payment flow with PayPal.

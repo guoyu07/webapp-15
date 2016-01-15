@@ -1,11 +1,12 @@
-/**
- * Ember route for wwoofer creation.
- */
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import moment from 'moment';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  titleToken() {
+    return this.get('i18n').t('titles.wwoofers.new');
+  },
+
   /**
    * Only one wwoofer profile allowed per user.
    * Redirects to wwoofer edit if the user already has a profile.
@@ -20,6 +21,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       }
     });
   },
+
   model() {
 
     // Create a new wwoofer record attached to the current logged in user
@@ -31,13 +33,16 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       });
     });
   },
+
   setupController(controller, model) {
     controller.set('selectedDate', moment().subtract(18, 'year'));
     this._super(controller, model);
   },
+
   renderTemplate() {
     this.render('wwoofer/form', { controller: 'wwoofers.new' });
   },
+
   deactivate() {
     this.get('controller.model').rollback();
   }

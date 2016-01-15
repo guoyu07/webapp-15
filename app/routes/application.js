@@ -27,6 +27,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     }
   },
 
+  title(tokens) {
+    tokens = Ember.makeArray(tokens);
+    tokens.unshift('WWOOF France');
+    return tokens.reverse().join(' · ');
+  },
+
   /**
    * Processes whether the new user modal should be visible.
    */

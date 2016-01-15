@@ -3,6 +3,10 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import request from 'ic-ajax';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  titleToken() {
+    return this.get('i18n').t('titles.host.contact');
+  },
+
   /**
    * Redirects users with no woofer profile to the create page.
    * Redirects users with no active memberships to the purchase page.

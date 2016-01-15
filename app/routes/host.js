@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  redirect() {
-    this.transitionTo('hosts');
+  titleToken(model) {
+    return model.get('displayedFarmName');
   }
 });

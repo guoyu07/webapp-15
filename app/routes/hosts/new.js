@@ -1,10 +1,11 @@
-/**
- * Ember route for host creation.
- */
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  titleToken() {
+    return this.get('i18n').t('titles.hosts.new');
+  },
+
   /**
    * Only one host profile allowed per user.
    * Redirects to host edit if the user already has a profile.
