@@ -1,10 +1,7 @@
-/**
- * Route for host index.
- */
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  renderTemplate: function() {
+  renderTemplate() {
     this.render({ into: 'application' });
   }
 });

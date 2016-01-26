@@ -1,6 +1,3 @@
-/**
- * Ember model for hosts.
- */
 import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from 'webapp/mixins/validations';
