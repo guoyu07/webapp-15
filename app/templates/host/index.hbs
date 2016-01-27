@@ -188,7 +188,10 @@
         <h3 class="panel-title">
           <span class="glyphicon glyphicon-pencil mrx"></span>
           {{t 'host.index.description'}}
-          <div class="fb-share-button pull-right" data-href={{model.completeUrl}} data-layout="button_count"></div>
+          <a class="share-btn pull-right" rel="nofollow" title="Share on Facebook" href={{model.fbShareUrl}} target="_blank">
+            <span class="sr-only">Facebook</span>
+            <img src="assets/images/fb-share.png"/>
+          </a>
         </h3>
       </div>
       <div class="panel-body">

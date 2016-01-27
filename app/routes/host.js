@@ -44,6 +44,14 @@ export default Ember.Route.extend({
           name: 'og:url',
           content: window.location.href
         }
+      },
+      {
+        type: 'meta',
+        tagId: 'meta-fb-app-id',
+        attrs: {
+          name: 'fb:app_id',
+          content: '591228884365436'
+        }
       }
     ];
   }

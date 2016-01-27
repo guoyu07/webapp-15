@@ -148,10 +148,11 @@ export default DS.Model.extend(ValidationsMixin, {
   }),
 
   /**
-   * Returns the complete URL to that host.
+   * Returns the facebook share URL of the host.
    */
-  completeUrl: computed('id', function () {
-    return 'https://app.wwoof.fr/host/' + this.get('id');
+  fbShareUrl: computed('id', function () {
+    let completeUrl = 'https://app.wwoof.fr/host/' + this.get('id');
+    return 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(completeUrl);
   }),
 
   // Phone is mandatory for hosts, this binding is used for validation
