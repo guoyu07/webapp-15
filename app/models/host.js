@@ -147,6 +147,13 @@ export default DS.Model.extend(ValidationsMixin, {
     return isFavorite;
   }),
 
+  /**
+   * Returns the complete URL to that host.
+   */
+  completeUrl: computed('id', function () {
+    return 'https://app.wwoof.fr/host/' + this.get('id');
+  }),
+
   // Phone is mandatory for hosts, this binding is used for validation
   phone: computed.readOnly('user.phone'),
 
