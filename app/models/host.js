@@ -27,6 +27,7 @@ export default DS.Model.extend(ValidationsMixin, {
   activities: DS.attr('array'),
   openingMonths: DS.attr('array'),
   stays: DS.attr('array'),
+  lodgings: DS.attr('array'),
   capacity: DS.attr('number'),
   childrenOk: DS.attr('boolean'),
   petsOk: DS.attr('boolean'),
@@ -182,6 +183,9 @@ export default DS.Model.extend(ValidationsMixin, {
       presence: true
     },
     stays: {
+      presence: true
+    },
+    lodgings: {
       presence: true
     },
     capacity: {
