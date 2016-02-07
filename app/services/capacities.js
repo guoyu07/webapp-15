@@ -21,7 +21,7 @@ export default Ember.Service.extend({
    * List of all capacities accepted by the hosts.
    */
   allCapacities: computed('capacityIds.[]', 'i18n.locale', function() {
-    var capacities = this.get('capacityIds').map((item)=> {
+    const capacities = this.get('capacityIds').map((item)=> {
       return Ember.Object.create({
         id: item,
         label: this.get('i18n').t('host.form.capacity.label', { count: item })
