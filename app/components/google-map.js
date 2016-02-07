@@ -17,11 +17,8 @@ export default Ember.Component.extend({
   mapUrl: function() {
     const latitude = this.get('latitude') || 0;
     const longitude = this.get('longitude') || 0;
-    const url = `https://maps.googleapis.com/maps/api/staticmap
-      ?center=${latitude},${longitude}
-      &zoom=6
-      &size=800x300
-      &markers=color:red|${latitude},${longitude}`;
+    const baseUrl = 'https://maps.googleapis.com/maps/api/staticmap';
+    const url = `${baseUrl}?center=${latitude},${longitude}&zoom=6&size=800x300&markers=color:red|${latitude},${longitude}`;
 
     return encodeURI(url);
   }.property('latitude', 'longitude')
