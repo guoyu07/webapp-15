@@ -38,13 +38,13 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
    */
   processNewUserModalVisibility() {
     this.get('sessionUser.user').then((user)=> {
-      var promise = Ember.RSVP.hash({
+      const promise = Ember.RSVP.hash({
         host: user.get('host'),
         wwoofer: user.get('wwoofer')
       });
 
       promise.then((results)=> {
-        var showModal = Ember.isEmpty(results.host) && Ember.isEmpty(results.wwoofer);
+        const showModal = Ember.isEmpty(results.host) && Ember.isEmpty(results.wwoofer);
         this.controller.set('showNewUserModal', showModal);
       });
     });

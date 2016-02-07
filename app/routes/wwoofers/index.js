@@ -23,13 +23,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model(params) {
-
-    var page = params.page || 1;
-    var limit = params.itemsPerPage || 20;
-    var offset = (page - 1) * limit;
-    var wwooferParams = Ember.merge(params, {
-      offset: offset,
-      limit: limit
+    const page = params.page || 1;
+    const limit = params.itemsPerPage || 20;
+    const offset = (page - 1) * limit;
+    const wwooferParams = Ember.merge(params, {
+      offset,
+      limit
     });
 
     return Ember.RSVP.hash({

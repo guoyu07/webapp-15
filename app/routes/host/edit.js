@@ -6,7 +6,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('i18n').t('titles.host.edit');
   },
 
-  renderTemplate: function() {
+  renderTemplate() {
     this.render('host/form', { controller: 'host.edit' });
   }
 });

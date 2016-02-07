@@ -12,11 +12,10 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
    */
   beforeModel(transition) {
     this._super(transition);
-    var route = this;
-    return this.get('sessionUser.user').then(function(user) {
-      var hostId = user.get('host.id');
+    return this.get('sessionUser.user').then((user)=> {
+      const hostId = user.get('host.id');
       if (hostId) {
-        route.transitionTo('host.edit', hostId);
+        this.transitionTo('host.edit', hostId);
       }
     });
   },
@@ -27,12 +26,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model() {
     return this.get('sessionUser.user').then((user)=> {
       return this.store.createRecord('host', {
-        user: user
+        user
       });
     });
   },
 
-  renderTemplate: function() {
+  renderTemplate() {
     this.render('host/form', { controller: 'hosts.new' });
   },
 
