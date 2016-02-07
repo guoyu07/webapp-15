@@ -44,7 +44,7 @@ Router.map(function() {
     this.route('cancel');
     this.route('failure');
   });
-  this.route('404', { path: "*path" });
+  this.route('404', { path: '*path' });
 });
 
 export default Router;

@@ -34,7 +34,7 @@ export default Ember.Controller.extend({
           var promise = host.save();
 
           // Save the user (phone number)
-          promise = promise.then (()=> {
+          promise = promise.then(()=> {
             return user.save();
           });
 

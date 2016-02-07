@@ -10,7 +10,7 @@ export default Ember.Route.extend({
 
     // Truncate description and remove extra spaces
     let description = truncate.compute([model.get('fullDescription')], { limit: 200 }) || '';
-    description = description.replace(/\s+/g, " ");
+    description = description.replace(/\s+/g, ' ');
 
     return [
       {

@@ -1,6 +1,3 @@
-/**
- * Ember component to display a bootstrap carousel.
- */
 import Ember from 'ember';
 
 const { computed } = Ember;
@@ -11,8 +8,8 @@ export default Ember.Component.extend({
   attributeBindings: ['dataRide:data-ride'],
   dataRide: 'carousel',
 
-  anchorId: computed('elementId', function () {
-    return '#' + this.get('elementId');
+  anchorId: computed('elementId', function() {
+    return `#${this.get('elementId')}`;
   }),
 
   didInsertElement() {

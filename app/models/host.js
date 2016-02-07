@@ -61,7 +61,7 @@ export default DS.Model.extend(ValidationsMixin, {
   displayedStays: computed('stays.[]', 'i18n.locale', function() {
     var allStays = this.get('staysService.allStays');
     var stays = this.get('stays');
-    return allStays.map(function (stay) {
+    return allStays.map(function(stay) {
       return {
         label: stay.get('label'),
         isOk: stays.contains(stay.get('id'))
@@ -72,7 +72,7 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Indicates whether the host profile is complete (i.e. ready for payment).
    */
-  isComplete: computed('fullDescription', 'address.id', function () {
+  isComplete: computed('fullDescription', 'address.id', function() {
     return Ember.isPresent(this.get('fullDescription')) && Ember.isPresent(this.get('address.id'));
   }),
   isIncomplete: computed.not('isComplete'),
@@ -81,14 +81,14 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns a list of all the months of the year.
    * Each month comes with a boolean indicating whether the host is open.
    */
-  openingCalendar: computed('openingMonths.[]', 'moment.locale', function () {
+  openingCalendar: computed('openingMonths.[]', 'moment.locale', function() {
     var openingMonths = this.get('openingMonths');
     var months = [];
     for (var i = 0; i <= 11; i++) {
       var currentMonth = this.get('moment').moment().month(i);
       months.push({
-        label: currentMonth.format("MMMM"),
-        isOpen: openingMonths.contains(currentMonth.format("MM"))
+        label: currentMonth.format('MMMM'),
+        isOpen: openingMonths.contains(currentMonth.format('MM'))
       });
     }
     return months;
@@ -107,7 +107,7 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the displayed capacity of the host.
    * Transforms 4 into 4+.
    */
-  displayedCapacity: computed('capacity', function () {
+  displayedCapacity: computed('capacity', function() {
     return this.get('capacity') === 4 ? '4+' : this.get('capacity');
   }),
 
@@ -120,7 +120,7 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Returns the host's displayed name.
    */
-  displayedFarmName: computed('farmName', 'shortDescription', function () {
+  displayedFarmName: computed('farmName', 'shortDescription', function() {
     return this.get('farmName') || this.get('shortDescription') || '[Unnamed Farm]';
   }),
 
@@ -151,7 +151,7 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Returns the facebook share URL of the host.
    */
-  fbShareUrl: computed('id', function () {
+  fbShareUrl: computed('id', function() {
     let completeUrl = 'https://app.wwoof.fr/host/' + this.get('id');
     return 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(completeUrl);
   }),

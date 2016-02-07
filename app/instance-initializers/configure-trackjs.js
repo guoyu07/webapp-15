@@ -29,7 +29,7 @@ export function initialize(application) {
           if (sessionService.get('isAuthenticated')) {
             sessionService.invalidate();
           } else {
-            window.location.replace("/login");
+            window.location.replace('/login');
           }
         }
       } else if (payload && payload.entry === 'ajax') {

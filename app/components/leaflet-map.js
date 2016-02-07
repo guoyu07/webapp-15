@@ -52,7 +52,7 @@ export default Ember.Component.extend({
     });
 
     // Set the tile layer
-    var tileLayer = new L.tileLayer.provider('MapQuestOpen');
+    let tileLayer = new L.tileLayer.provider('MapQuestOpen');
     tileLayer._url = 'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
     tileLayer.addTo(this.map);
 
@@ -65,9 +65,9 @@ export default Ember.Component.extend({
    * Centers the map in the middle of France.
    */
   centerMap() {
-    var latitude = this.get('latitude');
-    var longitude = this.get('longitude');
-    var zoom = this.get('zoom');
+    const latitude = this.get('latitude');
+    const longitude = this.get('longitude');
+    const zoom = this.get('zoom');
 
     if (latitude && longitude) {
       this.map.setView([latitude, longitude], zoom);
@@ -119,8 +119,8 @@ export default Ember.Component.extend({
    * Handles moves on the map.
    */
   mapDidMove() {
-    var center = this.map.getCenter();
-    var zoom = this.map.getZoom();
+    const center = this.map.getCenter();
+    const zoom = this.map.getZoom();
 
     this.sendAction('mapMoved', center.lat, center.lng, zoom);
 
@@ -137,8 +137,8 @@ export default Ember.Component.extend({
     }
 
     // Find visible features
-    var visibleFeatures = [];
-    var mapBounds = this.map.getBounds();
+    let visibleFeatures = [];
+    const mapBounds = this.map.getBounds();
     this.geoJsonLayer.eachLayer(function(layer) {
       if (mapBounds.contains(layer.getLatLng())) {
         visibleFeatures.push(layer.feature);
@@ -152,21 +152,17 @@ export default Ember.Component.extend({
    * Create and display the popup associated to the clicked feature.
    */
   onFeatureClick(e) {
-
-    var feature = e.target.feature;
-    var hostId = feature.properties.hostId;
-    var photo = feature.properties.photo;
-    var farmName = feature.properties.farmName;
+    const { properties } = e.target.feature;
 
     // Set info about the current host
-    this.set('hostId', hostId);
-    this.set('photo', photo);
-    this.set('farmName', farmName);
+    this.set('hostId', properties.hostId);
+    this.set('photo', properties.photo);
+    this.set('farmName', properties.farmName);
 
     Ember.run.later(this, function() {
 
       // Retrieve the popup content
-      var popup = Ember.$('.leaflet-popup').html();
+      let popup = Ember.$('.leaflet-popup').html();
 
       // Open popup
       e.target.bindPopup(popup, { closeButton: false }).togglePopup();

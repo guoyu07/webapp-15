@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
   /**
    * Indicates whether the authenticated user owns the current host profile.
    */
-  isCurrentUserProfile: computed('sessionUser.user.id', 'model.user.id', function () {
+  isCurrentUserProfile: computed('sessionUser.user.id', 'model.user.id', function() {
     return this.get('sessionUser.user.id') === this.get('model.user.id');
   }),
 

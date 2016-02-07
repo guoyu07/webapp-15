@@ -12,7 +12,7 @@ export default Ember.Component.extend({
    * Toggles the "isExpanded" state.
    */
   actions: {
-    toggle: function() {
+    toggle() {
       this.set('isExpanded', !this.get('isExpanded'));
     }
   },
@@ -21,7 +21,7 @@ export default Ember.Component.extend({
    * Truncates the text if not expanded then returns it.
    */
   displayedText: function() {
-    var text = this.get('text');
+    let text = this.get('text');
     if (!Ember.isEmpty(text)) {
       text = this.get('isExpanded') ? text : text.slice(0, this.get('truncateAt')).concat('...');
     }

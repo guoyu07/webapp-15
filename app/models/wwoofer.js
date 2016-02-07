@@ -36,7 +36,7 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Indicates whether the wwoofer profile is complete (i.e. ready for payment).
    */
-  isComplete: computed('intro', 'address.id', function () {
+  isComplete: computed('intro', 'address.id', function() {
     return Ember.isPresent(this.get('intro')) && Ember.isPresent(this.get('address.id'));
   }),
   isIncomplete: computed.not('isComplete'),

@@ -42,7 +42,7 @@ export default DS.Model.extend(ValidationsMixin, {
     },
     'department.id': {
       presence: {
-        'if': function (address) {
+        'if': function(address) {
           return address.get('country.code') === 'FR';
         }
       }

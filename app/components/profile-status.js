@@ -19,8 +19,8 @@ export default Ember.Component.extend({
    */
   wwooferProfileClass: function() {
     // Host has no active membership: warning
-    var hasValidMembership = this.get('user.hasNonExpiredWwooferMembership');
-    var isStillValidInAMonth = this.get('user.latestWwooferMembership.isStillValidInAMonth');
+    const hasValidMembership = this.get('user.hasNonExpiredWwooferMembership');
+    const isStillValidInAMonth = this.get('user.latestWwooferMembership.isStillValidInAMonth');
     if (!hasValidMembership || !isStillValidInAMonth) {
       return 'glyphicon glyphicon-warning-sign';
     }
@@ -33,7 +33,7 @@ export default Ember.Component.extend({
    * Provides the class name to style the component for host profile
    */
   hostProfileClass: function() {
-    var host = this.get('user.host');
+    const host = this.get('user.host');
 
     // Return if the Host has not been requested yet
     if (!host) {
@@ -50,8 +50,8 @@ export default Ember.Component.extend({
     }
 
     // Host has no active membership: warning
-    var hasValidMembership = this.get('user.hasNonExpiredHostMembership');
-    var isStillValidInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
+    const hasValidMembership = this.get('user.hasNonExpiredHostMembership');
+    const isStillValidInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
     if (!hasValidMembership || !isStillValidInAMonth) {
       return 'glyphicon glyphicon-warning-sign';
     }
