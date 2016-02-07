@@ -10,7 +10,7 @@ export default DS.Transform.extend({
    * This means null or undefined values automatically become
    * empty arrays when serializing this type.
    */
-  serialize: function(serialized) {
+  serialize(serialized) {
     return Ember.typeOf(serialized) === 'array' ? serialized.filter(function(e) {
       return e; // remove empty entries
     }).join(',') : '';
@@ -24,7 +24,7 @@ export default DS.Transform.extend({
    * turning all other data types (including nulls and undefined
    * values) into empty arrays.
    */
-  deserialize: function(deserialized) {
+  deserialize(deserialized) {
     switch (Ember.typeOf(deserialized)) {
       case 'array':
         return deserialized;

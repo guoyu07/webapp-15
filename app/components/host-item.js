@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   /**
    * Returns the current host.
    */
-  host: computed('hostId', function () {
+  host: computed('hostId', function() {
     return this.get('store').findRecord('host', this.get('hostId'));
   }),
 

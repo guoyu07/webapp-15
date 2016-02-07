@@ -21,10 +21,10 @@ export default Ember.Service.extend({
    * List of all lodgings proposed by the hosts.
    */
   allLodgings: computed('lodgingIds.[]', 'i18n.locale', function() {
-    var lodgings = this.get('lodgingIds').map((item)=> {
+    const lodgings = this.get('lodgingIds').map((item)=> {
       return Ember.Object.create({
         id: item,
-        label: this.get('i18n').t('lodgings.' + item)
+        label: this.get('i18n').t(`lodgings.${item}`)
       });
     });
 

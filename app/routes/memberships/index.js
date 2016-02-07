@@ -22,12 +22,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     }
   },
 
-  model: function(params) {
+  model(params) {
 
     let limit = params.itemsPerPage || 20;
     let queryParams = {
       offset: (params.page - 1) * limit,
-      limit: limit
+      limit
     };
     if (params.expireSoon === true) {
       queryParams.expireSoon = true;
@@ -40,7 +40,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     }
 
     // Prepare promises
-    var promises = {
+    let promises = {
       memberships: this.store.find('membership', queryParams)
     };
     if (params.userId) {
@@ -75,7 +75,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      * @param checked
      */
     itemToggled(membership, checked) {
-      var selectedMemberships = this.controller.get('selectedMemberships');
+      let selectedMemberships = this.controller.get('selectedMemberships');
       if (checked === true) {
         selectedMemberships.addObject(membership);
       } else {
@@ -97,32 +97,25 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      * Sends a reminder too each "remindable" selected membership.
      */
     sendReminder() {
-
-      // Prepare URL
-      var adapter = this.store.adapterFor('application');
+      const adapter = this.store.adapterFor('application');
 
       // Get memberships for which no reminder was sent already
-      var remindableMemberships = this.controller.get('remindableMemberships');
+      const remindableMemberships = this.controller.get('remindableMemberships');
 
       // Send the reminders
-      var promises = remindableMemberships.map(function(membership) {
-        var url = [
-          adapter.get('host'),
-          adapter.get('namespace'),
-          'memberships',
-          membership.get('id'),
-          'send-reminder'
-        ].join('/');
+      let promises = remindableMemberships.map(function(membership) {
+        const id = membership.get('id');
+        const url = [adapter.get('host'), adapter.get('namespace'), 'memberships', id, 'send-reminder'].join('/');
 
         // Send reminder
         return request({
           type: 'POST',
-          url: url
+          url
         });
       });
 
       // Handle success
-      var promise = Ember.RSVP.all(promises);
+      const promise = Ember.RSVP.all(promises);
 
       // Notify user
       promise.then(()=> {

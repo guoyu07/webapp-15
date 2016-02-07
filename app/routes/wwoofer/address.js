@@ -7,12 +7,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model() {
-    var wwoofer = this.modelFor('wwoofer');
-    var address = wwoofer.get('address') || this.store.createRecord('address');
+    const wwoofer = this.modelFor('wwoofer');
+    const address = wwoofer.get('address') || this.store.createRecord('address');
 
     return Ember.RSVP.hash({
-      wwoofer: wwoofer,
-      address: address
+      wwoofer,
+      address
     });
   },
 

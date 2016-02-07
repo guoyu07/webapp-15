@@ -1,6 +1,3 @@
-/**
- * Ember controller for user creation.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
@@ -19,7 +16,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     saveUser() {
 
       // Get user
-      var user = this.get('model');
+      let user = this.get('model');
 
       // Make sure all checkboxes are checked
       if (!this.get('termsOk') || !this.get('insuranceOk')) {
@@ -31,13 +28,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
       user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
 
       // Initialize validations array
-      var validations = [this.validate(), user.validate()];
+      const validations = [this.validate(), user.validate()];
 
       // Save the user
       Ember.RSVP.all(validations).then(()=> {
         user.save().then(()=> {
           // Authenticate user
-          var auth = this.get('session').authenticate('authenticator:passport', {
+          const auth = this.get('session').authenticate('authenticator:passport', {
             username: user.get('email'),
             password: user.get('password')
           });

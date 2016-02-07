@@ -1,6 +1,3 @@
-/**
- * Ember controller for password update.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 import request from 'ic-ajax';
@@ -25,20 +22,20 @@ export default Ember.Controller.extend(ValidationsMixin, {
       this.validate().then(()=> {
 
         // Get the current user id
-        var currentUserId = this.get('sessionUser.user.id');
+        const currentUserId = this.get('sessionUser.user.id');
         Ember.assert('User id cannot be null', currentUserId);
 
         // Set controller in loading state
         this.set('isLoading', true);
 
         // Prepare URL
-        var adapter = this.store.adapterFor('application'),
-          url = [adapter.get('host'), adapter.get('namespace'), 'users', currentUserId, 'change-password'].join('/');
+        const adapter = this.store.adapterFor('application');
+        const url = [adapter.get('host'), adapter.get('namespace'), 'users', currentUserId, 'change-password'].join('/');
 
         // Update password
-        var promise = request({
+        const promise = request({
           type: 'POST',
-          url: url,
+          url,
           data: {
             newPassword: this.get('password')
           }

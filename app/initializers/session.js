@@ -10,5 +10,5 @@ export function initialize(container, application) {
 
 export default {
   name: 'session',
-  initialize: initialize
+  initialize
 };

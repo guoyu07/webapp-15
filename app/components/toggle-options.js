@@ -7,7 +7,7 @@ export default Ember.Component.extend({
    *
    * @event init
    */
-  init: function() {
+  init() {
     this._super.apply(this, arguments);
     Ember.assert('Option values were not supplied.', !!this.get('values'));
   },
@@ -71,13 +71,13 @@ export default Ember.Component.extend({
    * @readOnly
    */
   options: function() {
-    var selected = Ember.makeArray(this.get('selected'));
-    var compareProperty = this.get('compareProperty');
-    var selectedProperties = selected.mapBy(compareProperty).compact();
-    var optionValuePath = this.get('optionValuePath');
+    const selected = Ember.makeArray(this.get('selected'));
+    const compareProperty = this.get('compareProperty');
+    const selectedProperties = selected.mapBy(compareProperty).compact();
+    const optionValuePath = this.get('optionValuePath');
 
     return this.get('values').map(function(value) {
-      var selectionValue = optionValuePath ? value.get(optionValuePath) : value;
+      const selectionValue = optionValuePath ? value.get(optionValuePath) : value;
 
       return Ember.ObjectProxy.create({
         content: value,
@@ -95,7 +95,7 @@ export default Ember.Component.extend({
      * @method clear
      */
     clear() {
-      var isSingle = this.get('selectOne');
+      const isSingle = this.get('selectOne');
       this.set('selected', isSingle ? null : Ember.A());
     },
 
@@ -106,9 +106,9 @@ export default Ember.Component.extend({
      * @param {Object} option Option to switch on.
      */
     select(option) {
-      var selected = this.get('selected');
-      var newSelection = option.get('value');
-      var isSingle = this.get('selectOne');
+      let selected = this.get('selected');
+      const newSelection = option.get('value');
+      const isSingle = this.get('selectOne');
 
       if (isSingle) {
         this.set('selected', newSelection);

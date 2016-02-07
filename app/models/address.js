@@ -1,6 +1,3 @@
-/**
- * Ember model for Address.
- */
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 
@@ -42,7 +39,7 @@ export default DS.Model.extend(ValidationsMixin, {
     },
     'department.id': {
       presence: {
-        'if': function (address) {
+        'if'(address) {
           return address.get('country.code') === 'FR';
         }
       }

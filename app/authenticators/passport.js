@@ -8,7 +8,7 @@ export default BaseAuthenticator.extend({
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (data && data.user && !Ember.isEmpty(data.user.id)) {
         // Prepare URL
-        var url = [config.apiHost, config.apiNamespace, 'users/is-authenticated'].join('/');
+        const url = [config.apiHost, config.apiNamespace, 'users/is-authenticated'].join('/');
 
         request(url).then(()=> {
           resolve(data);
@@ -22,12 +22,12 @@ export default BaseAuthenticator.extend({
   },
   authenticate(options) {
     // Prepare URL
-    var url = [config.apiHost, config.apiNamespace, 'users/login'].join('/');
+    const url = [config.apiHost, config.apiNamespace, 'users/login'].join('/');
 
     // Log the user in
     return request({
       type: 'POST',
-      url: url,
+      url,
       data: {
         username: options.username,
         password: options.password
@@ -36,12 +36,12 @@ export default BaseAuthenticator.extend({
   },
   invalidate() {
     // Prepare URL
-    var url = [config.apiHost, config.apiNamespace, 'users/logout'].join('/');
+    const url = [config.apiHost, config.apiNamespace, 'users/logout'].join('/');
 
     // Log the user out
     return request({
       type: 'POST',
-      url: url
+      url
     });
   }
 });

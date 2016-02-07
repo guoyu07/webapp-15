@@ -7,12 +7,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model() {
-    var host = this.modelFor('host');
-    var address = host.get('address') || this.store.createRecord('address');
+    const host = this.modelFor('host');
+    const address = host.get('address') || this.store.createRecord('address');
 
     return Ember.RSVP.hash({
-      host: host,
-      address: address
+      host,
+      address
     });
   },
 

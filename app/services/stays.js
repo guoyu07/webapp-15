@@ -22,10 +22,10 @@ export default Ember.Service.extend({
    * List of all length of stays accepted by the hosts.
    */
   allStays: computed('stayIds.[]', 'i18n.locale', function() {
-    var stays = this.get('stayIds').map((item)=> {
+    const stays = this.get('stayIds').map((item)=> {
       return Ember.Object.create({
         id: item,
-        label: this.get('i18n').t('stays.' + item)
+        label: this.get('i18n').t(`stays.${item}`)
       });
     });
 

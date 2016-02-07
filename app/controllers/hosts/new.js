@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     saveHost() {
 
       // Get the host
-      var host = this.get('model');
+      let host = this.get('model');
 
       // Get the host's user (async)
       host.get('user').then((user)=> {
@@ -25,16 +25,16 @@ export default Ember.Controller.extend({
         }
 
         // Prepare validation promises
-        var validations = [host.validate(), user.validate()];
+        const validations = [host.validate(), user.validate()];
 
         // Validate all models
         Ember.RSVP.all(validations).then(()=> {
 
           // Create the host
-          var promise = host.save();
+          let promise = host.save();
 
           // Save the user (phone number)
-          promise = promise.then (()=> {
+          promise = promise.then(()=> {
             return user.save();
           });
 

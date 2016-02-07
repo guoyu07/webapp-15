@@ -22,11 +22,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       }
 
       // Build the base URL
-      var url = config.SERVER_BASE_URL + '/api/payment/start?itemCode=' + itemCode;
+      let url = `${config.SERVER_BASE_URL}/api/payment/start?itemCode=${itemCode}`;
 
       // Add shipping fee code if present
       if (shippingRegion) {
-        url += '&shippingRegion=' + shippingRegion;
+        url += `&shippingRegion=${shippingRegion}`;
       }
 
       // Redirect to server payment route in order to get redirected to PayPal
@@ -37,8 +37,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      * Creates a membership (admin only).
      */
     createMembership() {
-
-      var promise = this.controller.getNewMembership();
+      let promise = this.controller.getNewMembership();
 
       promise = promise.then((newMembership)=> {
         return newMembership.save();

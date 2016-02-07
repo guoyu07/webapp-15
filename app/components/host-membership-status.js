@@ -16,10 +16,10 @@ export default Ember.Component.extend({
    * Returns the CSS class of the panel based on the host's membership status.
    */
   panelClass: computed('user.hasHostMemberships', 'user.latestHostMembership.isStillValidInAMonth', function() {
-    var hasHostMemberships = this.get('user.hasHostMemberships');
-    var stillGoodInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
+    const hasHostMemberships = this.get('user.hasHostMemberships');
+    const stillGoodInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
 
-    var panelClass = 'panel-success';
+    let panelClass = 'panel-success';
     if (!hasHostMemberships) {
       panelClass = 'panel-warning';
     } else if (!stillGoodInAMonth) {

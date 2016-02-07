@@ -13,7 +13,7 @@ export default Ember.Component.extend({
 
   dataToggle: 'tooltip',
 
-  iconClass: computed('icon', function () {
+  iconClass: computed('icon', function() {
     return `glyphicon-${this.get('icon')}`;
   }),
 

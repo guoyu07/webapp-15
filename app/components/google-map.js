@@ -15,13 +15,11 @@ export default Ember.Component.extend({
    * URL of the map.
    */
   mapUrl: function() {
-    var latitude = this.get('latitude') || 0;
-    var longitude = this.get('longitude') || 0;
-    var url = 'https://maps.googleapis.com/maps/api/staticmap?' +
-      'center=' + latitude + ',' + longitude +
-      '&zoom=6' +
-      '&size=800x300' +
-      '&markers=color:red|' + latitude + ',' + longitude;
+    const latitude = this.get('latitude') || 0;
+    const longitude = this.get('longitude') || 0;
+    const baseUrl = 'https://maps.googleapis.com/maps/api/staticmap';
+    const url = `${baseUrl}?center=${latitude},${longitude}&zoom=6&size=800x300&markers=color:red|${latitude},${longitude}`;
+
     return encodeURI(url);
   }.property('latitude', 'longitude')
 });

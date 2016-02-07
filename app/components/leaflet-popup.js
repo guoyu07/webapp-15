@@ -21,12 +21,12 @@ export default Ember.Component.extend({
    * Returns the photo URL to display based on the photo property.
    */
   photoUrl: function() {
-    var photo = this.get('photo');
-    var photoUrl;
+    const photo = this.get('photo');
+    let photoUrl;
     if (Ember.isEmpty(photo)) {
-      photoUrl = "assets/images/wwoof-no-photo.png";
+      photoUrl = 'assets/images/wwoof-no-photo.png';
     } else {
-      photoUrl = "https://s3.amazonaws.com/wwoof-france/photos/hosts/" + photo;
+      photoUrl = `https://s3.amazonaws.com/wwoof-france/photos/hosts/${photo}`;
     }
     return photoUrl;
   }.property('photo')

@@ -51,7 +51,7 @@ export default DS.Model.extend(ValidationsMixin, {
    */
   displayedActivities: computed('activities.[]', 'i18n.locale', function() {
     return this.get('activities').map((activity)=> {
-      return this.get('i18n').t('activities.' + activity);
+      return this.get('i18n').t(`activities.${activity}`);
     });
   }),
 
@@ -59,9 +59,9 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the list of stays accepted by the host.
    */
   displayedStays: computed('stays.[]', 'i18n.locale', function() {
-    var allStays = this.get('staysService.allStays');
-    var stays = this.get('stays');
-    return allStays.map(function (stay) {
+    const allStays = this.get('staysService.allStays');
+    const stays = this.get('stays');
+    return allStays.map(function(stay) {
       return {
         label: stay.get('label'),
         isOk: stays.contains(stay.get('id'))
@@ -72,7 +72,7 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Indicates whether the host profile is complete (i.e. ready for payment).
    */
-  isComplete: computed('fullDescription', 'address.id', function () {
+  isComplete: computed('fullDescription', 'address.id', function() {
     return Ember.isPresent(this.get('fullDescription')) && Ember.isPresent(this.get('address.id'));
   }),
   isIncomplete: computed.not('isComplete'),
@@ -81,14 +81,14 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns a list of all the months of the year.
    * Each month comes with a boolean indicating whether the host is open.
    */
-  openingCalendar: computed('openingMonths.[]', 'moment.locale', function () {
-    var openingMonths = this.get('openingMonths');
-    var months = [];
-    for (var i = 0; i <= 11; i++) {
-      var currentMonth = this.get('moment').moment().month(i);
+  openingCalendar: computed('openingMonths.[]', 'moment.locale', function() {
+    const openingMonths = this.get('openingMonths');
+    let months = [];
+    for (let i = 0; i <= 11; i++) {
+      const currentMonth = this.get('moment').moment().month(i);
       months.push({
-        label: currentMonth.format("MMMM"),
-        isOpen: openingMonths.contains(currentMonth.format("MM"))
+        label: currentMonth.format('MMMM'),
+        isOpen: openingMonths.contains(currentMonth.format('MM'))
       });
     }
     return months;
@@ -98,8 +98,8 @@ export default DS.Model.extend(ValidationsMixin, {
    * Indicates whether the host is pending approval or was rejected.
    */
   isPendingOrRejected: computed('isPendingApproval', 'isApproved', function() {
-    var isPendingApproval = this.get('isPendingApproval');
-    var isApproved = this.get('isApproved');
+    const isPendingApproval = this.get('isPendingApproval');
+    const isApproved = this.get('isApproved');
     return isPendingApproval || isApproved === false;
   }),
 
@@ -107,7 +107,7 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the displayed capacity of the host.
    * Transforms 4 into 4+.
    */
-  displayedCapacity: computed('capacity', function () {
+  displayedCapacity: computed('capacity', function() {
     return this.get('capacity') === 4 ? '4+' : this.get('capacity');
   }),
 
@@ -120,7 +120,7 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Returns the host's displayed name.
    */
-  displayedFarmName: computed('farmName', 'shortDescription', function () {
+  displayedFarmName: computed('farmName', 'shortDescription', function() {
     return this.get('farmName') || this.get('shortDescription') || '[Unnamed Farm]';
   }),
 
@@ -128,7 +128,7 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the host's first photo URL.
    */
   firstPhotoUrl: computed('photos.firstObject.completeUrl', function() {
-    var photoUrl = this.get('photos.firstObject.completeUrl');
+    let photoUrl = this.get('photos.firstObject.completeUrl');
     if (Ember.isEmpty(photoUrl)) {
       photoUrl = 'assets/images/wwoof-no-photo.png';
     }
@@ -151,9 +151,10 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Returns the facebook share URL of the host.
    */
-  fbShareUrl: computed('id', function () {
-    let completeUrl = 'https://app.wwoof.fr/host/' + this.get('id');
-    return 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(completeUrl);
+  fbShareUrl: computed('id', function() {
+    const completeUrl = `https://app.wwoof.fr/host/${this.get('id')}`;
+    const encodedUrl = encodeURIComponent(completeUrl);
+    return `http://www.facebook.com/sharer.php?u=${encodedUrl}`;
   }),
 
   // Phone is mandatory for hosts, this binding is used for validation

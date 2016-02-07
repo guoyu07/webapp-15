@@ -32,41 +32,39 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      * Sends a message to a host.
      */
     sendMessage() {
-
-      var controller = this.get('controller');
-      var message = controller.get('message');
-      var host = controller.get('model');
+      const message = this.controller.get('message');
+      const host = this.controller.get('model');
 
       // Validate the form
-      controller.validate().then(()=> {
+      this.controller.validate().then(()=> {
 
         // Set controller in sending state
-        controller.set('isSending', true);
+        this.controller.set('isSending', true);
 
         // Prepare URL
-        var adapter = this.store.adapterFor('application'),
-          url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
+        const adapter = this.store.adapterFor('application');
+        const url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
 
         // Send email
-        var promise = request({
+        const promise = request({
           type: 'POST',
-          url: url,
+          url,
           data: {
-            message: message
+            message
           }
         });
 
         promise.then(()=> {
           // Reset form
-          controller.set('message', null);
-          controller.resetValidations();
+          this.controller.set('message', null);
+          this.controller.resetValidations();
 
           // Notify user
-          controller.toggleProperty('showMessageSentModal');
+          this.controller.toggleProperty('showMessageSentModal');
         });
 
         promise.finally(()=> {
-          controller.set('isSending', false);
+          this.controller.set('isSending', false);
         });
       }).catch(()=> {
         this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));

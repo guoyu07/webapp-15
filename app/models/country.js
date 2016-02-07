@@ -1,6 +1,3 @@
-/**
- * Ember model for countries.
- */
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 

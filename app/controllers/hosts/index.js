@@ -90,9 +90,9 @@ export default Ember.Controller.extend({
   // Query parameters
   parameters: computed('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
     'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk', function() {
-     return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
-      'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
-  }),
+      return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
+       'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
+    }),
 
   /**
    * Indicates whether we can load more hosts.
@@ -104,7 +104,7 @@ export default Ember.Controller.extend({
   /**
    * Returns the list of features that can be displayed in the list.
    */
-  features: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'showMap', 'syncMapAndList', function () {
+  features: computed('featuresOnMap.[]', 'hostCoordinates.features.[]', 'showMap', 'syncMapAndList', function() {
     let features = [];
 
     if (this.get('showMap') && this.get('syncMapAndList')) {
@@ -119,7 +119,7 @@ export default Ember.Controller.extend({
   /**
    * Indicates whether the "Show Hosts Not on Map" button should be displayed.
    */
-  showDisableSyncButton: computed('syncMapAndList', 'hostCoordinates.features.length', function () {
+  showDisableSyncButton: computed('syncMapAndList', 'hostCoordinates.features.length', function() {
     return this.get('syncMapAndList') && this.get('hostCoordinates.features.length') > 0;
   }),
 
@@ -143,24 +143,24 @@ export default Ember.Controller.extend({
     return featuresInList;
   }),
 
-  selectedMonths: computed('months.[]', 'monthsService.allMonths.[]', function () {
+  selectedMonths: computed('months.[]', 'monthsService.allMonths.[]', function() {
     let months = this.get('months');
-    return this.get('monthsService.allMonths').filter(function (month) {
+    return this.get('monthsService.allMonths').filter(function(month) {
       return months.contains(month.id);
     });
   }),
 
-  selectedCapacity: computed('capacity', 'capacitiesService.allCapacities.[]', function () {
+  selectedCapacity: computed('capacity', 'capacitiesService.allCapacities.[]', function() {
     let capacity = this.get('capacity');
     return this.get('capacitiesService.allCapacities').findBy('id', capacity);
   }),
 
-  selectedStay: computed('stay', 'staysService.allStays.[]', function () {
+  selectedStay: computed('stay', 'staysService.allStays.[]', function() {
     let stay = this.get('stay');
     return this.get('staysService.allStays').findBy('id', stay);
   }),
 
-  selectedDepartment: computed('dptId', function () {
+  selectedDepartment: computed('dptId', function() {
     let dptId = this.get('dptId');
     return dptId ? this.store.find('department', dptId) : null;
   }),
@@ -170,13 +170,13 @@ export default Ember.Controller.extend({
     this.set('hostCoordinates', { features: [] });
 
     // Abort any potential previous request to avoid racing issues
-    var dataRequest = this.get('dataRequest');
+    let dataRequest = this.get('dataRequest');
     if (dataRequest) {
       dataRequest.abort();
     }
 
     // Prepare params
-    var params = this.get('parameters');
+    let params = this.get('parameters');
     params.limit = 5000;
 
     // Create GET request
@@ -220,7 +220,7 @@ export default Ember.Controller.extend({
       this.setProperties({
         lat: latitude,
         lon: longitude,
-        zoom: zoom
+        zoom
       });
     },
 
@@ -232,7 +232,7 @@ export default Ember.Controller.extend({
     },
 
     chooseDepartment(department) {
-      var id = department ? department.id : null;
+      const id = department ? department.id : null;
       this.set('dptId', id);
       this.retrieveHosts();
     },

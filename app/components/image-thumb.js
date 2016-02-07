@@ -18,10 +18,10 @@ export default Ember.Component.extend({
    * Returns the complete style tag based on the url.
    */
   style: Ember.computed('url', 'height', function() {
-    var url = this.get('url');
-    var height = this.get('height');
+    const url = this.get('url');
+    const height = this.get('height');
     if (!Ember.isEmpty(url)) {
-      var style = `background:url(${url}) center center; background-size:cover; height: ${height}px; border-radius: 3px;`;
+      const style = `background:url(${url}) center center; background-size:cover; height: ${height}px; border-radius: 3px;`;
       return style.htmlSafe();
     }
   })

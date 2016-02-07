@@ -1,6 +1,3 @@
-/**
- * Custom global REST Serializer.
- */
 import DS from 'ember-data';
 
 export default DS.RESTSerializer.extend({
@@ -8,12 +5,13 @@ export default DS.RESTSerializer.extend({
    * Overridden method. Defines a custom key when serializing relationship properties.
    * Sequelize returns foreign keys with 'Id' at the end (ex: user => userId).
    */
-  keyForRelationship: function(key, relationship) {
+  keyForRelationship(key, relationship) {
     if (relationship === 'belongsTo') {
-      key = key + 'Id';
+      key += 'Id';
     }
     if (relationship === 'hasMany') {
-      key = key.singularize() + 'Ids';
+      const singularizedKey = key.singularize();
+      key = `${singularizedKey}Ids`;
     }
     return key;
   }

@@ -30,9 +30,9 @@ export default Ember.Component.extend({
       // Approve/reject the host
       let promise = request({
         type: 'POST',
-        url: url,
+        url,
         data: {
-          isApproved: isApproved
+          isApproved
         }
       });
 

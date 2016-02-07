@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export function mailTo(params) {
-  let emailAddress = params[0];
+  let [emailAddress] = params;
   let label = params[1] || emailAddress;
   if (!emailAddress) {
     return;
@@ -10,7 +10,7 @@ export function mailTo(params) {
   emailAddress = Ember.Handlebars.Utils.escapeExpression(emailAddress);
   label = Ember.Handlebars.Utils.escapeExpression(label);
 
-  var link = '<a href="mailto:' + emailAddress + '" title="' + emailAddress + '" >' + label + '</a>';
+  const link = `<a href="mailto:${emailAddress}" title="${emailAddress}">${label}</a>`;
   return new Ember.Handlebars.SafeString(link);
 }
 

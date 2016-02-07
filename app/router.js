@@ -30,7 +30,7 @@ Router.map(function() {
   this.resource('users', function() {
     this.route('new');
   });
-  this.resource('user', { path: '/user/:user_id' }, function() {
+  this.resource('user', { path: '/user/:userId' }, function() {
     this.route('edit');
     this.route('change-password');
     this.route('memberships');
@@ -44,7 +44,7 @@ Router.map(function() {
     this.route('cancel');
     this.route('failure');
   });
-  this.route('404', { path: "*path" });
+  this.route('404', { path: '*path' });
 });
 
 export default Router;
