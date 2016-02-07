@@ -1,6 +1,3 @@
-/**
- * Ember model for Photo.
- */
 import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
@@ -16,11 +13,14 @@ export default DS.Model.extend(ValidationsMixin, {
   // Relationships
   host: DS.belongsTo('host'),
 
-  // Computed properties
+  /**
+   * Returns the complete URL of the photo.
+   */
   completeUrl: function() {
-    var fileName = this.get('fileName');
+    const fileName = this.get('fileName');
     if (!Ember.isEmpty(fileName)) {
-      return 'https://s3.amazonaws.com/wwoof-france/photos/hosts/' + encodeURIComponent(fileName);
+      const encodedFileName = encodeURIComponent(fileName);
+      return `https://s3.amazonaws.com/wwoof-france/photos/hosts/${encodedFileName}`;
     }
   }.property('fileName'),
 

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export function convertBreakLines(params) {
-  let text = params[0];
+  let [text] = params;
   text = Ember.Handlebars.Utils.escapeExpression(text);
   text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
   return new Ember.Handlebars.SafeString(text);

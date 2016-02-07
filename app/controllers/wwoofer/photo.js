@@ -1,6 +1,3 @@
-/**
- * Ember controller for wwoofer photo edition.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 import request from 'ic-ajax';
@@ -11,7 +8,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
    * The data-url to send the photo to.
    */
   photoDataUrl: function() {
-    return 'api/users/' + this.get('model.user.id') + '/photo';
+    return `api/users/${this.get('model.user.id')}/photo`;
   }.property('model.user.id'),
 
   actions: {
@@ -21,10 +18,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
     deletePhoto() {
 
       // Get user
-      var user = this.get('model.user');
+      let user = this.get('model.user');
 
       // Delete the photo
-      var deleteRequest = request({
+      const deleteRequest = request({
         type: 'DELETE',
         url: this.get('photoDataUrl')
       });

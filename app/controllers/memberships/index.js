@@ -54,8 +54,8 @@ export default Ember.Controller.extend({
    * Process the total number of pages that can be displayed.
    */
   totalPages: Ember.computed('memberships.meta.total', 'itemsPerPage', function() {
-    var totalItems = this.get('memberships.meta.total');
-    var itemsPerPage = this.get('itemsPerPage');
+    const totalItems = this.get('memberships.meta.total');
+    const itemsPerPage = this.get('itemsPerPage');
     return Math.ceil(totalItems / itemsPerPage);
   })
 });

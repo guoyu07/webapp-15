@@ -7,5 +7,5 @@ export function initialize(application) {
 
 export default {
   name: 'legacy-i18n',
-  initialize: initialize
+  initialize
 };

@@ -33,8 +33,8 @@ export default Ember.Controller.extend({
    * Process the total number of pages that can be displayed.
    */
   totalPages: computed('wwoofers.meta.total', 'itemsPerPage', function() {
-    var totalItems = this.get('wwoofers.meta.total');
-    var itemsPerPage = this.get('itemsPerPage');
+    const totalItems = this.get('wwoofers.meta.total');
+    const itemsPerPage = this.get('itemsPerPage');
     return Math.ceil(totalItems / itemsPerPage);
   })
 });

@@ -51,7 +51,7 @@ export default DS.Model.extend(ValidationsMixin, {
    */
   displayedActivities: computed('activities.[]', 'i18n.locale', function() {
     return this.get('activities').map((activity)=> {
-      return this.get('i18n').t('activities.' + activity);
+      return this.get('i18n').t(`activities.${activity}`);
     });
   }),
 
@@ -59,8 +59,8 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the list of stays accepted by the host.
    */
   displayedStays: computed('stays.[]', 'i18n.locale', function() {
-    var allStays = this.get('staysService.allStays');
-    var stays = this.get('stays');
+    const allStays = this.get('staysService.allStays');
+    const stays = this.get('stays');
     return allStays.map(function(stay) {
       return {
         label: stay.get('label'),
@@ -82,10 +82,10 @@ export default DS.Model.extend(ValidationsMixin, {
    * Each month comes with a boolean indicating whether the host is open.
    */
   openingCalendar: computed('openingMonths.[]', 'moment.locale', function() {
-    var openingMonths = this.get('openingMonths');
-    var months = [];
-    for (var i = 0; i <= 11; i++) {
-      var currentMonth = this.get('moment').moment().month(i);
+    const openingMonths = this.get('openingMonths');
+    let months = [];
+    for (let i = 0; i <= 11; i++) {
+      const currentMonth = this.get('moment').moment().month(i);
       months.push({
         label: currentMonth.format('MMMM'),
         isOpen: openingMonths.contains(currentMonth.format('MM'))
@@ -98,8 +98,8 @@ export default DS.Model.extend(ValidationsMixin, {
    * Indicates whether the host is pending approval or was rejected.
    */
   isPendingOrRejected: computed('isPendingApproval', 'isApproved', function() {
-    var isPendingApproval = this.get('isPendingApproval');
-    var isApproved = this.get('isApproved');
+    const isPendingApproval = this.get('isPendingApproval');
+    const isApproved = this.get('isApproved');
     return isPendingApproval || isApproved === false;
   }),
 
@@ -128,7 +128,7 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the host's first photo URL.
    */
   firstPhotoUrl: computed('photos.firstObject.completeUrl', function() {
-    var photoUrl = this.get('photos.firstObject.completeUrl');
+    let photoUrl = this.get('photos.firstObject.completeUrl');
     if (Ember.isEmpty(photoUrl)) {
       photoUrl = 'assets/images/wwoof-no-photo.png';
     }
@@ -152,8 +152,9 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the facebook share URL of the host.
    */
   fbShareUrl: computed('id', function() {
-    let completeUrl = 'https://app.wwoof.fr/host/' + this.get('id');
-    return 'http://www.facebook.com/sharer.php?u=' + encodeURIComponent(completeUrl);
+    const completeUrl = `https://app.wwoof.fr/host/${this.get('id')}`;
+    const encodedUrl = encodeURIComponent(completeUrl);
+    return `http://www.facebook.com/sharer.php?u=${encodedUrl}`;
   }),
 
   // Phone is mandatory for hosts, this binding is used for validation

@@ -13,6 +13,6 @@ export default DS.Model.extend(ValidationsMixin, {
   updatedAt: DS.attr('date'),
 
   displayedName: computed('code', 'name', function() {
-    return this.get('code') + ' - ' + this.get('name');
+    return `${this.get('code')} - ${this.get('name')}`;
   })
 });

@@ -14,8 +14,8 @@ export default Ember.Controller.extend({
     saveHost() {
 
       // Get host and address
-      var host = this.get('model'),
-        address = host.get('address');
+      let host = this.get('model');
+      let address = host.get('address');
 
       // Get the user (async)
       host.get('user').then((user)=> {
@@ -26,13 +26,13 @@ export default Ember.Controller.extend({
         }
 
         // Prepare validation promises
-        var validations = [host.validate(), address.validate(), user.validate()];
+        const validations = [host.validate(), address.validate(), user.validate()];
 
         // Validate all models
         Ember.RSVP.all(validations).then(()=> {
 
           // Prepare update promises
-          var updates = [host.save(), address.save(), user.save()];
+          const updates = [host.save(), address.save(), user.save()];
 
           // Update host and address
           Ember.RSVP.all(updates).then(()=> {

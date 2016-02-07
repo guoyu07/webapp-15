@@ -170,13 +170,13 @@ export default Ember.Controller.extend({
     this.set('hostCoordinates', { features: [] });
 
     // Abort any potential previous request to avoid racing issues
-    var dataRequest = this.get('dataRequest');
+    let dataRequest = this.get('dataRequest');
     if (dataRequest) {
       dataRequest.abort();
     }
 
     // Prepare params
-    var params = this.get('parameters');
+    let params = this.get('parameters');
     params.limit = 5000;
 
     // Create GET request
@@ -220,7 +220,7 @@ export default Ember.Controller.extend({
       this.setProperties({
         lat: latitude,
         lon: longitude,
-        zoom: zoom
+        zoom
       });
     },
 
@@ -232,7 +232,7 @@ export default Ember.Controller.extend({
     },
 
     chooseDepartment(department) {
-      var id = department ? department.id : null;
+      const id = department ? department.id : null;
       this.set('dptId', id);
       this.retrieveHosts();
     },

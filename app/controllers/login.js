@@ -1,6 +1,3 @@
-/**
- * Ember controller for login.
- */
 import Ember from 'ember';
 import ValidationsMixin from 'webapp/mixins/validations';
 import Regex from 'webapp/utils/regex';
@@ -32,7 +29,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
         this.set('isLoading', true);
 
         // Authenticate user
-        var auth = this.get('session').authenticate('authenticator:passport', {
+        const auth = this.get('session').authenticate('authenticator:passport', {
           username: this.get('username'),
           password: this.get('password')
         });

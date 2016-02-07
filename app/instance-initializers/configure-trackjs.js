@@ -44,5 +44,5 @@ export function initialize(application) {
 
 export default {
   name: 'configure-trackjs',
-  initialize: initialize
+  initialize
 };

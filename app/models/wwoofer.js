@@ -1,6 +1,3 @@
-/**
- * Ember model for Wwoofer.
- */
 import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
@@ -28,8 +25,10 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the full name of the second wwoofer.
    */
   fullName2: computed('firstName2', 'lastName2', function() {
-    if (this.get('firstName2') || this.get('lastName2')) {
-      return this.get('firstName2') + ' ' + this.get('lastName2');
+    const firstName2 = this.get('firstName2');
+    const lastName2 = this.get('lastName2');
+    if (firstName2 || lastName2) {
+      return `${firstName2} ${lastName2}`;
     }
   }),
 

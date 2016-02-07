@@ -1,6 +1,3 @@
-/**
- * Ember controller for password reset.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
@@ -27,13 +24,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
         this.set('isLoading', true);
 
         // Prepare URL
-        var adapter = this.store.adapterFor('application'),
-          url = [adapter.get('host'), adapter.get('namespace'), 'users/reset-password'].join('/');
+        const adapter = this.store.adapterFor('application');
+        const url = [adapter.get('host'), adapter.get('namespace'), 'users/reset-password'].join('/');
 
         // Send email
-        var promise = request({
+        const promise = request({
           type: 'POST',
-          url: url,
+          url,
           data: {
             email: this.get('emailAddress')
           }

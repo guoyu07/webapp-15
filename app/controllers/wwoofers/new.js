@@ -1,6 +1,3 @@
-/**
- * Ember controller for wwoofer creation.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
@@ -30,8 +27,8 @@ export default Ember.Controller.extend(ValidationsMixin, {
     saveWwoofer() {
 
       // Get the wwoofer
-      var wwoofer = this.get('model');
-      var secondWwooferChecked = this.get('secondWwooferChecked');
+      let wwoofer = this.get('model');
+      const secondWwooferChecked = this.get('secondWwooferChecked');
 
       // Handle second wwoofer
       if (secondWwooferChecked) {
@@ -45,13 +42,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
       }
 
       // Prepare validation promises
-      var validations = [this.validate(), wwoofer.validate()];
+      const validations = [this.validate(), wwoofer.validate()];
 
       // Validate all models
       Ember.RSVP.all(validations).then(()=> {
 
         // Create the wwoofer
-        var promise = wwoofer.save();
+        const promise = wwoofer.save();
 
         // Inform and redirect user to payment page
         promise.then(()=> {

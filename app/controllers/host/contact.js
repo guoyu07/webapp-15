@@ -8,7 +8,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
   showMessageSentModal: false,
 
   messagePlaceholder: function() {
-    return 'Bonjour ' + this.get('model.user.firstName') + '!';
+    return `Bonjour ${this.get('model.user.firstName')} !`;
   }.property('model.user.firstName'),
 
   actions: {

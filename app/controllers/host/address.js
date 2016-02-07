@@ -15,12 +15,12 @@ export default Ember.Controller.extend({
   actions: {
     saveAddress() {
 
-      var host = this.get('host');
-      var address = this.get('address');
-      var isNewAddress = address.get('isNew');
+      let host = this.get('host');
+      let address = this.get('address');
+      const isNewAddress = address.get('isNew');
 
       // Validate the address
-      var promise = address.validate();
+      let promise = address.validate();
 
       promise.then(()=> {
 

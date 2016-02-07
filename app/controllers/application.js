@@ -1,6 +1,3 @@
-/**
- * Ember controller for the application.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../mixins/validations';
 import Regex from '../utils/regex';
@@ -40,7 +37,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
   actions: {
     impersonateUser() {
 
-      var impersonatedUserEmail = this.get('impersonatedUserEmail');
+      const impersonatedUserEmail = this.get('impersonatedUserEmail');
 
       this.validate().then(()=> {
 
@@ -48,13 +45,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
         this.set('isLoading', true);
 
         // Find the user to impersonate
-        var userPromise = this.store.find('user', { email: impersonatedUserEmail });
+        const userPromise = this.store.find('user', { email: impersonatedUserEmail });
 
         // Handle success
         userPromise.then((result)=> {
 
           // Make sure the user could be found
-          var users = result.get('content');
+          const users = result.get('content');
           if (!Ember.isArray(users) || Ember.isEmpty(users)) {
             this.set('isLoading', false);
             this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
@@ -62,8 +59,8 @@ export default Ember.Controller.extend(ValidationsMixin, {
           }
 
           // Authenticate user
-          var auth = this.get('session').authenticate('authenticator:impersonation', {
-            impersonatedUserEmail: impersonatedUserEmail
+          const auth = this.get('session').authenticate('authenticator:impersonation', {
+            impersonatedUserEmail
           });
 
           // Handle success
@@ -92,7 +89,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     create(type) {
       this.toggleProperty('showNewUserModal');
 
-      var route = (type === 'W') ? 'wwoofers.new' : 'hosts.new';
+      const route = (type === 'W') ? 'wwoofers.new' : 'hosts.new';
       this.transitionToRoute(route);
     },
 

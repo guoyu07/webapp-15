@@ -15,12 +15,12 @@ export default Ember.Controller.extend({
   actions: {
     saveAddress() {
 
-      var wwoofer = this.get('wwoofer');
-      var address = this.get('address');
-      var isNewAddress = address.get('isNew');
+      let wwoofer = this.get('wwoofer');
+      let address = this.get('address');
+      const isNewAddress = address.get('isNew');
 
       // Validate the address
-      var promise = address.validate();
+      let promise = address.validate();
 
       promise.then(()=> {
 
@@ -38,8 +38,8 @@ export default Ember.Controller.extend({
         promise.then(()=> {
           this.get('notify').success(this.get('i18n').t('notify.addressSaved'));
           if (isNewAddress) {
-            var itemCode = Ember.isPresent(wwoofer.get('lastName2')) ? 'WO2' : 'WO1';
-            this.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode: itemCode } });
+            const itemCode = Ember.isPresent(wwoofer.get('lastName2')) ? 'WO2' : 'WO1';
+            this.transitionToRoute('memberships.new', { queryParams: { type: 'W', itemCode } });
           }
         });
       }).catch(()=> {

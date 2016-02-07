@@ -32,9 +32,10 @@ export default DS.Model.extend(ValidationsMixin, {
 
   // Computed properties
   completePhotoUrl: computed('photo', function() {
-    var photo = this.get('photo');
+    const photo = this.get('photo');
     if (Ember.isPresent(photo)) {
-      return 'https://s3.amazonaws.com/wwoof-france/photos/users/' + encodeURIComponent(photo);
+      const encodedPhoto = encodeURIComponent(photo);
+      return `https://s3.amazonaws.com/wwoof-france/photos/users/${encodedPhoto}`;
     } else {
       return '../assets/images/no-photo.png';
     }
@@ -46,7 +47,7 @@ export default DS.Model.extend(ValidationsMixin, {
    * Returns the full name of the user.
    */
   fullName: computed('firstName', 'lastName', function() {
-    return this.get('firstName') + ' ' + this.get('lastName');
+    return `${this.get('firstName')} ${this.get('lastName')}`;
   }),
 
   /**

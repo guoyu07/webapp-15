@@ -1,6 +1,3 @@
-/**
- * Ember controller for wwoofer edition.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
@@ -30,8 +27,8 @@ export default Ember.Controller.extend(ValidationsMixin, {
     saveWwoofer() {
 
       // Get wwoofer and address
-      var wwoofer = this.get('model');
-      var address = wwoofer.get('address');
+      let wwoofer = this.get('model');
+      let address = wwoofer.get('address');
 
       // Handle second wwoofer
       if (this.get('secondWwooferChecked')) {
@@ -47,13 +44,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
       }
 
       // Initialize validations array
-      var validations = [this.validate(), wwoofer.validate(), address.validate()];
+      const validations = [this.validate(), wwoofer.validate(), address.validate()];
 
       // Validate wwoofer and address
       Ember.RSVP.all(validations).then(()=> {
 
         // Prepare update promises
-        var updates = [wwoofer.save(), address.save()];
+        const updates = [wwoofer.save(), address.save()];
 
         // Update wwoofer and address
         Ember.RSVP.all(updates).then(()=> {

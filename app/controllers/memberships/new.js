@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
    * It is only displayed for Wwoofer memberships that include the book.
    */
   showShippingFees: computed('showWwoofMemberships', 'itemCode', function() {
-    var showShippingFees = false;
+    let showShippingFees = false;
     if (this.get('showWwoofMemberships') && this.get('itemCodeIncludesShipping')) {
       showShippingFees = true;
     }
@@ -73,17 +73,17 @@ export default Ember.Controller.extend({
    * Processes the total (membership + shipping fee).
    */
   total: computed('itemCode', 'shippingRegion', 'isFree', function() {
-    var itemCode = this.get('itemCode');
-    var membershipOption = this.get('membershipOptions').filterBy('id', itemCode)[0];
-    var itemPrice = membershipOption ? membershipOption.price : 0;
+    const itemCode = this.get('itemCode');
+    const membershipOption = this.get('membershipOptions').findBy('id', itemCode);
+    const itemPrice = membershipOption ? membershipOption.price : 0;
 
-    var shippingRegion = this.get('shippingRegion');
-    var shippingRegionOption = this.get('shippingRegionOptions').filterBy('id', shippingRegion)[0];
-    var shippingFee = shippingRegionOption ? shippingRegionOption.price : 0;
+    const shippingRegion = this.get('shippingRegion');
+    const shippingRegionOption = this.get('shippingRegionOptions').findBy('id', shippingRegion);
+    const shippingFee = shippingRegionOption ? shippingRegionOption.price : 0;
 
-    var total = (itemPrice + shippingFee).toFixed(2);
+    let total = (itemPrice + shippingFee).toFixed(2);
 
-    var isFree = this.get('isFree');
+    const isFree = this.get('isFree');
     if (isFree) {
       total = 0;
     }
@@ -95,13 +95,12 @@ export default Ember.Controller.extend({
    * @returns {Promise}
    */
   getNewMembership() {
-
-    var type = this.get('type');
-    var itemCode = this.get('itemCode');
-    var paymentType = this.get('paymentType');
-    var total = this.get('total');
-    var isFree = this.get('isFree');
-    var userId = this.get('userId');
+    const type = this.get('type');
+    const itemCode = this.get('itemCode');
+    let paymentType = this.get('paymentType');
+    let total = this.get('total');
+    const isFree = this.get('isFree');
+    const userId = this.get('userId');
 
     // Reset the payment type if the membership is offered
     if (isFree) {
@@ -111,18 +110,18 @@ export default Ember.Controller.extend({
 
     return this.store.find('user', userId).then((user)=> {
       return this.store.createRecord('membership', {
-        type: type,
-        itemCode: itemCode,
-        paymentType: paymentType,
-        total: total,
-        user: user
+        type,
+        itemCode,
+        paymentType,
+        total,
+        user
       });
     });
   },
 
   isValid: computed('itemCode', 'itemCodeIncludesShipping', 'shippingRegion', function() {
     let isValid = false;
-    let itemCode = this.get('itemCode');
+    const itemCode = this.get('itemCode');
 
     if (itemCode) {
       if (this.get('itemCodeIncludesShipping')) {

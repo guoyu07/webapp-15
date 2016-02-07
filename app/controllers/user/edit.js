@@ -1,6 +1,3 @@
-/**
- * Ember controller for user edition.
- */
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
@@ -21,7 +18,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     saveUser() {
 
       // Get the user
-      var user = this.get('model');
+      let user = this.get('model');
 
       // Set birth date
       if (this.get('canEditUser')) {
@@ -29,7 +26,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
       }
 
       // Initialize validations array
-      var validations = [this.validate(), user.validate()];
+      const validations = [this.validate(), user.validate()];
 
       // Save the user
       Ember.RSVP.all(validations).then(()=> {
