@@ -1,6 +1,3 @@
-/**
- * Ember controller for host edition.
- */
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
@@ -15,7 +12,6 @@ export default Ember.Controller.extend({
 
       // Get host and address
       let host = this.get('model');
-      let address = host.get('address');
 
       // Get the user (async)
       host.get('user').then((user)=> {
@@ -26,13 +22,13 @@ export default Ember.Controller.extend({
         }
 
         // Prepare validation promises
-        const validations = [host.validate(), address.validate(), user.validate()];
+        const validations = [host.validate(), user.validate()];
 
         // Validate all models
         Ember.RSVP.all(validations).then(()=> {
 
           // Prepare update promises
-          const updates = [host.save(), address.save(), user.save()];
+          const updates = [host.save(), user.save()];
 
           // Update host and address
           Ember.RSVP.all(updates).then(()=> {
