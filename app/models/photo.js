@@ -11,7 +11,7 @@ export default DS.Model.extend(ValidationsMixin, {
   updatedAt: DS.attr('date'),
 
   // Relationships
-  host: DS.belongsTo('host'),
+  host: DS.belongsTo('host', { async: false }),
 
   /**
    * Returns the complete URL of the photo.

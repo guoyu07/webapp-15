@@ -19,7 +19,7 @@ export default DS.Model.extend(ValidationsMixin, {
 
   // Relationships
   user: DS.belongsTo('user', { async: true }),
-  address: DS.belongsTo('address'),
+  address: DS.belongsTo('address', { async: false }),
 
   /**
    * Returns the full name of the second wwoofer.
