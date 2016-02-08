@@ -10,33 +10,33 @@ Router.map(function() {
   this.route('login');
   this.route('contact');
   this.route('reset-password');
-  this.resource('hosts', function() {
+  this.route('hosts', function() {
     this.route('new');
   });
-  this.resource('host', { path: '/host/:host_id' }, function() {
+  this.route('host', { path: '/host/:host_id' }, function() {
     this.route('edit');
     this.route('address');
     this.route('photos');
     this.route('contact');
   });
-  this.resource('wwoofers', function() {
+  this.route('wwoofers', function() {
     this.route('new');
   });
-  this.resource('wwoofer', { path: '/wwoofer/:wwoofer_id' }, function() {
+  this.route('wwoofer', { path: '/wwoofer/:wwoofer_id' }, function() {
     this.route('edit');
     this.route('address');
     this.route('photo');
   });
-  this.resource('users', function() {
+  this.route('users', function() {
     this.route('new');
   });
-  this.resource('user', { path: '/user/:userId' }, function() {
+  this.route('user', { path: '/user/:user_id' }, function() {
     this.route('edit');
     this.route('change-password');
     this.route('memberships');
     this.route('favorites');
   });
-  this.resource('memberships', function() {
+  this.route('memberships', function() {
     this.route('new');
   });
   this.route('payment', function() {

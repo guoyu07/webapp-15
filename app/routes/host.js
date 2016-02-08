@@ -5,6 +5,7 @@ export default Ember.Route.extend({
   titleToken(model) {
     return model.get('displayedFarmName');
   },
+
   headTags() {
     let model = this.modelFor(this.routeName);
 

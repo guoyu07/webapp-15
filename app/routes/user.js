@@ -6,10 +6,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return model.get('fullName');
   },
 
-  model(params) {
-    return this.store.find('user', params.userId);
-  },
-
   actions: {
     addFavorite(host) {
       this.send('addUserFavorite', host, this.controller.get('model'));
