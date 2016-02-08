@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
   tagName: 'span',
   type: null,
@@ -10,14 +12,14 @@ export default Ember.Component.extend({
   /**
    * Provide the class name to style the component based on the type
    */
-  profileStatusClass: function() {
+  profileStatusClass: computed('type', 'wwooferProfileClass', 'hostProfileClass', function() {
     return this.get('type') === 'host' ? this.get('hostProfileClass') : this.get('wwooferProfileClass');
-  }.property('type', 'wwooferProfileClass', 'hostProfileClass'),
+  }),
 
   /**
    * Provides the class name to style the component for wwoofer profile
    */
-  wwooferProfileClass: function() {
+  wwooferProfileClass: computed('user.hasNonExpiredWwooferMembership', 'user.latestWwooferMembership.isStillValidInAMonth', function() {
     // Host has no active membership: warning
     const hasValidMembership = this.get('user.hasNonExpiredWwooferMembership');
     const isStillValidInAMonth = this.get('user.latestWwooferMembership.isStillValidInAMonth');
@@ -27,12 +29,12 @@ export default Ember.Component.extend({
 
     // Membership status ok
     return 'glyphicon glyphicon-ok';
-  }.property('user.hasNonExpiredWwooferMembership', 'user.latestWwooferMembership.isStillValidInAMonth'),
+  }),
 
   /**
    * Provides the class name to style the component for host profile
    */
-  hostProfileClass: function() {
+  hostProfileClass: computed('user.host.isPendingApproval', 'user.host.isApproved', 'user.hasNonExpiredHostMembership', 'user.latestHostMembership.isStillValidInAMonth', function() {
     const host = this.get('user.host');
 
     // Return if the Host has not been requested yet
@@ -58,5 +60,5 @@ export default Ember.Component.extend({
 
     // Membership status ok
     return 'glyphicon glyphicon-ok';
-  }.property('user.host.isPendingApproval', 'user.host.isApproved', 'user.hasNonExpiredHostMembership', 'user.latestHostMembership.isStillValidInAMonth')
+  })
 });

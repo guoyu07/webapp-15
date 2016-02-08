@@ -2,10 +2,13 @@ import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 import Errors from 'ember-validations/errors';
 
+const { computed } = Ember;
+
 export default Ember.Mixin.create(EmberValidations.Mixin, {
-  fieldErrors: function() {
+
+  fieldErrors: computed('_wwoof_hasBeenValidated', function() {
     return this.get('_wwoof_hasBeenValidated') ? this.get('errors') : Errors.create({});
-  }.property('_wwoof_hasBeenValidated'),
+  }),
 
   validate() {
     this.set('_wwoof_hasBeenValidated', true);
@@ -22,7 +25,7 @@ export default Ember.Mixin.create(EmberValidations.Mixin, {
     this.set('_wwoof_hasBeenValidated', false);
   },
 
-  isInvalid: function() {
+  isInvalid: computed('isValid', function() {
     return !this.get('isValid');
-  }.property('isValid')
+  })
 });

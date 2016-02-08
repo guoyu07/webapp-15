@@ -1,10 +1,13 @@
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
+const { computed } = Ember;
+const { service } = Ember.inject;
+
 export default Ember.Controller.extend(ValidationsMixin, {
 
-  countriesService: Ember.inject.service('countries'),
-  departmentsService: Ember.inject.service('departments'),
+  countriesService: service('countries'),
+  departmentsService: service('departments'),
 
   selectedDate: null,
 
@@ -16,12 +19,12 @@ export default Ember.Controller.extend(ValidationsMixin, {
   /**
    * Indicates whether the fields for the second wwoofer must be shown.
    */
-  showOtherWwoofer: Ember.computed.or('secondWwooferChecked', 'sessionUser.user.isAdmin'),
+  showOtherWwoofer: computed.or('secondWwooferChecked', 'sessionUser.user.isAdmin'),
 
   /**
    * Indicates whether the second wwoofer can be edited.
    */
-  canEditOtherWwoofer: Ember.computed.or('sessionUser.user.isAdmin'),
+  canEditOtherWwoofer: computed.or('sessionUser.user.isAdmin'),
 
   actions: {
     saveWwoofer() {

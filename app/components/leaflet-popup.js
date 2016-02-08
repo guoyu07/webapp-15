@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
   /**
@@ -20,7 +22,7 @@ export default Ember.Component.extend({
   /**
    * Returns the photo URL to display based on the photo property.
    */
-  photoUrl: function() {
+  photoUrl: computed('photo', function() {
     const photo = this.get('photo');
     let photoUrl;
     if (Ember.isEmpty(photo)) {
@@ -29,6 +31,6 @@ export default Ember.Component.extend({
       photoUrl = `https://s3.amazonaws.com/wwoof-france/photos/hosts/${photo}`;
     }
     return photoUrl;
-  }.property('photo')
+  })
 
 });

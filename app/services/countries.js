@@ -1,23 +1,24 @@
 import Ember from 'ember';
 
 const { service } = Ember.inject;
+const { computed } = Ember;
 
 export default Ember.Service.extend({
 
   store: service('store'),
 
-  countries: Ember.computed(function() {
+  countries: computed(function() {
     return this.get('store').find('country');
   }),
 
   /**
    * Countries hosts can be attached to.
    */
-  hostCountries: Ember.computed.filterBy('countries', 'isFrance', true),
+  hostCountries: computed.filterBy('countries', 'isFrance', true),
 
   /**
    * Countries sorted by name.
    */
   countriesSorting: ['name'],
-  sortedCountries: Ember.computed.sort('countries', 'countriesSorting')
+  sortedCountries: computed.sort('countries', 'countriesSorting')
 });

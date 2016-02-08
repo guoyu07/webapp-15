@@ -2,14 +2,16 @@ import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 import request from 'ic-ajax';
 
+const { computed } = Ember;
+
 export default Ember.Controller.extend(ValidationsMixin, {
 
   /**
    * The data-url to send the photo to.
    */
-  photoDataUrl: function() {
+  photoDataUrl: computed('model.user.id', function() {
     return `api/users/${this.get('model.user.id')}/photo`;
-  }.property('model.user.id'),
+  }),
 
   actions: {
     /**

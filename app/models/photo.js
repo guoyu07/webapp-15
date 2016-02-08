@@ -2,9 +2,9 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 
-export default DS.Model.extend(ValidationsMixin, {
+const { computed } = Ember;
 
-  // Attributes
+export default DS.Model.extend(ValidationsMixin, {
   fileName: DS.attr('string'),
   caption: DS.attr('string'),
   createdAt: DS.attr('date'),
@@ -16,20 +16,20 @@ export default DS.Model.extend(ValidationsMixin, {
   /**
    * Returns the complete URL of the photo.
    */
-  completeUrl: function() {
+  completeUrl: computed('fileName', function() {
     const fileName = this.get('fileName');
     if (!Ember.isEmpty(fileName)) {
       const encodedFileName = encodeURIComponent(fileName);
       return `https://s3.amazonaws.com/wwoof-france/photos/hosts/${encodedFileName}`;
     }
-  }.property('fileName'),
+  }),
 
   /**
    * Returns true if the photo is in a state where it cannot be saved.
    */
-  cannotSave: function() {
+  cannotSave: computed('isSaving', 'hasDirtyAttributes', function() {
     return this.get('isSaving') || !this.get('hasDirtyAttributes');
-  }.property('isSaving', 'hasDirtyAttributes'),
+  }),
 
   // Validations
   validations: {

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
@@ -25,7 +26,7 @@ export default Ember.Component.extend({
   /**
    * Return the correct form data depending on the mode
    */
-  formData: function() {
+  formData: computed('mode', 'model.id', function() {
     const mode = this.get('mode');
     if (mode === 'host') {
       return {
@@ -34,7 +35,7 @@ export default Ember.Component.extend({
     } else if (mode === 'user') {
       return {};
     }
-  }.property('mode', 'model.id'),
+  }),
 
   didInsertElement() {
     const self = this;

@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
   /**
@@ -70,7 +72,7 @@ export default Ember.Component.extend({
    * @type Array
    * @readOnly
    */
-  options: function() {
+  options: computed('values.length', 'values', 'selected.length', 'selected', function() {
     const selected = Ember.makeArray(this.get('selected'));
     const compareProperty = this.get('compareProperty');
     const selectedProperties = selected.mapBy(compareProperty).compact();
@@ -86,7 +88,7 @@ export default Ember.Component.extend({
         label: value.get('label') ? value.get('label') : value
       });
     });
-  }.property('values.length', 'values', 'selected.length', 'selected'),
+  }),
 
   actions: {
 

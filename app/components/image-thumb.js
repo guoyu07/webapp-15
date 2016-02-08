@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
   attributeBindings: ['style'],
@@ -17,7 +19,7 @@ export default Ember.Component.extend({
   /**
    * Returns the complete style tag based on the url.
    */
-  style: Ember.computed('url', 'height', function() {
+  style: computed('url', 'height', function() {
     const url = this.get('url');
     const height = this.get('height');
     if (!Ember.isEmpty(url)) {

@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
+const { computed } = Ember;
 const { service } = Ember.inject;
 
 export default Ember.Controller.extend(ValidationsMixin, {
@@ -10,7 +11,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
   /**
    * Indicates whether the user's first name, last name and birth date can be edited.
    */
-  canEditUser: Ember.computed.readOnly('sessionUser.user.isAdmin'),
+  canEditUser: computed.readOnly('sessionUser.user.isAdmin'),
 
   selectedDate: null,
 

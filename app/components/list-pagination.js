@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
   tagName: 'nav',
@@ -8,23 +10,23 @@ export default Ember.Component.extend({
   totalPages: null,
   targetRoute: null,
 
-  previousPage: Ember.computed('currentPage', function() {
+  previousPage: computed('currentPage', function() {
     return Math.max(this.get('currentPage') - 1, 1);
   }),
-  nextPage: Ember.computed('currentPage', 'totalPages', function() {
+  nextPage: computed('currentPage', 'totalPages', function() {
     return Math.min(this.get('currentPage') + 1, this.get('totalPages'));
   }),
 
-  hasPreviousPage: Ember.computed('previousPage', 'currentPage', function() {
+  hasPreviousPage: computed('previousPage', 'currentPage', function() {
     return this.get('previousPage') < this.get('currentPage');
   }),
-  hasNextPage: Ember.computed('nextPage', 'currentPage', function() {
+  hasNextPage: computed('nextPage', 'currentPage', function() {
     return this.get('nextPage') > this.get('currentPage');
   }),
 
-  showPagination: Ember.computed.gt('totalPages', 1),
+  showPagination: computed.gt('totalPages', 1),
 
-  pages: Ember.computed('currentPage', 'totalPages', 'pageOffset', function() {
+  pages: computed('currentPage', 'totalPages', 'pageOffset', function() {
 
     const currentPage = this.get('currentPage');
     const totalPages = this.get('totalPages');

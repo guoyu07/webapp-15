@@ -1,15 +1,17 @@
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
+const { computed } = Ember;
+
 export default Ember.Controller.extend(ValidationsMixin, {
 
   message: null,
 
   showMessageSentModal: false,
 
-  messagePlaceholder: function() {
+  messagePlaceholder: computed('model.user.firstName', function() {
     return `Bonjour ${this.get('model.user.firstName')} !`;
-  }.property('model.user.firstName'),
+  }),
 
   actions: {
     closeModal() {

@@ -1,7 +1,6 @@
-/**
- * Ember component to display an expandable text.
- */
 import Ember from 'ember';
+
+const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'p',
@@ -20,11 +19,11 @@ export default Ember.Component.extend({
   /**
    * Truncates the text if not expanded then returns it.
    */
-  displayedText: function() {
+  displayedText: computed('text', 'isExpanded', function() {
     let text = this.get('text');
     if (!Ember.isEmpty(text)) {
       text = this.get('isExpanded') ? text : text.slice(0, this.get('truncateAt')).concat('...');
     }
     return text;
-  }.property('text', 'isExpanded')
+  })
 });

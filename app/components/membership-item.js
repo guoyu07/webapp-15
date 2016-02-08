@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
 
   tagName: 'tr',
@@ -24,7 +26,7 @@ export default Ember.Component.extend({
     this.sendAction('itemToggled', membership, checked);
   }),
 
-  expireAtClass: Ember.computed('membership.isExpired', 'membership.isStillValidInAMonth', function() {
+  expireAtClass: computed('membership.isExpired', 'membership.isStillValidInAMonth', function() {
     const isExpired = this.get('membership.isExpired');
     const isStillValidInAMonth = this.get('membership.isStillValidInAMonth');
 

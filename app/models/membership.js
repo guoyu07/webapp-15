@@ -1,10 +1,9 @@
-/**
- * Ember model for memberships.
- */
 import Ember from 'ember';
 import DS from 'ember-data';
 import ValidationsMixin from '../mixins/validations';
 import moment from 'moment';
+
+const { computed } = Ember;
 
 export default DS.Model.extend(ValidationsMixin, {
 
@@ -26,14 +25,14 @@ export default DS.Model.extend(ValidationsMixin, {
   user: DS.belongsTo('user', { async: true }),
 
   // Computed properties
-  isExpired: Ember.computed.lt('expireAt', moment()),
-  isNotExpired: Ember.computed.not('isExpired'),
-  isStillValidInAMonth: Ember.computed.gt('expireAt', moment().add(1, 'months')),
-  isNotValidInAMonth: Ember.computed.not('isStillValidInAMonth'),
-  expiresWithinAMonth: Ember.computed.and('isNotExpired', 'isNotValidInAMonth'),
-  reminderAlreadySent: Ember.computed.notEmpty('reminderSentAt'),
+  isExpired: computed.lt('expireAt', moment()),
+  isNotExpired: computed.not('isExpired'),
+  isStillValidInAMonth: computed.gt('expireAt', moment().add(1, 'months')),
+  isNotValidInAMonth: computed.not('isStillValidInAMonth'),
+  expiresWithinAMonth: computed.and('isNotExpired', 'isNotValidInAMonth'),
+  reminderAlreadySent: computed.notEmpty('reminderSentAt'),
 
-  hasBooklet: Ember.computed('itemCode', function() {
+  hasBooklet: computed('itemCode', function() {
     let itemCode = this.get('itemCode');
     return ['WOB1', 'WOB2'].indexOf(itemCode) >= 0;
   })
