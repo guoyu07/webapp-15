@@ -35,6 +35,8 @@
           selected=selectedStay
           options=staysService.allStays
           searchEnabled=false
+          allowClear=true
+          placeholder=(t 'hosts.index.stay.prompt')
           onchange=(action 'chooseStay')
           as |stay|}}
             <span class="text-capitalize">{{stay.label}}</span>

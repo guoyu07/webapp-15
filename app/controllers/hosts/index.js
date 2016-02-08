@@ -25,7 +25,7 @@ export default Ember.Controller.extend({
    */
   months: [],
   capacity: '1',
-  stay: 'one-two-weeks',
+  stay: null,
   activities: [],
 
   /**
@@ -248,7 +248,8 @@ export default Ember.Controller.extend({
     },
 
     chooseStay(stay) {
-      this.set('stay', stay.id);
+      const id = stay ? stay.id : null;
+      this.set('stay', id);
       this.retrieveHosts();
     },
 
