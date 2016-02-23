@@ -156,6 +156,13 @@
       </div>
       <table class="table table-striped">
         <tbody>
+          {{#each model.displayedLodgings as |lodging|}}
+            <tr>
+              <td colspan="2">
+                {{lodging}}
+              </td>
+            </tr>
+          {{/each}}
           <tr>
             <td>{{t 'host.index.capacity'}}</td>
             <td class="text-right">

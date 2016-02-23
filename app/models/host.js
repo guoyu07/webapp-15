@@ -113,6 +113,15 @@ export default DS.Model.extend(ValidationsMixin, {
   }),
 
   /**
+   * Returns the localized list of lodgings offered by the host.
+   */
+  displayedLodgings: computed('lodgings.[]', 'i18n.locale', function() {
+    return this.get('lodgings').map((lodging) => {
+      return this.get('i18n').t(`lodgings.${lodging}`)
+    });
+  }),
+
+  /**
    * $HACK: isPending seems to be conflicting with PromiseProxy.
    * This alias seems to solve the issue.
    */
