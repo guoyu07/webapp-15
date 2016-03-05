@@ -117,7 +117,7 @@ export default DS.Model.extend(ValidationsMixin, {
    */
   displayedLodgings: computed('lodgings.[]', 'i18n.locale', function() {
     return this.get('lodgings').map((lodging) => {
-      return this.get('i18n').t(`lodgings.${lodging}`)
+      return this.get('i18n').t(`lodgings.${lodging}`);
     });
   }),
 

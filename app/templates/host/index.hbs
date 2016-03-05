@@ -42,20 +42,18 @@
               {{/if}}
             </td>
           </tr>
-          <tr>
-            <td>
-              <span class="glyphicon glyphicon-envelope mrx"></span>
-              {{#if canSeeContactInfo}}
+          {{#if sessionUser.isAdmin}}
+            <tr>
+              <td>
+                <span class="glyphicon glyphicon-envelope mrx"></span>
                 {{#if model.noEmail}}
                   -
                 {{else}}
                   {{mail-to model.user.email (truncate model.user.email limit=28)}}
                 {{/if}}
-              {{else}}
-                {{members-only}}
-              {{/if}}
-            </td>
-          </tr>
+              </td>
+            </tr>
+          {{/if}}
           <tr>
             <td>
               <span class="glyphicon glyphicon-earphone mrx"></span>
