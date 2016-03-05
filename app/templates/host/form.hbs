@@ -51,12 +51,14 @@
               {{t 'host.form.noPhone.label'}}
             </label>
           </div>
-          <div class="checkbox">
-            <label>
-              {{input type="checkbox" id="noEmail" name="noEmail" checked=model.noEmail}}
-              {{t 'host.form.noEmail.label'}}
-            </label>
-          </div>
+          {{#if sessionUser.user.isAdmin}}
+            <div class="checkbox">
+              <label>
+                {{input type="checkbox" id="noEmail" name="noEmail" checked=model.noEmail}}
+                {{t 'host.form.noEmail.label'}}
+              </label>
+            </div>
+          {{/if}}
         </div>
       </div>
       <div class="col-sm-offset-2 col-sm-10 mbs">
