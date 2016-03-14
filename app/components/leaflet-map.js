@@ -39,7 +39,7 @@ export default Ember.Component.extend({
     this.map = L.map(this.get('elementId'), { minZoom: 3, maxZoom: 12 });
 
     // Prepare the cluster group
-    this.markerClusterGroup = L.markerClusterGroup({ disableClusteringAtZoom: 10 });
+    this.markerClusterGroup = L.markerClusterGroup();
     this.map.addLayer(this.markerClusterGroup);
 
     // Prepare GeoJSON layer
