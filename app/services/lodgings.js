@@ -14,7 +14,8 @@ export default Ember.Service.extend({
     'bedroom',
     'trailer',
     'campsite',
-    'yurt-tipi'
+    'yurt-tipi',
+    'shack'
   ],
 
   /**
