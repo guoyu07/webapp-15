@@ -202,12 +202,10 @@
   </div>
 
   <div class="col-md-3">
-    {{#unless model.noEmail}}
-      {{#link-to 'host.contact' model.id class="btn btn-block btn-primary mbm"}}
-        <span class="glyphicon glyphicon-envelope mrx"></span>
-        {{t 'host.index.contactHost'}}
-      {{/link-to}}
-    {{/unless}}
+    {{#link-to 'host.contact' model.id class="btn btn-block btn-primary mbm" disabled=model.noEmail}}
+      <span class="glyphicon glyphicon-envelope mrx"></span>
+      {{t 'host.index.contactHost'}}
+    {{/link-to}}
     {{#if showEditProfileButton}}
       {{#link-to 'host.edit' model.id class="btn btn-block btn-default mbm"}}
         <span class="glyphicon glyphicon-pencil mrx"></span>

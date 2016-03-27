@@ -9,6 +9,7 @@ module.exports = function(environment) {
     SERVER_BASE_URL: '',
     apiHost: '',
     apiNamespace: 'api',
+    urlAfterLogin: '/hosts',
     urlAfterLogout: '/login',
     EmberENV: {
 

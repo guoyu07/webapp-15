@@ -81,7 +81,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     });
 
     // Redirect user
-    this._super(...arguments);
+    window.location.replace(config.urlAfterLogin);
   },
 
   /**
