@@ -24,7 +24,7 @@ export default Ember.Service.extend({
     const capacities = this.get('capacityIds').map((item)=> {
       return Ember.Object.create({
         id: item,
-        label: this.get('i18n').t('host.form.capacity.label', { count: item })
+        label: this.get('i18n').t('host-form.capacity.label', { count: item })
       });
     });
 

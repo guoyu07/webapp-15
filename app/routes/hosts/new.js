@@ -31,11 +31,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
-  renderTemplate() {
-    this.render('host/form', { controller: 'hosts.new' });
-  },
-
   deactivate() {
-    this.controller.get('model').rollback();
+    this.controller.get('model').rollbackAttributes();
   }
 });
