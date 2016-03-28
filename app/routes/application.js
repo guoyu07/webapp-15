@@ -134,7 +134,11 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       }
     },
     error(err) {
-      this.trackjs.track(err);
+      if (Ember.get(err, 'errors.firstObject.status') === '404') {
+        this.transitionTo('404', 'not-found');
+      } else {
+        this.trackjs.track(err);
+      }
     }
   }
 });
