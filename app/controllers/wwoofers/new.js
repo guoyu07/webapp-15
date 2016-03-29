@@ -1,30 +1,16 @@
 import Ember from 'ember';
 import ValidationsMixin from '../../mixins/validations';
 
-const { computed } = Ember;
-const { service } = Ember.inject;
-
 export default Ember.Controller.extend(ValidationsMixin, {
-
-  countriesService: service('countries'),
-  departmentsService: service('departments'),
-
+  /**
+   * Birth date of the second wwoofer.
+   */
   selectedDate: null,
 
   /**
    * Indicates whether a second wwoofer was specified.
    */
   secondWwooferChecked: false,
-
-  /**
-   * Indicates whether the fields for the second wwoofer must be shown.
-   */
-  showOtherWwoofer: computed.readOnly('secondWwooferChecked'),
-
-  /**
-   * Indicates whether the second wwoofer can be edited.
-   */
-  canEditOtherWwoofer: true,
 
   actions: {
     saveWwoofer() {

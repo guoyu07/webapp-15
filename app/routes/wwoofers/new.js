@@ -21,9 +21,10 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
+  /**
+   * Creates a new wwoofer record attached to the current logged in user.
+   */
   model() {
-
-    // Create a new wwoofer record attached to the current logged in user
     return this.get('sessionUser.user').then((user)=> {
       const address = this.store.createRecord('address');
       return this.store.createRecord('wwoofer', {
@@ -38,11 +39,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     this._super(controller, model);
   },
 
-  renderTemplate() {
-    this.render('wwoofer/form', { controller: 'wwoofers.new' });
-  },
-
   deactivate() {
-    this.get('controller.model').rollback();
+    this.get('controller.model').rollbackAttributes();
   }
 });
