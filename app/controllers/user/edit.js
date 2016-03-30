@@ -9,9 +9,15 @@ export default Ember.Controller.extend(ValidationsMixin, {
   translationsFetcher: service('translations-fetcher'),
 
   /**
-   * Indicates whether the user's first name, last name and birth date can be edited.
+   * Indicates whether the user's first/last name can be edited.
    */
-  canEditUser: computed.readOnly('sessionUser.user.isAdmin'),
+  canEditName: computed.readOnly('sessionUser.user.isAdmin'),
+
+  /**
+   * Indicates whether the user's birth date can be edited.
+   * Legacy users do not have a birth date so give them a chance to set one when editing their info.
+   */
+  canEditBirthDate: computed.or('sessionUser.user.isAdmin', 'noBirthDate'),
 
   selectedDate: null,
 
@@ -22,7 +28,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
       let user = this.get('model');
 
       // Set birth date
-      if (this.get('canEditUser')) {
+      if (this.get('canEditBirthDate')) {
         user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
       }
 

@@ -4,9 +4,14 @@ import ValidationsMixin from '../../mixins/validations';
 export default Ember.Controller.extend(ValidationsMixin, {
 
   /**
-   * Indicates whether the user's first name, last name and birth date can be edited.
+   * Indicates whether the user's first/last name can be edited.
    */
-  canEditUser: true,
+  canEditName: true,
+
+  /**
+   * Indicates whether the user's birth date can be edited.
+   */
+  canEditBirthDate: true,
 
   termsOk: false,
   insuranceOk: false,

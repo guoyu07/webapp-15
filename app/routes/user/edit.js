@@ -9,6 +9,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   setupController(controller, user) {
     controller.set('selectedDate', moment(user.get('birthDate')));
+    controller.set('noBirthDate', Ember.isEmpty(user.get('birthDate')));
     this._super(controller, user);
   },
 
