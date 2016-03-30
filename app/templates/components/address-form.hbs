@@ -61,7 +61,7 @@
 
             <div class="col-sm-10">
               {{view "select"
-              content=departmentsService.sortedDepartments
+              content=departments
               optionValuePath="content.id"
               optionLabelPath="content.name"
               selection=address.department
@@ -106,7 +106,7 @@
   {{/if}}
   <div class="form-group">
     <div class="col-xs-12">
-      <button {{action "saveAddress"}} disabled={{address.isSaving}} class="btn btn-primary {{if address.isNew 'pull-right'}}">
+      <button {{action saveAddress}} disabled={{address.isSaving}} class="btn btn-primary {{if address.isNew 'pull-right'}}">
         {{#if address.isNew}}
           {{t 'literal.continue'}}
         {{else}}

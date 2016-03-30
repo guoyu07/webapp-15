@@ -18,9 +18,5 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   setupController(controller, models) {
     controller.setProperties(models);
-  },
-
-  renderTemplate() {
-    this.render('address/form', { controller: 'wwoofer.address' });
   }
 });
