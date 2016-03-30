@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 
   countries: computed.readOnly('countriesService.hostCountries'),
 
-  instructions: t('address.form.hostInstructions'),
+  instructions: t('address-form.hostInstructions'),
 
   actions: {
     saveAddress() {

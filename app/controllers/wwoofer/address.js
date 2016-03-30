@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 
   countries: computed.readOnly('countriesService.sortedCountries'),
 
-  instructions: t('address.form.wwooferInstructions'),
+  instructions: t('address-form.wwooferInstructions'),
 
   actions: {
     saveAddress() {
