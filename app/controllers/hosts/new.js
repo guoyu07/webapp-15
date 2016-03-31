@@ -5,38 +5,28 @@ export default Ember.Controller.extend({
     saveHost() {
 
       // Get the host
-      let host = this.get('model');
+      let host = this.get('host');
 
-      // Get the host's user (async)
-      host.get('user').then((user)=> {
+      // Reset website to null to pass server-side validation (accepts only null, not empty strings)
+      if (Ember.isEmpty(host.get('webSite'))) {
+        host.set('webSite', null);
+      }
 
-        // Reset website to null to pass server-side validation (accepts only null, not empty strings)
-        if (Ember.isEmpty(host.get('webSite'))) {
-          host.set('webSite', null);
-        }
+      // Validate the host
+      const validation = host.validate();
 
-        // Prepare validation promises
-        const validations = [host.validate(), user.validate()];
+      validation.then(()=> {
 
-        // Validate all models
-        Ember.RSVP.all(validations).then(()=> {
+        // Create the host
+        let promise = host.save();
 
-          // Create the host
-          let promise = host.save();
-
-          // Save the user (phone number)
-          promise = promise.then(()=> {
-            return user.save();
-          });
-
-          // Inform and redirect user to the address page
-          promise.then(()=> {
-            this.get('notify').success(this.get('i18n').t('notify.hostCreated'));
-            this.transitionToRoute('host.address', host);
-          });
-        }).catch(()=> {
-          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        // Inform and redirect user to the address page
+        promise.then(()=> {
+          this.get('notify').success(this.get('i18n').t('notify.hostCreated'));
+          this.transitionToRoute('host.address', host);
         });
+      }).catch(()=> {
+        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
     }
   }

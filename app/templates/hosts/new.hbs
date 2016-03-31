@@ -1,25 +1,36 @@
-<div class="row">
-  <div class="col-sm-9">
-    {{host-form host=model saveHost=(action 'saveHost')}}
-  </div>
-  <div class="col-sm-3">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <span class="glyphicon glyphicon glyphicon-pushpin mrx"></span>
-          {{t 'hosts.new.important'}}
-        </h3>
+<form class="form-horizontal">
+  <div class="row">
+    <div class="col-sm-9">
+      {{host-form host=host}}
+    </div>
+    <div class="col-sm-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <span class="glyphicon glyphicon glyphicon-pushpin mrx"></span>
+            {{t 'hosts.new.important'}}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <span class="glyphicon glyphicon-leaf mrx"></span>
+          {{t 'hosts.new.organic'}}
+          <hr/>
+          <span class="glyphicon glyphicon-exclamation-sign mrx"></span>
+          {{t 'hosts.new.majority'}}
+          <hr/>
+          <span class="glyphicon glyphicon-time mrx"></span>
+          {{t 'hosts.new.workHours'}}
+        </div>
       </div>
-      <div class="panel-body">
-        <span class="glyphicon glyphicon-leaf mrx"></span>
-        {{t 'hosts.new.organic'}}
-        <hr/>
-        <span class="glyphicon glyphicon-exclamation-sign mrx"></span>
-        {{t 'hosts.new.majority'}}
-        <hr/>
-        <span class="glyphicon glyphicon-time mrx"></span>
-        {{t 'hosts.new.workHours'}}
+    </div>
+    <div class="col-sm-9">
+      <div class="form-group">
+        <div class="col-xs-12">
+          <button {{action 'saveHost'}} class="btn btn-primary pull-right" disabled={{host.isSaving}}>
+            {{t 'literal.continue'}}
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>

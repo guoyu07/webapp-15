@@ -1,175 +1,161 @@
-<form class="form-horizontal">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{t 'host-form.generalInformation'}}</h3>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'host-form.generalInformation'}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="form-group {{if host.fieldErrors.farmName.length 'has-error'}}">
+      <label for="farm-name" class="col-sm-2 control-label">{{t 'host-form.farmName.label'}}</label>
+
+      <div class="col-sm-10">
+        {{input type="text" id="farm-name" name="farm-name" value=host.farmName class="form-control" placeholder=(t 'host-form.farmName.placeholder')}}
+        {{error-display errors=host.fieldErrors.farmName}}
+      </div>
     </div>
-    <div class="panel-body">
-      <div class="form-group {{if host.fieldErrors.farmName.length 'has-error'}}">
-        <label for="farm-name" class="col-sm-2 control-label">{{t 'host-form.farmName.label'}}</label>
+    <div class="form-group {{if host.fieldErrors.shortDescription.length 'has-error'}}">
+      <label for="shortDescription" class="col-sm-2 control-label">{{t 'host-form.shortDescription.label'}}</label>
 
-        <div class="col-sm-10">
-          {{input type="text" id="farm-name" name="farm-name" value=host.farmName class="form-control" placeholder=(t 'host-form.farmName.placeholder')}}
-          {{error-display errors=host.fieldErrors.farmName}}
-        </div>
+      <div class="col-sm-10">
+        {{input type="text" id="shortDescription" name="shortDescription" value=host.shortDescription class="form-control" placeholder=(t 'host-form.shortDescription.placeholder')}}
+        {{error-display errors=host.fieldErrors.shortDescription}}
       </div>
-      <div class="form-group {{if host.fieldErrors.shortDescription.length 'has-error'}}">
-        <label for="shortDescription" class="col-sm-2 control-label">{{t 'host-form.shortDescription.label'}}</label>
+    </div>
+    <div class="form-group {{if host.fieldErrors.fullDescription.length 'has-error'}}">
+      <label for="fullDescription" class="col-sm-2 control-label">{{t 'host-form.fullDescription.label'}}</label>
 
-        <div class="col-sm-10">
-          {{input type="text" id="shortDescription" name="shortDescription" value=host.shortDescription class="form-control" placeholder=(t 'host-form.shortDescription.placeholder')}}
-          {{error-display errors=host.fieldErrors.shortDescription}}
-        </div>
+      <div class="col-sm-10">
+        {{textarea id="fullDescription" name="fullDescription" value=host.fullDescription class="form-control" placeholder=(t 'host-form.fullDescription.placeholder') rows="10"}}
+        {{error-display errors=host.fieldErrors.fullDescription}}
       </div>
-      <div class="form-group {{if host.fieldErrors.fullDescription.length 'has-error'}}">
-        <label for="fullDescription" class="col-sm-2 control-label">{{t 'host-form.fullDescription.label'}}</label>
+    </div>
+    <div class="col-sm-offset-2 col-sm-10 mbs">
+      <p class="form-details">
+        {{t 'host-form.fullDescriptionDetails'}}
+      </p>
+    </div>
+    <div class="form-group">
+      <label for="travelDetails" class="col-sm-2 control-label">{{t 'host-form.travel.label'}}</label>
 
-        <div class="col-sm-10">
-          {{textarea id="fullDescription" name="fullDescription" value=host.fullDescription class="form-control" placeholder=(t 'host-form.fullDescription.placeholder') rows="10"}}
-          {{error-display errors=host.fieldErrors.fullDescription}}
-        </div>
+      <div class="col-sm-10">
+        {{input type="text" id="travelDetails" name="travelDetails" value=host.travelDetails class="form-control" placeholder=(t 'host-form.travel.placeholder')}}
       </div>
-      <div class="col-sm-offset-2 col-sm-10 mbs">
-        <p class="form-details">
-          {{t 'host-form.fullDescriptionDetails'}}
-        </p>
-      </div>
-      <div class="form-group">
-        <label for="travelDetails" class="col-sm-2 control-label">{{t 'host-form.travel.label'}}</label>
+    </div>
+    <div class="col-sm-offset-2 col-sm-10">
+      <p class="form-details">
+        {{t 'host-form.travelDetails'}}
+      </p>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{t 'host-form.activities'}}</label>
 
-        <div class="col-sm-10">
-          {{input type="text" id="travelDetails" name="travelDetails" value=host.travelDetails class="form-control" placeholder=(t 'host-form.travel.placeholder')}}
-        </div>
+      <div class="col-sm-10 toggle-options-cols">
+        {{toggle-options values=activitiesService.allActivities selected=host.activities optionValuePath='id'}}
       </div>
-      <div class="col-sm-offset-2 col-sm-10">
-        <p class="form-details">
-          {{t 'host-form.travelDetails'}}
-        </p>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">{{t 'host-form.activities'}}</label>
+    </div>
+    <hr class="col-sm-offset-2 col-sm-9 mvs">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">{{t 'host-form.openingMonths'}}</label>
 
-        <div class="col-sm-10 toggle-options-cols">
-          {{toggle-options values=activitiesService.allActivities selected=host.activities optionValuePath='id'}}
-        </div>
+      <div class="col-sm-10 toggle-options-cols capitalize">
+        {{toggle-options values=monthsService.allMonths selected=host.openingMonths optionValuePath='id'}}
       </div>
+    </div>
+
+    {{#unless host.isNew}}
       <hr class="col-sm-offset-2 col-sm-9 mvs">
       <div class="form-group">
-        <label class="col-sm-2 control-label">{{t 'host-form.openingMonths'}}</label>
-
-        <div class="col-sm-10 toggle-options-cols capitalize">
-          {{toggle-options values=monthsService.allMonths selected=host.openingMonths optionValuePath='id'}}
-        </div>
-      </div>
-
-      {{#unless host.isNew}}
-        <hr class="col-sm-offset-2 col-sm-9 mvs">
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-              <label>
-                {{input type="checkbox" id="isHidden" name="isHidden" checked=host.isHidden}}
-                {{t 'host-form.isHidden.label'}}
-              </label>
-            </div>
-          </div>
-        </div>
         <div class="col-sm-offset-2 col-sm-10">
-          <span class="form-details">
-            {{t 'host-form.isHiddenDetails'}}
-          </span>
-        </div>
-      {{/unless}}
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{t 'host-form.lodgingDetails'}}</h3>
-    </div>
-    <div class="panel-body">
-      <div class="form-group {{if host.fieldErrors.lodgings.length 'has-error'}}">
-        <label class="col-sm-2 control-label">{{t 'host-form.lodging'}}</label>
-
-        <div class="col-sm-10 toggle-options-cols">
-          {{toggle-options values=lodgingsService.allLodgings selected=host.lodgings optionValuePath='id'}}
-        </div>
-      </div>
-      <hr class="col-sm-offset-2 col-sm-9 mvs">
-      <div class="form-group {{if host.fieldErrors.capacity.length 'has-error'}}">
-        <label class="col-sm-2 control-label">{{t 'host-form.capacity'}}</label>
-
-        <div class="col-sm-10 radio-options-cols">
-          {{#radio-button classNames="radio-inline" value=1 groupValue=host.capacity}}
-            {{t 'host-form.capacity.label' count=1}}
-          {{/radio-button}}
-          {{#radio-button classNames="radio-inline" value=2 groupValue=host.capacity}}
-            {{t 'host-form.capacity.label' count=2}}
-          {{/radio-button}}
-          {{#radio-button classNames="radio-inline" value=3 groupValue=host.capacity}}
-            {{t 'host-form.capacity.label' count=3}}
-          {{/radio-button}}
-          {{#radio-button classNames="radio-inline" value=4 groupValue=host.capacity}}
-            {{t 'host-form.capacity.label' count='4+'}}
-          {{/radio-button}}
-        </div>
-      </div>
-      <hr class="col-sm-offset-2 col-sm-9 mvs">
-      <div class="form-group {{if host.fieldErrors.stays.length 'has-error'}}">
-        <label class="col-sm-2 control-label">{{t 'host-form.stays'}}</label>
-
-        <div class="col-sm-10 toggle-options-cols">
-          {{toggle-options values=staysService.allStays selected=host.stays optionValuePath='id'}}
-        </div>
-      </div>
-      <hr class="col-sm-offset-2 col-sm-9 mvs">
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10 toggle-options-cols">
-          <label for="childrenOk" class="checkbox-inline">
-            {{input type="checkbox" id="childrenOk" checked=host.childrenOk}}
-            {{t 'host-form.childrenOk.label'}}
-          </label>
-          <label for="petsOk" class="checkbox-inline">
-            {{input type="checkbox" id="petsOk" checked=host.petsOk}}
-            {{t 'host-form.petsOk.label'}}
-          </label>
-        </div>
-      </div>
-      <div class="col-sm-offset-2 col-sm-10">
-          <span class="form-details">
-            <span class="glyphicon glyphicon-warning-sign"></span>
-            {{t 'host-form.childrenOkDetails'}}
-          </span>
-      </div>
-    </div>
-  </div>
-
-  {{#if sessionUser.user.isAdmin}}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{t 'literal.admins'}}</h3>
-      </div>
-      <div class="panel-body">
-        <div class="form-group {{if host.fieldErrors.note.length 'has-error'}}">
-          <label for="note" class="col-sm-2 control-label">{{t 'host-form.note.label'}}</label>
-
-          <div class="col-sm-10">
-            {{textarea id="note" name="note" value=host.note class="form-control" rows="4"}}
-            {{error-display errors=host.fieldErrors.note}}
+          <div class="checkbox">
+            <label>
+              {{input type="checkbox" id="isHidden" name="isHidden" checked=host.isHidden}}
+              {{t 'host-form.isHidden.label'}}
+            </label>
           </div>
         </div>
       </div>
-    </div>
-  {{/if}}
+      <div class="col-sm-offset-2 col-sm-10">
+        <span class="form-details">
+          {{t 'host-form.isHiddenDetails'}}
+        </span>
+      </div>
+    {{/unless}}
+  </div>
+</div>
 
-  <div class="form-group">
-    <div class="col-xs-12">
-      <button {{action saveHost}} class="btn btn-primary {{if host.isNew 'pull-right'}}" disabled={{host.isSaving}}>
-        {{#if host.isNew}}
-          {{t 'literal.continue'}}
-        {{else}}
-          {{t 'literal.save'}}
-        {{/if}}
-      </button>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'host-form.lodgingDetails'}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="form-group {{if host.fieldErrors.lodgings.length 'has-error'}}">
+      <label class="col-sm-2 control-label">{{t 'host-form.lodging'}}</label>
+
+      <div class="col-sm-10 toggle-options-cols">
+        {{toggle-options values=lodgingsService.allLodgings selected=host.lodgings optionValuePath='id'}}
+      </div>
+    </div>
+    <hr class="col-sm-offset-2 col-sm-9 mvs">
+    <div class="form-group {{if host.fieldErrors.capacity.length 'has-error'}}">
+      <label class="col-sm-2 control-label">{{t 'host-form.capacity'}}</label>
+
+      <div class="col-sm-10 radio-options-cols">
+        {{#radio-button classNames="radio-inline" value=1 groupValue=host.capacity}}
+          {{t 'host-form.capacity.label' count=1}}
+        {{/radio-button}}
+        {{#radio-button classNames="radio-inline" value=2 groupValue=host.capacity}}
+          {{t 'host-form.capacity.label' count=2}}
+        {{/radio-button}}
+        {{#radio-button classNames="radio-inline" value=3 groupValue=host.capacity}}
+          {{t 'host-form.capacity.label' count=3}}
+        {{/radio-button}}
+        {{#radio-button classNames="radio-inline" value=4 groupValue=host.capacity}}
+          {{t 'host-form.capacity.label' count='4+'}}
+        {{/radio-button}}
+      </div>
+    </div>
+    <hr class="col-sm-offset-2 col-sm-9 mvs">
+    <div class="form-group {{if host.fieldErrors.stays.length 'has-error'}}">
+      <label class="col-sm-2 control-label">{{t 'host-form.stays'}}</label>
+
+      <div class="col-sm-10 toggle-options-cols">
+        {{toggle-options values=staysService.allStays selected=host.stays optionValuePath='id'}}
+      </div>
+    </div>
+    <hr class="col-sm-offset-2 col-sm-9 mvs">
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10 toggle-options-cols">
+        <label for="childrenOk" class="checkbox-inline">
+          {{input type="checkbox" id="childrenOk" checked=host.childrenOk}}
+          {{t 'host-form.childrenOk.label'}}
+        </label>
+        <label for="petsOk" class="checkbox-inline">
+          {{input type="checkbox" id="petsOk" checked=host.petsOk}}
+          {{t 'host-form.petsOk.label'}}
+        </label>
+      </div>
+    </div>
+    <div class="col-sm-offset-2 col-sm-10">
+        <span class="form-details">
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{t 'host-form.childrenOkDetails'}}
+        </span>
     </div>
   </div>
-</form>
+</div>
+
+{{#if sessionUser.user.isAdmin}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{t 'literal.admins'}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group {{if host.fieldErrors.note.length 'has-error'}}">
+        <label for="note" class="col-sm-2 control-label">{{t 'host-form.note.label'}}</label>
+
+        <div class="col-sm-10">
+          {{textarea id="note" name="note" value=host.note class="form-control" rows="4"}}
+          {{error-display errors=host.fieldErrors.note}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}

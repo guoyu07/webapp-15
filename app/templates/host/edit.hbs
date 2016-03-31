@@ -1,1 +1,11 @@
-{{host-form host=model saveHost=(action 'saveHost')}}
+<form class="form-horizontal">
+  {{host-form host=host}}
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <button {{action 'saveHost'}} class="btn btn-primary" disabled={{host.isSaving}}>
+        {{t 'literal.save'}}
+      </button>
+    </div>
+  </div>
+</form>
