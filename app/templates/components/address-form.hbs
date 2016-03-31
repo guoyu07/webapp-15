@@ -1,118 +1,98 @@
-<form class="form-horizontal">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{t 'address-form.title'}}</h3>
-    </div>
-    <div class="panel-body">
-      <p class="form-details mbm">
-        {{instructions}}
-      </p>
-      <div class="form-group {{if address.fieldErrors.address1.length 'has-error'}}">
-        <label for="address1" class="col-sm-2 control-label">{{t 'address-form.address1.label'}}</label>
-
-        <div class="col-sm-10">
-          {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder=(t 'address-form.address1.placeholder')}}
-          {{error-display errors=address.fieldErrors.address1}}
-        </div>
-      </div>
-      <div class="form-group {{if address.fieldErrors.address2.length 'has-error'}}">
-        <label for="address2" class="col-sm-2 control-label">{{t 'address-form.address2.label'}}</label>
-
-        <div class="col-sm-10">
-          {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder=(t 'address-form.address2.placeholder')}}
-          {{error-display errors=address.fieldErrors.address2}}
-        </div>
-      </div>
-      <div class="form-group {{if address.fieldErrors.city.length 'has-error'}}">
-        <label for="city" class="col-sm-2 control-label">{{t 'address-form.city.label'}}</label>
-
-        <div class="col-sm-10">
-          {{input type="text" id="city" name="city" value=address.city class="form-control"}}
-          {{error-display errors=address.fieldErrors.city}}
-        </div>
-      </div>
-      <div class="form-group {{if address.fieldErrors.zipCode.length 'has-error'}}">
-        <label for="zipCode" class="col-sm-2 control-label">{{t 'address-form.zipCode.label'}}</label>
-
-        <div class="col-sm-10">
-          {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control"}}
-          {{error-display errors=address.fieldErrors.zipCode}}
-        </div>
-      </div>
-      <div class="form-group {{if address.fieldErrors.country.id.length 'has-error'}}">
-        <label for="country" class="col-sm-2 control-label">{{t 'address-form.country.label'}}</label>
-
-        <div class="col-sm-10">
-          {{view "select"
-          content=countries
-          optionValuePath="content.id"
-          optionLabelPath="content.name"
-          selection=address.country
-          class="form-control"
-          name="country"
-          prompt=(t 'address-form.country.prompt')}}
-          {{error-display errors=address.fieldErrors.country.id}}
-        </div>
-      </div>
-      {{#if address.country}}
-        <div class="form-group {{if address.fieldErrors.department.id.length 'has-error'}}">
-          {{#if address.country.isFrance}}
-            <label for="department" class="col-sm-2 control-label">{{t 'address-form.department.label'}}</label>
-
-            <div class="col-sm-10">
-              {{view "select"
-              content=departments
-              optionValuePath="content.id"
-              optionLabelPath="content.name"
-              selection=address.department
-              class="form-control"
-              name="department"
-              prompt=(t 'address-form.department.prompt')}}
-              {{error-display errors=address.fieldErrors.department.id}}
-            </div>
-          {{else}}
-            <label for="state" class="col-sm-2 control-label">{{t 'address-form.state.label'}}</label>
-
-            <div class="col-sm-10">
-              {{input type="text" id="state" name="state" value=address.state class="form-control"}}
-            </div>
-          {{/if}}
-        </div>
-      {{/if}}
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'address-form.title'}}</h3>
   </div>
+  <div class="panel-body">
+    <p class="form-details mbm">
+      {{instructions}}
+    </p>
+    <div class="form-group {{if address.fieldErrors.address1.length 'has-error'}}">
+      <label for="address1" class="col-sm-2 control-label">{{t 'address-form.address1.label'}}</label>
 
-  {{#if sessionUser.user.isAdmin}}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{t 'literal.admins'}}</h3>
-      </div>
-      <div class="panel-body">
-        <div class="form-group {{if address.fieldErrors.latitude.length 'has-error'}}
-          {{if address.fieldErrors.longitude.length 'has-error'}}">
-          <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address-form.latitudeLongitude.label'}}</label>
-
-          <div class="col-xs-6 col-sm-5">
-            {{input type="number" id="latitude" name="latitude" value=address.latitude class="form-control"}}
-            {{error-display errors=address.fieldErrors.latitude}}
-          </div>
-          <div class="col-xs-6 col-sm-5">
-            {{input type="number" id="longitude" name="longitude" value=address.longitude class="form-control"}}
-            {{error-display errors=address.fieldErrors.longitude}}
-          </div>
-        </div>
+      <div class="col-sm-10">
+        {{input type="text" id="address1" name="address1" value=address.address1 class="form-control" placeholder=(t 'address-form.address1.placeholder')}}
+        {{error-display errors=address.fieldErrors.address1}}
       </div>
     </div>
-  {{/if}}
-  <div class="form-group">
-    <div class="col-xs-12">
-      <button {{action saveAddress}} disabled={{address.isSaving}} class="btn btn-primary {{if address.isNew 'pull-right'}}">
-        {{#if address.isNew}}
-          {{t 'literal.continue'}}
+    <div class="form-group {{if address.fieldErrors.address2.length 'has-error'}}">
+      <label for="address2" class="col-sm-2 control-label">{{t 'address-form.address2.label'}}</label>
+
+      <div class="col-sm-10">
+        {{input type="text" id="address2" name="address2" value=address.address2 class="form-control" placeholder=(t 'address-form.address2.placeholder')}}
+        {{error-display errors=address.fieldErrors.address2}}
+      </div>
+    </div>
+    <div class="form-group {{if address.fieldErrors.city.length 'has-error'}}">
+      <label for="city" class="col-sm-2 control-label">{{t 'address-form.city.label'}}</label>
+
+      <div class="col-sm-10">
+        {{input type="text" id="city" name="city" value=address.city class="form-control"}}
+        {{error-display errors=address.fieldErrors.city}}
+      </div>
+    </div>
+    <div class="form-group {{if address.fieldErrors.zipCode.length 'has-error'}}">
+      <label for="zipCode" class="col-sm-2 control-label">{{t 'address-form.zipCode.label'}}</label>
+
+      <div class="col-sm-10">
+        {{input type="text" id="zipCode" name="zipCode" value=address.zipCode class="form-control"}}
+        {{error-display errors=address.fieldErrors.zipCode}}
+      </div>
+    </div>
+    <div class="form-group {{if address.fieldErrors.country.id.length 'has-error'}}">
+      <label for="country" class="col-sm-2 control-label">{{t 'address-form.country.label'}}</label>
+
+      <div class="col-sm-10">
+        {{view "select"
+        content=countries
+        optionValuePath="content.id"
+        optionLabelPath="content.name"
+        selection=address.country
+        class="form-control"
+        name="country"
+        prompt=(t 'address-form.country.prompt')}}
+        {{error-display errors=address.fieldErrors.country.id}}
+      </div>
+    </div>
+    {{#if address.country}}
+      <div class="form-group {{if address.fieldErrors.department.id.length 'has-error'}}">
+        {{#if address.country.isFrance}}
+          <label for="department" class="col-sm-2 control-label">{{t 'address-form.department.label'}}</label>
+
+          <div class="col-sm-10">
+            {{view "select"
+            content=departments
+            optionValuePath="content.id"
+            optionLabelPath="content.name"
+            selection=address.department
+            class="form-control"
+            name="department"
+            prompt=(t 'address-form.department.prompt')}}
+            {{error-display errors=address.fieldErrors.department.id}}
+          </div>
         {{else}}
-          {{t 'literal.save'}}
+          <label for="state" class="col-sm-2 control-label">{{t 'address-form.state.label'}}</label>
+
+          <div class="col-sm-10">
+            {{input type="text" id="state" name="state" value=address.state class="form-control"}}
+          </div>
         {{/if}}
-      </button>
-    </div>
+      </div>
+    {{/if}}
+    {{#if sessionUser.user.isAdmin}}
+      <hr/>
+      <div class="form-group {{if address.fieldErrors.latitude.length 'has-error'}}
+        {{if address.fieldErrors.longitude.length 'has-error'}}">
+        <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address-form.latitudeLongitude.label'}}</label>
+
+        <div class="col-xs-6 col-sm-5">
+          {{input type="number" id="latitude" name="latitude" value=address.latitude class="form-control"}}
+          {{error-display errors=address.fieldErrors.latitude}}
+        </div>
+        <div class="col-xs-6 col-sm-5">
+          {{input type="number" id="longitude" name="longitude" value=address.longitude class="form-control"}}
+          {{error-display errors=address.fieldErrors.longitude}}
+        </div>
+      </div>
+    {{/if}}
   </div>
-</form>
+</div>

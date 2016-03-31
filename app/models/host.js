@@ -167,9 +167,6 @@ export default DS.Model.extend(ValidationsMixin, {
     return `http://www.facebook.com/sharer.php?u=${encodedUrl}`;
   }),
 
-  // Phone is mandatory for hosts, this binding is used for validation
-  phone: computed.readOnly('user.phone'),
-
   // Validations
   validations: {
     farmName: {
@@ -189,9 +186,6 @@ export default DS.Model.extend(ValidationsMixin, {
         with: Regex.URL,
         allowBlank: true
       }
-    },
-    phone: {
-      presence: true
     },
     stays: {
       presence: true

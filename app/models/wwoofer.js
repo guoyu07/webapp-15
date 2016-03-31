@@ -7,7 +7,6 @@ const { computed } = Ember;
 export default DS.Model.extend(ValidationsMixin, {
 
   // Attributes
-  oldWwooferId: DS.attr('number'),
   firstName2: DS.attr('string'),
   lastName2: DS.attr('string'),
   birthDate2: DS.attr('string'),
@@ -16,6 +15,7 @@ export default DS.Model.extend(ValidationsMixin, {
   updatedAt: DS.attr('date'),
   intro: DS.attr('string'),
   tripMotivation: DS.attr('string'),
+  emergencyPhone: DS.attr('string'),
 
   // Relationships
   user: DS.belongsTo('user', { async: true }),

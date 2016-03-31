@@ -1,7 +1,16 @@
-{{wwoofer-form
-wwoofer=model
-selectedDate=selectedDate
-fieldErrors=fieldErrors
-secondWwooferChecked=secondWwooferChecked
-dateSelected=(action 'dateSelected')
-saveWwoofer=(action 'saveWwoofer')}}
+<form class="form-horizontal">
+  {{wwoofer-form
+  wwoofer=model
+  selectedDate=selectedDate
+  fieldErrors=fieldErrors
+  secondWwooferChecked=secondWwooferChecked
+  dateSelected=(action 'dateSelected')}}
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <button {{action 'saveWwoofer'}} class="btn btn-primary pull-right" disabled={{wwoofer.isSaving}}>
+        {{t 'literal.continue'}}
+      </button>
+    </div>
+  </div>
+</form>

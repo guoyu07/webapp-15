@@ -17,23 +17,22 @@ export default Ember.Controller.extend({
 
       let wwoofer = this.get('wwoofer');
       let address = this.get('address');
+      let user = this.get('user');
       const isNewAddress = address.get('isNew');
 
       // Validate the address
-      let promise = address.validate();
+      let promise = [address.validate(), user.validate(), wwoofer.validate()];
 
-      promise.then(()=> {
+      Ember.RSVP.all(promise).then(()=> {
 
-        // Create or update the address
-        promise = address.save();
+        // Create or update the address, update the user
+        promise = [address.save(), user.save()];
 
         // Set the wwoofer's address (now that it has a valid id), then update the wwoofer
-        if (isNewAddress) {
-          promise = promise.then(()=> {
-            wwoofer.set('address', address);
-            return wwoofer.save();
-          });
-        }
+        promise = Ember.RSVP.all(promise).then(()=> {
+          wwoofer.set('address', address);
+          return wwoofer.save();
+        });
 
         promise.then(()=> {
           this.get('notify').success(this.get('i18n').t('notify.addressSaved'));

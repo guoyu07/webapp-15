@@ -108,6 +108,11 @@ export default DS.Model.extend(ValidationsMixin, {
       presence: {
         'if': 'isNew' // legacy users do not have a birth date
       }
+    },
+    phone: {
+      presence: {
+        'if': 'host.id' // only hosts must provide a phone
+      }
     }
   }
 });

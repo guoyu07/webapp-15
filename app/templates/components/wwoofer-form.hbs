@@ -1,126 +1,111 @@
-<form class="form-horizontal">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{t 'wwoofer-form.moreAboutYou'}}</h3>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'wwoofer-form.moreAboutYou'}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="form-group {{if wwoofer.fieldErrors.intro.length 'has-error'}}">
+      <label for="intro" class="col-sm-2 control-label">{{t 'wwoofer-form.intro.label'}}</label>
+
+      <div class="col-sm-10">
+        {{textarea id="intro" name="intro" value=wwoofer.intro class="form-control" rows="5"}}
+        {{error-display errors=wwoofer.fieldErrors.intro}}
+      </div>
     </div>
-    <div class="panel-body">
-      <div class="form-group {{if wwoofer.fieldErrors.intro.length 'has-error'}}">
-        <label for="intro" class="col-sm-2 control-label">{{t 'wwoofer-form.intro.label'}}</label>
+    <div class="col-sm-offset-2 col-sm-10">
+      <p class="form-details">
+        {{t 'wwoofer-form.introInstructions'}}
+      </p>
+    </div>
+    <div class="form-group {{if wwoofer.fieldErrors.tripMotivation.length 'has-error'}}">
+      <label for="tripMotivation" class="col-sm-2 control-label">{{t 'wwoofer-form.tripMotivation.label'}}</label>
+
+      <div class="col-sm-10">
+        {{textarea id="tripMotivation" name="tripMotivation" value=wwoofer.tripMotivation class="form-control" rows="5"}}
+        {{error-display errors=wwoofer.fieldErrors.tripMotivation}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'wwoofer-form.otherWwoofer'}}</h3>
+  </div>
+  <div class="panel-body">
+    <p class="form-details">
+      {{t 'wwoofer-form.otherWwooferInstructions'}}
+    </p>
+    {{#if canEditOtherWwoofer }}
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              {{input type="checkbox" name="otherWwoofer" checked=secondWwooferChecked}}
+              {{t 'wwoofer-form.otherWwoofer.label'}}
+            </label>
+          </div>
+        </div>
+      </div>
+    {{else}}
+      {{#unless secondWwooferChecked}}
+        <div class="col-sm-offset-2 col-sm-10">
+          {{t 'wwoofer-form.noOtherWwoofer'}}
+        </div>
+      {{/unless}}
+    {{/if}}
+    {{#if secondWwooferChecked}}
+      <div class="form-group {{if fieldErrors.model.firstName2.length 'has-error'}}">
+        <label for="firstName2" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
 
         <div class="col-sm-10">
-          {{textarea id="intro" name="intro" value=wwoofer.intro class="form-control" rows="5"}}
-          {{error-display errors=wwoofer.fieldErrors.intro}}
+          {{#if canEditOtherWwoofer}}
+            {{input type="text" id="firstName2" name="firstName2" value=wwoofer.firstName2 class="form-control"}}
+            {{error-display errors=fieldErrors.model.firstName2}}
+          {{else}}
+            <p class="form-control-static">{{wwoofer.firstName2}}</p>
+          {{/if}}
         </div>
       </div>
-      <div class="col-sm-offset-2 col-sm-10">
-        <p class="form-details">
-          {{t 'wwoofer-form.introInstructions'}}
-        </p>
-      </div>
-      <div class="form-group {{if wwoofer.fieldErrors.tripMotivation.length 'has-error'}}">
-        <label for="tripMotivation" class="col-sm-2 control-label">{{t 'wwoofer-form.tripMotivation.label'}}</label>
+      <div class="form-group {{if fieldErrors.model.lastName2.length 'has-error'}}">
+        <label for="lastName2" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
 
         <div class="col-sm-10">
-          {{textarea id="tripMotivation" name="tripMotivation" value=wwoofer.tripMotivation class="form-control" rows="5"}}
-          {{error-display errors=wwoofer.fieldErrors.tripMotivation}}
+          {{#if canEditOtherWwoofer}}
+            {{input type="text" id="lastName2" name="lastName2" value=wwoofer.lastName2 class="form-control"}}
+            {{error-display errors=fieldErrors.model.lastName2}}
+          {{else}}
+            <p class="form-control-static">{{wwoofer.lastName2}}</p>
+          {{/if}}
         </div>
       </div>
-    </div>
+      <div class="form-group {{if fieldErrors.selectedDate.length 'has-error'}}">
+        <label for="birthDate2" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
+
+        <div class="col-sm-10">
+          {{#if canEditOtherWwoofer}}
+            {{date-picker selectedDate=selectedDate dateSelected=dateSelected}}
+            {{error-display errors=fieldErrors.selectedDate}}
+          {{else}}
+            <p class="form-control-static">{{moment-format wwoofer.birthDate2}}</p>
+          {{/if}}
+        </div>
+      </div>
+    {{/if}}
   </div>
+</div>
+{{#if sessionUser.user.isAdmin}}
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">{{t 'wwoofer-form.otherWwoofer'}}</h3>
+      <h3 class="panel-title">{{t 'literal.admins'}}</h3>
     </div>
     <div class="panel-body">
-      <div class="col-sm-offset-2 col-sm-10">
-        <p class="form-details">
-          {{t 'wwoofer-form.otherWwooferInstructions'}}
-        </p>
+      <div class="form-group {{if wwoofer.fieldErrors.note.length 'has-error'}}">
+        <label for="note" class="col-sm-2 control-label">{{t 'wwoofer-form.note.label'}}</label>
+
+        <div class="col-sm-10">
+          {{textarea id="note" name="note" value=wwoofer.note class="form-control" rows="4"}}
+          {{error-display errors=wwoofer.fieldErrors.note}}
+        </div>
       </div>
-      {{#if canEditOtherWwoofer }}
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-              <label>
-                {{input type="checkbox" name="otherWwoofer" checked=secondWwooferChecked}}
-                {{t 'wwoofer-form.otherWwoofer.label'}}
-              </label>
-            </div>
-          </div>
-        </div>
-      {{else}}
-        {{#unless secondWwooferChecked}}
-          <div class="col-sm-offset-2 col-sm-10">
-            {{t 'wwoofer-form.noOtherWwoofer'}}
-          </div>
-        {{/unless}}
-      {{/if}}
-      {{#if secondWwooferChecked}}
-        <div class="form-group {{if fieldErrors.model.firstName2.length 'has-error'}}">
-          <label for="firstName2" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
-
-          <div class="col-sm-10">
-            {{#if canEditOtherWwoofer}}
-              {{input type="text" id="firstName2" name="firstName2" value=wwoofer.firstName2 class="form-control"}}
-              {{error-display errors=fieldErrors.model.firstName2}}
-            {{else}}
-              <p class="form-control-static">{{wwoofer.firstName2}}</p>
-            {{/if}}
-          </div>
-        </div>
-        <div class="form-group {{if fieldErrors.model.lastName2.length 'has-error'}}">
-          <label for="lastName2" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
-
-          <div class="col-sm-10">
-            {{#if canEditOtherWwoofer}}
-              {{input type="text" id="lastName2" name="lastName2" value=wwoofer.lastName2 class="form-control"}}
-              {{error-display errors=fieldErrors.model.lastName2}}
-            {{else}}
-              <p class="form-control-static">{{wwoofer.lastName2}}</p>
-            {{/if}}
-          </div>
-        </div>
-        <div class="form-group {{if fieldErrors.selectedDate.length 'has-error'}}">
-          <label for="birthDate2" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
-
-          <div class="col-sm-10">
-            {{#if canEditOtherWwoofer}}
-              {{date-picker selectedDate=selectedDate dateSelected=dateSelected}}
-              {{error-display errors=fieldErrors.selectedDate}}
-            {{else}}
-              <p class="form-control-static">{{moment-format wwoofer.birthDate2}}</p>
-            {{/if}}
-          </div>
-        </div>
-      {{/if}}
     </div>
   </div>
-  {{#if sessionUser.user.isAdmin}}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{t 'literal.admins'}}</h3>
-      </div>
-      <div class="panel-body">
-        <div class="form-group {{if wwoofer.fieldErrors.note.length 'has-error'}}">
-          <label for="note" class="col-sm-2 control-label">{{t 'wwoofer-form.note.label'}}</label>
-
-          <div class="col-sm-10">
-            {{textarea id="note" name="note" value=wwoofer.note class="form-control" rows="4"}}
-            {{error-display errors=wwoofer.fieldErrors.note}}
-          </div>
-        </div>
-      </div>
-    </div>
-  {{/if}}
-  <div class="form-group">
-    <div class="col-xs-12">
-      <button {{action saveWwoofer}} class="btn btn-primary {{if wwoofer.isNew 'pull-right'}}" disabled={{wwoofer.isSaving}}>
-        {{#if wwoofer.isNew}}
-          {{t 'literal.continue'}}
-        {{else}}
-          {{t 'literal.save'}}
-        {{/if}}
-      </button>
-    </div>
-  </div>
-</form>
+{{/if}}

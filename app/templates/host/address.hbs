@@ -1,6 +1,23 @@
-{{address-form
-address=address
-countries=countries
-departments=departmentsService.sortedDepartments
-instructions=instructions
-saveAddress=(action 'saveAddress')}}
+<form class="form-horizontal">
+
+  {{address-form
+  address=address
+  countries=countries
+  departments=departmentsService.sortedDepartments
+  instructions=instructions}}
+
+  {{host-contact-details
+  host=host}}
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <button {{action 'saveAddress'}} disabled={{address.isSaving}} class="btn btn-primary {{if address.isNew 'pull-right'}}">
+        {{#if address.isNew}}
+          {{t 'literal.continue'}}
+        {{else}}
+          {{t 'literal.save'}}
+        {{/if}}
+      </button>
+    </div>
+  </div>
+</form>

@@ -17,23 +17,22 @@ export default Ember.Controller.extend({
 
       let host = this.get('host');
       let address = this.get('address');
+      let user = this.get('user');
       const isNewAddress = address.get('isNew');
 
       // Validate the address
-      let promise = address.validate();
+      let promise = [address.validate(), user.validate(), host.validate()];
 
-      promise.then(()=> {
+      Ember.RSVP.all(promise).then(()=> {
 
-        // Create or update the address
-        promise = address.save();
+        // Create or update the address, update the user
+        promise = [address.save(), user.save()];
 
         // Set the host's address (now that it has a valid id), then update the host
-        if (isNewAddress) {
-          promise = promise.then(()=> {
-            host.set('address', address);
-            return host.save();
-          });
-        }
+        promise = Ember.RSVP.all(promise).then(()=> {
+          host.set('address', address);
+          return host.save();
+        });
 
         promise.then(()=> {
           this.get('notify').success(this.get('i18n').t('notify.addressSaved'));

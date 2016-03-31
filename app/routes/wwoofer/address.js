@@ -8,10 +8,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   model() {
     const wwoofer = this.modelFor('wwoofer');
+    const user = wwoofer.get('user');
     const address = wwoofer.get('address') || this.store.createRecord('address');
 
     return Ember.RSVP.hash({
       wwoofer,
+      user,
       address
     });
   },

@@ -8,10 +8,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   model() {
     const host = this.modelFor('host');
+    const user = host.get('user');
     const address = host.get('address') || this.store.createRecord('address');
 
     return Ember.RSVP.hash({
       host,
+      user,
       address
     });
   },
