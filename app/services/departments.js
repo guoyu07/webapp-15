@@ -8,7 +8,7 @@ export default Ember.Service.extend({
   store: service('store'),
 
   departments: computed(function() {
-    return this.get('store').find('department');
+    return this.get('store').findAll('department');
   }),
 
   /**
