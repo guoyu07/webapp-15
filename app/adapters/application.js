@@ -1,6 +1,3 @@
-/**
- * Custom App REST adapter.
- */
 import DS from 'ember-data';
 import config from 'webapp/config/environment';
 

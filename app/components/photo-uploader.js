@@ -81,7 +81,7 @@ export default Ember.Component.extend({
   },
 
   /**
-   * Callback when the request is successful in host mode
+   * Callback when the request is successful in host mode.
    * @param e
    * @param data
    * @param self
@@ -95,7 +95,7 @@ export default Ember.Component.extend({
   },
 
   /**
-   * Callback when the request is successful in user mode
+   * Callback when the request is successful in user mode.
    * @param e
    * @param data
    * @param self
