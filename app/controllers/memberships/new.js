@@ -1,6 +1,3 @@
-/**
- * Ember controller for new membership.
- */
 import Ember from 'ember';
 
 const { computed } = Ember;
@@ -97,7 +94,7 @@ export default Ember.Controller.extend({
   getNewMembership() {
     const type = this.get('type');
     const itemCode = this.get('itemCode');
-    let paymentType = this.get('paymentType');
+    let paymentType = this.get('paymentType.id');
     let total = this.get('total');
     const isFree = this.get('isFree');
     const userId = this.get('userId');
@@ -135,9 +132,15 @@ export default Ember.Controller.extend({
 
   isInvalid: computed.not('isValid'),
 
-  isValidAdmin: computed('isValid', 'paymentType', 'isFree', function() {
-    return this.get('isValid') && (Ember.isPresent(this.get('paymentType')) || this.get('isFree'));
+  isValidAdmin: computed('isValid', 'paymentType.id', 'isFree', function() {
+    return this.get('isValid') && (Ember.isPresent(this.get('paymentType.id')) || this.get('isFree'));
   }),
 
-  isInvalidAdmin: computed.not('isValidAdmin')
+  isInvalidAdmin: computed.not('isValidAdmin'),
+
+  actions: {
+    paymentTypeDidChange(paymentType) {
+      this.set('paymentType', paymentType);
+    }
+  }
 });

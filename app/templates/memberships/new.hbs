@@ -68,14 +68,17 @@
               </label>
 
               <div class="col-sm-10">
-                {{view "select"
-                content=paymentTypeOptions
-                optionValuePath="content.id"
-                optionLabelPath="content.name"
-                value=paymentType
-                class="form-control"
-                prompt=(t 'memberships.new.paymentType.prompt')
-                disabled=isFree}}
+                {{#power-select
+                selected=paymentType
+                options=paymentTypeOptions
+                searchField='name'
+                placeholder=(t 'memberships.new.paymentType.prompt')
+                allowClear=true
+                onchange=(action 'paymentTypeDidChange')
+                disabled=isFree
+                as |paymentType|}}
+                  {{paymentType.name}}
+                {{/power-select}}
                 <div class="checkbox">
                   <label>
                     {{input type="checkbox" checked=isFree}}
