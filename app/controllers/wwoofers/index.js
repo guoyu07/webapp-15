@@ -36,5 +36,13 @@ export default Ember.Controller.extend({
     const totalItems = this.get('wwoofers.meta.total');
     const itemsPerPage = this.get('itemsPerPage');
     return Math.ceil(totalItems / itemsPerPage);
-  })
+  }),
+
+  actions: {
+    countryDidChange(country) {
+      const id = country ? country.id : null;
+      this.set('country', id);
+      this.set('selectedCountry', country);
+    }
+  }
 });

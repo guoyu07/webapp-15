@@ -2,9 +2,10 @@
 
   {{address-form
   address=address
+  instructions=instructions
   countries=countries
-  departments=departmentsService.sortedDepartments
-  instructions=instructions}}
+  countryDidChange=(action 'countryDidChange')
+  departmentDidChange=(action 'departmentDidChange')}}
 
   {{host-contact-details
   host=host}}

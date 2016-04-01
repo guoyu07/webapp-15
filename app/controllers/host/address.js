@@ -6,7 +6,6 @@ const { computed } = Ember;
 export default Ember.Controller.extend({
 
   countriesService: Ember.inject.service('countries'),
-  departmentsService: Ember.inject.service('departments'),
 
   countries: computed.readOnly('countriesService.hostCountries'),
 
@@ -43,6 +42,14 @@ export default Ember.Controller.extend({
       }).catch(()=> {
         this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
+    },
+
+    countryDidChange(country) {
+      this.set('address.country', country);
+    },
+
+    departmentDidChange(department) {
+      this.set('address.department', department);
     }
   }
 });

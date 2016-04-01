@@ -15,8 +15,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     }
   },
 
-  countriesService: Ember.inject.service('countries'),
-
   beforeModel(transition) {
     this._super(transition);
     this.controllerFor('wwoofers.index').set('isLoading', true);
@@ -31,12 +29,15 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       limit
     });
 
-    return Ember.RSVP.hash({
-      wwoofers: this.store.find('wwoofer', wwooferParams),
-      // Pre-load the countries so the queryParams binding
-      // with the select menu work properly
-      countries: this.get('countriesService.countries')
-    });
+    var promises = {
+      wwoofers: this.store.query('wwoofer', wwooferParams)
+    };
+
+    if (params.country) {
+      promises.country = this.store.findRecord('country', params.country);
+    }
+
+    return Ember.RSVP.hash(promises);
   },
 
   afterModel() {
@@ -45,6 +46,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   setupController(controller, results) {
     controller.set('wwoofers', results.wwoofers);
+    controller.set('selectedCountry', results.country);
   },
 
   actions: {

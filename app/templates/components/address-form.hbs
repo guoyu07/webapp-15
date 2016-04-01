@@ -42,14 +42,11 @@
       <label for="country" class="col-sm-2 control-label">{{t 'address-form.country.label'}}</label>
 
       <div class="col-sm-10">
-        {{view "select"
-        content=countries
-        optionValuePath="content.id"
-        optionLabelPath="content.name"
-        selection=address.country
-        class="form-control"
-        name="country"
-        prompt=(t 'address-form.country.prompt')}}
+        {{forms/country-select
+        countries=countries
+        country=address.country
+        allowClear=true
+        onchange=countryDidChange}}
         {{error-display errors=address.fieldErrors.country.id}}
       </div>
     </div>
@@ -59,14 +56,10 @@
           <label for="department" class="col-sm-2 control-label">{{t 'address-form.department.label'}}</label>
 
           <div class="col-sm-10">
-            {{view "select"
-            content=departments
-            optionValuePath="content.id"
-            optionLabelPath="content.name"
-            selection=address.department
-            class="form-control"
-            name="department"
-            prompt=(t 'address-form.department.prompt')}}
+            {{forms/department-select
+            department=address.department
+            allowClear=true
+            onchange=departmentDidChange}}
             {{error-display errors=address.fieldErrors.department.id}}
           </div>
         {{else}}

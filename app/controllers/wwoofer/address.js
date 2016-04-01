@@ -1,14 +1,7 @@
 import Ember from 'ember';
 import { translationMacro as t } from 'ember-i18n';
 
-const { computed } = Ember;
-
 export default Ember.Controller.extend({
-
-  countriesService: Ember.inject.service('countries'),
-  departmentsService: Ember.inject.service('departments'),
-
-  countries: computed.readOnly('countriesService.sortedCountries'),
 
   instructions: t('address-form.wwooferInstructions'),
 
@@ -44,6 +37,14 @@ export default Ember.Controller.extend({
       }).catch(()=> {
         this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
       });
+    },
+
+    countryDidChange(country) {
+      this.set('address.country', country);
+    },
+
+    departmentDidChange(department) {
+      this.set('address.department', department);
     }
   }
 });

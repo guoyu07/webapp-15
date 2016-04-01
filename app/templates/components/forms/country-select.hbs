@@ -1,0 +1,10 @@
+{{#power-select
+selected=country
+options=_countries
+searchField='name'
+placeholder=(t 'country-select.prompt')
+allowClear=allowClear
+onchange=onchange
+as |country|}}
+  {{country.name}}
+{{/power-select}}

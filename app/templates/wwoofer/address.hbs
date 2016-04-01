@@ -2,9 +2,9 @@
 
   {{address-form
   address=address
-  countries=countries
-  departments=departmentsService.sortedDepartments
-  instructions=instructions}}
+  instructions=instructions
+  countryDidChange=(action 'countryDidChange')
+  departmentDidChange=(action 'departmentDidChange')}}
 
   {{wwoofer-contact-details
   wwoofer=wwoofer}}
