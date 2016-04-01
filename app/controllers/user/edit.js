@@ -8,6 +8,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
   translationsFetcher: service('translations-fetcher'),
 
+  selectedDate: null,
+
+  noSelectedDate: computed.empty('selectedDate'),
+
   /**
    * Indicates whether the user's first/last name can be edited.
    */
@@ -17,9 +21,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
    * Indicates whether the user's birth date can be edited.
    * Legacy users do not have a birth date so give them a chance to set one when editing their info.
    */
-  canEditBirthDate: computed.or('sessionUser.user.isAdmin', 'noBirthDate'),
-
-  selectedDate: null,
+  canEditBirthDate: computed.or('sessionUser.user.isAdmin', 'noSelectedDate'),
 
   actions: {
     saveUser() {
@@ -27,16 +29,11 @@ export default Ember.Controller.extend(ValidationsMixin, {
       // Get the user
       let user = this.get('model');
 
-      // Set birth date
-      if (this.get('canEditBirthDate')) {
-        user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
-      }
-
-      // Initialize validations array
+      // Validate the user
       const validations = [this.validate(), user.validate()];
-
-      // Save the user
       Ember.RSVP.all(validations).then(()=> {
+
+        // Save the user
         user.save().then(()=> {
           this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
 
@@ -51,13 +48,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
     },
 
     dateSelected(date) {
-      this.set('selectedDate', date);
+      this.set('model.birthDate', date.format('YYYY-MM-DD'));
     }
   },
 
   validations: {
-    selectedDate: {
-      'is-18': true
+    'model.birthDate': {
+      presence: true
     }
   }
 });

@@ -18,19 +18,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
       // Get wwoofer and address
       let wwoofer = this.get('model');
 
-      // Handle second wwoofer
-      if (this.get('secondWwooferChecked')) {
-        if (this.get('sessionUser.user.isAdmin')) {
-          // Set second wwoofer birth date
-          wwoofer.set('birthDate2', this.get('selectedDate').format('YYYY-MM-DD'));
-        }
-      } else {
-        // Erase the other wwoofer info
-        wwoofer.set('firstName2', null);
-        wwoofer.set('lastName2', null);
-        wwoofer.set('birthDate2', null);
-      }
-
       // Initialize validations array
       const validations = [this.validate(), wwoofer.validate()];
 
@@ -49,7 +36,21 @@ export default Ember.Controller.extend(ValidationsMixin, {
     },
 
     dateSelected(date) {
-      this.set('selectedDate', date);
+      this.set('model.birthDate2', date.format('YYYY-MM-DD'));
+    },
+
+    toggleSecondWwoofer(secondWwooferChecked) {
+      if (secondWwooferChecked === false) {
+        const wwoofer = this.get('model');
+        wwoofer.setProperties({
+          'firstName2': null,
+          'lastName2': null,
+          'birthDate2': null
+        });
+        this.set('selectedDate', null);
+      }
+
+      this.set('secondWwooferChecked', secondWwooferChecked);
     }
   },
 
@@ -66,7 +67,10 @@ export default Ember.Controller.extend(ValidationsMixin, {
       },
       length: { maximum: 255 }
     },
-    selectedDate: {
+    'model.birthDate2': {
+      presence: {
+        'if': 'secondWwooferChecked'
+      },
       'is-18': {
         'if': 'secondWwooferChecked'
       }

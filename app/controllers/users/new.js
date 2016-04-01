@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import ValidationsMixin from '../../mixins/validations';
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend({
 
   /**
    * Indicates whether the user's first/last name can be edited.
@@ -29,15 +28,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
         return;
       }
 
-      // Set birth date
-      user.set('birthDate', this.get('selectedDate').format('YYYY-MM-DD'));
+      // Validate the user
+      const validation = user.validate();
+      validation.then(()=> {
 
-      // Initialize validations array
-      const validations = [this.validate(), user.validate()];
-
-      // Save the user
-      Ember.RSVP.all(validations).then(()=> {
+        // Create the user
         user.save().then(()=> {
+
           // Authenticate user
           const auth = this.get('session').authenticate('authenticator:passport', {
             username: user.get('email'),
@@ -62,13 +59,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
     },
 
     dateSelected(date) {
-      this.set('selectedDate', date);
-    }
-  },
-
-  validations: {
-    selectedDate: {
-      'is-18': true
+      this.set('model.birthDate', date.format('YYYY-MM-DD'));
     }
   }
 });

@@ -1,10 +1,7 @@
-/**
- * Ember component for date picker.
- */
 import Ember from 'ember';
 import moment from 'moment';
 
-const { observer, computed } = Ember;
+const { computed } = Ember;
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
@@ -52,18 +49,15 @@ export default Ember.Component.extend({
   didReceiveAttrs() {
     let selectedDate = this.getAttr('selectedDate');
 
-    if (!selectedDate || !selectedDate.isValid()) {
-      selectedDate = moment();
-    }
-
-    if (selectedDate) {
+    if (selectedDate && selectedDate.isValid()) {
+      var selectedMonth = this.get('months').findBy('value', selectedDate.month());
       this.set('_selectedDay', selectedDate.date());
-      this.set('_selectedMonth', { value: selectedDate.month() });
+      this.set('_selectedMonth', selectedMonth);
       this.set('_selectedYear', selectedDate.year());
     }
   },
 
-  dateChanged: observer('_selectedDay', '_selectedMonth.value', '_selectedYear', function() {
+  dateChanged() {
     let day = this.get('_selectedDay');
     const month = this.get('_selectedMonth.value');
     const year = this.get('_selectedYear');
@@ -76,6 +70,23 @@ export default Ember.Component.extend({
     day = (day > daysInMonth) ? daysInMonth : day;
 
     let date = moment({ day, month, year });
-    this.sendAction('dateSelected', date);
-  })
+    if (date.isValid()) {
+      this.sendAction('dateSelected', date);
+    }
+  },
+
+  actions: {
+    dayDidChange(day) {
+      this.set('_selectedDay', day);
+      this.dateChanged();
+    },
+    monthDidChange(month) {
+      this.set('_selectedMonth', month);
+      this.dateChanged();
+    },
+    yearDidChange(year) {
+      this.set('_selectedYear', year);
+      this.dateChanged();
+    }
+  }
 });

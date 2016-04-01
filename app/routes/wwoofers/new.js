@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import moment from 'moment';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   titleToken() {
@@ -32,11 +31,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         address
       });
     });
-  },
-
-  setupController(controller, model) {
-    controller.set('selectedDate', moment().subtract(18, 'year'));
-    this._super(controller, model);
   },
 
   deactivate() {

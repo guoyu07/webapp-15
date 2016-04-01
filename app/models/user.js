@@ -107,7 +107,8 @@ export default DS.Model.extend(ValidationsMixin, {
     birthDate: {
       presence: {
         'if': 'isNew' // legacy users do not have a birth date
-      }
+      },
+      'is-18': true
     },
     phone: {
       presence: {

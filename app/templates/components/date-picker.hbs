@@ -1,22 +1,33 @@
 <div class="row">
   <div class="col-xs-3">
-    {{view "select"
-    content=days
-    selection=_selectedDay
-    class="form-control"}}
+    {{#power-select
+    selected=_selectedDay
+    options=days
+    placeholder=(t 'date-picker.day.prompt')
+    onchange=(action 'dayDidChange')
+    as |day|}}
+      {{day}}
+    {{/power-select}}
   </div>
   <div class="col-xs-6">
-    {{view "select"
-    content=months
-    optionValuePath="content.value"
-    optionLabelPath="content.name"
-    selection=_selectedMonth
-    class="form-control"}}
+    {{#power-select
+    selected=_selectedMonth
+    options=months
+    searchField='name'
+    placeholder=(t 'date-picker.month.prompt')
+    onchange=(action 'monthDidChange')
+    as |month|}}
+      <span class="text-capitalize">{{month.name}}</span>
+    {{/power-select}}
   </div>
   <div class="col-xs-3">
-    {{view "select"
-    content=years
-    selection=_selectedYear
-    class="form-control"}}
+    {{#power-select
+    selected=_selectedYear
+    options=years
+    placeholder=(t 'date-picker.year.prompt')
+    onchange=(action 'yearDidChange')
+    as |year|}}
+      {{year}}
+    {{/power-select}}
   </div>
 </div>

@@ -15,9 +15,13 @@ export default BaseValidator.extend({
    * Validates that the selected date is before 18 years ago.
    */
   call() {
-    const selectedDate = this.model.get(this.property);
-    if (!selectedDate || !selectedDate.isValid() || selectedDate.isAfter(this.get('maxDate'))) {
-      this.errors.pushObject(this.get('i18n').t('notify.mustBe18'));
+    const selectedDateString = this.model.get(this.property);
+    if (selectedDateString) {
+      const selectedDate = moment(selectedDateString);
+
+      if (selectedDate && (!selectedDate.isValid() || selectedDate.isAfter(this.get('maxDate')))) {
+        this.errors.pushObject(this.get('i18n').t('notify.mustBe18'));
+      }
     }
   }
 });
