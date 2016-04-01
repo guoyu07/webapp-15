@@ -41,10 +41,10 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
     // Prepare promises
     let promises = {
-      memberships: this.store.find('membership', queryParams)
+      memberships: this.store.query('membership', queryParams)
     };
     if (params.userId) {
-      promises.user = this.store.find('user', params.userId);
+      promises.user = this.store.findRecord('user', params.userId);
     }
 
     return Ember.RSVP.hash(promises);

@@ -29,7 +29,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       limit
     });
 
-    return this.store.find('user', userParams);
+    return this.store.query('user', userParams);
   },
 
   afterModel() {

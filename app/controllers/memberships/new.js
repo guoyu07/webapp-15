@@ -105,7 +105,7 @@ export default Ember.Controller.extend({
       paymentType = null;
     }
 
-    return this.store.find('user', userId).then((user)=> {
+    return this.store.findRecord('user', userId).then((user)=> {
       return this.store.createRecord('membership', {
         type,
         itemCode,

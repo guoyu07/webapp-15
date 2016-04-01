@@ -45,14 +45,13 @@ export default Ember.Controller.extend(ValidationsMixin, {
         this.set('isLoading', true);
 
         // Find the user to impersonate
-        const userPromise = this.store.find('user', { email: impersonatedUserEmail });
+        const userPromise = this.store.queryRecord('user', { email: impersonatedUserEmail });
 
         // Handle success
-        userPromise.then((result)=> {
+        userPromise.then((user)=> {
 
           // Make sure the user could be found
-          const users = result.get('content');
-          if (!Ember.isArray(users) || Ember.isEmpty(users)) {
+          if (Ember.isEmpty(user)) {
             this.set('isLoading', false);
             this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
             return;

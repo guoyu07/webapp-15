@@ -162,7 +162,7 @@ export default Ember.Controller.extend({
 
   selectedDepartment: computed('dptId', function() {
     let dptId = this.get('dptId');
-    return dptId ? this.store.find('department', dptId) : null;
+    return dptId ? this.store.findRecord('department', dptId) : null;
   }),
 
   retrieveHosts() {
