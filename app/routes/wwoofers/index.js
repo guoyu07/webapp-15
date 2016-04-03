@@ -29,7 +29,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       limit
     });
 
-    var promises = {
+    let promises = {
       wwoofers: this.store.query('wwoofer', wwooferParams)
     };
 
