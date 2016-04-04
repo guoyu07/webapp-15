@@ -1,6 +1,6 @@
 <form class="form-horizontal">
   <div class="panel panel-default">
-    {{#unless model.isNew}}
+    {{#unless user.isNew}}
       <div class="panel-heading">
         <h3 class="panel-title">
           {{t 'user.form.title'}}
@@ -8,62 +8,61 @@
       </div>
     {{/unless}}
     <div class="panel-body">
-      <div class="form-group {{if model.fieldErrors.firstName.length 'has-error'}}">
+      {{#forms/form-group valuePath='user.firstName' as |showError|}}
         <label for="firstName" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
 
         <div class="col-sm-10">
           {{#if canEditName}}
-            {{input type="text" name="firstName" value=model.firstName class="form-control"}}
-            {{error-display errors=model.fieldErrors.firstName}}
+            {{input type='text' id='firstName' name='firstName' value=user.firstName class='form-control'}}
+            {{error-display error=validations.attrs.user.firstName showError=showError}}
           {{else}}
-            <p class="form-control-static">{{model.firstName}}</p>
+            <p class="form-control-static">{{user.firstName}}</p>
           {{/if}}
         </div>
-      </div>
-      <div class="form-group {{if model.fieldErrors.lastName.length 'has-error'}}">
+      {{/forms/form-group}}
+      {{#forms/form-group valuePath='user.lastName' as |showError|}}
         <label for="lastName" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
 
         <div class="col-sm-10">
           {{#if canEditName}}
-            {{input type="text" name="lastName" value=model.lastName class="form-control"}}
-            {{error-display errors=model.fieldErrors.lastName}}
+            {{input type='text' id='lastName' name='lastName' value=user.lastName class='form-control'}}
+            {{error-display error=validations.attrs.user.lastName showError=showError}}
           {{else}}
-            <p class="form-control-static">{{model.lastName}}</p>
+            <p class="form-control-static">{{user.lastName}}</p>
           {{/if}}
         </div>
-      </div>
-      <div class="form-group {{if model.fieldErrors.birthDate.length 'has-error'}}">
+      {{/forms/form-group}}
+      {{#forms/form-group valuePath='user.birthDate' as |showError|}}
         <label for="birthDate" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
 
         <div class="col-sm-10">
           {{#if canEditBirthDate}}
             {{date-picker selectedDate=selectedDate dateSelected='dateSelected'}}
-            {{error-display errors=model.fieldErrors.birthDate}}
-            {{error-display errors=fieldErrors.model.birthDate}}
+            {{error-display error=validations.attrs.user.birthDate showError=showError}}
           {{else}}
-            <p class="form-control-static">{{moment-format model.birthDate}}</p>
+            <p class="form-control-static">{{moment-format user.birthDate}}</p>
           {{/if}}
         </div>
-      </div>
-      <div class="form-group {{if model.fieldErrors.email.length 'has-error'}}">
+      {{/forms/form-group}}
+      {{#forms/form-group valuePath='user.email' as |showError|}}
         <label for="email" class="col-sm-2 control-label">{{t 'literal.email'}}</label>
 
         <div class="col-sm-10">
-          {{input type="email" name="email" value=model.email class="form-control"}}
-          {{error-display errors=model.fieldErrors.email}}
+          {{input type='email' id='email' name='email' value=user.email class='form-control'}}
+          {{error-display error=validations.attrs.user.email showError=showError}}
         </div>
-      </div>
-      {{#if model.isNew}}
-        <div class="form-group {{if model.fieldErrors.password.length 'has-error'}}">
+      {{/forms/form-group}}
+      {{#if user.isNew}}
+        {{#forms/form-group valuePath='user.password' as |showError|}}
           <label for="password" class="col-sm-2 control-label">{{t 'literal.password'}}</label>
 
           <div class="col-sm-10">
-            {{input type="password" name="password" value=model.password class="form-control"}}
-            {{error-display errors=model.fieldErrors.password}}
+            {{input type='password' id='password' name='password' value=user.password class='form-control'}}
+            {{error-display error=validations.attrs.user.password showError=showError}}
           </div>
-        </div>
+        {{/forms/form-group}}
       {{/if}}
-      {{#if model.isNew}}
+      {{#if user.isNew}}
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
@@ -82,7 +81,7 @@
         </div>
         <div class="form-group mbx">
           <div class="col-sm-offset-2 col-sm-10">
-            <button {{action "saveUser"}} class="btn btn-primary" disabled={{model.isSaving}}>
+            <button {{action "saveUser"}} class="btn btn-primary" disabled={{user.isSaving}}>
                 {{t 'user.form.register'}}
             </button>
           </div>
@@ -91,7 +90,7 @@
     </div>
   </div>
 
-  {{#unless model.isNew}}
+  {{#unless user.isNew}}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">{{t 'user.form.preferredLanguage'}}</h3>
@@ -99,10 +98,10 @@
       <div class="panel-body">
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-              {{#radio-button classNames="radio-inline" value="fr" groupValue=model.locale}}
+              {{#radio-button classNames="radio-inline" value="fr" groupValue=user.locale}}
                 Français
               {{/radio-button}}
-              {{#radio-button classNames="radio-inline" value="en" groupValue=model.locale}}
+              {{#radio-button classNames="radio-inline" value="en" groupValue=user.locale}}
                 English
               {{/radio-button}}
           </div>
@@ -126,7 +125,7 @@
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
               <label>
-                {{input type="checkbox" name="isHidden" checked=model.isSuspended}}
+                {{input type="checkbox" name="isHidden" checked=user.isSuspended}}
                 {{t 'user.form.isSuspended.label'}}
               </label>
             </div>
@@ -141,10 +140,10 @@
     </div>
   {{/if}}
 
-  {{#unless model.isNew}}
+  {{#unless user.isNew}}
     <div class="form-group">
       <div class="col-xs-12">
-        <button {{action "saveUser"}} class="btn btn-primary" disabled={{model.isSaving}}>
+        <button {{action 'saveUser'}} class="btn btn-primary" disabled={{user.isSaving}}>
             {{t 'literal.save'}}
         </button>
       </div>
