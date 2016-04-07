@@ -140,7 +140,8 @@
   {{impersonation-modal
   impersonatedUserEmail=impersonatedUserEmail
   isLoading=isLoading
-  fieldErrors=fieldErrors
+  error=validations.attrs.impersonatedUserEmail
+  showError=didValidate
   impersonate=(action 'impersonateUser')
   close=(action 'toggleImpersonationModal')}}
 {{/if}}

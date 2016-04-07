@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import ValidationsMixin from '../mixins/validations';
-import Regex from '../utils/regex';
+import Validations from 'webapp/validations/application';
 
 const { computed } = Ember;
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend(Validations, {
 
   isHostsIndexRoute: computed.equal('currentRouteName', 'hosts.index'),
 
@@ -39,45 +38,49 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
       const impersonatedUserEmail = this.get('impersonatedUserEmail');
 
-      this.validate().then(()=> {
+      // Validate the modal
+      this.validate().then(({ m, validations })=> {
 
-        // Set controller in loading state
-        this.set('isLoading', true);
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Find the user to impersonate
-        const userPromise = this.store.queryRecord('user', { email: impersonatedUserEmail });
+          // Set controller in loading state
+          this.set('isLoading', true);
 
-        // Handle success
-        userPromise.then((user)=> {
-
-          // Make sure the user could be found
-          if (Ember.isEmpty(user)) {
-            this.set('isLoading', false);
-            this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
-            return;
-          }
-
-          // Authenticate user
-          const auth = this.get('session').authenticate('authenticator:impersonation', {
-            impersonatedUserEmail
-          });
+          // Find the user to impersonate
+          const userPromise = this.store.queryRecord('user', { email: impersonatedUserEmail });
 
           // Handle success
-          auth.then(()=> {
-            this.get('notify').success(this.get('i18n').t('notify.userImpersonated', { email: impersonatedUserEmail }));
+          userPromise.then((user)=> {
 
-            // Refresh the route
-            this.send('userImpersonated');
-          });
+            // Make sure the user could be found
+            if (Ember.isEmpty(user)) {
+              this.set('isLoading', false);
+              this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
+              return;
+            }
 
-          auth.finally(()=> {
-            this.set('isLoading', false);
-            this.toggleProperty('showImpersonationModal');
+            // Authenticate user
+            const auth = this.get('session').authenticate('authenticator:impersonation', {
+              impersonatedUserEmail
+            });
+
+            // Handle success
+            auth.then(()=> {
+              this.get('notify').success(this.get('i18n').t('notify.userImpersonated', { email: impersonatedUserEmail }));
+
+              // Refresh the route
+              this.send('userImpersonated');
+            });
+
+            auth.finally(()=> {
+              this.set('isLoading', false);
+              this.toggleProperty('showImpersonationModal');
+            });
           });
-        });
-      }).catch(()=> {
-        this.set('isLoading', false);
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
       });
     },
 
@@ -110,15 +113,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
       }
 
       Ember.$('.navbar-collapse').collapse('hide');
-    }
-  },
-
-  validations: {
-    impersonatedUserEmail: {
-      presence: true,
-      format: {
-        with: Regex.EMAIL_ADDRESS
-      }
     }
   }
 });
