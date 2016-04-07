@@ -36,38 +36,42 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       const host = this.controller.get('model');
 
       // Validate the form
-      this.controller.validate().then(()=> {
+      this.controller.validate().then(({ m, validations })=> {
 
-        // Set controller in sending state
-        this.controller.set('isSending', true);
+        this.set('controller.didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Prepare URL
-        const adapter = this.store.adapterFor('application');
-        const url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
+          // Set controller in sending state
+          this.controller.set('isSending', true);
 
-        // Send email
-        const promise = request({
-          type: 'POST',
-          url,
-          data: {
-            message
-          }
-        });
+          // Prepare URL
+          const adapter = this.store.adapterFor('application');
+          const url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
 
-        promise.then(()=> {
-          // Reset form
-          this.controller.set('message', null);
-          this.controller.resetValidations();
+          // Send email
+          const promise = request({
+            type: 'POST',
+            url,
+            data: {
+              message
+            }
+          });
 
-          // Notify user
-          this.controller.toggleProperty('showMessageSentModal');
-        });
+          promise.then(()=> {
+            // Reset form
+            this.controller.set('message', null);
+            this.controller.resetValidations();
 
-        promise.finally(()=> {
-          this.controller.set('isSending', false);
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+            // Notify user
+            this.controller.toggleProperty('showMessageSentModal');
+          });
+
+          promise.finally(()=> {
+            this.controller.set('isSending', false);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
       });
     }
   }
