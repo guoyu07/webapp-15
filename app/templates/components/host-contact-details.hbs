@@ -6,14 +6,14 @@
     <p class="form-details mbm">
       {{t 'host-contact-details.sharePolicy'}}
     </p>
-    <div class="form-group {{if host.user.fieldErrors.phone.length 'has-error'}}">
+    {{#forms/form-group valuePath='user.phone' as |showError|}}
       <label for="phone" class="col-sm-2 control-label">{{t 'host-contact-details.phone.label'}}</label>
 
       <div class="col-sm-10">
         {{input type='text' id='phone' name='phone' value=host.user.phone class='form-control' placeholder=(t 'host-contact-details.phone.placeholder')}}
-        {{error-display errors=host.user.fieldErrors.phone}}
+        {{error-display error=validations.attrs.user.phone showError=showError}}
       </div>
-    </div>
+    {{/forms/form-group}}
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <div class="checkbox">
@@ -33,13 +33,13 @@
       </div>
     </div>
 
-    <div class="form-group {{if host.fieldErrors.webSite.length 'has-error'}}">
+    {{#forms/form-group valuePath='host.webSite' as |showError|}}
       <label for="webSite" class="col-sm-2 control-label">{{t 'host-contact-details.website.label'}}</label>
 
       <div class="col-sm-10">
         {{input type='text' id='webSite' name='webSite' value=host.webSite class='form-control' placeholder=(t 'host-contact-details.website.placeholder')}}
-        {{error-display errors=host.fieldErrors.webSite}}
+        {{error-display error=validations.attrs.host.webSite showError=showError}}
       </div>
-    </div>
+    {{/forms/form-group}}
   </div>
 </div>

@@ -1,7 +1,6 @@
 import DS from 'ember-data';
-import ValidationsMixin from '../mixins/validations';
 
-export default DS.Model.extend(ValidationsMixin, {
+export default DS.Model.extend({
 
   // Attributes
   address1: DS.attr('string'),
@@ -17,46 +16,4 @@ export default DS.Model.extend(ValidationsMixin, {
   // Relationships
   department: DS.belongsTo('department', { async: true }),
   country: DS.belongsTo('country', { async: true }),
-
-  validations: {
-    address1: {
-      presence: true,
-      length: { minimum: 5, maximum: 255 }
-    },
-    address2: {
-      length: { maximum: 255 }
-    },
-    zipCode: {
-      presence: true,
-      length: { minimum: 2, maximum: 10 }
-    },
-    city: {
-      presence: true,
-      length: { minimum: 2, maximum: 255 }
-    },
-    'country.id': {
-      presence: true
-    },
-    'department.id': {
-      presence: {
-        'if'(address) {
-          return address.get('country.code') === 'FR';
-        }
-      }
-    },
-    latitude: {
-      numericality: {
-        greaterThanOrEqualTo: -90,
-        lessThanOrEqualTo: +90,
-        allowBlank: true
-      }
-    },
-    longitude: {
-      numericality: {
-        greaterThanOrEqualTo: -180,
-        lessThanOrEqualTo: +180,
-        allowBlank: true
-      }
-    }
-  }
 });
