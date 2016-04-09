@@ -1,11 +1,10 @@
 import Ember from 'ember';
-import ValidationsMixin from '../mixins/validations';
-import Regex from '../utils/regex';
 import request from 'ic-ajax';
+import Validations from 'webapp/validations/reset-password';
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend(Validations, {
 
-  emailAddress: null,
+  email: null,
   isLoading: false,
 
   actions: {
@@ -14,56 +13,48 @@ export default Ember.Controller.extend(ValidationsMixin, {
      */
     resetPassword() {
 
-      if (this.get('isLoading')) {
-        return;
-      }
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-      this.validate().then(()=> {
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Set controller in loading state
-        this.set('isLoading', true);
+          // Set controller in loading state
+          this.set('isLoading', true);
 
-        // Prepare URL
-        const adapter = this.store.adapterFor('application');
-        const url = [adapter.get('host'), adapter.get('namespace'), 'users/reset-password'].join('/');
+          // Prepare URL
+          const adapter = this.store.adapterFor('application');
+          const url = [adapter.get('host'), adapter.get('namespace'), 'users/reset-password'].join('/');
 
-        // Send email
-        const promise = request({
-          type: 'POST',
-          url,
-          data: {
-            email: this.get('emailAddress')
-          }
-        });
+          // Send email
+          const promise = request({
+            type: 'POST',
+            url,
+            data: {
+              email: this.get('email')
+            }
+          });
 
-        promise.then(()=> {
-          this.transitionToRoute('login', { queryParams: { fromReset: true } });
-        });
+          promise.then(()=> {
+            this.transitionToRoute('login', { queryParams: { fromReset: true } });
+          });
 
-        promise.catch((err)=> {
-          err = err.jqXHR || err;
-          if (err.status === 404) {
-            this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
-          } else {
-            throw err;
-          }
-        });
+          promise.catch((err)=> {
+            err = err.jqXHR || err;
+            if (err.status === 404) {
+              this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
+            } else {
+              throw err;
+            }
+          });
 
-        promise.finally(()=> {
-          this.set('isLoading', false);
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+          promise.finally(()=> {
+            this.set('isLoading', false);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
       });
-    }
-  },
-
-  validations: {
-    emailAddress: {
-      presence: true,
-      format: {
-        with: Regex.EMAIL_ADDRESS
-      }
     }
   }
 });

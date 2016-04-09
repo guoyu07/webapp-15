@@ -17,11 +17,11 @@ export default Ember.Controller.extend(Validations, {
      */
     login() {
 
-      // Validate form then login
-      this.validate().then(() => {
-        this.set('didValidate', true);
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-        if (this.get('validations').get('isValid')) {
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
           // Set controller in loading state
           this.set('isLoading', true);
