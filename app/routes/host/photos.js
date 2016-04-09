@@ -8,12 +8,19 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   actions: {
     savePhoto(photo) {
-      photo.validate().then(()=> {
-        photo.save().then(()=> {
-          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+
+      // Validate the form
+      photo.validate().then(({ m, validations })=> {
+
+        photo.set('didValidate', true);
+        if (validations.get('isValid')) {
+
+          photo.save().then(()=> {
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
       });
     },
 

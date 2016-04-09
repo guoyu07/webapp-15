@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import ValidationsMixin from '../mixins/validations';
+import Validations from 'webapp/validations/photo';
 
 const { computed } = Ember;
 
-export default DS.Model.extend(ValidationsMixin, {
+export default DS.Model.extend(Validations, {
   fileName: DS.attr('string'),
   caption: DS.attr('string'),
   createdAt: DS.attr('date'),
@@ -29,12 +29,5 @@ export default DS.Model.extend(ValidationsMixin, {
    */
   cannotSave: computed('isSaving', 'hasDirtyAttributes', function() {
     return this.get('isSaving') || !this.get('hasDirtyAttributes');
-  }),
-
-  // Validations
-  validations: {
-    caption: {
-      length: { maximum: 255 }
-    }
-  }
+  })
 });
