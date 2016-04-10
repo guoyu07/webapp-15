@@ -1,10 +1,9 @@
 import Ember from 'ember';
-import ValidationsMixin from '../../mixins/validations';
 import request from 'ic-ajax';
 
 const { computed } = Ember;
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend({
 
   /**
    * The data-url to send the photo to.

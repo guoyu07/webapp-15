@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import ValidationsMixin from 'webapp/mixins/validations';
-import Regex from 'webapp/utils/regex';
+import Validations from 'webapp/validations/login';
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend(Validations, {
 
   queryParams: ['fromReset'],
 
@@ -10,6 +9,7 @@ export default Ember.Controller.extend(ValidationsMixin, {
   username: null,
   password: null,
   isLoading: false,
+  didValidate: false,
 
   actions: {
     /**
@@ -17,47 +17,33 @@ export default Ember.Controller.extend(ValidationsMixin, {
      */
     login() {
 
-      // Prevent multiple login attempts
-      if (this.get('isLoading')) {
-        return;
-      }
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-      // Validate form then login
-      this.validate().then(() => {
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Set controller in loading state
-        this.set('isLoading', true);
+          // Set controller in loading state
+          this.set('isLoading', true);
 
-        // Authenticate user
-        const auth = this.get('session').authenticate('authenticator:passport', {
-          username: this.get('username'),
-          password: this.get('password')
-        });
+          // Authenticate user
+          const auth = this.get('session').authenticate('authenticator:passport', {
+            username: this.get('username'),
+            password: this.get('password')
+          });
 
-        // Handle failure
-        auth.catch(()=> {
-          this.get('notify').error(this.get('i18n').t('notify.userCannotAuthenticate'));
-        });
+          // Handle failure
+          auth.catch(()=> {
+            this.get('notify').error(this.get('i18n').t('notify.userCannotAuthenticate'));
+          });
 
-        auth.finally(() => {
-          this.set('isLoading', false);
-        });
-
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+          auth.finally(() => {
+            this.set('isLoading', false);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
       });
-    }
-  },
-
-  validations: {
-    username: {
-      presence: true,
-      format: {
-        with: Regex.EMAIL_ADDRESS
-      }
-    },
-    password: {
-      presence: true
     }
   }
 });

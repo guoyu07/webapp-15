@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import ValidationsMixin from '../../mixins/validations';
+import Validations from 'webapp/validations/wwoofer';
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend(Validations, {
   /**
    * Birth date of the second wwoofer.
    */
@@ -16,32 +16,33 @@ export default Ember.Controller.extend(ValidationsMixin, {
     saveWwoofer() {
 
       // Get wwoofer and address
-      let wwoofer = this.get('model');
+      let wwoofer = this.get('wwoofer');
 
-      // Initialize validations array
-      const validations = [this.validate(), wwoofer.validate()];
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-      // Validate wwoofer and address
-      Ember.RSVP.all(validations).then(()=> {
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Update wwoofer and address
-        wwoofer.save().then(()=> {
-          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+          // Update wwoofer and address
+          wwoofer.save().then(()=> {
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+            window.scrollTo(0, 0);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
           window.scrollTo(0, 0);
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
-        window.scrollTo(0, 0);
+        }
       });
     },
 
     dateSelected(date) {
-      this.set('model.birthDate2', date.format('YYYY-MM-DD'));
+      this.set('wwoofer.birthDate2', date.format('YYYY-MM-DD'));
     },
 
     toggleSecondWwoofer(secondWwooferChecked) {
       if (secondWwooferChecked === false) {
-        const wwoofer = this.get('model');
+        const wwoofer = this.get('wwoofer');
         wwoofer.setProperties({
           'firstName2': null,
           'lastName2': null,
@@ -51,29 +52,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
       }
 
       this.set('secondWwooferChecked', secondWwooferChecked);
-    }
-  },
-
-  validations: {
-    'model.firstName2': {
-      presence: {
-        'if': 'secondWwooferChecked'
-      },
-      length: { maximum: 255 }
-    },
-    'model.lastName2': {
-      presence: {
-        'if': 'secondWwooferChecked'
-      },
-      length: { maximum: 255 }
-    },
-    'model.birthDate2': {
-      presence: {
-        'if': 'secondWwooferChecked'
-      },
-      'is-18': {
-        'if': 'secondWwooferChecked'
-      }
     }
   }
 });

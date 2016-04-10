@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import { translationMacro as t } from 'ember-i18n';
+import Validations from 'webapp/validations/host/address';
 
 const { computed } = Ember;
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Validations, {
 
   countriesService: Ember.inject.service('countries'),
 
@@ -19,28 +20,31 @@ export default Ember.Controller.extend({
       let user = this.get('user');
       const isNewAddress = address.get('isNew');
 
-      // Validate the address
-      let promise = [address.validate(), user.validate(), host.validate()];
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-      Ember.RSVP.all(promise).then(()=> {
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Create or update the address, update the user
-        promise = [address.save(), user.save()];
+          // Create or update the address, update the user
+          let promise = [address.save(), user.save()];
 
-        // Set the host's address (now that it has a valid id), then update the host
-        promise = Ember.RSVP.all(promise).then(()=> {
-          host.set('address', address);
-          return host.save();
-        });
+          // Set the host's address (now that it has a valid id), then update the host
+          promise = Ember.RSVP.all(promise).then(()=> {
+            host.set('address', address);
+            return host.save();
+          });
 
-        promise.then(()=> {
-          this.get('notify').success(this.get('i18n').t('notify.addressSaved'));
-          if (isNewAddress) {
-            this.transitionToRoute('host.photos', host);
-          }
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+          promise.then(()=> {
+            this.get('notify').success(this.get('i18n').t('notify.addressSaved'));
+            if (isNewAddress) {
+              this.transitionToRoute('host.photos', host);
+            }
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+          window.scrollTo(0, 0);
+        }
       });
     },
 

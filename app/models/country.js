@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import ValidationsMixin from '../mixins/validations';
 
 const { computed } = Ember;
 
-export default DS.Model.extend(ValidationsMixin, {
+export default DS.Model.extend({
   code: DS.attr('string'),
   name: DS.attr('string'),
   createdAt: DS.attr('date'),

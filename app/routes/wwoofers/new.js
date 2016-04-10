@@ -33,7 +33,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
+  setupController(controller, model) {
+    controller.set('wwoofer', model);
+  },
+
   deactivate() {
-    this.get('controller.model').rollbackAttributes();
+    this.controller.get('wwoofer').rollbackAttributes();
   }
 });

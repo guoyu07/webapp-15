@@ -4,5 +4,6 @@ export default Ember.Component.extend({
   tagName: 'span',
   classNames: ['error'],
 
-  errors: []
+  error: null,
+  showError: null
 });

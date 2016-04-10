@@ -15,6 +15,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     controller.set('selectedDate', selectedDate);
 
     controller.set('secondWwooferChecked', !Ember.isEmpty(wwoofer.get('firstName2')));
-    this._super(controller, wwoofer);
+    controller.set('wwoofer', wwoofer);
   }
 });

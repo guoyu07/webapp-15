@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import Validations from 'webapp/validations/host';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Validations, {
   actions: {
     saveHost() {
 
@@ -12,22 +13,21 @@ export default Ember.Controller.extend({
         host.set('webSite', null);
       }
 
-      // Validate the host
-      const validation = host.validate();
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-      validation.then(()=> {
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Update the host
-        let promise = host.save();
-
-        // Inform user
-        promise.then(()=> {
-          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+          // Update the host
+          host.save().then(()=> {
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+            window.scrollTo(0, 0);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
           window.scrollTo(0, 0);
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
-        window.scrollTo(0, 0);
+        }
       });
     }
   }

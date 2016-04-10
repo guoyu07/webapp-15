@@ -1,11 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import ValidationsMixin from '../mixins/validations';
-import Regex from '../utils/regex';
 
 const { computed } = Ember;
 
-export default DS.Model.extend(ValidationsMixin, {
+export default DS.Model.extend({
 
   // Attributes
   email: DS.attr('string'),
@@ -80,40 +78,5 @@ export default DS.Model.extend(ValidationsMixin, {
   hasHostMemberships: computed.notEmpty('hostMemberships'),
   latestHostMembership: computed.readOnly('hostMemberships.firstObject'),
   firstHostMembership: computed.readOnly('hostMemberships.lastObject'),
-  hasNonExpiredHostMembership: computed.and('hasHostMemberships', 'latestHostMembership.isNotExpired'),
-
-  // Validations
-  validations: {
-    email: {
-      presence: true,
-      format: {
-        'with': Regex.EMAIL_ADDRESS
-      }
-    },
-    password: {
-      presence: {
-        'if': 'isNew'
-      },
-      length: { 'if': 'isNew', minimum: 8, maximum: 25 }
-    },
-    firstName: {
-      presence: true,
-      length: { maximum: 255 }
-    },
-    lastName: {
-      presence: true,
-      length: { maximum: 255 }
-    },
-    birthDate: {
-      presence: {
-        'if': 'isNew' // legacy users do not have a birth date
-      },
-      'is-18': true
-    },
-    phone: {
-      presence: {
-        'if': 'host.id' // only hosts must provide a phone
-      }
-    }
-  }
+  hasNonExpiredHostMembership: computed.and('hasHostMemberships', 'latestHostMembership.isNotExpired')
 });

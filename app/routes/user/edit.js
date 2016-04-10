@@ -13,7 +13,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       selectedDate = moment(user.get('birthDate'));
     }
     controller.set('selectedDate', selectedDate);
-    this._super(controller, user);
+    controller.set('user', user);
   },
 
   renderTemplate() {

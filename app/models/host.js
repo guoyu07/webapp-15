@@ -1,12 +1,10 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import ValidationsMixin from 'webapp/mixins/validations';
-import Regex from 'webapp/utils/regex';
 
 const { computed } = Ember;
 const { service } = Ember.inject;
 
-export default DS.Model.extend(ValidationsMixin, {
+export default DS.Model.extend({
 
   moment: service('moment'),
   staysService: service('stays'),
@@ -165,39 +163,5 @@ export default DS.Model.extend(ValidationsMixin, {
     const completeUrl = `https://app.wwoof.fr/host/${this.get('id')}`;
     const encodedUrl = encodeURIComponent(completeUrl);
     return `http://www.facebook.com/sharer.php?u=${encodedUrl}`;
-  }),
-
-  // Validations
-  validations: {
-    farmName: {
-      presence: true,
-      length: { minimum: 5, maximum: 50 }
-    },
-    shortDescription: {
-      presence: true,
-      length: { minimum: 5, maximum: 255 }
-    },
-    fullDescription: {
-      presence: true,
-      length: { minimum: 300, maximum: 5000 }
-    },
-    webSite: {
-      format: {
-        with: Regex.URL,
-        allowBlank: true
-      }
-    },
-    stays: {
-      presence: true
-    },
-    lodgings: {
-      presence: true
-    },
-    capacity: {
-      presence: true
-    },
-    note: {
-      length: { maximum: 2000 }
-    }
-  }
+  })
 });

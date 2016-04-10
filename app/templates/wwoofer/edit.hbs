@@ -1,8 +1,9 @@
 <form class="form-horizontal">
   {{wwoofer-form
-  wwoofer=model
+  wwoofer=wwoofer
   selectedDate=selectedDate
-  fieldErrors=fieldErrors
+  validations=validations
+  didValidate=didValidate
   secondWwooferChecked=secondWwooferChecked
   dateSelected=(action 'dateSelected')
   toggleSecondWwoofer=(action 'toggleSecondWwoofer')}}

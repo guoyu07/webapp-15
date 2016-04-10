@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import ValidationsMixin from '../../mixins/validations';
+import Validations from 'webapp/validations/user/edit';
 
 const { computed } = Ember;
 const { service } = Ember.inject;
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend(Validations, {
 
   translationsFetcher: service('translations-fetcher'),
 
@@ -27,34 +27,32 @@ export default Ember.Controller.extend(ValidationsMixin, {
     saveUser() {
 
       // Get the user
-      let user = this.get('model');
+      let user = this.get('user');
 
-      // Validate the user
-      const validations = [this.validate(), user.validate()];
-      Ember.RSVP.all(validations).then(()=> {
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-        // Save the user
-        user.save().then(()=> {
-          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-          // Fetch translations from server if the user locale was updated
-          if (this.get('i18n.locale') !== user.get('locale')) {
-            this.get('translationsFetcher').fetch();
-          }
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+          // Save the user
+          user.save().then(()=> {
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+
+            // Fetch translations from server if the user locale was updated
+            if (this.get('i18n.locale') !== user.get('locale')) {
+              this.get('translationsFetcher').fetch();
+            }
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+          window.scrollTo(0, 0);
+        }
       });
     },
 
     dateSelected(date) {
-      this.set('model.birthDate', date.format('YYYY-MM-DD'));
-    }
-  },
-
-  validations: {
-    'model.birthDate': {
-      presence: true
+      this.set('user.birthDate', date.format('YYYY-MM-DD'));
     }
   }
 });

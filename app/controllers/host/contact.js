@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import ValidationsMixin from '../../mixins/validations';
+import Validations from 'webapp/validations/host/contact';
 
 const { computed } = Ember;
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend(Validations, {
 
   message: null,
 
@@ -19,13 +19,6 @@ export default Ember.Controller.extend(ValidationsMixin, {
 
       // Go back to host index page
       this.transitionToRoute('host.index', this.get('model.id'));
-    }
-  },
-
-  validations: {
-    message: {
-      presence: true,
-      length: { minimum: 50, maximum: 5000 }
     }
   }
 });
