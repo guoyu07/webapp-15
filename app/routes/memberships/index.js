@@ -1,8 +1,12 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import request from 'ic-ajax';
+
+const { service } = Ember.inject;
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+
+  ajax: service('ajax'),
+
   titleToken() {
     return this.get('i18n').t('titles.memberships.index');
   },
@@ -108,9 +112,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         const url = [adapter.get('host'), adapter.get('namespace'), 'memberships', id, 'send-reminder'].join('/');
 
         // Send reminder
-        return request({
-          type: 'POST',
-          url
+        return this.get('ajax').request(url, {
+          method: 'POST'
         });
       });
 

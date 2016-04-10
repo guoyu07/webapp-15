@@ -1,16 +1,20 @@
 import Ember from 'ember';
-import request from 'ic-ajax';
 import config from 'webapp/config/environment';
 import BaseAuthenticator from 'ember-simple-auth/authenticators/base';
 
+const { service } = Ember.inject;
+
 export default BaseAuthenticator.extend({
+
+  ajax: service('ajax'),
+
   restore(data) {
     return new Ember.RSVP.Promise(function(resolve, reject) {
       if (data && data.user && !Ember.isEmpty(data.user.id)) {
         // Prepare URL
         const url = [config.apiHost, config.apiNamespace, 'users/is-authenticated'].join('/');
 
-        request(url).then(()=> {
+        this.get('ajax').request(url).then(()=> {
           resolve(data);
         }).catch(()=> {
           reject();
@@ -25,9 +29,8 @@ export default BaseAuthenticator.extend({
     const url = [config.apiHost, config.apiNamespace, 'users/impersonate'].join('/');
 
     // Impersonate the user
-    return request({
-      type: 'POST',
-      url,
+    return this.get('ajax').request(url, {
+      method: 'POST',
       data: {
         email: options.impersonatedUserEmail
       }
@@ -38,9 +41,8 @@ export default BaseAuthenticator.extend({
     const url = [config.apiHost, config.apiNamespace, 'users/logout'].join('/');
 
     // Log the user out
-    return request({
-      type: 'POST',
-      url
+    return this.get('ajax').request(url, {
+      method: 'POST'
     });
   }
 });

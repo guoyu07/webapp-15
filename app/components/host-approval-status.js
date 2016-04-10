@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import config from 'webapp/config/environment';
-import request from 'ic-ajax';
 
 const { service } = Ember.inject;
 
 export default Ember.Component.extend({
 
+  ajax: service('ajax'),
   notify: service('notify'),
 
   host: null,
@@ -28,9 +28,8 @@ export default Ember.Component.extend({
       let url = [config.apiHost, config.apiNamespace, 'hosts', host.get('id'), 'approve'].join('/');
 
       // Approve/reject the host
-      let promise = request({
-        type: 'POST',
-        url,
+      let promise = this.get('ajax').request(url, {
+        method: 'POST',
         data: {
           isApproved
         }

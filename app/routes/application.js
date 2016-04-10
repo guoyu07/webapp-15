@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
-import request from 'ic-ajax';
 import config from 'webapp/config/environment';
 
 const { service } = Ember.inject;
@@ -8,6 +7,7 @@ const { service } = Ember.inject;
 export default Ember.Route.extend(ApplicationRouteMixin, {
 
   translationsFetcher: service('translations-fetcher'),
+  ajax: service('ajax'),
 
   beforeModel() {
     // Set trackJs user if authenticated
@@ -109,9 +109,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       if (!user) {
         this.transitionTo('login');
       } else {
-        let promise = request({
-          type: 'PUT',
-          url: this.getUrl(user.get('id'), host.get('id'))
+        let url = this.getUrl(user.get('id'), host.get('id'));
+        let promise = this.get('ajax').request(url, {
+          method: 'PUT'
         });
 
         promise.then(() => {
@@ -123,9 +123,9 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       if (!user) {
         this.transitionTo('login');
       } else {
-        let promise = request({
-          type: 'DELETE',
-          url: this.getUrl(user.get('id'), host.get('id'))
+        let url = this.getUrl(user.get('id'), host.get('id'));
+        let promise = this.get('ajax').request(url, {
+          method: 'DELETE'
         });
 
         promise.then(()=> {

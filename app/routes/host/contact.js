@@ -1,8 +1,12 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import request from 'ic-ajax';
+
+const { service } = Ember.inject;
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+  
+  ajax: service('ajax'),
+
   titleToken() {
     return this.get('i18n').t('titles.host.contact');
   },
@@ -49,8 +53,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           const url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
 
           // Send email
-          const promise = request({
-            type: 'POST',
+          const promise = this.get('ajax').request({
+            method: 'POST',
             url,
             data: {
               message

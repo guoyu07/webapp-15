@@ -1,8 +1,11 @@
 import Ember from 'ember';
-import request from 'ic-ajax';
 import Validations from 'webapp/validations/reset-password';
 
+const { service } = Ember.inject;
+
 export default Ember.Controller.extend(Validations, {
+
+  ajax: service('ajax'),
 
   email: null,
   isLoading: false,
@@ -27,9 +30,8 @@ export default Ember.Controller.extend(Validations, {
           const url = [adapter.get('host'), adapter.get('namespace'), 'users/reset-password'].join('/');
 
           // Send email
-          const promise = request({
-            type: 'POST',
-            url,
+          const promise = this.get('ajax').request(url, {
+            method: 'POST',
             data: {
               email: this.get('email')
             }
