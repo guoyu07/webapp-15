@@ -1,4 +1,5 @@
 import { validator, buildValidations } from 'ember-cp-validations';
+import moment from 'moment';
 
 export default buildValidations({
   'wwoofer.intro': [
