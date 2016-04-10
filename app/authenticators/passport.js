@@ -9,7 +9,7 @@ export default BaseAuthenticator.extend({
   ajax: service('ajax'),
 
   restore(data) {
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    return new Ember.RSVP.Promise((resolve, reject)=> {
       if (data && data.user && !Ember.isEmpty(data.user.id)) {
         // Prepare URL
         const url = [config.apiHost, config.apiNamespace, 'users/is-authenticated'].join('/');

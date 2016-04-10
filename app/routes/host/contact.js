@@ -4,7 +4,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 const { service } = Ember.inject;
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  
+
   ajax: service('ajax'),
 
   titleToken() {
@@ -53,9 +53,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           const url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
 
           // Send email
-          const promise = this.get('ajax').request({
+          const promise = this.get('ajax').request(url, {
             method: 'POST',
-            url,
             data: {
               message
             }

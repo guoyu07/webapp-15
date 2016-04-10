@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
   countries: null,
 
-  _countries: computed('countries', 'countriesService.sortedCountries', function () {
+  _countries: computed('countries', 'countriesService.sortedCountries', function() {
     return this.get('countries') || this.get('countriesService.sortedCountries');
   })
 });

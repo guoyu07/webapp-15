@@ -78,10 +78,10 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       this.setTrackJsUser(user.get('id'));
 
       this.processNewUserModalVisibility();
-    });
 
-    // Redirect user
-    window.location.replace(config.urlAfterLogin);
+      // Redirect user
+      window.location.replace(config.urlAfterLogin);
+    });
   },
 
   /**

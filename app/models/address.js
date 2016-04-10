@@ -15,5 +15,5 @@ export default DS.Model.extend({
 
   // Relationships
   department: DS.belongsTo('department', { async: true }),
-  country: DS.belongsTo('country', { async: true }),
+  country: DS.belongsTo('country', { async: true })
 });
