@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import ValidationsMixin from '../../mixins/validations';
 import request from 'ic-ajax';
+import Validations from 'webapp/validations/user/change-password';
 
-export default Ember.Controller.extend(ValidationsMixin, {
+export default Ember.Controller.extend(Validations, {
 
   password: null,
   passwordConfirmation: null,
@@ -14,61 +14,49 @@ export default Ember.Controller.extend(ValidationsMixin, {
      */
     changePassword() {
 
-      if (this.get('isLoading')) {
-        return;
-      }
+      // Validate the form
+      this.validate().then(({ m, validations })=> {
 
-      // Validate form
-      this.validate().then(()=> {
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
 
-        // Get the current user id
-        const currentUserId = this.get('sessionUser.user.id');
-        Ember.assert('User id cannot be null', currentUserId);
+          // Get the current user id
+          const currentUserId = this.get('sessionUser.user.id');
+          Ember.assert('User id cannot be null', currentUserId);
 
-        // Set controller in loading state
-        this.set('isLoading', true);
+          // Set controller in loading state
+          this.set('isLoading', true);
 
-        // Prepare URL
-        const adapter = this.store.adapterFor('application');
-        const url = [adapter.get('host'), adapter.get('namespace'), 'users', currentUserId, 'change-password'].join('/');
+          // Prepare URL
+          const adapter = this.store.adapterFor('application');
+          const url = [adapter.get('host'), adapter.get('namespace'), 'users', currentUserId, 'change-password'].join('/');
 
-        // Update password
-        const promise = request({
-          type: 'POST',
-          url,
-          data: {
-            newPassword: this.get('password')
-          }
-        });
+          // Update password
+          const promise = request({
+            type: 'POST',
+            url,
+            data: {
+              newPassword: this.get('password')
+            }
+          });
 
-        promise.then(()=> {
-          this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
-          this.transitionToRoute('user.edit', currentUserId);
-        });
+          promise.then(()=> {
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+            this.transitionToRoute('user.edit', currentUserId);
+          });
 
-        promise.catch((err)=> {
-          err = err.jqXHR || err;
-          throw err;
-        });
+          promise.catch((err)=> {
+            err = err.jqXHR || err;
+            throw err;
+          });
 
-        promise.finally(()=> {
-          this.set('isLoading', false);
-        });
-      }).catch(()=> {
-        this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+          promise.finally(()=> {
+            this.set('isLoading', false);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
       });
-    }
-  },
-
-  validations: {
-    password: {
-      presence: true,
-      length: { minimum: 8, maximum: 25 },
-      confirmation: true
-    },
-    passwordConfirmation: {
-      presence: true,
-      length: { minimum: 8, maximum: 25 }
     }
   }
 });
