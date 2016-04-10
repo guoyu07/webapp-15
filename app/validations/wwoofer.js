@@ -50,6 +50,7 @@ export default buildValidations({
     },
     format: 'YYYY-MM-DD',
     errorFormat: 'YYYY-MM-DD',
+    descriptionKey: 'errors.mustBe18',
     dependentKeys: ['secondWwooferChecked'],
     disabled() {
       return this.get('model.secondWwooferChecked') === false;

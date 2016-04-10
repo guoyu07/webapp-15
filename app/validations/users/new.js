@@ -34,6 +34,7 @@ export default buildValidations({
       return moment().subtract(18, 'year');
     },
     format: 'YYYY-MM-DD',
-    errorFormat: 'YYYY-MM-DD'
+    errorFormat: 'YYYY-MM-DD',
+    descriptionKey: 'errors.mustBe18'
   })
 });
