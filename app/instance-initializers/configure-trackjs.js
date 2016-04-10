@@ -32,6 +32,9 @@ export function initialize(application) {
             window.location.replace('/login');
           }
         }
+      } else if (String(err).indexOf('404') > -1) {
+        // Ignore 404s
+        return false;
       } else if (payload && payload.entry === 'ajax') {
         // Handle other Ajax errors
         notifyService.error({ html: i18nService.t('notify.submissionError') });
