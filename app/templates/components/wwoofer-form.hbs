@@ -3,27 +3,27 @@
     <h3 class="panel-title">{{t 'wwoofer-form.moreAboutYou'}}</h3>
   </div>
   <div class="panel-body">
-    <div class="form-group {{if wwoofer.fieldErrors.intro.length 'has-error'}}">
+    {{#forms/form-group valuePath='wwoofer.intro' as |showError|}}
       <label for="intro" class="col-sm-2 control-label">{{t 'wwoofer-form.intro.label'}}</label>
 
       <div class="col-sm-10">
-        {{textarea name='intro' value=wwoofer.intro class='form-control' rows='5'}}
-        {{error-display errors=wwoofer.fieldErrors.intro}}
+        {{textarea id='intro' name='intro' value=wwoofer.intro class='form-control' rows='5'}}
+        {{error-display error=validations.attrs.wwoofer.intro showError=showError}}
       </div>
-    </div>
+    {{/forms/form-group}}
     <div class="col-sm-offset-2 col-sm-10">
       <p class="form-details">
         {{t 'wwoofer-form.introInstructions'}}
       </p>
     </div>
-    <div class="form-group {{if wwoofer.fieldErrors.tripMotivation.length 'has-error'}}">
+    {{#forms/form-group valuePath='wwoofer.tripMotivation' as |showError|}}
       <label for="tripMotivation" class="col-sm-2 control-label">{{t 'wwoofer-form.tripMotivation.label'}}</label>
 
       <div class="col-sm-10">
-        {{textarea name='tripMotivation' value=wwoofer.tripMotivation class='form-control' rows='5'}}
-        {{error-display errors=wwoofer.fieldErrors.tripMotivation}}
+        {{textarea id='tripMotivation' name='tripMotivation' value=wwoofer.tripMotivation class='form-control' rows='5'}}
+        {{error-display error=validations.attrs.wwoofer.tripMotivation showError=showError}}
       </div>
-    </div>
+    {{/forms/form-group}}
   </div>
 </div>
 <div class="panel panel-default">
@@ -53,42 +53,42 @@
       {{/unless}}
     {{/if}}
     {{#if secondWwooferChecked}}
-      <div class="form-group {{if fieldErrors.model.firstName2.length 'has-error'}}">
+      {{#forms/form-group valuePath='wwoofer.firstName2' as |showError|}}
         <label for="firstName2" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
 
         <div class="col-sm-10">
           {{#if canEditOtherWwoofer}}
-            {{input type='text' name='firstName2' value=wwoofer.firstName2 class='form-control'}}
-            {{error-display errors=fieldErrors.model.firstName2}}
+            {{input id='firstName2' type='text' name='firstName2' value=wwoofer.firstName2 class='form-control'}}
+            {{error-display error=validations.attrs.wwoofer.firstName2 showError=showError}}
           {{else}}
             <p class="form-control-static">{{wwoofer.firstName2}}</p>
           {{/if}}
         </div>
-      </div>
-      <div class="form-group {{if fieldErrors.model.lastName2.length 'has-error'}}">
+      {{/forms/form-group}}
+      {{#forms/form-group valuePath='wwoofer.lastName2' as |showError|}}
         <label for="lastName2" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
 
         <div class="col-sm-10">
           {{#if canEditOtherWwoofer}}
-            {{input type='text' name='lastName2' value=wwoofer.lastName2 class='form-control'}}
-            {{error-display errors=fieldErrors.model.lastName2}}
+            {{input id='lastName2' type='text' name='lastName2' value=wwoofer.lastName2 class='form-control'}}
+            {{error-display error=validations.attrs.wwoofer.lastName2 showError=showError}}
           {{else}}
             <p class="form-control-static">{{wwoofer.lastName2}}</p>
           {{/if}}
         </div>
-      </div>
-      <div class="form-group {{if fieldErrors.model.birthDate2.length 'has-error'}}">
+      {{/forms/form-group}}
+      {{#forms/form-group valuePath='wwoofer.birthDate2' as |showError|}}
         <label for="birthDate2" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
 
         <div class="col-sm-10">
           {{#if canEditOtherWwoofer}}
             {{date-picker selectedDate=selectedDate dateSelected=dateSelected}}
-            {{error-display errors=fieldErrors.model.birthDate2}}
+            {{error-display error=validations.attrs.wwoofer.birthDate2 showError=showError}}
           {{else}}
             <p class="form-control-static">{{moment-format wwoofer.birthDate2}}</p>
           {{/if}}
         </div>
-      </div>
+      {{/forms/form-group}}
     {{/if}}
   </div>
 </div>
@@ -98,14 +98,14 @@
       <h3 class="panel-title">{{t 'literal.admins'}}</h3>
     </div>
     <div class="panel-body">
-      <div class="form-group {{if wwoofer.fieldErrors.note.length 'has-error'}}">
+      {{#forms/form-group valuePath='wwoofer.note' as |showError|}}
         <label for="note" class="col-sm-2 control-label">{{t 'wwoofer-form.note.label'}}</label>
 
         <div class="col-sm-10">
           {{textarea name='note' value=wwoofer.note class='form-control' rows='4'}}
-          {{error-display errors=wwoofer.fieldErrors.note}}
+          {{error-display error=validations.attrs.wwoofer.note showError=showError}}
         </div>
-      </div>
+      {{/forms/form-group}}
     </div>
   </div>
 {{/if}}

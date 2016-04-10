@@ -43,8 +43,9 @@ export default buildValidations({
   'address.country.id': validator('presence', true),
   'address.department.id': validator('presence', {
     presence: true,
+    dependentKeys: ['address.country.isFrance'],
     disabled() {
-      return this.get('model.address.country.code') !== 'FR';
+      return this.get('model.address.country.isFrance') === false;
     }
   })
 });

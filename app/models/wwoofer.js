@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-import ValidationsMixin from '../mixins/validations';
 
 const { computed } = Ember;
 
-export default DS.Model.extend(ValidationsMixin, {
+export default DS.Model.extend({
 
   // Attributes
   firstName2: DS.attr('string'),
@@ -38,19 +37,5 @@ export default DS.Model.extend(ValidationsMixin, {
   isComplete: computed('intro', 'address.id', function() {
     return Ember.isPresent(this.get('intro')) && Ember.isPresent(this.get('address.id'));
   }),
-  isIncomplete: computed.not('isComplete'),
-
-  validations: {
-    intro: {
-      presence: true,
-      length: { minimum: 100, maximum: 2000 }
-    },
-    tripMotivation: {
-      presence: true,
-      length: { minimum: 100, maximum: 2000 }
-    },
-    note: {
-      length: { maximum: 2000 }
-    }
-  }
+  isIncomplete: computed.not('isComplete')
 });
