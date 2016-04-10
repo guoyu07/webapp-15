@@ -42,7 +42,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       // Validate the form
       this.controller.validate().then(({ m, validations })=> {
 
-        this.set('controller.didValidate', true);
+        this.controller.set('didValidate', true);
         if (validations.get('isValid')) {
 
           // Set controller in sending state
@@ -64,7 +64,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           promise.then(()=> {
             // Reset form
             this.controller.set('message', null);
-            this.controller.resetValidations();
 
             // Notify user
             this.controller.toggleProperty('showMessageSentModal');
@@ -72,6 +71,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
           promise.finally(()=> {
             this.controller.set('isSending', false);
+            this.controller.set('didValidate', false);
           });
         } else {
           this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));

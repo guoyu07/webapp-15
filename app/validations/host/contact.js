@@ -6,7 +6,7 @@ export default buildValidations({
     validator('length', {
       allowBlank: false,
       min: 50,
-      max: 255
+      max: 5000
     })
   ]
 });
