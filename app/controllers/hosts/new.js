@@ -8,11 +8,6 @@ export default Ember.Controller.extend(Validations, {
       // Get the host
       let host = this.get('host');
 
-      // Reset website to null to pass server-side validation (accepts only null, not empty strings)
-      if (Ember.isEmpty(host.get('webSite'))) {
-        host.set('webSite', null);
-      }
-
       // Validate the form
       this.validate().then(({ m, validations })=> {
 

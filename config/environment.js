@@ -64,7 +64,7 @@ module.exports = function(environment) {
 
     ENV.SERVER_BASE_URL = 'http://localhost:3333';
     
-    ENV.trackJs.config.enabled = false;
+    ENV.trackJs.config.enabled = true;
   }
 
   if (environment === 'test') {
