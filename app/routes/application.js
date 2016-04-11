@@ -67,21 +67,21 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
    * Performs post-login actions.
    */
   sessionAuthenticated() {
-    this.get('sessionUser.user').then((user) => {
+    // this.get('sessionUser.user').then((user) => {
+    //
+    //   // Fetch translations from server if the preferred locale of the user
+    //   // is different from the current locale
+    //   if (this.get('i18n.locale') !== user.get('locale')) {
+    //     this.get('translationsFetcher').fetch();
+    //   }
+    //
+    //   this.setTrackJsUser(user.get('id'));
+    //
+    //   this.processNewUserModalVisibility();
+    // });
 
-      // Fetch translations from server if the preferred locale of the user
-      // is different from the current locale
-      if (this.get('i18n.locale') !== user.get('locale')) {
-        this.get('translationsFetcher').fetch();
-      }
-
-      this.setTrackJsUser(user.get('id'));
-
-      this.processNewUserModalVisibility();
-
-      // Redirect user
-      window.location.replace(config.urlAfterLogin);
-    });
+    // Redirect user
+    window.location.replace(config.urlAfterLogin);
   },
 
   /**
