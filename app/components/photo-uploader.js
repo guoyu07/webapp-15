@@ -90,7 +90,8 @@ export default Ember.Component.extend({
     self.get('notify').success(self.get('i18n').t('notify.fileUploaded'));
 
     // Push the created photo in the store, then add the photo in the host
-    const photo = self.get('store').push('photo', data.result.photo);
+    let normalizedPhoto = self.get('store').normalize('photo', data.result.photo);
+    const photo = self.get('store').push(normalizedPhoto);
     self.get('model.photos').addObject(photo);
   },
 
