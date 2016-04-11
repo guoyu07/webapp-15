@@ -1,8 +1,11 @@
 import Ember from 'ember';
-import request from 'ic-ajax';
 import Validations from 'webapp/validations/user/change-password';
 
+const { service } = Ember.inject;
+
 export default Ember.Controller.extend(Validations, {
+
+  ajax: service('ajax'),
 
   password: null,
   passwordConfirmation: null,
@@ -32,9 +35,8 @@ export default Ember.Controller.extend(Validations, {
           const url = [adapter.get('host'), adapter.get('namespace'), 'users', currentUserId, 'change-password'].join('/');
 
           // Update password
-          const promise = request({
-            type: 'POST',
-            url,
+          const promise = this.get('ajax').request(url, {
+            method: 'POST',
             data: {
               newPassword: this.get('password')
             }

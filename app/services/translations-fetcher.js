@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import request from 'ic-ajax';
 
 const { service } = Ember.inject;
 const PATH = 'api/translations';
@@ -8,9 +7,10 @@ export default Ember.Service.extend({
 
   i18n: service('i18n'),
   moment: service('moment'),
+  ajax: service('ajax'),
 
   fetch() {
-    return request(PATH).then(this._addTranslations.bind(this));
+    return this.get('ajax').request(PATH).then(this._addTranslations.bind(this));
   },
 
   _addTranslations(translations) {

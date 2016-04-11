@@ -1,9 +1,11 @@
 import Ember from 'ember';
-import request from 'ic-ajax';
 
 const { computed } = Ember;
+const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
+
+  ajax: service('ajax'),
 
   /**
    * The data-url to send the photo to.
@@ -20,11 +22,11 @@ export default Ember.Controller.extend({
 
       // Get user
       let user = this.get('model.user');
+      let url = this.get('photoDataUrl');
 
       // Delete the photo
-      const deleteRequest = request({
-        type: 'DELETE',
-        url: this.get('photoDataUrl')
+      const deleteRequest = this.get('ajax').request(url, {
+        method: 'DELETE'
       });
 
       // Handle success

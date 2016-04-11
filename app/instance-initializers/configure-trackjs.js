@@ -1,5 +1,5 @@
 export function initialize(application) {
-  const trackJs = application.container.lookup('service:trackjs');
+  const trackJs = application.lookup('service:trackjs');
 
   trackJs.configure({
     /**
@@ -9,15 +9,15 @@ export function initialize(application) {
     onError(payload, err) {
       let reportError = true;
 
-      let notifyService = application.container.lookup('service:notify');
-      let i18nService = application.container.lookup('service:i18n');
+      let notifyService = application.lookup('service:notify');
+      let i18nService = application.lookup('service:i18n');
 
       // Handle unauthorized errors
       if (String(err).indexOf('401') > -1) {
         reportError = false;
 
-        let applicationController = application.container.lookup('controller:application');
-        let sessionService = application.container.lookup('service:session');
+        let applicationController = application.lookup('controller:application');
+        let sessionService = application.lookup('service:session');
 
         // Ignore errors from login page
         if (applicationController && applicationController.get('currentRouteName') !== 'login') {
