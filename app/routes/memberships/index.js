@@ -107,7 +107,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       const remindableMemberships = this.controller.get('remindableMemberships');
 
       // Send the reminders
-      let promises = remindableMemberships.map(function(membership) {
+      let promises = remindableMemberships.map((membership)=> {
         const id = membership.get('id');
         const url = [adapter.get('host'), adapter.get('namespace'), 'memberships', id, 'send-reminder'].join('/');
 
