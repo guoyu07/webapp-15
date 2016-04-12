@@ -25,8 +25,14 @@ export default buildValidations({
       max: 5000
     })
   ],
-  'host.stays': validator('presence', true),
-  'host.lodgings': validator('presence', true),
+  'host.stays': validator('presence', {
+    presence: true,
+    dependentKeys: ['host.stays.[]']
+  }),
+  'host.lodgings': validator('presence', {
+    presence: true,
+    dependentKeys: ['host.lodgings.[]']
+  }),
   'host.capacity': validator('presence', true),
   'host.note': validator('length', {
     allowBlank: true,

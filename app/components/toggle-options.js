@@ -4,75 +4,20 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
 
-  /**
-   * Check that options and selected values were provided.
-   *
-   * @event init
-   */
   init() {
     this._super.apply(this, arguments);
     Ember.assert('Option values were not supplied.', !!this.get('values'));
   },
 
-  /**
-   * Whether this set of options can have multiple options selected or just one.
-   *
-   * @property selectOne
-   * @type Boolean
-   * @default false
-   */
-  selectOne: false,
-
-  /**
-   * Path to use when comparing selection options to tell if they are selected.
-   *
-   * Only used when the option values are objects.
-   *
-   * @property compareProperty
-   * @type string
-   * @default 'id'
-   */
   compareProperty: 'id',
 
-  /**
-   * The path to the option values.
-   *
-   * For example, specifying 'id' will select the 'id' value of the option
-   * when selecting.
-   *
-   * @property optionValuePath
-   * @type {string}
-   */
   optionValuePath: null,
 
-  /**
-   * List of all the options that we could possibly be toggling.
-   *
-   * @property values
-   * @type Array
-   * @default Ember.A()
-   */
   values: Ember.A(),
 
-  /**
-   * List of the values that are toggled 'on'.
-   *
-   * @property selected
-   * @type Array
-   * @default Ember.A()
-   */
   selected: null,
 
-  /**
-   * List of the possible toggle options, stuffed into objects that indicate whether
-   * they are toggled 'on' or 'off' based on their presence in the array stored on
-   * this view's `selected` property.
-   *
-   * @property options
-   * @type Array
-   * @readOnly
-   */
-  options: computed('values.length', 'values', 'selected.length', 'selected', function() {
+  options: computed('values.[]', 'selected.[]', 'compareProperty', 'optionValuePath', function() {
     const selected = Ember.makeArray(this.get('selected'));
     const compareProperty = this.get('compareProperty');
     const selectedProperties = selected.mapBy(compareProperty).compact();
@@ -92,40 +37,26 @@ export default Ember.Component.extend({
 
   actions: {
 
-    /**
-     * Clears the current selection.
-     * @method clear
-     */
     clear() {
-      const isSingle = this.get('selectOne');
-      this.set('selected', isSingle ? null : Ember.A());
+      let selected = Ember.A();
+      this.set('selected', selected);
+
+      // Uncomment to switch to DDAU
+      // this.sendAction('onchange', selected);
     },
 
-    /**
-     * Toggles the passed option on and other options off.
-     *
-     * @method select
-     * @param {Object} option Option to switch on.
-     */
-    select(option) {
+    toggleOption(value) {
       let selected = this.get('selected');
-      const newSelection = option.get('value');
-      const isSingle = this.get('selectOne');
 
-      if (isSingle) {
-        this.set('selected', newSelection);
+      selected = Ember.makeArray(selected);
+      if (selected.contains(value)) {
+        selected.removeObject(value);
       } else {
-        selected = Ember.makeArray(selected);
-        if (selected.contains(newSelection)) {
-          selected = selected.without(newSelection);
-        } else {
-          selected.pushObject(newSelection);
-        }
-        this.set('selected', selected);
+        selected.pushObject(value);
       }
-      this.triggerAction();
 
-      this.sendAction('onchange');
+      // Uncomment to switch to DDAU
+      // this.sendAction('onchange', selected);
     }
   }
 });
