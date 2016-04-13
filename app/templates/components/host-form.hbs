@@ -32,13 +32,14 @@
         {{t 'host-form.fullDescriptionDetails'}}
       </p>
     </div>
-    <div class="form-group">
+    {{#forms/form-group valuePath='host.travelDetails' as |showError|}}
       <label for="travelDetails" class="col-sm-2 control-label">{{t 'host-form.travel.label'}}</label>
 
       <div class="col-sm-10">
         {{input type='text' id='travelDetails' name='travelDetails' value=host.travelDetails class='form-control' placeholder=(t 'host-form.travel.placeholder')}}
+        {{error-display error=validations.attrs.host.travelDetails showError=showError}}
       </div>
-    </div>
+    {{/forms/form-group}}
     <div class="col-sm-offset-2 col-sm-10">
       <p class="form-details">
         {{t 'host-form.travelDetails'}}

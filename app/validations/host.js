@@ -25,6 +25,10 @@ export default buildValidations({
       max: 5000
     })
   ],
+  'host.travelDetails': validator('length', {
+    allowBlank: true,
+    max: 255
+  }),
   'host.stays': validator('presence', {
     presence: true,
     dependentKeys: ['host.stays.[]']
