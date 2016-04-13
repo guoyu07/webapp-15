@@ -115,16 +115,20 @@
               <h4 class="panel-title">{{t 'memberships.new.paypal'}}</h4>
             </div>
             <div class="panel-body">
-              <p>
-                {{t 'memberships.new.easiestWay'}}
-              </p>
-              <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary mbs" disabled={{isInvalid}}>
-                {{t 'memberships.new.pay'}}
-              </button>
-              <p class="mbx small">
-                <span class="glyphicon glyphicon-info-sign"></span>
-                {{t 'memberships.new.notePaypal'}}
-              </p>
+              {{#if beta}}
+                {{payment-form token=token onSubmit='processPayment' disableSubmit=isInvalid}}
+              {{else}}
+                <p>
+                  {{t 'memberships.new.easiestWay'}}
+                </p>
+                <button {{action "initPayment" itemCode shippingRegion}} class="btn btn-primary mbs" disabled={{isInvalid}}>
+                  {{t 'memberships.new.pay'}}
+                </button>
+                <p class="mbx small">
+                  <span class="glyphicon glyphicon-info-sign"></span>
+                  {{t 'memberships.new.notePaypal'}}
+                </p>
+              {{/if}}
             </div>
           </div>
         </div>

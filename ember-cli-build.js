@@ -48,10 +48,10 @@ module.exports = function(defaults) {
   });
 
   // Leaflet providers
-  app.import("bower_components/leaflet-providers/leaflet-providers.js");
+  app.import('bower_components/leaflet-providers/leaflet-providers.js');
 
-  // TrackJs
-  app.import("bower_components/trackjs/tracker.js");
+  // Braintree
+  app.import('bower_components/braintree-web/dist/braintree.js');
 
   return mergeTrees([
     bootstrapFonts,

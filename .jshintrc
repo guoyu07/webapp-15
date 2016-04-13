@@ -4,6 +4,7 @@
     "window",
     "-Promise",
     "trackJs",
+    "braintree",
     "L"
   ],
   "browser": true,

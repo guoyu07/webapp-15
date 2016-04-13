@@ -4,7 +4,7 @@ const { computed } = Ember;
 
 export default Ember.Controller.extend({
 
-  queryParams: ['type', 'itemCode', 'shippingRegion', 'userId'],
+  queryParams: ['type', 'itemCode', 'shippingRegion', 'userId', 'beta'],
 
   type: null,
   itemCode: null,
@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
   userId: null,
   paymentType: null,
   isFree: false,
+  beta: false,
 
   _membershipOptions: computed(function() {
     return [
