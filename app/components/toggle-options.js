@@ -55,6 +55,8 @@ export default Ember.Component.extend({
         selected.pushObject(value);
       }
 
+      this.set('selected', selected);
+
       // Uncomment to switch to DDAU
       // this.sendAction('onchange', selected);
     }
