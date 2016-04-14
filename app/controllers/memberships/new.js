@@ -133,6 +133,8 @@ export default Ember.Controller.extend({
 
   isInvalid: computed.not('isValid'),
 
+  disableSubmit: computed.or('isProcessing', 'isInvalid'),
+
   isValidAdmin: computed('isValid', 'paymentType.id', 'isFree', function() {
     return this.get('isValid') && (Ember.isPresent(this.get('paymentType.id')) || this.get('isFree'));
   }),

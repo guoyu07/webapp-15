@@ -52,9 +52,10 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     
     /**
      * Process a payment.
-     * @param {Object} payment The payment object.
+     * @param {Object} payment The payment object containing the nonce.
+     * @param {Object} checkout The checkout object to destroy the payment form.
      */
-    processPayment(payment) {
+    processPayment(payment, checkout) {
       
       payment.itemCode = this.controller.get('itemCode');
       payment.shippingRegion = this.controller.get('shippingRegion');
@@ -65,11 +66,39 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         return;
       }
 
+      this.controller.set('isProcessing', true);
+
       var promise = this.get('ajax').post('api/payment/checkout', { data: payment });
 
-      promise.then(()=> {
-        this.get('notify').success('Payment completed!');
+      promise.then((result)=> {
+        checkout.teardown(()=> {
+          checkout = null;
+
+          if (result.success === true) {
+            this.transitionTo('user.memberships', this.get('sessionUser.user.id'));
+          } else {
+            this.controller.set('paymentFailureMessage', result.message);
+          }
+        });
       });
+      
+      promise.catch((err) => {
+        checkout.teardown(()=> {
+          checkout = null;
+
+          if (Ember.get(err, 'errors.firstObject.status') === '409') {
+            this.controller.set('membershipAlreadyActive', true);
+          }
+        });
+      });
+
+      promise.finally(() => {
+        this.controller.set('isProcessing', false);
+      });
+    },
+
+    resetPaymentForm() {
+      this.controller.set('paymentFailureMessage', null);
     },
 
     /**
