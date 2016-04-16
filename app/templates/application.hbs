@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" onclick={{action 'navBarClicked' value='target'}}>
       <ul class="nav navbar-nav">
         {{#link-to 'hosts' tagName='li' class=(if hostsIsActive 'active')}}
-          <a href={{view.href}}>{{t 'literal.hosts'}}</a>
+          <a href={{view.href}}>{{t 'navbar.hostList'}}</a>
         {{/link-to}}
         {{#if canSeeWwoofersLink}}
           {{#link-to 'wwoofers' tagName='li' class=(if wwoofersIsActive 'active')}}
