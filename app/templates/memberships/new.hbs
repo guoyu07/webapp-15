@@ -109,13 +109,13 @@
     </div>
     {{#unless isAdminMode}}
       <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">{{t 'memberships.new.creditCard'}}</h4>
             </div>
             <div class="panel-body">
-              {{#if beta}}
+              {{#if isBraintree}}
                 {{#if membershipAlreadyActive}}
                   <div class="alert alert-warning mbn" role="alert">{{t 'notify.membershipAlreadyActive'}}</div>
                 {{else if paymentFailureMessage}}
@@ -144,10 +144,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-2 text-center">
-          <h4>— {{t 'memberships.new.or'}} —</h4>
-        </div>
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>

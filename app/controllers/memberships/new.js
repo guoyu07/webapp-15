@@ -4,7 +4,7 @@ const { computed } = Ember;
 
 export default Ember.Controller.extend({
 
-  queryParams: ['type', 'itemCode', 'shippingRegion', 'userId', 'beta'],
+  queryParams: ['type', 'itemCode', 'shippingRegion', 'userId', 'gateway'],
 
   type: null,
   itemCode: null,
@@ -12,9 +12,11 @@ export default Ember.Controller.extend({
   userId: null,
   paymentType: null,
   isFree: false,
-  beta: false,
+  gateway: 'braintree',
 
-  _membershipOptions: computed(function() {
+  isBraintree: computed.equal('gateway', 'braintree'),
+
+  _membershipOptions: computed('i18n.locale', function() {
     return [
       { id: 'WO1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
       { id: 'WO2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
@@ -29,7 +31,7 @@ export default Ember.Controller.extend({
     return this.get('_membershipOptions').filterBy('type', this.get('type'));
   }),
 
-  shippingRegionOptions: computed(function() {
+  shippingRegionOptions: computed('i18n.locale', function() {
     return [
       { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: 4.80 }), price: 4.80 },
       { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: 8.55 }), price: 8.55 },
@@ -39,7 +41,7 @@ export default Ember.Controller.extend({
     ];
   }),
 
-  paymentTypeOptions: computed(function() {
+  paymentTypeOptions: computed('i18n.locale', function() {
     return [
       { id: 'CHQ', name: this.get('i18n').t('memberships.paymentTypes.CHQ') },
       { id: 'ESP', name: this.get('i18n').t('memberships.paymentTypes.ESP') },

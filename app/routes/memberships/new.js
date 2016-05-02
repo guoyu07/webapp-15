@@ -13,7 +13,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model(params) {
-    if (params.beta) {
+    if (params.gateway === 'braintree') {
       return this.get('ajax').request('api/payment/token');
     }
   },
@@ -75,7 +75,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           checkout = null;
 
           if (result.success === true) {
-            this.transitionTo('user.memberships', this.get('sessionUser.user.id'));
+            this.get('sessionUser.user').then((user)=> {
+              window.location.replace(`user/${user.id}/memberships`);
+            });
           } else {
             this.controller.set('paymentFailureMessage', result.message);
           }
