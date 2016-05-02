@@ -39,10 +39,11 @@ export default Ember.Component.extend({
 
     clear() {
       let selected = Ember.A();
+
+      // Remove after full switch to DDAU
       this.set('selected', selected);
 
-      // Uncomment to switch to DDAU
-      // this.sendAction('onchange', selected);
+      this.sendAction('onchange', selected);
     },
 
     toggleOption(value) {
@@ -55,10 +56,10 @@ export default Ember.Component.extend({
         selected.pushObject(value);
       }
 
+      // Remove after full switch to DDAU
       this.set('selected', selected);
 
-      // Uncomment to switch to DDAU
-      // this.sendAction('onchange', selected);
+      this.sendAction('onchange', selected);
     }
   }
 });

@@ -87,13 +87,6 @@ export default Ember.Controller.extend({
    */
   showMap: computed.or('media.isDesktop', 'media.isJumbo'),
 
-  // Query parameters
-  parameters: computed('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
-    'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk', function() {
-      return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended', 'isHidden',
-       'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
-    }),
-
   /**
    * Indicates whether we can load more hosts.
    */
@@ -176,7 +169,7 @@ export default Ember.Controller.extend({
     }
 
     // Prepare params
-    let params = this.get('parameters');
+    let params = this.getParameters();
     params.limit = 5000;
 
     // Create GET request
@@ -187,6 +180,11 @@ export default Ember.Controller.extend({
       this.set('hostCoordinates', data);
       this.set('isLoading', false);
     });
+  },
+
+  getParameters() {
+    return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended',
+      'isHidden', 'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
   },
 
   actions: {
