@@ -47,11 +47,6 @@ export default Ember.Controller.extend(Validations, {
             this.transitionToRoute('user.edit', currentUserId);
           });
 
-          promise.catch((err)=> {
-            err = err.jqXHR || err;
-            throw err;
-          });
-
           promise.finally(()=> {
             this.set('isLoading', false);
           });

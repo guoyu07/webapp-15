@@ -42,11 +42,9 @@ export default Ember.Controller.extend(Validations, {
           });
 
           promise.catch((err)=> {
-            err = err.jqXHR || err;
-            if (err.status === 404) {
+            var status = Number(Ember.get(err, 'errors.firstObject.status'));
+            if (status === 404) {
               this.get('notify').error(this.get('i18n').t('notify.userNotFound'));
-            } else {
-              throw err;
             }
           });
 
