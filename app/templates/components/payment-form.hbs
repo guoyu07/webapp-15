@@ -1,2 +1,4 @@
 <div id="payment-form"></div>
-<input type="submit" value={{t 'payment-form.pay'}} disabled={{disableSubmit}} class="btn btn-primary mts btn-block">
+<button class="btn btn-primary mts btn-block" disabled={{disableSubmit}}>
+  <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {{t 'payment-form.pay'}}
+</button>
