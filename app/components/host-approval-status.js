@@ -28,11 +28,11 @@ export default Ember.Component.extend({
       let url = [config.apiHost, config.apiNamespace, 'hosts', host.get('id'), 'approve'].join('/');
 
       // Approve/reject the host
-      let promise = this.get('ajax').request(url, {
-        method: 'POST',
-        data: {
+      let promise = this.get('ajax').post(url, {
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({
           isApproved
-        }
+        })
       });
 
       // Handle success
