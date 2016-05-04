@@ -25,9 +25,7 @@ export default Ember.Controller.extend({
       let url = this.get('photoDataUrl');
 
       // Delete the photo
-      const deleteRequest = this.get('ajax').request(url, {
-        method: 'DELETE'
-      });
+      const deleteRequest = this.get('ajax').delete(url);
 
       // Handle success
       deleteRequest.then(()=> {

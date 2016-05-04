@@ -29,11 +29,11 @@ export default BaseAuthenticator.extend({
     const url = [config.apiHost, config.apiNamespace, 'users/impersonate'].join('/');
 
     // Impersonate the user
-    return this.get('ajax').request(url, {
-      method: 'POST',
-      data: {
+    return this.get('ajax').post(url, {
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify({
         email: options.impersonatedUserEmail
-      }
+      })
     });
   },
   invalidate() {
@@ -41,8 +41,6 @@ export default BaseAuthenticator.extend({
     const url = [config.apiHost, config.apiNamespace, 'users/logout'].join('/');
 
     // Log the user out
-    return this.get('ajax').request(url, {
-      method: 'POST'
-    });
+    return this.get('ajax').post(url);
   }
 });

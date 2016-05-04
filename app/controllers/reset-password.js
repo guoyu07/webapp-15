@@ -30,11 +30,11 @@ export default Ember.Controller.extend(Validations, {
           const url = [adapter.get('host'), adapter.get('namespace'), 'users/reset-password'].join('/');
 
           // Send email
-          const promise = this.get('ajax').request(url, {
-            method: 'POST',
-            data: {
+          const promise = this.get('ajax').post(url, {
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
               email: this.get('email')
-            }
+            })
           });
 
           promise.then(()=> {

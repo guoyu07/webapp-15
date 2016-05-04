@@ -114,9 +114,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         this.transitionTo('login');
       } else {
         let url = this.getUrl(user.get('id'), host.get('id'));
-        let promise = this.get('ajax').request(url, {
-          method: 'PUT'
-        });
+        let promise = this.get('ajax').put(url);
 
         promise.then(() => {
           user.get('favorites').pushObject(host);
@@ -128,9 +126,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         this.transitionTo('login');
       } else {
         let url = this.getUrl(user.get('id'), host.get('id'));
-        let promise = this.get('ajax').request(url, {
-          method: 'DELETE'
-        });
+        let promise = this.get('ajax').delete(url);
 
         promise.then(()=> {
           user.get('favorites').removeObject(host);

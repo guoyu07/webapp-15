@@ -112,9 +112,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
         const url = [adapter.get('host'), adapter.get('namespace'), 'memberships', id, 'send-reminder'].join('/');
 
         // Send reminder
-        return this.get('ajax').request(url, {
-          method: 'POST'
-        });
+        return this.get('ajax').post(url);
       });
 
       // Handle success
