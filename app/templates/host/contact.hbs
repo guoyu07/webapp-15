@@ -20,6 +20,13 @@
             <div class="col-sm-10">
               {{textarea id='message' name='message' value=message class='form-control' rows='10' placeholder=messagePlaceholder}}
               {{error-display error=validations.attrs.message showError=showError}}
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="sendCopy" checked={{sendCopy}} onclick={{action 'toggleSendCopy' value='target.checked'}}>
+                  {{t 'host.contact.sendCopy.label' email=sessionUser.user.email}}
+                </label>
+              </div>
             </div>
           {{/forms/form-group}}
           <div class="form-group mbx">

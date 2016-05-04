@@ -37,6 +37,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
      */
     sendMessage() {
       const message = this.controller.get('message');
+      const sendCopy = this.controller.get('sendCopy');
       const host = this.controller.get('model');
 
       // Validate the form
@@ -53,11 +54,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           const url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
 
           // Send email
-          const promise = this.get('ajax').request(url, {
-            method: 'POST',
-            data: {
-              message
-            }
+          const promise = this.get('ajax').post(url, {
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+              message,
+              sendCopy
+            })
           });
 
           promise.then(()=> {

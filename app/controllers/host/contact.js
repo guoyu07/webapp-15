@@ -7,6 +7,8 @@ export default Ember.Controller.extend(Validations, {
 
   message: null,
 
+  sendCopy: false,
+
   showMessageSentModal: false,
 
   messagePlaceholder: computed('model.user.firstName', function() {
@@ -19,6 +21,10 @@ export default Ember.Controller.extend(Validations, {
 
       // Go back to host index page
       this.transitionToRoute('host.index', this.get('model.id'));
+    },
+
+    toggleSendCopy(sendCopy) {
+      this.set('sendCopy', sendCopy);
     }
   }
 });
