@@ -13,8 +13,8 @@ export default Ember.Component.extend({
 
     braintree.setup(token, 'dropin', {
       container: 'payment-form',
-      onPaymentMethodReceived: onPaymentMethodReceived,
-      onReady: onReady
+      onPaymentMethodReceived,
+      onReady
     });
   },
 

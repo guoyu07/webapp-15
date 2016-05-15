@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 
   init() {
     this._super(...arguments);
-    var valuePath = this.get('valuePath');
+    let valuePath = this.get('valuePath');
     defineProperty(this, 'validation', computed.oneWay(`targetObject.validations.attrs.${valuePath}`));
   },
 

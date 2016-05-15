@@ -50,7 +50,7 @@ export default Ember.Component.extend({
     let selectedDate = this.getAttr('selectedDate');
 
     if (selectedDate && selectedDate.isValid()) {
-      var selectedMonth = this.get('months').findBy('value', selectedDate.month());
+      let selectedMonth = this.get('months').findBy('value', selectedDate.month());
       this.set('_selectedDay', selectedDate.date());
       this.set('_selectedMonth', selectedMonth);
       this.set('_selectedYear', selectedDate.year());
