@@ -1,45 +1,42 @@
-<div class="page-header">
-  <h1>
-    {{t 'wwoofers.index.title'}}
-  </h1>
-</div>
 <div class="row mbm">
-  <div class="col-xs-12">
-    <p>
-      {{t 'wwoofers.index.instructions'}}
-    </p>
-
-    <form class="form-inline">
-      <div class="form-group">
-        <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
-        {{input type='text'
-        class='form-control'
-        placeholder=(t 'wwoofers.index.search.placeholder')
-        value=searchTerm
-        enter='search'}}
+  <div class="col-xs-12 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'wwoofers.index.title'}}</h3>
       </div>
-      <div class="form-group">
-        <label for="country" class="sr-only">{{t 'address-form.country.label'}}</label>
-        {{forms/country-select
-        country=selectedCountry
-        allowClear=true
-        onchange=(action 'countryDidChange')}}
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="searchTerm">{{t 'wwoofers.index.search.label'}}</label>
+            {{input type='text'
+            id='searchTerm'
+            class='form-control'
+            value=searchTerm
+            placeholder='Pat Dunn / patd@gmail.com'
+            enter='search'}}
+          </div>
+          <div class="form-group">
+            <label for="country">{{t 'address-form.country.label'}}</label>
+            {{forms/country-select
+            country=selectedCountry
+            allowClear=true
+            onchange=(action 'countryDidChange')}}
+          </div>
+          <button {{action 'search'}} class="btn btn-block btn-primary" disabled={{isLoading}}>
+            {{t 'literal.search'}}
+          </button>
+        </form>
       </div>
-      <button {{action 'search'}} class="btn btn-primary" disabled={{isLoading}}>
-      {{t 'literal.search'}}
-      </button>
-    </form>
+    </div>
   </div>
-</div>
 
-<div class="row mbm">
-  <div class="col-xs-12">
+  <div class="col-xs-12 col-md-9">
     {{#if isLoading}}
       {{partial 'loading'}}
     {{else}}
       {{#if wwoofers}}
         <div class="table-responsive">
-          <table class="table table-striped table-hover">
+          <table class="table table-striped table-bordere table-hover">
             <thead>
             <tr>
               <th>{{t 'wwoofers.index.wwoofer1'}}</th>
