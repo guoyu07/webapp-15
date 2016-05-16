@@ -51,6 +51,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   actions: {
     search() {
+      // Reset pagination
+      this.controller.set('page', 1);
+
       this.refresh();
     }
   }

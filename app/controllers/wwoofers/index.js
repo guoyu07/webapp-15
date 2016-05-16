@@ -40,6 +40,9 @@ export default Ember.Controller.extend({
 
   actions: {
     countryDidChange(country) {
+      // Reset pagination
+      this.set('page', 1);
+      
       const id = country ? country.id : null;
       this.set('country', id);
       this.set('selectedCountry', country);
