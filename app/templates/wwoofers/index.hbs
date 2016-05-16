@@ -67,9 +67,9 @@
         </div>
       {{else}}
         {{t 'wwoofers.index.noResults'}}
-        {{#if sessionUser.user.isAdmin}}
+        {{#unless sessionUser.user.isAdmin}}
           {{t 'wwoofers.index.noResultsNotAdmin'}}
-        {{/if}}
+        {{/unless}}
       {{/if}}
     {{/if}}
   </div>
