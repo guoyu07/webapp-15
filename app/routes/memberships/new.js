@@ -68,7 +68,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
       this.controller.set('isProcessing', true);
 
-      var promise = this.get('ajax').post('api/payment/checkout', {
+      let promise = this.get('ajax').post('api/payment/checkout', {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(payment)
       });

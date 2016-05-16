@@ -8,7 +8,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   setupController(controller, user) {
-    var selectedDate = null;
+    let selectedDate = null;
     if (user.get('birthDate')) {
       selectedDate = moment(user.get('birthDate'));
     }

@@ -8,7 +8,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   setupController(controller, wwoofer) {
-    var selectedDate = null;
+    let selectedDate = null;
     if (wwoofer.get('birthDate2')) {
       selectedDate = moment(wwoofer.get('birthDate2'));
     }
