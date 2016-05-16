@@ -1,73 +1,88 @@
-<div class="row">
-  <div class="col-xs-12 {{unless isLoggedUserProfile 'col-md-9'}}">
-    <div class="row">
-      <div class="hidden-xs col-sm-4 col-md-3">
-        {{image-thumb url=model.user.completePhotoUrl height=200}}
-      </div>
-      <div class="col-sm-8 col-md-9">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1>
-              {{model.user.fullName}}
-              {{#if model.fullName2}}
-                <small>{{t 'wwoofer.index.and'}} {{model.fullName2}}</small>
-              {{/if}}
-            </h1>
-            <hr>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <p>
-              <span class="glyphicon glyphicon-user mrx"></span>
-              {{model.user.fullName}}
-              ({{birthdate-to-age model.user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
-            </p>
-
-            <p>
-              <span class="glyphicon glyphicon-envelope mrx"></span>
-              {{#unless model.noEmail}}
-                {{mail-to model.user.email}}
-              {{/unless}}
-            </p>
-          </div>
-          <div class="col-md-6">
-            <p>
-              <span class="glyphicon glyphicon-home mrx"></span>
-              {{#if sessionUser.user.isAdmin}}
-                {{model.address.address1}}
-                {{#if model.address.address2}}
-                  / {{model.address.address2}}
-                {{/if}}
-                / {{model.address.zipCode}} {{model.address.city}} ({{model.address.country.name}})
-              {{else}}
-                {{model.address.city}}, {{model.address.country.name}}
-              {{/if}}
-            </p>
-
-            <p>
-              <span class="glyphicon glyphicon-star mrx"></span>
-              {{#if model.user.hasWwooferMemberships}}
-                {{t 'wwoofer.index.memberSince'}} {{moment-format model.user.firstWwooferMembership.createdAt 'MMMM YYYY'}}
-              {{else}}
-                {{t 'wwoofer.index.notAMember'}}
-              {{/if}}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    {{#if showNote}}
-      <div class="alert alert-info" role="alert">
-        <strong>{{t 'wwoofer.index.note'}}</strong>: {{model.note}}
-      </div>
+<div class="page-header">
+  <h1 class="capitalize">
+    {{model.user.fullName}}
+    {{#if model.fullName2}}
+      <small>{{t 'wwoofer.index.and'}} {{model.fullName2}}</small>
     {{/if}}
-    <div class="row mbl">
-      <div class="col-md-3">
-        <h4>{{t 'wwoofer-form.intro.label'}}</h4>
+  </h1>
+</div>
+
+{{#if showNote}}
+  <div class="alert alert-info" role="alert">
+    <strong>{{t 'wwoofer.index.note'}}</strong>: {{model.note}}
+  </div>
+{{/if}}
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-3">
+    {{image-thumb url=model.user.completePhotoUrl height=250 class='mbm'}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{t 'wwoofer.index.generalInformation'}}
+        </h3>
       </div>
-      <div class="col-md-9">
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <td>
+            <span class="glyphicon glyphicon-user mrx"></span>
+            <span class="capitalize">{{model.user.fullName}}</span>
+            ({{birthdate-to-age model.user.birthDate}} {{t 'wwoofer.index.yearsOld'}})
+          </td>
+        </tr>
+        {{#if model.fullName2}}
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-user mrx"></span>
+              <span class="capitalize">{{model.fullName2}}</span>
+              ({{birthdate-to-age model.birthDate2}} {{t 'wwoofer.index.yearsOld'}})
+            </td>
+          </tr>
+        {{/if}}
+        {{#if model.user.phone}}
+          <tr>
+            <td>
+              <span class="glyphicon glyphicon-earphone mrx"></span>
+              {{model.user.phone}}
+            </td>
+          </tr>
+        {{/if}}
+        <tr>
+          <td>
+            <span class="glyphicon glyphicon-map-marker mrx"></span>
+            <span class="capitalize">{{model.address.city}} ({{model.address.country.name}})</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="glyphicon glyphicon-star mrx"></span>
+            {{#if model.user.hasWwooferMemberships}}
+              {{t 'wwoofer.index.memberSince'}} {{moment-format model.user.firstWwooferMembership.createdAt 'MMMM YYYY'}}
+            {{else}}
+              {{t 'wwoofer.index.notAMember'}}
+            {{/if}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="glyphicon glyphicon-time mrx"></span>
+            {{t 'wwoofer.index.updated'}} {{moment-from-now model.updatedAt}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{t 'wwoofer-form.intro.label'}}
+        </h3>
+      </div>
+      <div class="panel-body">
         {{#if model.intro}}
           {{convert-breaklines model.intro}}
         {{else}}
@@ -75,12 +90,14 @@
         {{/if}}
       </div>
     </div>
-    <hr>
-    <div class="row mbl">
-      <div class="col-md-3">
-        <h4>{{t 'wwoofer-form.tripMotivation.label'}}</h4>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{t 'wwoofer-form.tripMotivation.label'}}
+        </h3>
       </div>
-      <div class="col-md-9">
+      <div class="panel-body">
         {{#if model.tripMotivation}}
           {{convert-breaklines model.tripMotivation}}
         {{else}}
@@ -89,102 +106,128 @@
       </div>
     </div>
   </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{t 'wwoofer.index.contact' firstName=model.user.firstName}}
+        </h3>
+      </div>
+      <ul class="list-group">
+        {{#if sessionUser.user.isAdmin}}
+          <li class="list-group-item">
+            <span class="glyphicon glyphicon-envelope mrx"></span>
+            {{mail-to model.user.email (truncate model.user.email limit=28)}}
+          </li>
+        {{/if}}
+        {{#if model.user.phone}}
+          <li class="list-group-item">
+            <span class="glyphicon glyphicon-earphone mrx"></span>
+            {{model.user.phone}}
+          </li>
+        {{/if}}
+        {{#link-to 'wwoofer.contact' model.id class='list-group-item list-group-item-primary text-center'}}
+          {{t 'wwoofer.index.sendMessage'}}
+        {{/link-to}}
+      </ul>
+    </div>
+  </div>
+
   {{#unless isLoggedUserProfile}}
     <div class="col-xs-12 col-sm-6 col-md-3">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <span class="glyphicon glyphicon glyphicon-pushpin mrx"></span>
-            {{t 'wwoofer.index.goodToKnow'}}
-          </h3>
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <span class="glyphicon glyphicon glyphicon-pushpin mrx"></span>
+              {{t 'wwoofer.index.goodToKnow'}}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <span class="glyphicon glyphicon-calendar mrx"></span>
+            {{t 'wwoofer.index.goodToKnow1'}}
+            <hr/>
+            <span class="glyphicon glyphicon-time mrx"></span>
+            {{t 'wwoofer.index.goodToKnow2'}}
+            <hr/>
+            <span class="glyphicon glyphicon-paperclip mrx"></span>
+            {{t 'wwoofer.index.goodToKnow3'}}
+          </div>
         </div>
-        <div class="panel-body">
-          <span class="glyphicon glyphicon-calendar mrx"></span>
-          {{t 'wwoofer.index.goodToKnow1'}}
-          <hr/>
-          <span class="glyphicon glyphicon-time mrx"></span>
-          {{t 'wwoofer.index.goodToKnow2'}}
-          <hr/>
-          <span class="glyphicon glyphicon-paperclip mrx"></span>
-          {{t 'wwoofer.index.goodToKnow3'}}
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <span class="glyphicon glyphicon glyphicon-download-alt mrx"></span>
+              {{t 'documents.usefulDocuments'}}
+            </h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <tbody>
+              <tr>
+                <td>
+                  <span class="glyphicon glyphicon-link mrx"></span>
+                  {{t 'documents.wwooferDeclaration'}}
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/declaration.pdf" target="_blank">{{t 'literal.french'}}</a>
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/declaration.pdf" target="_blank">{{t 'literal.english'}}</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="glyphicon glyphicon-link mrx"></span>
+                  {{t 'documents.selectWwoofer'}}
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/selection-wwoofeur.pdf" target="_blank">{{t 'literal.french'}}</a>
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/selection-wwoofeur.pdf" target="_blank">{{t 'literal.english'}}</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="glyphicon glyphicon-link mrx"></span>
+                  {{t 'documents.wwooferArrival'}}
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/arrivee-wwoofeur.pdf" target="_blank">{{t 'literal.french'}}</a>
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/arrivee-wwoofeur.pdf" target="_blank">{{t 'literal.english'}}</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="glyphicon glyphicon-link mrx"></span>
+                  {{t 'documents.wwoofingCharter'}}
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/charte-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a>
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/wwoofing-charter.pdf" target="_blank">{{t 'literal.english'}}</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="glyphicon glyphicon-link mrx"></span>
+                  {{t 'documents.rulesAndRegulations'}}
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/reglement-interieur-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a>
+                </td>
+                <td>
+                  <a href="http://docs.wwoof.fr/documents/wwoofing-rules-and-regulations.pdf" target="_blank">{{t 'literal.english'}}</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <span class="glyphicon glyphicon glyphicon-download-alt mrx"></span>
-            {{t 'documents.usefulDocuments'}}
-          </h3>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <tbody>
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-link mrx"></span>
-                {{t 'documents.wwooferDeclaration'}}
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/declaration.pdf" target="_blank">{{t 'literal.french'}}</a>
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/declaration.pdf" target="_blank">{{t 'literal.english'}}</a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-link mrx"></span>
-                {{t 'documents.selectWwoofer'}}
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/selection-wwoofeur.pdf" target="_blank">{{t 'literal.french'}}</a>
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/selection-wwoofeur.pdf" target="_blank">{{t 'literal.english'}}</a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-link mrx"></span>
-                {{t 'documents.wwooferArrival'}}
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/arrivee-wwoofeur.pdf" target="_blank">{{t 'literal.french'}}</a>
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/arrivee-wwoofeur.pdf" target="_blank">{{t 'literal.english'}}</a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-link mrx"></span>
-                {{t 'documents.wwoofingCharter'}}
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/charte-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a>
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/wwoofing-charter.pdf" target="_blank">{{t 'literal.english'}}</a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-link mrx"></span>
-                {{t 'documents.rulesAndRegulations'}}
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/reglement-interieur-wwoofing.pdf" target="_blank">{{t 'literal.french'}}</a>
-              </td>
-              <td>
-                <a href="http://docs.wwoof.fr/documents/wwoofing-rules-and-regulations.pdf" target="_blank">{{t 'literal.english'}}</a>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   {{/unless}}
 </div>

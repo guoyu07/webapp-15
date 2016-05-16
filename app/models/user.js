@@ -45,7 +45,11 @@ export default DS.Model.extend({
    * Returns the full name of the user.
    */
   fullName: computed('firstName', 'lastName', function() {
-    return `${this.get('firstName')} ${this.get('lastName')}`;
+    const firstName = this.get('firstName');
+    const lastName = this.get('lastName');
+    if (firstName || lastName) {
+      return `${firstName} ${lastName}`;
+    }
   }),
 
   /**

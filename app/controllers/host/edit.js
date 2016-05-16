@@ -7,7 +7,7 @@ export default Ember.Controller.extend(Validations, {
 
       // Get host
       let host = this.get('host');
-      
+
       // Validate the form
       this.validate().then(({ m, validations })=> {
 

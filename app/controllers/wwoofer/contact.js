@@ -1,26 +1,22 @@
 import Ember from 'ember';
 import Validations from 'webapp/validations/host/contact';
 
-const { computed } = Ember;
+const { service } = Ember.inject;
 
 export default Ember.Controller.extend(Validations, {
 
+  ajax: service('ajax'),
+  
   message: null,
-  sendCopy: false,
   showMessageSentModal: false,
-
-  messagePlaceholder: computed('model.user.firstName', function() {
-    return `Bonjour ${this.get('model.user.firstName')} !`;
-  }),
 
   actions: {
     /**
-     * Sends a message to a host.
+     * Sends a message to a wwoofer.
      */
     sendMessage() {
       const message = this.get('message');
-      const sendCopy = this.get('sendCopy');
-      const host = this.get('model');
+      const wwoofer = this.get('wwoofer');
 
       // Validate the form
       this.validate().then(({ m, validations })=> {
@@ -33,14 +29,13 @@ export default Ember.Controller.extend(Validations, {
 
           // Prepare URL
           const adapter = this.store.adapterFor('application');
-          const url = [adapter.get('host'), adapter.get('namespace'), 'hosts', host.id, 'contact'].join('/');
+          const url = [adapter.get('host'), adapter.get('namespace'), 'wwoofers', wwoofer.id, 'contact'].join('/');
 
           // Send email
           const promise = this.get('ajax').post(url, {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({
-              message,
-              sendCopy
+              message
             })
           });
 
@@ -65,12 +60,8 @@ export default Ember.Controller.extend(Validations, {
     closeModal() {
       this.toggleProperty('showMessageSentModal');
 
-      // Go back to host index page
-      this.transitionToRoute('host.index', this.get('model.id'));
-    },
-
-    toggleSendCopy(sendCopy) {
-      this.set('sendCopy', sendCopy);
+      // Go back to wwoofer index page
+      this.transitionToRoute('wwoofer.index', this.get('wwoofer.id'));
     }
   }
 });

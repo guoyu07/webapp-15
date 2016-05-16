@@ -26,6 +26,7 @@ Router.map(function() {
     this.route('edit');
     this.route('address');
     this.route('photo');
+    this.route('contact');
   });
   this.route('users', function() {
     this.route('new');
