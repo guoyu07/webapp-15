@@ -1,11 +1,7 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { service } = Ember.inject;
-
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-
-  ajax: service('ajax'),
 
   titleToken() {
     return this.get('i18n').t('titles.host.contact');
