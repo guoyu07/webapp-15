@@ -8,11 +8,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
    * See: https://github.com/kimroen/ember-cli-document-title/issues/42
    */
   model(params) {
-    return this.get('store').findRecord('wwoofer', params.wwoofer_id).then((wwoofer)=> {
+    return this.get('store').findRecord('wwoofer', params['wwoofer_id']).then((wwoofer)=> {
       return this.get('store').findRecord('user', wwoofer.get('user.id')).then(()=> {
         return wwoofer;
-      })
-    })
+      });
+    });
   },
 
   titleToken(model) {

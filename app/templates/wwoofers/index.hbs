@@ -44,7 +44,6 @@
             <tr>
               <th>{{t 'wwoofers.index.wwoofer1'}}</th>
               <th>{{t 'wwoofers.index.wwoofer2'}}</th>
-              <th>{{t 'literal.email'}}</th>
               <th class="hidden-xs hidden-sm">{{t 'wwoofers.index.city'}}</th>
               <th class="hidden-xs hidden-sm">{{t 'wwoofers.index.country'}}</th>
               <th>{{t 'wwoofers.index.actions'}}</th>
@@ -55,17 +54,10 @@
               <tr>
                 <td>{{wwoofer.user.fullName}}</td>
                 <td>{{wwoofer.fullName2}}</td>
-                <td>{{wwoofer.user.email}}</td>
                 <td class="hidden-xs hidden-sm">{{wwoofer.address.city}}</td>
                 <td class="hidden-xs hidden-sm">{{wwoofer.address.country.name}}</td>
                 <td>
-                  {{#link-to "wwoofer" wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
-                  {{#if sessionUser.user.isAdmin}}
-                    |
-                    {{#link-to "wwoofer.edit" wwoofer.id}}{{t 'literal.edit'}}{{/link-to}}
-                    |
-                    {{#link-to "user.memberships" wwoofer.user}}{{t 'wwoofers.index.viewMemberships'}}{{/link-to}}
-                  {{/if}}
+                  {{#link-to 'wwoofer.index' wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
                 </td>
               </tr>
             {{/each}}

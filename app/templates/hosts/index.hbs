@@ -9,16 +9,15 @@
           {{t 'hosts.index.dates'}}
         </label>
         <div class="col-xs-12 col-sm-4 form-control-search-months">
-          {{#power-select
+          {{#power-select-multiple
           selected=selectedMonths
           options=monthsService.allMonths
           searchField='label'
           placeholder=(t 'hosts.index.months.prompt')
           onchange=(action 'chooseMonths')
-          multiple=true
           as |month|}}
             <span class="text-capitalize">{{month.label}}</span>
-          {{/power-select}}
+          {{/power-select-multiple}}
         </div>
         <div class="col-xs-6 col-sm-3 form-control-search-capacity">
           {{#power-select

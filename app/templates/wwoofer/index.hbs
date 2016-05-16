@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h1 class="capitalize">
-    {{model.user.fullName}}
+  <h1>
+    <span class="capitalize">{{model.user.fullName}}</span>
     {{#if model.fullName2}}
-      <small>{{t 'wwoofer.index.and'}} {{model.fullName2}}</small>
+      <small>{{t 'wwoofer.index.and'}} <span class="capitalize">{{model.fullName2}}</span></small>
     {{/if}}
   </h1>
 </div>
@@ -37,14 +37,6 @@
               <span class="glyphicon glyphicon-user mrx"></span>
               <span class="capitalize">{{model.fullName2}}</span>
               ({{birthdate-to-age model.birthDate2}} {{t 'wwoofer.index.yearsOld'}})
-            </td>
-          </tr>
-        {{/if}}
-        {{#if model.user.phone}}
-          <tr>
-            <td>
-              <span class="glyphicon glyphicon-earphone mrx"></span>
-              {{model.user.phone}}
             </td>
           </tr>
         {{/if}}
