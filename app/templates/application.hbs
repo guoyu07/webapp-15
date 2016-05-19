@@ -29,8 +29,8 @@
             <ul class="dropdown-menu" role="menu">
               {{#if sessionUser.user.wwoofer.id}}
                 <li>
-                  {{#link-to 'wwoofer.edit' sessionUser.user.wwoofer}}
-                    {{profile-status type="wwoofer" user=sessionUser.user class="prx"}} {{t 'navbar.editWwooferProfile'}}
+                  {{#link-to 'wwoofer.edit' sessionUser.user.wwoofer.id}}
+                    {{profile-status type='wwoofer' user=sessionUser.user class='prx'}} {{t 'navbar.editWwooferProfile'}}
                   {{/link-to}}
                 </li>
               {{else}}
@@ -43,8 +43,8 @@
               <li class="divider hidden-xs"></li>
               {{#if sessionUser.user.host.id}}
                 <li>
-                  {{#link-to 'host.edit' sessionUser.user.host}}
-                    {{profile-status type="host" user=sessionUser.user class="prx"}}
+                  {{#link-to 'host.edit' sessionUser.user.host.id}}
+                    {{profile-status type='host' user=sessionUser.user class='prx'}}
                     {{t 'navbar.editHostProfile'}}
                   {{/link-to}}
                 </li>

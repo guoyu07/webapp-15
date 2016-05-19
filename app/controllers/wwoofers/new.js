@@ -24,9 +24,13 @@ export default Ember.Controller.extend(Validations, {
         this.set('didValidate', true);
         if (validations.get('isValid')) {
 
-          // Create the wwoofer and redirect user to payment page
+          // Create the wwoofer
           wwoofer.save().then(()=> {
             this.get('notify').success(this.get('i18n').t('notify.wwooferCreated'));
+
+            // Refresh the session across all tabs
+            this.get('sessionUser').refresh();
+            
             this.transitionToRoute('wwoofer.address', wwoofer);
           });
         } else {

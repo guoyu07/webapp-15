@@ -14,9 +14,13 @@ export default Ember.Controller.extend(Validations, {
         this.set('didValidate', true);
         if (validations.get('isValid')) {
 
-          // Create the host and redirect user to the address page
+          // Create the host
           host.save().then(()=> {
             this.get('notify').success(this.get('i18n').t('notify.hostCreated'));
+
+            // Refresh the session across all tabs
+            this.get('sessionUser').refresh();
+
             this.transitionToRoute('host.address', host);
           });
         } else {

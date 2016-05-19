@@ -43,6 +43,15 @@ export default Ember.Controller.extend(Validations, {
             if (this.get('i18n.locale') !== user.get('locale')) {
               this.get('translationsFetcher').fetch();
             }
+
+            // Refresh the session across all tabs
+            this.get('sessionUser').refresh();
+          }).catch((err)=> {
+            if (Ember.get(err, 'errors.firstObject.status') === '409') {
+              this.get('notify').error(this.get('i18n').t('notify.emailAddressInUse'));
+            } else {
+              throw err;
+            }
           });
         } else {
           this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));

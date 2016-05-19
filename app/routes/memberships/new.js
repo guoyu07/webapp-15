@@ -79,6 +79,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
           if (result.success === true) {
             this.get('sessionUser.user').then((user)=> {
+              // Refresh the session across all tabs
+              this.get('sessionUser').refresh();
+
               window.location.replace(`user/${user.id}/memberships`);
             });
           } else {
