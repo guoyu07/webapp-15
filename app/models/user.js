@@ -55,10 +55,8 @@ export default DS.Model.extend({
   /**
    * Order memberships by expiration date (most recent first).
    */
-  sortedMemberships: computed('memberships.[]', function() {
-    let memberships = this.get('memberships');
-    return memberships.sortBy('expireAt').reverseObjects();
-  }),
+  expireAtSortingDesc: ['expireAt:desc'],
+  sortedMemberships: computed.sort('memberships', 'expireAtSortingDesc'),
 
   /**
    * All memberships computed properties.
