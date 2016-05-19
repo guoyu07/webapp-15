@@ -13,6 +13,9 @@ App = Ember.Application.extend({
   Resolver
 });
 
+// Disable caching to fix IE-related bugs
+Ember.$.ajaxSetup({ cache: false });
+
 loadInitializers(App, config.modulePrefix);
 
 export default App;
