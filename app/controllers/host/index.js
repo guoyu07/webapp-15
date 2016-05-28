@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import Validations from 'webapp/validations/review';
 
 const { computed } = Ember;
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Validations, {
   /**
    * Indicates whether the host contact info can be displayed to the current user.
    */
@@ -21,6 +22,9 @@ export default Ember.Controller.extend({
     return this.get('sessionUser.user.id') === this.get('model.user.id');
   }),
 
+  review: null,
+  showReviewModal: false,
+
   /**
    * Indicates whether the edit profile buttons should be displayed.
    */
@@ -36,6 +40,64 @@ export default Ember.Controller.extend({
       } else {
         this.send('addUserFavorite', host, user);
       }
+    },
+    /**
+     * Submits a review for the current host.
+     */
+    submitReview(review) {
+      
+      this.validate().then(({ m, validations })=> {
+
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
+
+          this.set('isSubmittingReview', true);
+
+          let promise = review.save();
+
+          promise.then(()=> {
+            this.set('reviewText', null);
+            this.set('showReviewModal', false);
+
+            this.get('notify').success('Your review was submitted to our team for validation.');
+          });
+
+          promise.catch(() => {
+            this.get('notify').error({ html: this.get('i18n').t('notify.submissionError') });
+          });
+
+          promise.finally(() => {
+            this.set('isSubmittingReview', false);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
+      });
+    },
+    /**
+     * Opens the review modal.
+     */
+    openReviewModal() {
+      let review = this.get('review');
+      
+      if (!review) {
+        let host = this.get('model');
+        let wwoofer = this.get('sessionUser.user.wwoofer');
+
+        review = this.store.createRecord('review', {
+          recipient: 'host',
+          host,
+          wwoofer
+        });
+        
+        this.set('review', review);
+      }
+      
+      this.set('showReviewModal', true);
+    },
+
+    closeReviewModal() {
+      this.set('showReviewModal', false);
     }
   }
 });

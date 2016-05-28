@@ -41,6 +41,7 @@ export default DS.Model.extend({
     inverse: 'favorites',
     async: false
   }),
+  reviews: DS.hasMany('review', { async: true }),
 
   // First photo
   mainPhoto: computed.readOnly('photos.firstObject'),

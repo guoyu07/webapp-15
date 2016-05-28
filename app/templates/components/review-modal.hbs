@@ -1,0 +1,31 @@
+{{#modal-dialog close=close translucentOverlay=true}}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" {{action close}} aria-label={{t 'literal.close'}}>
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">
+      Write a Review
+    </h4>
+  </div>
+  <div class="modal-body">
+    Rules:
+    <ul>
+      <li>Be polite and respectful</li>
+      <li>Stick to the facts, avoid sharing personal opinions or 3rd party information</li>
+      <li>Your review must be helpful to the community</li>
+      <li>No personal attacks or insults, defamation, inappropriate or unrelated content</li>
+    </ul>
+    {{#forms/form-group valuePath='review.text' as |showError|}}
+      <label for="text" class="control-label">Your Review</label>
+
+      {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
+      {{error-display error=validations.attrs.review.text showError=showError}}
+    {{/forms/form-group}}
+    <small>Your review must be approved by our team before publication.</small>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" {{action submitReview review}} disabled={{isSubmitting}}>
+      Submit
+    </button>
+  </div>
+{{/modal-dialog}}

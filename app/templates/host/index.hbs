@@ -199,6 +199,30 @@
         {{convert-breaklines model.fullDescription}}
       </div>
     </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-comment mrx"></span>
+          {{model.reviews.length}} Reviews
+        </h3>
+      </div>
+      <ul class="list-group">
+        {{#each model.reviews as |review|}}
+          <li class="list-group-item">
+            <p>{{convert-breaklines review.text}}</p>
+            <p class="text-right text-muted small mbn">
+              {{#unless review.approvedAt}}
+                <span class="label label-info">Pending Approval</span>
+              {{/unless}}
+              {{review.wwoofer.user.firstName}} - {{moment-format review.createdAt 'MMMM YYYY'}}
+            </p>
+          </li>
+        {{/each}}
+      </ul>
+      <div class="panel-footer text-right">
+        <button class="btn btn-primary btn-sm" onclick={{action 'openReviewModal'}}><span class="glyphicon glyphicon-pencil"></span> Write a review</button>
+      </div>
+    </div>
   </div>
 
   <div class="col-md-3">
@@ -273,3 +297,13 @@
     </div>
   </div>
 </div>
+
+{{#if showReviewModal}}
+  {{review-modal
+  review=newReview
+  validations=validations
+  didValidate=didValidate
+  isSubmitting=isSubmittingReview
+  submitReview=(action 'submitReview')
+  close=(action 'closeReviewModal')}}
+{{/if}}
