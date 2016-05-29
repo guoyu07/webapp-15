@@ -1,0 +1,75 @@
+<div class="page-header">
+  <h1>
+    {{t 'reviews.index.title'}}
+  </h1>
+</div>
+
+<div class="row mbm">
+  <div class="col-xs-12 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'reviews.index.searchTitle'}}</h3>
+      </div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="searchTerm">{{t 'reviews.index.text.label'}}</label>
+            {{input type='text'
+            id='searchTerm'
+            class='form-control'
+            value=searchTerm
+            enter='search'}}
+          </div>
+          <div class="form-group">
+            <label for="pendingApproval" class="checkbox-inline">
+              <input type="checkbox" id="pendingApproval" checked={{pendingApproval}} onclick={{action 'togglePendingApproval'}} />
+              {{t 'reviews.index.pendingApproval.label'}}
+            </label>
+          </div>
+          <button {{action 'search'}} class="btn btn-block btn-primary" disabled={{isLoading}}>
+            {{t 'literal.search'}}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-9">
+    {{#if isLoading}}
+      {{partial 'loading'}}
+    {{else}}
+      {{#if reviews}}
+        <div class="table-responsive">
+          <table class="table table-striped table-bordere table-hover">
+            <thead>
+            <tr>
+              <th>{{t 'reviews.index.reviewer'}}</th>
+              <th>{{t 'reviews.index.text'}}</th>
+              <th class="hidden-xs hidden-sm">{{t 'reviews.index.submittedAt'}}</th>
+              <th>{{t 'reviews.index.actions'}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each reviews as |review|}}
+              <tr>
+                <td>{{review.reviewer.fullName}}</td>
+                <td>{{truncate review.text limit=80}}</td>
+                <td class="hidden-xs hidden-sm">{{moment-format review.createdAt 'll'}}</td>
+                <td>
+                  {{#link-to 'wwoofer.index' review.id}}{{t 'literal.view'}}{{/link-to}}
+                </td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+
+          <p class="text-center">
+            {{list-pagination currentPage=page totalPages=totalPages targetRoute='reviews'}}
+          </p>
+        </div>
+      {{else}}
+        {{t 'reviews.index.noResults'}}
+      {{/if}}
+    {{/if}}
+  </div>
+</div>

@@ -1,4 +1,7 @@
+import Ember from 'ember';
 import DS from 'ember-data';
+
+const { computed } = Ember;
 
 export default DS.Model.extend({
   text: DS.attr('string'),
@@ -10,5 +13,9 @@ export default DS.Model.extend({
 
   // Relationships
   host: DS.belongsTo('host', { async: true }),
-  wwoofer: DS.belongsTo('wwoofer', { async: true })
+  wwoofer: DS.belongsTo('wwoofer', { async: true }),
+
+  reviewer: computed('recipient', 'host.user', 'wwoofer.user', function() {
+    return this.get('recipient') === 'host' ? this.get('wwoofer.user') : this.get('host.user');
+  })
 });
