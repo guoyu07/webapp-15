@@ -4,28 +4,27 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <h4 class="modal-title">
-      Write a Review
+      Approve a Review
     </h4>
   </div>
   <div class="modal-body">
-    Rules:
+    Please make sure that the review:
     <ul>
-      <li>Be polite and respectful</li>
-      <li>Stick to the facts, avoid sharing personal opinions or third party information</li>
-      <li>Your review must be helpful to the community</li>
-      <li>No personal attacks or insults, defamation, inappropriate or unrelated content</li>
+      <li>is polite and respectful</li>
+      <li>sticks to the facts and avoids personal opinions or third party information</li>
+      <li>is helpful to the community</li>
+      <li>does not contain personal attacks or insults, defamation, inappropriate or unrelated content</li>
     </ul>
     {{#forms/form-group valuePath='review.text' as |showError|}}
-      <label for="text" class="control-label">Your Review</label>
+      <label for="text" class="control-label">Edit the Review (fix typos, remove extra spaces, ...)</label>
 
       {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
       {{error-display error=validations.attrs.review.text showError=showError}}
     {{/forms/form-group}}
-    <small>Your review must be approved by our team before publication.</small>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" {{action submitReview review}} disabled={{isSubmitting}}>
-      Submit
+    <button type="button" class="btn btn-primary" {{action approveReview review}} disabled={{isApproving}}>
+      Approve
     </button>
   </div>
 {{/modal-dialog}}

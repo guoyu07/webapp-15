@@ -207,7 +207,7 @@
         </h3>
       </div>
       <ul class="list-group">
-        {{#each model.reviews as |review|}}
+        {{#each model.sortedReviews as |review|}}
           <li class="list-group-item">
             <p>{{convert-breaklines review.text}}</p>
             <p class="text-right text-muted small mbn">
@@ -300,7 +300,7 @@
 
 {{#if showReviewModal}}
   {{review-modal
-  review=newReview
+  review=review
   validations=validations
   didValidate=didValidate
   isSubmitting=isSubmittingReview

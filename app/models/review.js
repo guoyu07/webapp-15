@@ -15,6 +15,9 @@ export default DS.Model.extend({
   host: DS.belongsTo('host', { async: true }),
   wwoofer: DS.belongsTo('wwoofer', { async: true }),
 
+  isHostReview: computed.equal('recipient', 'host'),
+  isWwooferReview: computed.equal('recipient', 'wwoofer'),
+  
   reviewer: computed('recipient', 'host.user', 'wwoofer.user', function() {
     return this.get('recipient') === 'host' ? this.get('wwoofer.user') : this.get('host.user');
   })

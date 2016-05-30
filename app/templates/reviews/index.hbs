@@ -53,10 +53,15 @@
             {{#each reviews as |review|}}
               <tr>
                 <td>{{review.reviewer.fullName}}</td>
-                <td>{{truncate review.text limit=80}}</td>
+                <td>{{truncate review.text limit=70}}</td>
                 <td class="hidden-xs hidden-sm">{{moment-format review.createdAt 'll'}}</td>
                 <td>
-                  {{#link-to 'wwoofer.index' review.id}}{{t 'literal.view'}}{{/link-to}}
+                  {{#if review.isHostReview}}
+                    {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
+                  {{else}}
+                    {{#link-to 'wwoofer.index' review.wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
+                  {{/if}} |
+                  <a href="#" {{action 'openReviewModal' review}}>Approve</a>
                 </td>
               </tr>
             {{/each}}
@@ -73,3 +78,13 @@
     {{/if}}
   </div>
 </div>
+
+{{#if review}}
+  {{approve-review-modal
+  review=review
+  validations=validations
+  didValidate=didValidate
+  isApproving=isApprovingReview
+  approveReview=(action 'approveReview')
+  close=(action 'closeReviewModal')}}
+{{/if}}

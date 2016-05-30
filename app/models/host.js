@@ -46,6 +46,10 @@ export default DS.Model.extend({
   // First photo
   mainPhoto: computed.readOnly('photos.firstObject'),
 
+  // Review sorted by creation date (most recent first)
+  createdAtSortingDesc: ['createdAt:desc'],
+  sortedReviews: computed.sort('reviews', 'createdAtSortingDesc'),
+
   /**
    * Returns the list of activities offered by the host.
    */

@@ -64,6 +64,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       this.controller.set('page', 1);
 
       this.refresh();
+    },
+    refresh() {
+      this.refresh();
     }
   }
 });
