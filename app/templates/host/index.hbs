@@ -42,44 +42,6 @@
               {{/if}}
             </td>
           </tr>
-          {{#if sessionUser.user.isAdmin}}
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-envelope mrx"></span>
-                {{mail-to model.user.email (truncate model.user.email limit=28)}}
-              </td>
-            </tr>
-          {{/if}}
-          <tr>
-            <td>
-              <span class="glyphicon glyphicon-earphone mrx"></span>
-              {{#if canSeeContactInfo}}
-                {{#if model.noPhone}}
-                  -
-                {{else}}
-                  {{model.user.phone}}
-                {{/if}}
-              {{else}}
-                {{members-only}}
-              {{/if}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="glyphicon glyphicon-globe mrx"></span>
-              {{#if canSeeContactInfo}}
-                {{#if model.webSite}}
-                  <a href={{model.webSite}} title={{model.webSite}} target="_blank">
-                    {{truncate model.webSite limit=28}}
-                  </a>
-                {{else}}
-                  {{t 'host.index.noWebsite'}}
-                {{/if}}
-              {{else}}
-                {{members-only}}
-              {{/if}}
-            </td>
-          </tr>
           <tr>
             <td>
               <span class="glyphicon glyphicon-map-marker mrx"></span>
@@ -118,6 +80,13 @@
           </tr>
         </tbody>
       </table>
+      {{#if showEditProfileButton}}
+        <ul class="list-group">
+          {{#link-to 'host.edit' model.id class='list-group-item list-group-item-default text-center'}}
+            {{t 'literal.editProfile'}}
+          {{/link-to}}
+        </ul>
+      {{/if}}
     </div>
 
     {{#if model.activities}}
@@ -203,11 +172,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">
           <span class="glyphicon glyphicon-comment mrx"></span>
-          {{model.reviews.length}} Reviews
+          {{model.displayedReviews.length}} Reviews
         </h3>
       </div>
       <ul class="list-group">
-        {{#each model.sortedReviews as |review|}}
+        {{#each model.displayedReviews as |review|}}
           <li class="list-group-item">
             <p>{{convert-breaklines review.text}}</p>
             <p class="text-right text-muted small mbn">
@@ -217,35 +186,75 @@
               {{review.wwoofer.user.firstName}} - {{moment-format review.createdAt 'MMMM YYYY'}}
             </p>
           </li>
+        {{else}}
+          <li class="list-group-item">This host doesn't have reviews yet.</li>
         {{/each}}
       </ul>
       <div class="panel-footer text-right">
-        <button class="btn btn-primary btn-sm" onclick={{action 'openReviewModal'}}><span class="glyphicon glyphicon-pencil"></span> Write a review</button>
+        <button class="btn btn-primary btn-sm" disabled={{disableNewReview}} onclick={{action 'openReviewModal'}}>
+          <span class="glyphicon glyphicon-pencil"></span> Write a review
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="col-md-3">
-    {{#link-to 'host.contact' model.id class="btn btn-block btn-primary mbm" disabled=model.noEmail}}
-      <span class="glyphicon glyphicon-envelope mrx"></span>
-      {{t 'host.index.contactHost'}}
-    {{/link-to}}
-    {{#if showEditProfileButton}}
-      {{#link-to 'host.edit' model.id class="btn btn-block btn-default mbm"}}
-        <span class="glyphicon glyphicon-pencil mrx"></span>
-        {{t 'literal.editProfile'}}
-      {{/link-to}}
-    {{else}}
-      <button class="btn btn-block btn-default mbm" {{action 'toggleFavorites' model sessionUser.user}}>
-        {{#if model.isFavorite}}
-          <span class="glyphicon glyphicon-heart mrx"></span>
-          {{t 'common.removeFavorite'}}
-        {{else}}
-          <span class="glyphicon glyphicon-heart-empty mrx"></span>
-          {{t 'common.addFavorite'}}
+  <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{t 'host.index.contact' firstName=model.user.firstName}}
+        </h3>
+      </div>
+      <ul class="list-group">
+        {{#if sessionUser.user.isAdmin}}
+          <li class="list-group-item">
+            <span class="glyphicon glyphicon-envelope mrx"></span>
+            {{mail-to model.user.email (truncate model.user.email limit=28)}}
+          </li>
         {{/if}}
-      </button>
-    {{/if}}
+        <li class="list-group-item">
+          <span class="glyphicon glyphicon-earphone mrx"></span>
+          {{#if canSeeContactInfo}}
+            {{#if model.noPhone}}
+              {{t 'host.index.noPhone'}}
+            {{else}}
+              {{model.user.phone}}
+            {{/if}}
+          {{else}}
+            {{members-only}}
+          {{/if}}
+        </li>
+        <li class="list-group-item">
+          <span class="glyphicon glyphicon-globe mrx"></span>
+          {{#if canSeeContactInfo}}
+            {{#if model.webSite}}
+              <a href={{model.webSite}} title={{model.webSite}} target="_blank">
+                {{truncate model.webSite limit=28}}
+              </a>
+            {{else}}
+              {{t 'host.index.noWebsite'}}
+            {{/if}}
+          {{else}}
+            {{members-only}}
+          {{/if}}
+        </li>
+        {{#link-to 'host.contact' model.id class='list-group-item list-group-item-primary text-center'}}
+          {{t 'host.index.sendMessage'}}
+        {{/link-to}}
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <button class="btn btn-block btn-default mbm" {{action 'toggleFavorites' model sessionUser.user}}>
+      {{#if model.isFavorite}}
+        <span class="glyphicon glyphicon-heart mrx"></span>
+        {{t 'common.removeFavorite'}}
+      {{else}}
+        <span class="glyphicon glyphicon-heart-empty mrx"></span>
+        {{t 'common.addFavorite'}}
+      {{/if}}
+    </button>
 
     <div class="panel panel-default">
       <div class="panel-heading">

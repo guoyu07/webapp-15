@@ -50,6 +50,8 @@ export default DS.Model.extend({
   createdAtSortingDesc: ['createdAt:desc'],
   sortedReviews: computed.sort('reviews', 'createdAtSortingDesc'),
 
+  displayedReviews: computed.filterBy('sortedReviews', 'isNew', false),
+
   /**
    * Returns the list of activities offered by the host.
    */

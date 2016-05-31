@@ -30,6 +30,16 @@ export default Ember.Controller.extend(Validations, {
    */
   showEditProfileButton: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile'),
 
+  /**
+   * Disable new review button if the current wwoofer has already reviewed the host.
+   */
+  disableNewReview: computed('model.reviews.@each.wwoofer.id', 'sessionUser.user.wwoofer.id', function () {
+    let wwooferIds = this.get('model.reviews').filterBy('isNew', false).mapBy('wwoofer.id');
+    let wwooferId = this.get('sessionUser.user.wwoofer.id');
+
+    return wwooferIds.contains(wwooferId);
+  }),
+
   actions: {
     /**
      * Adds or removes the host to the user's favorites.
@@ -60,10 +70,6 @@ export default Ember.Controller.extend(Validations, {
             this.set('showReviewModal', false);
 
             this.get('notify').success('Your review was submitted to our team for validation.');
-          });
-
-          promise.catch(() => {
-            this.get('notify').error({ html: this.get('i18n').t('notify.submissionError') });
           });
 
           promise.finally(() => {
