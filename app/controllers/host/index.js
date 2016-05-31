@@ -33,7 +33,7 @@ export default Ember.Controller.extend(Validations, {
   /**
    * Disable new review button if the current wwoofer has already reviewed the host.
    */
-  disableNewReview: computed('model.reviews.@each.wwoofer.id', 'sessionUser.user.wwoofer.id', function () {
+  disableNewReview: computed('model.reviews.@each.wwoofer', 'sessionUser.user.wwoofer.id', function () {
     let wwooferIds = this.get('model.reviews').filterBy('isNew', false).mapBy('wwoofer.id');
     let wwooferId = this.get('sessionUser.user.wwoofer.id');
 
