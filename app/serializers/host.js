@@ -7,7 +7,9 @@ export default ApplicationSerializer.extend({
 
     json.farmName = Ember.String.capitalize(json.farmName);
     json.shortDescription = Ember.String.capitalize(json.shortDescription);
-    json.travelDetails = Ember.String.capitalize(json.travelDetails);
+    if (json.travelDetails) {
+      json.travelDetails = Ember.String.capitalize(json.travelDetails);
+    }
 
     return json;
   }
