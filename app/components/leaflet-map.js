@@ -52,9 +52,8 @@ export default Ember.Component.extend({
     });
 
     // Set the tile layer
-    let tileLayer = new L.tileLayer.provider('MapQuestOpen');
-    tileLayer._url = 'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
-    tileLayer.addTo(this.map);
+    let mapQuestLayer = MQ.mapLayer();
+    mapQuestLayer.addTo(this.map);
 
     // Attach events to the map
     this.map.on('dragend', this.mapDidMove, this);
