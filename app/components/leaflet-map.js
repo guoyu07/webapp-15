@@ -72,7 +72,7 @@ export default Ember.Component.extend({
       this.map.setView([latitude, longitude], zoom);
     } else {
       this.map.fitBounds([
-        [42, -3], // south west
+        [43, -3], // south west
         [50, 8] // north east
       ]);
     }
