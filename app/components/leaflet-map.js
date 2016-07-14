@@ -73,7 +73,7 @@ export default Ember.Component.extend({
     } else {
       this.map.fitBounds([
         [43, -3], // south west
-        [50, 8] // north east
+        [50, 7] // north east
       ]);
     }
   },
