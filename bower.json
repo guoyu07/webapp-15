@@ -8,12 +8,12 @@
     "bootstrap": "~3.3.2",
     "jquery-file-upload": "~9.5.8",
     "jquery-cookie": "~1.4.1",
-    "leaflet-providers": "~1.0.12",
     "trackjs": "~2.3.1",
     "leaflet.markercluster": "~0.4.0",
     "moment": ">= 2.8.0",
     "moment-timezone": ">= 0.1.0",
     "leaflet": "~0.7.7",
-    "braintree-web": "^2.22.2"
+    "braintree-web": "^2.22.2",
+    "leaflet-plugins": "^1.7.0"
   }
 }

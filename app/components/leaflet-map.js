@@ -52,8 +52,8 @@ export default Ember.Component.extend({
     });
 
     // Set the tile layer
-    let mapQuestLayer = MQ.mapLayer();
-    mapQuestLayer.addTo(this.map);
+    let googleLayer = new L.Google('ROADMAP');
+    this.map.addLayer(googleLayer);
 
     // Attach events to the map
     this.map.on('dragend', this.mapDidMove, this);
@@ -72,8 +72,8 @@ export default Ember.Component.extend({
       this.map.setView([latitude, longitude], zoom);
     } else {
       this.map.fitBounds([
-        [41.263, -5.466], // south west
-        [51.268, 9.868] // north east
+        [42, -3], // south west
+        [50, 8] // north east
       ]);
     }
   },
