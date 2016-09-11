@@ -30,7 +30,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   title(tokens) {
     tokens = Ember.makeArray(tokens);
     tokens.unshift('WWOOF France');
-    return tokens.reverse().join(' · ');
+    return tokens.reverse().join(' — ');
   },
 
   /**
