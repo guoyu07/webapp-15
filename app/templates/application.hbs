@@ -106,9 +106,11 @@
               </li>
               <li class="divider hidden-xs"></li>
               <li>
-                {{#link-to 'contact'}}
-                  {{t 'menu.contact'}}
-                {{/link-to}}
+                {{#if isEnglishLocale}}
+                  <a href="http://en.wwoof.fr/contact/">{{t 'menu.contact'}}</a>
+                {{else}}
+                  <a href="http://www.wwoof.fr/contact/">{{t 'menu.contact'}}</a>
+                {{/if}}
               </li>
               <li class="divider hidden-xs"></li>
               <li>
