@@ -1,10 +1,10 @@
 <h1>{{t 'memberships.new.title'}}</h1>
 <h4 class="mtm">
   <small>
-    {{#if showWwoofMemberships}}
+    {{#if isWwooferMembership}}
       {{t 'memberships.new.leadWwoof'}}
     {{/if}}
-    {{#if showHostMemberships}}
+    {{#if isHostMembership}}
       {{t 'memberships.new.leadHost'}}
     {{/if}}
   </small>
@@ -18,10 +18,12 @@
         </h3>
       </div>
       <div class="panel-body">
-        <div class="alert alert-warning" role="alert">
-          {{t 'memberships.new.franceOnly'}}
-          {{t 'memberships.new.otherCountries'}}
-        </div>
+        {{#if isWwooferMembership}}
+          <div class="alert alert-warning" role="alert">
+            {{t 'memberships.new.franceOnly'}}
+            {{t 'memberships.new.otherCountries'}}
+          </div>
+        {{/if}}
         <form class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label">
