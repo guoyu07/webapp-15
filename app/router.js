@@ -8,7 +8,6 @@ const Router = Ember.Router.extend(GooglePageviewMixin, {
 
 Router.map(function() {
   this.route('login');
-  this.route('contact');
   this.route('reset-password');
   this.route('hosts', function() {
     this.route('new');

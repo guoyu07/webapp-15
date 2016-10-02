@@ -47,8 +47,8 @@ module.exports = function(defaults) {
     destDir: '/assets/images'
   });
 
-  // Leaflet providers
-  app.import('bower_components/leaflet-providers/leaflet-providers.js');
+  // Leaflet plugins
+  app.import('bower_components/leaflet-plugins/layer/tile/Google.js');
 
   // Braintree
   app.import('bower_components/braintree-web/dist/braintree.js');

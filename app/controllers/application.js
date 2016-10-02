@@ -33,6 +33,8 @@ export default Ember.Controller.extend(Validations, {
   hostsIsActive: computed.match('currentRouteName', /host.index|host.contact/),
   wwoofersIsActive: computed.match('currentRouteName', /wwoofer.index/),
 
+  isEnglishLocale: computed.equal('i18n.locale', 'en'),
+
   actions: {
     impersonateUser() {
 

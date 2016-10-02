@@ -50,8 +50,8 @@ export default Ember.Controller.extend({
     ];
   }),
 
-  showWwoofMemberships: computed.equal('type', 'W'),
-  showHostMemberships: computed.equal('type', 'H'),
+  isWwooferMembership: computed.equal('type', 'W'),
+  isHostMembership: computed.equal('type', 'H'),
   itemCodeIncludesShipping: computed.match('itemCode', /WOB1|WOB2/),
 
   hasUserId: computed.notEmpty('userId'),
@@ -61,9 +61,9 @@ export default Ember.Controller.extend({
    * Determines whether the shipping fees menu should be displayed.
    * It is only displayed for Wwoofer memberships that include the book.
    */
-  showShippingFees: computed('showWwoofMemberships', 'itemCode', function() {
+  showShippingFees: computed('isWwooferMembership', 'itemCode', function() {
     let showShippingFees = false;
-    if (this.get('showWwoofMemberships') && this.get('itemCodeIncludesShipping')) {
+    if (this.get('isWwooferMembership') && this.get('itemCodeIncludesShipping')) {
       showShippingFees = true;
     }
     return showShippingFees;

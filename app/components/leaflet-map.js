@@ -52,9 +52,8 @@ export default Ember.Component.extend({
     });
 
     // Set the tile layer
-    let tileLayer = new L.tileLayer.provider('MapQuestOpen');
-    tileLayer._url = 'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
-    tileLayer.addTo(this.map);
+    let googleLayer = new L.Google('ROADMAP');
+    this.map.addLayer(googleLayer);
 
     // Attach events to the map
     this.map.on('dragend', this.mapDidMove, this);
@@ -73,8 +72,8 @@ export default Ember.Component.extend({
       this.map.setView([latitude, longitude], zoom);
     } else {
       this.map.fitBounds([
-        [41.263, -5.466], // south west
-        [51.268, 9.868] // north east
+        [43, -3], // south west
+        [50, 7] // north east
       ]);
     }
   },
