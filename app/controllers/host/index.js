@@ -24,6 +24,7 @@ export default Ember.Controller.extend(Validations, {
 
   review: null,
   showReviewModal: false,
+  showDeleteReviewModal: false,
 
   /**
    * Indicates whether the edit profile buttons should be displayed.
@@ -100,7 +101,19 @@ export default Ember.Controller.extend(Validations, {
       this.set('showReviewModal', true);
     },
     deleteReview(review) {
+      let promise = review.destroyRecord();
 
+      promise.then(()=> {
+        this.set('review', null);
+        this.set('showDeleteReviewModal', false);
+      });
+    },
+    openDeleteReviewModal(review) {
+      this.set('review', review);
+      this.set('showDeleteReviewModal', true);
+    },
+    closeDeleteReviewModal() {
+      this.set('showDeleteReviewModal', false);
     },
     closeReviewModal() {
       this.set('showReviewModal', false);

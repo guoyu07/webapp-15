@@ -4,29 +4,29 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <h4 class="modal-title">
-      {{t 'review-modal.title'}}
+      {{t 'edit-modal.title'}}
     </h4>
   </div>
   <div class="modal-body">
-    <strong>{{t 'review-modal.communityGuidelines'}}</strong>
+    <strong>{{t 'edit-modal.communityGuidelines'}}</strong>
     <ul>
-      <li>{{t 'review-modal.guideline1'}}</li>
-      <li>{{t 'review-modal.guideline2'}}</li>
-      <li>{{t 'review-modal.guideline3'}}</li>
-      <li>{{t 'review-modal.guideline4'}}</li>
+      <li>{{t 'edit-modal.guideline1'}}</li>
+      <li>{{t 'edit-modal.guideline2'}}</li>
+      <li>{{t 'edit-modal.guideline3'}}</li>
+      <li>{{t 'edit-modal.guideline4'}}</li>
     </ul>
     {{#forms/form-group valuePath='review.text' as |showError|}}
-      <label for="text" class="control-label">{{t 'review-modal.yourReview'}}</label>
+      <label for="text" class="control-label">{{t 'edit-modal.yourReview'}}</label>
 
       {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
       {{error-display error=validations.attrs.review.text showError=showError}}
     {{/forms/form-group}}
-    <small>{{t 'review-modal.approval'}}</small>
+    <small>{{t 'edit-modal.approval'}}</small>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" {{action submitReview review}} disabled={{review.isSaving}}>
       {{#if review.isNew}}
-        {{t 'review-modal.postReview'}}
+        {{t 'edit-modal.postReview'}}
       {{else}}
         {{t 'literal.save'}}
       {{/if}}
