@@ -4,28 +4,32 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <h4 class="modal-title">
-      Write a Review
+      {{t 'review-modal.title'}}
     </h4>
   </div>
   <div class="modal-body">
-    Rules:
+    <strong>{{t 'review-modal.communityGuidelines'}}</strong>
     <ul>
-      <li>Be polite and respectful</li>
-      <li>Stick to the facts, avoid sharing personal opinions or third party information</li>
-      <li>Your review must be helpful to the community</li>
-      <li>No personal attacks or insults, defamation, inappropriate or unrelated content</li>
+      <li>{{t 'review-modal.guideline1'}}</li>
+      <li>{{t 'review-modal.guideline2'}}</li>
+      <li>{{t 'review-modal.guideline3'}}</li>
+      <li>{{t 'review-modal.guideline4'}}</li>
     </ul>
     {{#forms/form-group valuePath='review.text' as |showError|}}
-      <label for="text" class="control-label">Your Review</label>
+      <label for="text" class="control-label">{{t 'review-modal.yourReview'}}</label>
 
       {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
       {{error-display error=validations.attrs.review.text showError=showError}}
     {{/forms/form-group}}
-    <small>Your review must be approved by our team before publication.</small>
+    <small>{{t 'review-modal.approval'}}</small>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" {{action submitReview review}} disabled={{isSubmitting}}>
-      Submit
+    <button type="button" class="btn btn-primary" {{action submitReview review}} disabled={{review.isSaving}}>
+      {{#if review.isNew}}
+        {{t 'review-modal.postReview'}}
+      {{else}}
+        {{t 'literal.save'}}
+      {{/if}}
     </button>
   </div>
 {{/modal-dialog}}

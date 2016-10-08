@@ -61,32 +61,26 @@ export default Ember.Controller.extend(Validations, {
         this.set('didValidate', true);
         if (validations.get('isValid')) {
 
-          this.set('isSubmittingReview', true);
-
+          let isNew = review.get('isNew');
           let promise = review.save();
 
           promise.then(()=> {
-            this.set('reviewText', null);
+            this.set('review', null);
             this.set('showReviewModal', false);
 
-            this.get('notify').success('Your review was submitted to our team for validation.');
-          });
-
-          promise.finally(() => {
-            this.set('isSubmittingReview', false);
+            if (isNew) {
+              this.get('notify').success('Your review was submitted to our team for validation.');
+            }
           });
         } else {
           this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
         }
       });
     },
-    /**
-     * Opens the review modal.
-     */
-    openReviewModal() {
+    writeNewReview() {
       let review = this.get('review');
-      
-      if (!review) {
+
+      if (!review || !review.get('isNew')) {
         let host = this.get('model');
         let wwoofer = this.get('sessionUser.user.wwoofer');
 
@@ -95,13 +89,19 @@ export default Ember.Controller.extend(Validations, {
           host,
           wwoofer
         });
-        
+
         this.set('review', review);
       }
-      
+
       this.set('showReviewModal', true);
     },
+    editReview(review) {
+      this.set('review', review);
+      this.set('showReviewModal', true);
+    },
+    deleteReview(review) {
 
+    },
     closeReviewModal() {
       this.set('showReviewModal', false);
     }
