@@ -177,7 +177,7 @@
       </div>
       <ul class="list-group">
         {{#each model.displayedReviews as |review|}}
-          <li class="list-group-item">
+          <li id="review-{{review.id}}" class="list-group-item">
             <p>
               {{convert-breaklines review.text}}
             </p>
