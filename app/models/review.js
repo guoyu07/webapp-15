@@ -8,8 +8,8 @@ export default DS.Model.extend({
   sessionUser: service('sessionUser'),
 
   text: DS.attr('string'),
+  rating: DS.attr('number'),
   recipient: DS.attr('string'),
-
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
   approvedAt: DS.attr('date'),
@@ -20,6 +20,12 @@ export default DS.Model.extend({
 
   isHostReview: computed.equal('recipient', 'host'),
   isWwooferReview: computed.equal('recipient', 'wwoofer'),
+
+  hasOneStar: computed.gte('rating', 1),
+  hasTwoStars: computed.gte('rating', 2),
+  hasThreeStars: computed.gte('rating', 3),
+  hasFourStars: computed.gte('rating', 4),
+  hasFiveStars: computed.gte('rating', 5),
 
   reviewer: computed('recipient', 'host.user', 'wwoofer.user', function() {
     return this.get('recipient') === 'host' ? this.get('wwoofer.user') : this.get('host.user');

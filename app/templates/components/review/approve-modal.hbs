@@ -17,6 +17,13 @@
     </ul>
     {{#forms/form-group valuePath='review.text' as |showError|}}
       <label for="text" class="control-label">{{t 'approve-modal.instructions'}}</label>
+      <div class="rating mbs">
+        <span class="{{if review.hasFiveStars 'selected'}}">☆</span>
+        <span class="{{if review.hasFourStars 'selected'}}">☆</span>
+        <span class="{{if review.hasThreeStars 'selected'}}">☆</span>
+        <span class="{{if review.hasTwoStars 'selected'}}">☆</span>
+        <span class="{{if review.hasOneStar 'selected'}}">☆</span>
+      </div>
 
       {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
       {{error-display error=validations.attrs.review.text showError=showError}}

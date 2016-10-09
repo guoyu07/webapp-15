@@ -7,5 +7,14 @@ export default buildValidations({
       allowBlank: false,
       max: 1000
     })
+  ],
+  'review.rating': [
+    validator('presence', true),
+    validator('number', {
+      allowString: false,
+      integer: true,
+      gte: 1,
+      lte: 5
+    })
   ]
 });
