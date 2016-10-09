@@ -204,12 +204,6 @@
           <li class="list-group-item">{{t 'host.index.noReviews' firstName=model.user.firstName}}</li>
         {{/each}}
       </ul>
-      <div class="panel-footer text-right">
-        <button class="btn btn-primary btn-sm" disabled={{disableNewReview}} onclick={{action 'writeNewReview'}}>
-          <span class="glyphicon glyphicon-pencil"></span>
-          {{t 'host.index.writeReview'}}
-        </button>
-      </div>
     </div>
   </div>
 
@@ -261,15 +255,21 @@
   </div>
 
   <div class="col-md-3">
-    <button class="btn btn-block btn-default mbm" {{action 'toggleFavorites' model sessionUser.user}}>
-      {{#if model.isFavorite}}
-        <span class="glyphicon glyphicon-heart mrx"></span>
-        {{t 'common.removeFavorite'}}
-      {{else}}
-        <span class="glyphicon glyphicon-heart-empty mrx"></span>
-        {{t 'common.addFavorite'}}
-      {{/if}}
-    </button>
+    <div class="list-group">
+      <button class="list-group-item" onclick={{action 'toggleFavorites' model sessionUser.user}}>
+        {{#if model.isFavorite}}
+          <span class="glyphicon glyphicon-heart mrx"></span>
+          {{t 'common.removeFavorite'}}
+        {{else}}
+          <span class="glyphicon glyphicon-heart-empty mrx"></span>
+          {{t 'common.addFavorite'}}
+        {{/if}}
+      </button>
+      <button class="list-group-item {{if disableNewReview 'disabled'}}" disabled={{disableNewReview}} onclick={{action 'writeNewReview'}}>
+        <span class="glyphicon glyphicon-pencil mrx"></span>
+        {{t 'host.index.writeReview'}}
+      </button>
+    </div>
 
     <div class="panel panel-default">
       <div class="panel-heading">
