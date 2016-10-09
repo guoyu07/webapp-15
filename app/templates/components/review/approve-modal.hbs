@@ -4,19 +4,19 @@
       <span aria-hidden="true">&times;</span>
     </button>
     <h4 class="modal-title">
-      Approve a Review
+      {{t 'approve-modal.title'}}
     </h4>
   </div>
   <div class="modal-body">
-    Please make sure that the review:
+    {{t 'approve-modal.communityGuidelines'}}
     <ul>
-      <li>is polite and respectful</li>
-      <li>sticks to the facts and avoids personal opinions or third party information</li>
-      <li>is helpful to the community</li>
-      <li>does not contain personal attacks or insults, defamation, inappropriate or unrelated content</li>
+      <li>{{t 'approve-modal.guideline1'}}</li>
+      <li>{{t 'approve-modal.guideline2'}}</li>
+      <li>{{t 'approve-modal.guideline3'}}</li>
+      <li>{{t 'approve-modal.guideline4'}}</li>
     </ul>
     {{#forms/form-group valuePath='review.text' as |showError|}}
-      <label for="text" class="control-label">Edit the Review (fix typos, remove extra spaces, ...)</label>
+      <label for="text" class="control-label">{{t 'approve-modal.instructions'}}</label>
 
       {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
       {{error-display error=validations.attrs.review.text showError=showError}}
@@ -24,7 +24,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" {{action approveReview review}} disabled={{isApproving}}>
-      Approve
+      {{t 'literal.approve'}}
     </button>
   </div>
 {{/modal-dialog}}
