@@ -60,8 +60,11 @@
                     {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
                   {{else}}
                     {{#link-to 'wwoofer.index' review.wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
-                  {{/if}} |
-                  <a href="#" {{action 'openReviewModal' review}}>Approve</a>
+                  {{/if}}
+                  {{#unless review.approvedAt}}
+                    |
+                    <a href="#" {{action 'openReviewModal' review}}>Approve</a>
+                  {{/unless}}
                 </td>
               </tr>
             {{/each}}
