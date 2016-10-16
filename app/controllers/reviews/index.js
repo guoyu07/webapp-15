@@ -50,7 +50,7 @@ export default Ember.Controller.extend(Validations, {
           });
 
           promise.then(()=> {
-            this.get('notify').success('The review was approved successfully.');
+            this.get('notify').success(this.get('i18n').t('notify.reviewApproved'));
 
             this.set('review', null);
 
@@ -62,6 +62,7 @@ export default Ember.Controller.extend(Validations, {
           });
 
           promise.finally(() => {
+            review.reload();
             this.set('isApprovingReview', false);
           });
         } else {

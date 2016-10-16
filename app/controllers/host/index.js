@@ -64,7 +64,7 @@ export default Ember.Controller.extend(Validations, {
      * Submits a review for the current host.
      */
     submitReview(review) {
-      
+
       this.validate().then(({ m, validations })=> {
 
         this.set('didValidate', true);
@@ -78,7 +78,7 @@ export default Ember.Controller.extend(Validations, {
             this.set('showReviewModal', false);
 
             if (isNew) {
-              this.get('notify').success('Your review was submitted to our team for validation.');
+              this.get('notify').success(this.get('i18n').t('host.index.reviewSubmitted'));
             }
           });
         } else {
