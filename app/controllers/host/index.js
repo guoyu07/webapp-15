@@ -7,7 +7,7 @@ export default Ember.Controller.extend(Validations, {
   /**
    * Indicates whether the host contact info can be displayed to the current user.
    */
-  canSeeContactInfo: computed.readOnly('sessionUser.user.hasNonExpiredMembership'),
+  isActiveMember: computed.readOnly('sessionUser.user.hasNonExpiredMembership'),
 
   /**
    * Indicates whether the notes about the host should be displayed.
@@ -34,7 +34,15 @@ export default Ember.Controller.extend(Validations, {
   /**
    * Disable new review button if the current wwoofer has already reviewed the host.
    */
-  disableNewReview: computed('model.reviews.@each.wwoofer', 'sessionUser.user.wwoofer.id', function () {
+  disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasNonExpiredWwooferMembership',
+    'model.reviews.@each.wwoofer', 'model.reviews.@each.isNew', 'sessionUser.user.wwoofer.id', function () {
+    if (!this.get('session.isAuthenticated')) {
+      return false;
+    }
+    if (!this.get('sessionUser.user.hasNonExpiredWwooferMembership')) {
+      return true;
+    }
+
     let wwooferIds = this.get('model.reviews').filterBy('isNew', false).mapBy('wwoofer.id');
     let wwooferId = this.get('sessionUser.user.wwoofer.id');
 
@@ -79,6 +87,10 @@ export default Ember.Controller.extend(Validations, {
       });
     },
     writeNewReview() {
+      if (!this.get('session.isAuthenticated')) {
+        return this.transitionToRoute('login');
+      }
+
       let review = this.get('review');
 
       if (!review || !review.get('isNew')) {

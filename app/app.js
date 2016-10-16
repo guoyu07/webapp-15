@@ -20,10 +20,10 @@ Ember.$.ajaxSetup({ cache: false });
 setTimeout(function() {
   let hash = window.location.hash;
   if (hash) {
-    let element = $(hash);
+    let element = Ember.$(hash);
     if (element) {
       let top = element.offset().top - 60;
-      $('html, body').scrollTop(top);
+      Ember.$('html, body').scrollTop(top);
     }
   }
 }, 1500);
