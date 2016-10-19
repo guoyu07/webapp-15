@@ -52,7 +52,7 @@
             <tbody>
             {{#each reviews as |review|}}
               <tr>
-                <td>{{review.reviewer.fullName}}</td>
+                <td>{{review.author.fullName}}</td>
                 <td>{{truncate review.text limit=70}}</td>
                 <td class="hidden-xs hidden-sm">{{moment-format review.createdAt 'll'}}</td>
                 <td>

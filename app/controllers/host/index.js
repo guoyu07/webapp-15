@@ -35,7 +35,7 @@ export default Ember.Controller.extend(Validations, {
    * Disable new review button if the current wwoofer has already reviewed the host.
    */
   disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasNonExpiredWwooferMembership',
-    'model.reviews.@each.wwoofer', 'model.reviews.@each.isNew', 'sessionUser.user.wwoofer.id', function () {
+    'model.reviews.@each.author', 'model.reviews.@each.isNew', 'sessionUser.user.id', function () {
     if (!this.get('session.isAuthenticated')) {
       return false;
     }
@@ -43,10 +43,10 @@ export default Ember.Controller.extend(Validations, {
       return true;
     }
 
-    let wwooferIds = this.get('model.reviews').filterBy('isNew', false).mapBy('wwoofer.id');
-    let wwooferId = this.get('sessionUser.user.wwoofer.id');
+    let authorIds = this.get('model.reviews').filterBy('isNew', false).mapBy('author.id');
+    let userId = this.get('sessionUser.user.id');
 
-    return wwooferIds.contains(wwooferId);
+    return authorIds.contains(userId);
   }),
 
   actions: {
@@ -95,12 +95,11 @@ export default Ember.Controller.extend(Validations, {
 
       if (!review || !review.get('isNew')) {
         let host = this.get('model');
-        let wwoofer = this.get('sessionUser.user.wwoofer');
+        let author = this.get('sessionUser.user');
 
         review = this.store.createRecord('review', {
-          recipient: 'host',
           host,
-          wwoofer
+          author
         });
 
         this.set('review', review);

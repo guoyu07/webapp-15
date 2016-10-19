@@ -183,7 +183,7 @@
                 {{convert-breaklines review.text}}
               </p>
               <p class="text-muted small">
-                {{review.wwoofer.user.firstName}} ({{moment-format review.createdAt 'MMMM YYYY'}})
+                {{review.author.firstName}} ({{moment-format review.createdAt 'MMMM YYYY'}})
                 {{#unless review.approvedAt}}
                   <span class="label label-info">{{t 'host.index.pendingApproval'}}</span>
                 {{/unless}}
