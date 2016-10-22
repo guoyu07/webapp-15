@@ -39,21 +39,17 @@ export default Ember.Controller.extend(Validations, {
         this.set('didValidate', true);
         if (validations.get('isValid')) {
 
-          let url = [config.apiHost, config.apiNamespace, 'reviews', review.get('id'), 'approve'].join('/');
-
           this.set('isApprovingReview', true);
-
           let promise = review.save();
 
           promise.then(()=> {
+            let url = [config.apiHost, config.apiNamespace, 'reviews', review.get('id'), 'approve'].join('/');
             return this.get('ajax').post(url);
           });
 
           promise.then(()=> {
             this.get('notify').success(this.get('i18n').t('notify.reviewApproved'));
-
             this.set('review', null);
-
             this.send('refresh');
           });
 
