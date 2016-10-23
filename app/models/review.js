@@ -9,9 +9,12 @@ export default DS.Model.extend({
 
   text: DS.attr('string'),
   rating: DS.attr('number'),
+  approvedAt: DS.attr('date'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
-  approvedAt: DS.attr('date'),
+
+  replyText: DS.attr('string'),
+  replyApprovedAt: DS.attr('date'),
 
   // Relationships
   host: DS.belongsTo('host', { async: true }),
@@ -39,5 +42,9 @@ export default DS.Model.extend({
   canEdit: computed('sessionUser.user.isAdmin', 'isCurrentUserAuthor', 'approvedAt', function () {
     let authorCanEdit = this.get('isCurrentUserAuthor') && Ember.isEmpty(this.get('approvedAt'));
     return this.get('sessionUser.user.isAdmin') || authorCanEdit;
+  }),
+
+  replyTextCharLeft: computed('replyText.length', function () {
+    return Math.max(0, 1000 - this.get('replyText.length'));
   })
 });

@@ -78,7 +78,7 @@ export default Ember.Controller.extend(Validations, {
             this.set('showReviewModal', false);
 
             if (isNew) {
-              this.get('notify').success(this.get('i18n').t('host.index.reviewSubmitted'));
+              this.get('notify').success(this.get('i18n').t('notify.reviewSubmitted'));
             }
           });
         } else {
@@ -128,6 +128,13 @@ export default Ember.Controller.extend(Validations, {
     },
     closeReviewModal() {
       this.set('showReviewModal', false);
+    },
+    saveReviewReply(review) {
+      let promise = review.save();
+
+      promise.then(()=> {
+        this.get('notify').success(this.get('i18n').t('notify.replySubmitted'));
+      });
     }
   }
 });
