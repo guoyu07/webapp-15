@@ -16,5 +16,11 @@ export default buildValidations({
       gte: 1,
       lte: 5
     })
-  ]
+  ],
+  'review.replyText': [
+    validator('length', {
+      allowBlank: true,
+      max: 1000
+    })
+  ],
 });

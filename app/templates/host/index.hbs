@@ -190,7 +190,7 @@
               </p>
               {{#if review.replyApprovedAt}}
                 <blockquote class="blockquote-review">
-                  <p><strong>{{t 'host.index.replyBy' name=model.user.firstName}}</strong></p>
+                  <p><strong>{{t 'host.index.replyBy' name=review.reviewee.firstName}}</strong></p>
                   <p>
                     {{convert-breaklines review.replyText}}
                   </p>
