@@ -1,12 +1,13 @@
 import Ember from 'ember';
+import Validations from 'webapp/validations/review';
 
 const { computed } = Ember;
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Validations, {
   /**
    * Indicates whether the host contact info can be displayed to the current user.
    */
-  canSeeContactInfo: computed.readOnly('sessionUser.user.hasNonExpiredMembership'),
+  isActiveMember: computed.readOnly('sessionUser.user.hasNonExpiredMembership'),
 
   /**
    * Indicates whether the notes about the host should be displayed.
@@ -21,10 +22,32 @@ export default Ember.Controller.extend({
     return this.get('sessionUser.user.id') === this.get('model.user.id');
   }),
 
+  review: null,
+  showReviewModal: false,
+  showDeleteReviewModal: false,
+
   /**
    * Indicates whether the edit profile buttons should be displayed.
    */
   showEditProfileButton: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile'),
+
+  /**
+   * Disable new review button if the current wwoofer has already reviewed the host.
+   */
+  disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasNonExpiredWwooferMembership',
+    'model.reviews.@each.author', 'model.reviews.@each.isNew', 'sessionUser.user.id', function () {
+    if (!this.get('session.isAuthenticated')) {
+      return false;
+    }
+    if (!this.get('sessionUser.user.hasNonExpiredWwooferMembership')) {
+      return true;
+    }
+
+    let authorIds = this.get('model.reviews').filterBy('isNew', false).mapBy('author.id');
+    let userId = this.get('sessionUser.user.id');
+
+    return authorIds.contains(userId);
+  }),
 
   actions: {
     /**
@@ -36,6 +59,82 @@ export default Ember.Controller.extend({
       } else {
         this.send('addUserFavorite', host, user);
       }
+    },
+    /**
+     * Submits a review for the current host.
+     */
+    submitReview(review) {
+
+      this.validate().then(({ m, validations })=> {
+
+        this.set('didValidate', true);
+        if (validations.get('isValid')) {
+
+          let isNew = review.get('isNew');
+          let promise = review.save();
+
+          promise.then(()=> {
+            this.set('review', null);
+            this.set('showReviewModal', false);
+
+            if (isNew) {
+              this.get('notify').success(this.get('i18n').t('notify.reviewSubmitted'));
+            }
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
+      });
+    },
+    writeNewReview() {
+      if (!this.get('session.isAuthenticated')) {
+        return this.transitionToRoute('login');
+      }
+
+      let review = this.get('review');
+
+      if (!review || !review.get('isNew')) {
+        let host = this.get('model');
+        let author = this.get('sessionUser.user');
+
+        review = this.store.createRecord('review', {
+          host,
+          author
+        });
+
+        this.set('review', review);
+      }
+
+      this.set('showReviewModal', true);
+    },
+    editReview(review) {
+      this.set('review', review);
+      this.set('showReviewModal', true);
+    },
+    deleteReview(review) {
+      let promise = review.destroyRecord();
+
+      promise.then(()=> {
+        this.set('review', null);
+        this.set('showDeleteReviewModal', false);
+      });
+    },
+    openDeleteReviewModal(review) {
+      this.set('review', review);
+      this.set('showDeleteReviewModal', true);
+    },
+    closeDeleteReviewModal() {
+      this.set('showDeleteReviewModal', false);
+    },
+    closeReviewModal() {
+      this.set('showReviewModal', false);
+    },
+    saveReviewReply(review) {
+      let promise = review.save();
+
+      promise.then(()=> {
+        this.get('notify').success(this.get('i18n').t('notify.replySubmitted'));
+      });
     }
   }
 });

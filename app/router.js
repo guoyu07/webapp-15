@@ -39,6 +39,8 @@ Router.map(function() {
   this.route('memberships', function() {
     this.route('new');
   });
+  this.route('reviews', function() {
+  });
   this.route('payment', function() {
     this.route('complete');
     this.route('cancel');

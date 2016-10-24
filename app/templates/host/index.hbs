@@ -35,46 +35,8 @@
           <tr>
             <td>
               <span class="glyphicon glyphicon-user mrx"></span>
-              {{#if canSeeContactInfo}}
+              {{#if isActiveMember}}
                 <span class="capitalize">{{model.user.fullName}}</span>
-              {{else}}
-                {{members-only}}
-              {{/if}}
-            </td>
-          </tr>
-          {{#if sessionUser.user.isAdmin}}
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-envelope mrx"></span>
-                {{mail-to model.user.email (truncate model.user.email limit=28)}}
-              </td>
-            </tr>
-          {{/if}}
-          <tr>
-            <td>
-              <span class="glyphicon glyphicon-earphone mrx"></span>
-              {{#if canSeeContactInfo}}
-                {{#if model.noPhone}}
-                  -
-                {{else}}
-                  {{model.user.phone}}
-                {{/if}}
-              {{else}}
-                {{members-only}}
-              {{/if}}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <span class="glyphicon glyphicon-globe mrx"></span>
-              {{#if canSeeContactInfo}}
-                {{#if model.webSite}}
-                  <a href={{model.webSite}} title={{model.webSite}} target="_blank">
-                    {{truncate model.webSite limit=28}}
-                  </a>
-                {{else}}
-                  {{t 'host.index.noWebsite'}}
-                {{/if}}
               {{else}}
                 {{members-only}}
               {{/if}}
@@ -83,7 +45,7 @@
           <tr>
             <td>
               <span class="glyphicon glyphicon-map-marker mrx"></span>
-              {{#if canSeeContactInfo}}
+              {{#if isActiveMember}}
                 <span class="capitalize">{{model.address.city}} ({{model.address.department.name}})</span>
               {{else}}
                 {{members-only}}
@@ -118,6 +80,13 @@
           </tr>
         </tbody>
       </table>
+      {{#if showEditProfileButton}}
+        <ul class="list-group">
+          {{#link-to 'host.edit' model.id class='list-group-item list-group-item-default text-center'}}
+            {{t 'literal.editProfile'}}
+          {{/link-to}}
+        </ul>
+      {{/if}}
     </div>
 
     {{#if model.activities}}
@@ -145,7 +114,6 @@
         <h3 class="panel-title">
           <span class="glyphicon glyphicon-home mrx"></span>
           {{t 'host.index.accommodation'}}
-          {{tool-tip icon='info-sign' class='pull-right mrx' title=(t 'host.index.recentSection') }}
         </h3>
       </div>
       <table class="table table-striped">
@@ -199,20 +167,122 @@
         {{convert-breaklines model.fullDescription}}
       </div>
     </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-comment mrx"></span>
+          {{t 'literal.reviews'}}
+          <span class="label label-info text-uppercase">{{t 'host.index.new'}}</span>
+        </h3>
+      </div>
+      <ul class="list-group">
+        {{#if isActiveMember}}
+          {{#each model.displayedReviews as |review|}}
+            <li id="review-{{review.id}}" class="list-group-item">
+              <p>
+                {{convert-breaklines review.text}}
+              </p>
+              <p class="text-muted small">
+                {{review.author.firstName}} ({{moment-format review.createdAt 'MMMM YYYY'}})
+                {{#unless review.approvedAt}}
+                  <span class="label label-info">{{t 'host.index.pendingApproval'}}</span>
+                {{/unless}}
+              </p>
+              {{#if review.replyApprovedAt}}
+                <blockquote class="blockquote-review">
+                  <p><strong>{{t 'host.index.replyBy' name=review.reviewee.firstName}}</strong></p>
+                  <p>
+                    {{convert-breaklines review.replyText}}
+                  </p>
+                </blockquote>
+              {{else}}
+                {{#if isCurrentUserProfile}}
+                  {{#forms/form-group valuePath='review.replyText' as |showError|}}
+                    <label for="replyText" class="control-label">{{t 'host.index.yourReply'}}</label>
+                    <span class="pull-right {{unless review.replyTextCharLeft 'text-danger'}}">{{t 'common.charLeft' count=review.replyTextCharLeft}}</span>
+
+                    {{textarea name='replyText' value=review.replyText class='form-control' rows='5'}}
+                  {{/forms/form-group}}
+                  <button type="button" class="btn btn-primary" onclick={{action 'saveReviewReply' review}} disabled={{review.isSaving}}>
+                    {{t 'literal.save'}}
+                  </button>
+                {{/if}}
+              {{/if}}
+              <p class="text-right mbn">
+                {{#if review.canEdit}}
+                  <button {{action 'editReview' review}} class="btn btn-default btn-sm" aria-label={{t 'literal.edit'}} title={{t 'literal.edit'}}>
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                  </button>
+                {{/if}}
+                {{#if review.canDelete}}
+                  <button {{action 'openDeleteReviewModal' review}} class="btn btn-default btn-sm" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </button>
+                {{/if}}
+              </p>
+            </li>
+          {{else}}
+            <li class="list-group-item">{{t 'host.index.noReviews' firstName=model.user.firstName}}</li>
+          {{/each}}
+        {{else}}
+          <li class="list-group-item">
+            {{members-only}}
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{t 'host.index.contact' firstName=model.user.firstName}}
+        </h3>
+      </div>
+      <ul class="list-group">
+        {{#if sessionUser.user.isAdmin}}
+          <li class="list-group-item">
+            <span class="glyphicon glyphicon-envelope mrx"></span>
+            {{mail-to model.user.email (truncate model.user.email limit=28)}}
+          </li>
+        {{/if}}
+        <li class="list-group-item">
+          <span class="glyphicon glyphicon-earphone mrx"></span>
+          {{#if isActiveMember}}
+            {{#if model.noPhone}}
+              {{t 'host.index.noPhone'}}
+            {{else}}
+              {{model.user.phone}}
+            {{/if}}
+          {{else}}
+            {{members-only}}
+          {{/if}}
+        </li>
+        <li class="list-group-item">
+          <span class="glyphicon glyphicon-globe mrx"></span>
+          {{#if isActiveMember}}
+            {{#if model.webSite}}
+              <a href={{model.webSite}} title={{model.webSite}} target="_blank">
+                {{truncate model.webSite limit=28}}
+              </a>
+            {{else}}
+              {{t 'host.index.noWebsite'}}
+            {{/if}}
+          {{else}}
+            {{members-only}}
+          {{/if}}
+        </li>
+        {{#link-to 'host.contact' model.id class='list-group-item list-group-item-primary text-center'}}
+          {{t 'host.index.sendMessage'}}
+        {{/link-to}}
+      </ul>
+    </div>
   </div>
 
   <div class="col-md-3">
-    {{#link-to 'host.contact' model.id class="btn btn-block btn-primary mbm" disabled=model.noEmail}}
-      <span class="glyphicon glyphicon-envelope mrx"></span>
-      {{t 'host.index.contactHost'}}
-    {{/link-to}}
-    {{#if showEditProfileButton}}
-      {{#link-to 'host.edit' model.id class="btn btn-block btn-default mbm"}}
-        <span class="glyphicon glyphicon-pencil mrx"></span>
-        {{t 'literal.editProfile'}}
-      {{/link-to}}
-    {{else}}
-      <button class="btn btn-block btn-default mbm" {{action 'toggleFavorites' model sessionUser.user}}>
+    <div class="list-group">
+      <button class="list-group-item" onclick={{action 'toggleFavorites' model sessionUser.user}}>
         {{#if model.isFavorite}}
           <span class="glyphicon glyphicon-heart mrx"></span>
           {{t 'common.removeFavorite'}}
@@ -221,7 +291,11 @@
           {{t 'common.addFavorite'}}
         {{/if}}
       </button>
-    {{/if}}
+      <button class="list-group-item {{if disableNewReview 'disabled'}}" disabled={{disableNewReview}} onclick={{action 'writeNewReview'}}>
+        <span class="glyphicon glyphicon-pencil mrx"></span>
+        {{t 'host.index.writeReview'}}
+      </button>
+    </div>
 
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -255,7 +329,6 @@
         <h3 class="panel-title">
           <span class="glyphicon glyphicon-bed mrx"></span>
           {{t 'host.index.stays'}}
-          {{tool-tip icon='info-sign' class='pull-right mrx' title=(t 'host.index.recentSection') }}
         </h3>
       </div>
       <table class="table table-striped">
@@ -273,3 +346,19 @@
     </div>
   </div>
 </div>
+
+{{#if showReviewModal}}
+  {{review/edit-modal
+  review=review
+  validations=validations
+  didValidate=didValidate
+  submitReview=(action 'submitReview')
+  close=(action 'closeReviewModal')}}
+{{/if}}
+
+{{#if showDeleteReviewModal}}
+  {{review/delete-modal
+  review=review
+  deleteReview=(action 'deleteReview')
+  close=(action 'closeDeleteReviewModal')}}
+{{/if}}

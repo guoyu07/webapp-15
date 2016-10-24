@@ -41,9 +41,16 @@ export default DS.Model.extend({
     inverse: 'favorites',
     async: false
   }),
+  reviews: DS.hasMany('review', { async: true }),
 
   // First photo
   mainPhoto: computed.readOnly('photos.firstObject'),
+
+  // Review sorted by creation date (most recent first)
+  createdAtSortingDesc: ['createdAt:desc'],
+  sortedReviews: computed.sort('reviews', 'createdAtSortingDesc'),
+
+  displayedReviews: computed.filterBy('sortedReviews', 'isNew', false),
 
   /**
    * Returns the list of activities offered by the host.

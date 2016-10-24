@@ -1,0 +1,104 @@
+<div class="page-header">
+  <h1>
+    {{t 'reviews.index.title'}}
+  </h1>
+</div>
+
+<div class="row mbm">
+  <div class="col-xs-12 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'reviews.index.searchTitle'}}</h3>
+      </div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="searchTerm">{{t 'reviews.index.text.label'}}</label>
+            {{input type='text'
+            id='searchTerm'
+            class='form-control'
+            value=searchTerm
+            enter='search'}}
+          </div>
+          <div class="form-group">
+            <label for="pendingApproval" class="checkbox-inline">
+              <input type="checkbox" id="pendingApproval" checked={{pendingApproval}} onclick={{action 'togglePendingApproval'}} />
+              {{t 'reviews.index.pendingApproval.label'}}
+            </label>
+          </div>
+          <button {{action 'search'}} class="btn btn-block btn-primary" disabled={{isLoading}}>
+            {{t 'literal.search'}}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-9">
+    {{#if isLoading}}
+      {{partial 'loading'}}
+    {{else}}
+      {{#if reviews}}
+        {{#each reviews as |review|}}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p>
+                <strong>{{review.author.fullName}}</strong>
+                <span class="pull-right">
+                  {{#if review.isHostReview}}
+                    {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
+                  {{else}}
+                    {{#link-to 'wwoofer.index' review.wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
+                  {{/if}}
+                  {{#unless review.approvedAt}}
+                    | <a href="#" {{action 'openReviewModal' review}}>{{t 'literal.approve'}}</a>
+                  {{/unless}}
+                </span>
+              </p>
+              <p>{{convert-breaklines review.text}}</p>
+              <span class="text-muted small">{{moment-format review.createdAt 'LLLL'}}</span>
+            </div>
+          </div>
+          {{#if review.replyText}}
+            <div class="panel panel-default col-xs-offset-1">
+              <div class="panel-body">
+                <p>
+                  <strong>{{review.reviewee.fullName}}</strong>
+                  <span class="pull-right">
+                  {{#if review.isHostReview}}
+                    {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
+                  {{else}}
+                    {{#link-to 'wwoofer.index' review.wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
+                  {{/if}}
+                  {{#unless review.replyApprovedAt}}
+                    | <a href="#" {{action 'openReviewModal' review}}>{{t 'literal.approve'}}</a>
+                  {{/unless}}
+                </span>
+                </p>
+                <p>{{convert-breaklines review.replyText}}</p>
+                {{#if review.replyApprovedAt}}
+                  <span class="text-muted small">{{moment-format review.replyApprovedAt 'LLLL'}}</span>
+                {{/if}}
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+        <p class="text-center">
+          {{list-pagination currentPage=page totalPages=totalPages targetRoute='reviews'}}
+        </p>
+      {{else}}
+        {{t 'reviews.index.noResults'}}
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
+
+{{#if review}}
+  {{review/approve-modal
+  review=review
+  validations=validations
+  didValidate=didValidate
+  isApproving=isApprovingReview
+  approveReview=(action 'approveReview')
+  close=(action 'closeReviewModal')}}
+{{/if}}
