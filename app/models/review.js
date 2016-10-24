@@ -49,6 +49,7 @@ export default DS.Model.extend({
   }),
 
   replyTextCharLeft: computed('replyText.length', function () {
-    return Math.max(0, 1000 - this.get('replyText.length'));
+    let length = this.get('replyText.length') || 0;
+    return Math.max(0, 1000 - length);
   })
 });

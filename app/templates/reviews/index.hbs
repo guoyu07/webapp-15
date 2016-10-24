@@ -56,7 +56,7 @@
                 </span>
               </p>
               <p>{{convert-breaklines review.text}}</p>
-              <span class="text-muted small">{{moment-format review.createdAt 'MMMM YYYY'}}</span>
+              <span class="text-muted small">{{moment-format review.createdAt 'LLLL'}}</span>
             </div>
           </div>
           {{#if review.replyText}}
@@ -75,9 +75,9 @@
                   {{/unless}}
                 </span>
                 </p>
-                <p>{{convert-breaklines review.text}}</p>
+                <p>{{convert-breaklines review.replyText}}</p>
                 {{#if review.replyApprovedAt}}
-                  <span class="text-muted small">{{moment-format review.replyApprovedAt 'MMMM YYYY'}}</span>
+                  <span class="text-muted small">{{moment-format review.replyApprovedAt 'LLLL'}}</span>
                 {{/if}}
               </div>
             </div>
