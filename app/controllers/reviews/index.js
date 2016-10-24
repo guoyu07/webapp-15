@@ -43,7 +43,7 @@ export default Ember.Controller.extend(Validations, {
           let promise = review.save();
 
           promise = promise.then(()=> {
-            let action = review.get('replyText') ? 'approveReply' : 'approve';
+            let action = review.get('approvedAt') ? 'approveReply' : 'approve';
             let url = [config.apiHost, config.apiNamespace, 'reviews', review.get('id'), action].join('/');
             return this.get('ajax').post(url);
           });
