@@ -45,13 +45,13 @@
         {{t 'host-form.travelDetails'}}
       </p>
     </div>
-    <div class="form-group">
+    {{#forms/form-group valuePath='host.activities'}}
       <label class="col-sm-2 control-label">{{t 'host-form.activities'}}</label>
 
       <div class="col-sm-10 toggle-options-cols">
         {{toggle-options values=activitiesService.allActivities selected=host.activities optionValuePath='id'}}
       </div>
-    </div>
+    {{/forms/form-group}}
     <hr class="col-sm-offset-2 col-sm-9 mvs">
     <div class="form-group">
       <label class="col-sm-2 control-label">{{t 'host-form.openingMonths'}}</label>

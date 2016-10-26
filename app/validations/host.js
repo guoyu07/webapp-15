@@ -29,6 +29,10 @@ export default buildValidations({
     allowBlank: true,
     max: 255
   }),
+  'host.activities': validator('presence', {
+    presence: true,
+    dependentKeys: ['host.activities.[]']
+  }),
   'host.stays': validator('presence', {
     presence: true,
     dependentKeys: ['host.stays.[]']
