@@ -43,7 +43,13 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <p>
-                <strong>{{review.author.fullName}}</strong>
+                <strong>
+                  {{#if review.isHostReview}}
+                    {{#link-to 'wwoofer.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
+                  {{else}}
+                    {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
+                  {{/if}}
+                </strong>
                 <span class="pull-right">
                   {{#if review.isHostReview}}
                     {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
