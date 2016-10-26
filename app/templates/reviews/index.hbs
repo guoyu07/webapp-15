@@ -43,13 +43,11 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <p>
-                <strong>
-                  {{#if review.isHostReview}}
-                    {{#link-to 'wwoofer.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
-                  {{else}}
-                    {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
-                  {{/if}}
-                </strong>
+                {{#if review.isHostReview}}
+                  {{#link-to 'wwoofer.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
+                {{else}}
+                  {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
+                {{/if}}
                 <span class="pull-right">
                   {{#if review.isHostReview}}
                     {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
@@ -69,7 +67,11 @@
             <div class="panel panel-default col-xs-offset-1">
               <div class="panel-body">
                 <p>
-                  <strong>{{review.reviewee.fullName}}</strong>
+                  {{#if review.isHostReview}}
+                    {{#link-to 'host.index' review.reviewee.host.id}}{{review.reviewee.fullName}}{{/link-to}}
+                  {{else}}
+                    {{#link-to 'wwoofer.index' review.reviewee.wwoofer.id}}{{review.reviewee.fullName}}{{/link-to}}
+                  {{/if}}
                   <span class="pull-right">
                   {{#if review.isHostReview}}
                     {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
