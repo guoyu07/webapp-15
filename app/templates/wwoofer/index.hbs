@@ -106,19 +106,27 @@
           {{t 'wwoofer.index.contact' firstName=model.user.firstName}}
         </h3>
       </div>
+      <table class="table">
+        <tbody>
+          {{#if sessionUser.user.isAdmin}}
+            <tr>
+              <td>
+                <span class="glyphicon glyphicon-envelope mrx"></span>
+                {{mail-to model.user.email (truncate model.user.email limit=28)}}
+              </td>
+            </tr>
+          {{/if}}
+          {{#if model.user.phone}}
+            <tr>
+              <td>
+                <span class="glyphicon glyphicon-earphone mrx"></span>
+                {{model.user.phone}}
+              </td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </table>
       <ul class="list-group">
-        {{#if sessionUser.user.isAdmin}}
-          <li class="list-group-item">
-            <span class="glyphicon glyphicon-envelope mrx"></span>
-            {{mail-to model.user.email (truncate model.user.email limit=28)}}
-          </li>
-        {{/if}}
-        {{#if model.user.phone}}
-          <li class="list-group-item">
-            <span class="glyphicon glyphicon-earphone mrx"></span>
-            {{model.user.phone}}
-          </li>
-        {{/if}}
         {{#link-to 'wwoofer.contact' model.id class='list-group-item list-group-item-primary text-center'}}
           {{t 'wwoofer.index.sendMessage'}}
         {{/link-to}}
