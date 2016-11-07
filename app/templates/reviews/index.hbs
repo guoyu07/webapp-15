@@ -48,16 +48,17 @@
                 {{else}}
                   {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
                 {{/if}}
-                <span class="pull-right">
-                  {{#if review.isHostReview}}
-                    {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
-                  {{else}}
-                    {{#link-to 'wwoofer.index' review.wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
-                  {{/if}}
-                  {{#unless review.approvedAt}}
-                    | <a href="#" {{action 'openReviewModal' review}}>{{t 'literal.approve'}}</a>
-                  {{/unless}}
-                </span>
+                {{t 'reviews.index.reviewed'}}
+                {{#if review.isHostReview}}
+                  {{#link-to 'host.index' review.reviewee.host.id}}{{review.reviewee.host.farmName}}{{/link-to}}
+                {{else}}
+                  {{#link-to 'wwoofer.index' review.reviewee.wwoofer.id}}{{review.reviewee.fullName}}{{/link-to}}
+                {{/if}}
+                {{#unless review.approvedAt}}
+                  <span class="pull-right">
+                      <a href="#" {{action 'openReviewModal' review}}>{{t 'literal.approve'}}</a>
+                  </span>
+                {{/unless}}
               </p>
               <p>{{convert-breaklines review.text}}</p>
               <span class="text-muted small">{{moment-format review.createdAt 'LLLL'}}</span>
@@ -72,16 +73,17 @@
                   {{else}}
                     {{#link-to 'wwoofer.index' review.reviewee.wwoofer.id}}{{review.reviewee.fullName}}{{/link-to}}
                   {{/if}}
-                  <span class="pull-right">
+                  {{t 'reviews.index.repliedTo'}}
                   {{#if review.isHostReview}}
-                    {{#link-to 'host.index' review.host.id}}{{t 'literal.view'}}{{/link-to}}
+                    {{#link-to 'wwoofer.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
                   {{else}}
-                    {{#link-to 'wwoofer.index' review.wwoofer.id}}{{t 'literal.view'}}{{/link-to}}
+                    {{#link-to 'host.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
                   {{/if}}
                   {{#unless review.replyApprovedAt}}
-                    | <a href="#" {{action 'openReviewModal' review}}>{{t 'literal.approve'}}</a>
+                    <span class="pull-right">
+                      <a href="#" {{action 'openReviewModal' review}}>{{t 'literal.approve'}}</a>
+                    </span>
                   {{/unless}}
-                </span>
                 </p>
                 <p>{{convert-breaklines review.replyText}}</p>
                 {{#if review.replyApprovedAt}}
