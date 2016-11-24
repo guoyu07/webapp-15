@@ -38,6 +38,11 @@
     {{/if}}
   </div>
   <div class="modal-footer">
+    {{#unless review.approvedAt}}
+      <button type="button" class="btn btn-danger" onclick={{action deleteReview review}}>
+        {{t 'literal.delete'}}
+      </button>
+    {{/unless}}
     <button type="button" class="btn btn-primary" onclick={{action approveReview review}} disabled={{isApproving}}>
       {{t 'literal.approve'}}
     </button>

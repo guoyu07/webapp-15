@@ -63,6 +63,14 @@ export default Ember.Controller.extend(Validations, {
         }
       });
     },
+    deleteReview(review) {
+      let promise = review.destroyRecord();
+
+      promise.then(()=> {
+        this.set('review', null);
+        this.send('refresh');
+      });
+    },
     openReviewModal(review) {
       this.set('review', review);
     },
