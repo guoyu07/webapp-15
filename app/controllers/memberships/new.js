@@ -18,12 +18,12 @@ export default Ember.Controller.extend({
 
   _membershipOptions: computed('i18n.locale', function() {
     return [
-      { id: 'WO1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO1', { price: 25 }), price: 25 },
-      { id: 'WO2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO2', { price: 30 }), price: 30 },
-      { id: 'WOB1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB1', { price: 42 }), price: 42 },
-      { id: 'WOB2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB2', { price: 47 }), price: 47 },
-      { id: 'H', type: 'H', name: this.get('i18n').t('memberships.itemCodes.H', { price: 35 }), price: 35 },
-      { id: 'HR', type: 'H', name: this.get('i18n').t('memberships.itemCodes.HR', { price: 30 }), price: 30 }
+      { id: 'WO1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO1', { price: '25' }), price: 25 },
+      { id: 'WO2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO2', { price: '30' }), price: 30 },
+      { id: 'WOB1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB1', { price: '42' }), price: 42 },
+      { id: 'WOB2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB2', { price: '47' }), price: 47 },
+      { id: 'H', type: 'H', name: this.get('i18n').t('memberships.itemCodes.H', { price: '35' }), price: 35 },
+      { id: 'HR', type: 'H', name: this.get('i18n').t('memberships.itemCodes.HR', { price: '30' }), price: 30 }
     ];
   }),
 
@@ -33,11 +33,11 @@ export default Ember.Controller.extend({
 
   shippingRegionOptions: computed('i18n.locale', function() {
     return [
-      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: 4.80 }), price: 4.80 },
-      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: 8.55 }), price: 8.55 },
-      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: 13.05 }), price: 13.05 },
-      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: 9.30 }), price: 9.30 },
-      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: 11.45 }), price: 11.45 }
+      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: '4.80' }), price: 4.80 },
+      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: '8.55' }), price: 8.55 },
+      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: '13.05' }), price: 13.05 },
+      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: '9.30' }), price: 9.30 },
+      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: '11.45' }), price: 11.45 }
     ];
   }),
 
