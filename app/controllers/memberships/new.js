@@ -36,7 +36,7 @@ export default Ember.Controller.extend({
       { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: 4.80 }), price: 4.80 },
       { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: 8.55 }), price: 8.55 },
       { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: 13.05 }), price: 13.05 },
-      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: 8.35 }), price: 8.35 },
+      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: 9.30 }), price: 9.30 },
       { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: 11.45 }), price: 11.45 }
     ];
   }),
