@@ -6,7 +6,6 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
-    SERVER_BASE_URL: '',
     apiHost: '',
     apiNamespace: 'api',
     urlAfterLogin: '/hosts',
@@ -62,8 +61,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.SERVER_BASE_URL = 'http://localhost:3333';
-    
     ENV.trackJs.config.enabled = true;
   }
 

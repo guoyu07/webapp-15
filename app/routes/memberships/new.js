@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'webapp/config/environment';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const { service } = Ember.inject;
@@ -12,10 +11,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('i18n').t('titles.memberships.new');
   },
 
-  model(params) {
-    if (params.gateway === 'braintree') {
-      return this.get('ajax').request('api/payment/token');
-    }
+  model() {
+    return this.get('ajax').request('api/payment/token');
   },
 
   setupController(controller, result) {
@@ -25,31 +22,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   actions: {
-    /**
-     * Initializes a payment flow with PayPal.
-     * @param {String} itemCode The item code (WO1, WO2, ...).
-     * @param {String} [shippingRegion] The region where the booklet should be sent.
-     */
-    initPayment(itemCode, shippingRegion) {
-
-      // Do not continue if no item code was specified
-      if (!itemCode) {
-        this.get('notify').error(this.get('i18n').t('notify.noItemCode'));
-        return;
-      }
-
-      // Build the base URL
-      let url = `${config.SERVER_BASE_URL}/api/payment/start?itemCode=${itemCode}`;
-
-      // Add shipping fee code if present
-      if (shippingRegion) {
-        url += `&shippingRegion=${shippingRegion}`;
-      }
-
-      // Redirect to server payment route in order to get redirected to PayPal
-      window.location.replace(url);
-    },
-    
     /**
      * Process a payment.
      * @param {Object} payment The payment object containing the nonce.

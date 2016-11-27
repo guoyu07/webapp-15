@@ -41,11 +41,6 @@ Router.map(function() {
   });
   this.route('reviews', function() {
   });
-  this.route('payment', function() {
-    this.route('complete');
-    this.route('cancel');
-    this.route('failure');
-  });
   this.route('404', { path: '*path' });
 });
 

@@ -121,31 +121,18 @@
               <h4 class="panel-title">{{t 'memberships.new.creditCard'}}</h4>
             </div>
             <div class="panel-body">
-              {{#if isBraintree}}
-                {{#if membershipAlreadyActive}}
-                  <div class="alert alert-warning mbn" role="alert">{{t 'notify.membershipAlreadyActive'}}</div>
-                {{else if paymentFailureMessage}}
-                  <div class="alert alert-warning" role="alert">
-                    {{t 'memberships.new.paymentFailed'}}
-                    <strong>{{paymentFailureMessage}}</strong>
-                  </div>
-                  <button {{action 'resetPaymentForm'}} class="btn btn-primary btn-block">
-                    {{t 'memberships.new.reEnter'}}
-                  </button>
-                {{else}}
-                  {{payment-form token=token onSubmit='processPayment' disableSubmit=disableSubmit}}
-                {{/if}}
-              {{else}}
-                <p>
-                  {{t 'memberships.new.easiestWay'}}
-                </p>
-                <button {{action 'initPayment' itemCode shippingRegion}} class="btn btn-primary mbs" disabled={{isInvalid}}>
-                  {{t 'memberships.new.pay'}}
+              {{#if membershipAlreadyActive}}
+                <div class="alert alert-warning mbn" role="alert">{{t 'notify.membershipAlreadyActive'}}</div>
+              {{else if paymentFailureMessage}}
+                <div class="alert alert-warning" role="alert">
+                  {{t 'memberships.new.paymentFailed'}}
+                  <strong>{{paymentFailureMessage}}</strong>
+                </div>
+                <button {{action 'resetPaymentForm'}} class="btn btn-primary btn-block">
+                  {{t 'memberships.new.reEnter'}}
                 </button>
-                <p class="mbx small">
-                  <span class="glyphicon glyphicon-info-sign"></span>
-                  {{t 'memberships.new.notePaypal'}}
-                </p>
+              {{else}}
+                {{payment-form token=token onSubmit='processPayment' disableSubmit=disableSubmit}}
               {{/if}}
             </div>
           </div>

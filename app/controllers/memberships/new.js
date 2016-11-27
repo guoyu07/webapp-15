@@ -4,7 +4,7 @@ const { computed } = Ember;
 
 export default Ember.Controller.extend({
 
-  queryParams: ['type', 'itemCode', 'shippingRegion', 'userId', 'gateway'],
+  queryParams: ['type', 'itemCode', 'shippingRegion', 'userId'],
 
   type: null,
   itemCode: null,
@@ -12,9 +12,6 @@ export default Ember.Controller.extend({
   userId: null,
   paymentType: null,
   isFree: false,
-  gateway: 'braintree',
-
-  isBraintree: computed.equal('gateway', 'braintree'),
 
   _membershipOptions: computed('i18n.locale', function() {
     return [

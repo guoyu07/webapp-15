@@ -10,7 +10,7 @@
       <label for="address1" class="col-sm-2 control-label">{{t 'address-form.address1.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='address1' name='address1' value=address.address1 class='form-control' placeholder=(t 'address-form.address1.placeholder')}}
+        {{input type='text' name='address1' value=address.address1 class='form-control' placeholder=(t 'address-form.address1.placeholder')}}
         {{error-display error=validations.attrs.address.address1 showError=showError}}
       </div>
     {{/forms/form-group}}
@@ -18,7 +18,7 @@
       <label for="address2" class="col-sm-2 control-label">{{t 'address-form.address2.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='address2' name='address2' value=address.address2 class='form-control' placeholder=(t 'address-form.address2.placeholder')}}
+        {{input type='text' name='address2' value=address.address2 class='form-control' placeholder=(t 'address-form.address2.placeholder')}}
         {{error-display error=validations.attrs.address.address2 showError=showError}}
       </div>
     {{/forms/form-group}}
@@ -26,7 +26,7 @@
       <label for="city" class="col-sm-2 control-label">{{t 'address-form.city.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='city' name='city' value=address.city class='form-control'}}
+        {{input type='text' name='city' value=address.city class='form-control'}}
         {{error-display error=validations.attrs.address.city showError=showError}}
       </div>
     {{/forms/form-group}}
@@ -34,7 +34,7 @@
       <label for="zipCode" class="col-sm-2 control-label">{{t 'address-form.zipCode.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='zipCode' name='zipCode' value=address.zipCode class='form-control'}}
+        {{input type='text' name='zipCode' value=address.zipCode class='form-control'}}
         {{error-display error=validations.attrs.address.zipCode showError=showError}}
       </div>
     {{/forms/form-group}}
@@ -66,7 +66,7 @@
           <label for="state" class="col-sm-2 control-label">{{t 'address-form.state.label'}}</label>
 
           <div class="col-sm-10">
-            {{input type='text' id='state' name='state' value=address.state class='form-control'}}
+            {{input type='text' name='state' value=address.state class='form-control'}}
           </div>
         {{/if}}
       {{/forms/form-group}}
@@ -77,11 +77,11 @@
         <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address-form.latitudeLongitude.label'}}</label>
 
         <div class="col-xs-6 col-sm-5">
-          {{input type='number' id='latitude' name='latitude' value=address.latitude class='form-control'}}
+          {{input type='number' name='latitude' value=address.latitude class='form-control'}}
           {{error-display error=validations.attrs.address.latitude showError=showError}}
         </div>
         <div class="col-xs-6 col-sm-5">
-          {{input type='number' id='longitude' name='longitude' value=address.longitude class='form-control'}}
+          {{input type='number' name='longitude' value=address.longitude class='form-control'}}
           {{error-display error=validations.attrs.address.longitude showError=showError}}
         </div>
       {{/forms/form-group}}
