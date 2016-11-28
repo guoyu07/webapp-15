@@ -13,6 +13,11 @@ App = Ember.Application.extend({
   Resolver
 });
 
+// Bind ARIA attributes for accessibility
+Ember.LinkComponent.reopen({
+  attributeBindings: ['aria-label']
+});
+
 // Disable caching to fix IE-related bugs
 Ember.$.ajaxSetup({ cache: false });
 

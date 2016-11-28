@@ -3,8 +3,6 @@ import Ember from 'ember';
 const { computed } = Ember;
 const { service } = Ember.inject;
 
-const featurePageSize = 10;
-
 export default Ember.Controller.extend({
 
   activitiesService: service('activities'),
@@ -17,8 +15,14 @@ export default Ember.Controller.extend({
   queryParams: [
     'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'zoom', 'showMoreFilter',
     'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay',
-    'childrenOk', 'petsOk'
+    'childrenOk', 'petsOk', 'page'
   ],
+
+  /**
+   * Pagination.
+   */
+  page: 1,
+  itemsPerPage: 10,
 
   /**
    * Search filters.
@@ -55,17 +59,11 @@ export default Ember.Controller.extend({
    * Indicates whether the controller is in loading state.
    */
   isLoading: false,
-  isLoadingMore: false,
 
   /**
    * Indicates whether advanced filters are visible.
    */
   showMoreFilter: false,
-
-  /**
-   * List of features currently displayed in the list.
-   */
-  displayedFeatureCount: featurePageSize,
 
   /**
    * List of visible features on the map.
@@ -88,10 +86,12 @@ export default Ember.Controller.extend({
   showMap: computed.or('media.isDesktop', 'media.isJumbo'),
 
   /**
-   * Indicates whether we can load more hosts.
+   * Process the total number of pages that can be displayed.
    */
-  cannotLoadMore: computed('isLoadingMore', 'displayedFeatureCount', 'features.length', function() {
-    return this.get('isLoadingMore') || this.get('displayedFeatureCount') >= this.get('features.length');
+  totalPages: computed('features.length', 'itemsPerPage', function() {
+    const totalItems = this.get('features.length');
+    const itemsPerPage = this.get('itemsPerPage');
+    return Math.ceil(totalItems / itemsPerPage);
   }),
 
   /**
@@ -117,20 +117,19 @@ export default Ember.Controller.extend({
   }),
 
   /**
-   * Whether the list has visible features.
-   */
-  hasVisibleFeatures: computed.notEmpty('featuresInList'),
-
-  /**
    * Returns the list of features that are displayed in the list.
    */
-  featuresInList: computed('features.[]', 'displayedFeatureCount', function() {
+  featuresInList: computed('features.[]', 'page', 'itemsPerPage', function() {
     let featuresInList = null;
     let features = this.get('features');
 
+    let page = this.get('page');
+    let itemsPerPage = this.get('itemsPerPage');
     if (Ember.isPresent(features)) {
-      let end = Math.min(this.get('displayedFeatureCount'), features.length);
-      featuresInList = features.slice(0, end);
+      let start = (page - 1) * itemsPerPage;
+      let end = start + itemsPerPage;
+      end = Math.min(end, features.length);
+      featuresInList = features.slice(start, end);
     }
 
     return featuresInList;
@@ -204,11 +203,10 @@ export default Ember.Controller.extend({
     },
 
     /**
-     * Refreshes the list of visible features when yhe map is loaded or was moved.
+     * Refreshes the list of visible features when the map is loaded or was moved.
      */
     visibleFeaturesChanged(visibleFeatures) {
       this.set('featuresOnMap', visibleFeatures);
-      this.set('displayedFeatureCount', featurePageSize);
     },
 
     /**
@@ -220,13 +218,6 @@ export default Ember.Controller.extend({
         lon: longitude,
         zoom
       });
-    },
-
-    /**
-     * Displays more hosts in the host list.
-     */
-    moreHosts() {
-      this.set('displayedFeatureCount', this.get('displayedFeatureCount') + featurePageSize);
     },
 
     chooseDepartment(department) {

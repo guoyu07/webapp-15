@@ -1,19 +1,46 @@
 {{#if showPagination}}
   <ul class="pagination">
     <li class="{{unless hasPreviousPage 'disabled'}}">
-      {{#link-to targetRoute (query-params page=previousPage)}}
+      {{#link-to targetRoute (query-params page=previousPage) aria-label=(t 'list-pagination.previous')}}
         <span aria-hidden="true">&laquo;</span>
       {{/link-to}}
     </li>
+
+    {{#if showFirstPage}}
+      <li>
+        {{#link-to targetRoute (query-params page=1)}}
+          1
+        {{/link-to}}
+      </li>
+      <li class="disabled">
+        <a href="#" aria-label={{t 'list-pagination.separator'}}><span aria-hidden="true">...</span></a>
+      </li>
+    {{/if}}
+
     {{#each pages as |page|}}
       <li class="{{if page.isCurrent 'active'}}">
         {{#link-to targetRoute (query-params page=page.number)}}
           {{page.number}}
+          {{#if page.isCurrent}}
+            <span class="sr-only">({{t 'list-pagination.current'}})</span>
+          {{/if}}
         {{/link-to}}
       </li>
     {{/each}}
+
+    {{#if showLastPage}}
+      <li class="disabled">
+        <a href="#" aria-label={{t 'list-pagination.separator'}}><span aria-hidden="true">...</span></a>
+      </li>
+      <li>
+        {{#link-to targetRoute (query-params page=totalPages)}}
+          {{totalPages}}
+        {{/link-to}}
+      </li>
+    {{/if}}
+
     <li class="{{unless hasNextPage 'disabled'}}">
-      {{#link-to targetRoute (query-params page=nextPage)}}
+      {{#link-to targetRoute (query-params page=nextPage) aria-label=(t 'list-pagination.next')}}
         <span aria-hidden="true">&raquo;</span>
       {{/link-to}}
     </li>

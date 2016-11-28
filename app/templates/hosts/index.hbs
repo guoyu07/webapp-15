@@ -173,7 +173,7 @@
       {{#if isLoading}}
         {{partial 'loading'}}
       {{else}}
-        {{#if hasVisibleFeatures}}
+        {{#if featuresInList}}
           <div class="row">
             {{#each featuresInList as |feature|}}
               <div class="col-xs-12 col-sm-6 col-host-item">
@@ -185,10 +185,8 @@
               </div>
             {{/each}}
           </div>
-          <p>
-            <button {{action 'moreHosts'}} class="btn btn-primary center-block" disabled={{cannotLoadMore}}>
-              {{t 'literal.showMore'}}
-            </button>
+          <p class="text-center">
+            {{list-pagination currentPage=page totalPages=totalPages targetRoute='hosts'}}
           </p>
         {{else}}
           <p class="text-center mtl"><strong>{{t 'hosts.index.noResults'}}</strong></p>
