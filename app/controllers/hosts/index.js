@@ -6,6 +6,7 @@ const { service } = Ember.inject;
 export default Ember.Controller.extend({
 
   activitiesService: service('activities'),
+  lodgingsService: service('lodgings'),
   monthsService: service('months'),
   capacitiesService: service('capacities'),
   staysService: service('stays'),
@@ -13,7 +14,7 @@ export default Ember.Controller.extend({
 
   // Query parameters bound with the URL
   queryParams: [
-    'searchTerm', 'activities', 'lon', 'lat', 'approvalStatus', 'zoom', 'showMoreFilter',
+    'searchTerm', 'activities', 'lodgings', 'lon', 'lat', 'approvalStatus', 'zoom', 'showMoreFilter',
     'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay',
     'childrenOk', 'petsOk', 'page'
   ],
@@ -31,6 +32,7 @@ export default Ember.Controller.extend({
   capacity: '1',
   stay: null,
   activities: [],
+  lodgings: [],
 
   /**
    * Advanced search filters.
@@ -177,12 +179,13 @@ export default Ember.Controller.extend({
 
     dataRequest.done((data)=> {
       this.set('hostCoordinates', data);
+      this.set('page', 1);
       this.set('isLoading', false);
     });
   },
 
   getParameters() {
-    return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'membershipStatus', 'isSuspended',
+    return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'lodgings', 'membershipStatus', 'isSuspended',
       'isHidden', 'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
   },
 
@@ -207,6 +210,7 @@ export default Ember.Controller.extend({
      */
     visibleFeaturesChanged(visibleFeatures) {
       this.set('featuresOnMap', visibleFeatures);
+      this.set('page', 1);
     },
 
     /**

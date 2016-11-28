@@ -26,7 +26,7 @@
           searchEnabled=false
           onchange=(action 'chooseCapacity')
           as |capacity|}}
-            <span class="text-capitalize">{{capacity.label}}</span>
+            {{capacity.label}}
           {{/power-select}}
         </div>
         <div class="col-xs-6 col-sm-3 plx">
@@ -38,24 +38,36 @@
           placeholder=(t 'hosts.index.stay.prompt')
           onchange=(action 'chooseStay')
           as |stay|}}
-            <span class="text-capitalize">{{stay.label}}</span>
+            {{stay.label}}
           {{/power-select}}
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">
-          {{t 'hosts.index.activities'}}
+          {{t 'hosts.index.lodging.label'}}
         </label>
         <div class="col-sm-10 toggle-options-cols">
           {{toggle-options
-          values=activitiesService.allActivities
-          selected=activities
-          optionValuePath='id'
-          onchange='updateHosts'}}
+              values=lodgingsService.allLodgings
+              selected=lodgings
+              optionValuePath='id'
+              onchange='updateHosts'}}
         </div>
       </div>
       {{#if showMoreFilter}}
 
+        <div class="form-group">
+          <label class="col-sm-2 control-label">
+            {{t 'hosts.index.activities'}}
+          </label>
+          <div class="col-sm-10 toggle-options-cols">
+            {{toggle-options
+                values=activitiesService.allActivities
+                selected=activities
+                optionValuePath='id'
+                onchange='updateHosts'}}
+          </div>
+        </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">
             {{t 'hosts.index.department.label'}}
@@ -69,7 +81,7 @@
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">
-            {{t 'hosts.index.lodging.label'}}
+            {{t 'hosts.index.other.label'}}
           </label>
           <div class="col-sm-10 toggle-options-cols">
             <label for="childrenOk" class="checkbox-inline">
