@@ -27,5 +27,10 @@ export default Ember.Service.extend({
 
     // Set ember-i18n locale
     i18n.set('locale', locale);
+
+    // Set Zendesk widget locale
+    zE(function() {
+      zE.setLocale(locale);
+    });
   }
 });
