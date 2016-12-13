@@ -8,5 +8,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   setupController(controller, user) {
     controller.set('user', user);
+
+    this.controllerFor('user').set('articlesLabel', 'user-memberships');
+  },
+
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      this.controllerFor('user').set('articlesLabel', null);
+    }
   }
 });

@@ -6,6 +6,8 @@
       <li>{{#link-to 'user.favorites' model.id}}{{t 'user.nav.favorites'}}{{/link-to}}</li>
       <li>{{#link-to 'user.change-password' model.id}}{{t 'user.nav.myPassword'}}{{/link-to}}</li>
     </ul>
+
+    {{help-articles label=articlesLabel class='hidden-xs'}}
   </div>
   <div class="col-sm-9 ">
     {{outlet}}
