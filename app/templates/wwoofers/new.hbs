@@ -1,18 +1,25 @@
-<form class="form-horizontal">
-  {{wwoofer-form
-  wwoofer=wwoofer
-  selectedDate=selectedDate
-  validations=validations
-  didValidate=didValidate
-  secondWwooferChecked=secondWwooferChecked
-  dateSelected=(action 'dateSelected')
-  toggleSecondWwoofer=(action 'toggleSecondWwoofer')}}
+<div class="row">
+  <div class="col-xs-12 col-sm-9">
+    <form class="form-horizontal">
+      {{wwoofer-form
+          wwoofer=wwoofer
+          selectedDate=selectedDate
+          validations=validations
+          didValidate=didValidate
+          secondWwooferChecked=secondWwooferChecked
+          dateSelected=(action 'dateSelected')
+          toggleSecondWwoofer=(action 'toggleSecondWwoofer')}}
 
-  <div class="form-group">
-    <div class="col-xs-12">
-      <button {{action 'saveWwoofer'}} class="btn btn-primary pull-right" disabled={{wwoofer.isSaving}}>
-        {{t 'literal.continue'}}
-      </button>
-    </div>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <button {{action 'saveWwoofer'}} class="btn btn-primary pull-right" disabled={{wwoofer.isSaving}}>
+            {{t 'literal.continue'}}
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
-</form>
+  <div class="hidden-xs col-sm-3">
+    {{help-articles label='wwoofer-new'}}
+  </div>
+</div>

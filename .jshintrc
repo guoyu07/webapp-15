@@ -5,7 +5,8 @@
     "-Promise",
     "trackJs",
     "braintree",
-    "L"
+    "L",
+    "zE"
   ],
   "browser": true,
   "boss": true,

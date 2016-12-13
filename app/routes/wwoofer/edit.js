@@ -16,5 +16,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
     controller.set('secondWwooferChecked', !Ember.isEmpty(wwoofer.get('firstName2')));
     controller.set('wwoofer', wwoofer);
+
+    this.controllerFor('wwoofer').set('articlesLabel', 'wwoofer-edit');
+  },
+
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      this.controllerFor('wwoofer').set('articlesLabel', null);
+    }
   }
 });

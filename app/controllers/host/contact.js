@@ -12,10 +12,6 @@ export default Ember.Controller.extend(Validations, {
   sendCopy: false,
   showMessageSentModal: false,
 
-  messagePlaceholder: computed('model.user.firstName', function() {
-    return `Bonjour ${this.get('model.user.firstName')} !`;
-  }),
-
   actions: {
     /**
      * Sends a message to a host.
