@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import Validations from 'webapp/validations/host/contact';
 
-const { computed } = Ember;
 const { service } = Ember.inject;
 
 export default Ember.Controller.extend(Validations, {

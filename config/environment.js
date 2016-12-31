@@ -4,14 +4,21 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'webapp',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: 'auto',
     apiHost: '',
     apiNamespace: 'api',
     urlAfterLogin: '/hosts',
     urlAfterLogout: '/login',
     EmberENV: {
-
+      FEATURES: {
+        // Here you can enable experimental features on an ember canary build
+        // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // Prevent Ember Data from overriding Date.parse.
+        Date: false
+      }
     },
 
     APP: {
@@ -33,22 +40,8 @@ module.exports = function(environment) {
         token: '48bf177fb24447f19be94f292931ff05'
       }
     },
-
-    // Configure content security policy headers
-    contentSecurityPolicyHeader: 'Content-Security-Policy',
-    contentSecurityPolicy: {
-      'default-src': "'none'",
-      'font-src': "'self' fonts.gstatic.com",
-      'connect-src': "'self' capture.trackjs.com",
-      'img-src': "'self' data: https://app.wwoof.fr https://maps.googleapis.com www.google-analytics.com " +
-      "https://*.mqcdn.com https://usage.trackjs.com https://s3.amazonaws.com/wwoof-france/",
-      'style-src': "'self' fonts.googleapis.com 'unsafe-inline'",
-      'media-src': "'self'",
-      'script-src': "'self' 'unsafe-eval' 'unsafe-inline' www.google-analytics.com"
-    }
   };
 
-  // Ember simple auth configuration
   ENV['ember-simple-auth'] = {
     routeAfterAuthentication: 'hosts.index',
     authenticationRoute: 'login'
@@ -66,7 +59,6 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter

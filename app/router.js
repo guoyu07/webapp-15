@@ -1,9 +1,10 @@
 import Ember from 'ember';
-import config from 'webapp/config/environment';
+import config from './config/environment';
 import GooglePageviewMixin from './mixins/google-pageview';
 
 const Router = Ember.Router.extend(GooglePageviewMixin, {
-  location: config.locationType
+  location: config.locationType,
+  rootURL: config.rootURL
 });
 
 Router.map(function() {

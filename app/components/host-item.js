@@ -30,7 +30,7 @@ export default Ember.Component.extend({
     let hostId = this.get('host.id');
     let isFavorite = false;
     if (favoritesIds && hostId) {
-      isFavorite = favoritesIds.contains(hostId);
+      isFavorite = favoritesIds.includes(hostId);
     }
     return isFavorite;
   }),

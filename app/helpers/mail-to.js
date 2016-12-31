@@ -11,7 +11,7 @@ export function mailTo(params) {
   label = Ember.Handlebars.Utils.escapeExpression(label);
 
   const link = `<a href="mailto:${emailAddress}" title="${emailAddress}">${label}</a>`;
-  return new Ember.Handlebars.SafeString(link);
+  return new Ember.String.htmlSafe(link);
 }
 
 export default Ember.Helper.helper(mailTo);

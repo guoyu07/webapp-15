@@ -70,7 +70,7 @@ export default DS.Model.extend({
     return allStays.map(function(stay) {
       return {
         label: stay.get('label'),
-        isOk: stays.contains(stay.get('id'))
+        isOk: stays.includes(stay.get('id'))
       };
     });
   }),
@@ -94,7 +94,7 @@ export default DS.Model.extend({
       const currentMonth = this.get('moment').moment().month(i);
       months.push({
         label: currentMonth.format('MMMM'),
-        isOpen: openingMonths.contains(currentMonth.format('MM'))
+        isOpen: openingMonths.includes(currentMonth.format('MM'))
       });
     }
     return months;
@@ -158,7 +158,7 @@ export default DS.Model.extend({
     let userId = this.get('sessionUser.user.id');
     let isFavorite = false;
     if (followersIds && userId) {
-      isFavorite = followersIds.contains(userId);
+      isFavorite = followersIds.includes(userId);
     }
     return isFavorite;
   }),

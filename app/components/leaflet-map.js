@@ -52,8 +52,9 @@ export default Ember.Component.extend({
     });
 
     // Set the tile layer
-    let googleLayer = new L.Google('ROADMAP');
-    this.map.addLayer(googleLayer);
+    L.gridLayer.googleMutant({
+      type: 'roadmap'
+    }).addTo(this.map);
 
     // Attach events to the map
     this.map.on('dragend', this.mapDidMove, this);

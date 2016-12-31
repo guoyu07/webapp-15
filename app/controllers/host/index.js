@@ -46,7 +46,7 @@ export default Ember.Controller.extend(Validations, {
     let authorIds = this.get('model.reviews').filterBy('isNew', false).mapBy('author.id');
     let userId = this.get('sessionUser.user.id');
 
-    return authorIds.contains(userId);
+    return authorIds.includes(userId);
   }),
 
   actions: {
