@@ -40,6 +40,8 @@ module.exports = function(environment) {
         token: '48bf177fb24447f19be94f292931ff05'
       }
     },
+
+    googleMapsApiKey: 'AIzaSyDMCrKYHQ_ymyuWpLEJZT3JyuD9zny_dmE'
   };
 
   ENV['ember-simple-auth'] = {

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'webapp/config/environment';
 
 const { computed } = Ember;
 
@@ -14,7 +15,7 @@ export default Ember.Component.extend({
    * URL of the map.
    */
   mapUrl: computed('latitude', 'longitude', function() {
-    const key = 'AIzaSyDMCrKYHQ_ymyuWpLEJZT3JyuD9zny_dmE';
+    const key = config.googleMapsApiKey;
     const latitude = this.get('latitude') || 0;
     const longitude = this.get('longitude') || 0;
     const baseUrl = 'https://maps.googleapis.com/maps/api/staticmap';
