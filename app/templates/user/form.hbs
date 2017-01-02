@@ -8,7 +8,7 @@
       </div>
     {{/unless}}
     <div class="panel-body">
-      {{#forms/form-group valuePath='user.firstName' as |showError|}}
+      {{#forms/form-group valuePath='user.firstName' validations=validations as |showError|}}
         <label for="firstName" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
 
         <div class="col-sm-10">
@@ -20,7 +20,7 @@
           {{/if}}
         </div>
       {{/forms/form-group}}
-      {{#forms/form-group valuePath='user.lastName' as |showError|}}
+      {{#forms/form-group valuePath='user.lastName' validations=validations as |showError|}}
         <label for="lastName" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
 
         <div class="col-sm-10">
@@ -32,7 +32,7 @@
           {{/if}}
         </div>
       {{/forms/form-group}}
-      {{#forms/form-group valuePath='user.birthDate' as |showError|}}
+      {{#forms/form-group valuePath='user.birthDate' validations=validations as |showError|}}
         <label for="birthDate" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
 
         <div class="col-sm-10">
@@ -44,7 +44,7 @@
           {{/if}}
         </div>
       {{/forms/form-group}}
-      {{#forms/form-group valuePath='user.email' as |showError|}}
+      {{#forms/form-group valuePath='user.email' validations=validations as |showError|}}
         <label for="email" class="col-sm-2 control-label">{{t 'literal.email'}}</label>
 
         <div class="col-sm-10">
@@ -53,7 +53,7 @@
         </div>
       {{/forms/form-group}}
       {{#if user.isNew}}
-        {{#forms/form-group valuePath='user.password' as |showError|}}
+        {{#forms/form-group valuePath='user.password' validations=validations as |showError|}}
           <label for="password" class="col-sm-2 control-label">{{t 'literal.password'}}</label>
 
           <div class="col-sm-10">

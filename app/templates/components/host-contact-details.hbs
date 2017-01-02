@@ -6,7 +6,7 @@
     <p class="form-details mbm">
       {{t 'host-contact-details.sharePolicy'}}
     </p>
-    {{#forms/form-group valuePath='user.phone' as |showError|}}
+    {{#forms/form-group valuePath='user.phone' validations=validations as |showError|}}
       <label for="phone" class="col-sm-2 control-label">{{t 'host-contact-details.phone.label'}}</label>
 
       <div class="col-sm-10">
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    {{#forms/form-group valuePath='host.webSite' as |showError|}}
+    {{#forms/form-group valuePath='host.webSite' validations=validations as |showError|}}
       <label for="webSite" class="col-sm-2 control-label">{{t 'host-contact-details.website.label'}}</label>
 
       <div class="col-sm-10">

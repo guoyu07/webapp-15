@@ -1,11 +1,13 @@
+'use strict';
+
 /*jshint node:true*/
 /* global require, module */
-var mergeTrees = require('broccoli-merge-trees');
-var pickFiles = require('broccoli-static-compiler');
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const mergeTrees = require('broccoli-merge-trees');
+const pickFiles = require('broccoli-static-compiler');
+const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
+  let app = new EmberApp(defaults, {
     fingerprint: {
       prepend: 'https://d2ede2tjxuzdo4.cloudfront.net/'
     },
@@ -16,14 +18,14 @@ module.exports = function(defaults) {
 
   // Bootstrap
   app.import('bower_components/bootstrap/dist/js/bootstrap.js');
-  var bootstrapCssMap = pickFiles('bower_components/bootstrap/dist/css', {
+  let bootstrapCssMap = pickFiles('bower_components/bootstrap/dist/css', {
     srcDir: '/',
     files: ['bootstrap.css.map'],
     destDir: '/assets'
   });
 
   // Put the bootstrap fonts in the place where the bootstrap css expects to find them
-  var bootstrapFonts = pickFiles('bower_components/bootstrap/fonts', {
+  let bootstrapFonts = pickFiles('bower_components/bootstrap/fonts', {
     srcDir: '/',
     destDir: '/assets/fonts'
   });
@@ -37,17 +39,15 @@ module.exports = function(defaults) {
   app.import('bower_components/jquery-file-upload/js/jquery.iframe-transport.js');
   app.import('bower_components/jquery-file-upload/js/jquery.fileupload.js');
 
-  // Ember leaflet
-  app.import('bower_components/leaflet/dist/leaflet-src.js');
+  // Leaflet
+  app.import('bower_components/leaflet/dist/leaflet.js');
   app.import('bower_components/leaflet/dist/leaflet.css');
-  app.import('bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js');
-  app.import('bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css');
-  var leaflet = pickFiles('bower_components/leaflet/dist/', {
+  let leaflet = pickFiles('bower_components/leaflet/dist/', {
     srcDir: 'images',
     destDir: '/assets/images'
   });
-
-  // Leaflet plugins
+  app.import('bower_components/leaflet.markercluster/dist/leaflet.markercluster.js');
+  app.import('bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css');
   app.import('bower_components/leaflet-plugins/layer/tile/Google.js');
 
   // Braintree

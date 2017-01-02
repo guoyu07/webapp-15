@@ -159,7 +159,7 @@
           {{t 'host.index.description'}}
           <a class="share-btn pull-right" rel="nofollow" title="Share on Facebook" href={{model.fbShareUrl}} target="_blank">
             <span class="sr-only">Facebook</span>
-            <img src="assets/images/fb-share.png"/>
+            <img src="/assets/images/fb-share.png"/>
           </a>
         </h3>
       </div>
@@ -197,7 +197,7 @@
                 </blockquote>
               {{else}}
                 {{#if isCurrentUserProfile}}
-                  {{#forms/form-group valuePath='review.replyText' as |showError|}}
+                  {{#forms/form-group valuePath='review.replyText' validations=validations as |showError|}}
                     <label for="replyText" class="control-label">{{t 'host.index.yourReply'}}</label>
                     <span class="pull-right {{unless review.replyTextCharLeft 'text-danger'}}">{{t 'common.charLeft' count=review.replyTextCharLeft}}</span>
 
@@ -361,7 +361,6 @@
   {{review/edit-modal
   review=review
   validations=validations
-  didValidate=didValidate
   submitReview=(action 'submitReview')
   close=(action 'closeReviewModal')}}
 {{/if}}

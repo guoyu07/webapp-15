@@ -28,7 +28,7 @@ export default Ember.Component.extend({
 
       return Ember.ObjectProxy.create({
         content: value,
-        isSelected: (selectedProperties.contains(Ember.get(selectionValue, compareProperty)) || selected.contains(selectionValue)),
+        isSelected: (selectedProperties.includes(Ember.get(selectionValue, compareProperty)) || selected.includes(selectionValue)),
         value: selectionValue,
         label: value.get('label') ? value.get('label') : value
       });
@@ -50,7 +50,7 @@ export default Ember.Component.extend({
       let selected = this.get('selected');
 
       selected = Ember.makeArray(selected);
-      if (selected.contains(value)) {
+      if (selected.includes(value)) {
         selected.removeObject(value);
       } else {
         selected.pushObject(value);

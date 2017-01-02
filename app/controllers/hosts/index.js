@@ -140,7 +140,7 @@ export default Ember.Controller.extend({
   selectedMonths: computed('months.[]', 'monthsService.allMonths.[]', function() {
     let months = this.get('months');
     return this.get('monthsService.allMonths').filter(function(month) {
-      return months.contains(month.id);
+      return months.includes(month.id);
     });
   }),
 
