@@ -44,27 +44,17 @@ export default Ember.Component.extend({
     });
 
     // Set the tile layer
-    L.gridLayer.googleMutant({
-      type: 'roadmap'
-    }).addTo(this.map);
-
-    // $HACK: fixes the Leaflet 1.0 icon issue
-    // See: https://github.com/Leaflet/Leaflet/issues/4968 for resolution
-    let DefaultIcon = L.icon({
-      iconUrl: 'assets/images/marker-icon.png',
-      iconRetinaUrl: 'assets/images/marker-icon-2x.png',
-      shadowUrl: 'assets/images/marker-shadow.png'
-    });
-    L.Marker.prototype.options.icon = DefaultIcon;
+    let googleLayer = new L.Google('ROADMAP');
+    this.map.addLayer(googleLayer);
   },
 
   /**
    * Centers the map in the middle of France.
    */
   centerMap() {
-    const latitude = this.get('latitude');
-    const longitude = this.get('longitude');
-    const zoom = this.get('zoom');
+    let latitude = this.get('latitude');
+    let longitude = this.get('longitude');
+    let zoom = this.get('zoom');
 
     if (latitude && longitude) {
       this.map.setView([latitude, longitude], zoom);
@@ -124,10 +114,12 @@ export default Ember.Component.extend({
    * Handles moves on the map.
    */
   mapDidMove() {
-    const center = this.map.getCenter();
-    const zoom = this.map.getZoom();
+    let center = this.map.getCenter();
+    let zoom = this.map.getZoom();
 
-    this.sendAction('mapMoved', center.lat, center.lng, zoom);
+    Ember.run(() => {
+      this.sendAction('mapMoved', center.lat, center.lng, zoom);
+    });
 
     this.updateVisibleFeatures();
   },
@@ -143,21 +135,23 @@ export default Ember.Component.extend({
 
     // Find visible features
     let visibleFeatures = [];
-    const mapBounds = this.map.getBounds();
+    let mapBounds = this.map.getBounds();
     this.geoJsonLayer.eachLayer(function(layer) {
       if (mapBounds.contains(layer.getLatLng())) {
         visibleFeatures.push(layer.feature);
       }
     });
 
-    this.sendAction('visibleFeaturesChanged', visibleFeatures);
+    Ember.run.next(() => {
+      this.sendAction('visibleFeaturesChanged', visibleFeatures);
+    });
   },
 
   /**
    * Create and display the popup associated to the clicked feature.
    */
   onFeatureClick(e) {
-    const { properties } = e.target.feature;
+    let { properties } = e.target.feature;
 
     // Set info about the current host
     this.set('hostId', properties.hostId);

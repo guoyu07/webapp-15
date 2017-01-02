@@ -48,7 +48,7 @@ module.exports = function(defaults) {
   });
   app.import('bower_components/leaflet.markercluster/dist/leaflet.markercluster.js');
   app.import('bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css');
-  app.import('vendor/Leaflet.GoogleMutant.js');
+  app.import('bower_components/leaflet-plugins/layer/tile/Google.js');
 
   // Braintree
   app.import('bower_components/braintree-web/dist/braintree.js');

@@ -7,8 +7,9 @@
     "braintree-web": "^2.22.2",
     "jquery-file-upload": "~9.5.8",
     "jquery-cookie": "~1.4.1",
-    "leaflet": "~1.0.2",
-    "leaflet.markercluster": "~1.0.0",
+    "leaflet": "0.7.7",
+    "leaflet.markercluster": "0.4.0",
+    "leaflet-plugins": "1.7.0",
     "moment": ">= 2.8.0",
     "moment-timezone": ">= 0.1.0",
     "trackjs": "~2.3.1"
