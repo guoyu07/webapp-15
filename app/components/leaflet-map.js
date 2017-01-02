@@ -15,12 +15,17 @@ export default Ember.Component.extend({
     this.drawMap();
     this.centerMap();
     this.setupMapEvents();
+
+    // If markers are available, show them on the map
+    let markers = this.get('markers');
+    if (markers) {
+      this.setMarkers(markers);
+    }
   },
 
   didReceiveAttrs() {
-    let markers = this.getAttr('markers');
-
     // If markers are available, show them on the map
+    let markers = this.getAttr('markers');
     if (markers) {
       this.setMarkers(markers);
     }
