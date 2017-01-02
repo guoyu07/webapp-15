@@ -12,17 +12,9 @@ export default Ember.Component.extend({
   geoJsonLayer: null,
 
   didInsertElement() {
-    // Draw the map
     this.drawMap();
-
-    // Center the map on France
     this.centerMap();
-
-    // If markers are available, show them on the map
-    let markers = this.get('markers');
-    if (markers) {
-      this.setMarkers(markers);
-    }
+    this.setupMapEvents();
   },
 
   didReceiveAttrs() {
@@ -56,9 +48,14 @@ export default Ember.Component.extend({
       type: 'roadmap'
     }).addTo(this.map);
 
-    // Attach events to the map
-    this.map.on('dragend', this.mapDidMove, this);
-    this.map.on('zoomend', this.mapDidMove, this);
+    // $HACK: fixes the Leaflet 1.0 icon issue
+    // See: https://github.com/Leaflet/Leaflet/issues/4968 for resolution
+    let DefaultIcon = L.icon({
+      iconUrl: 'assets/images/marker-icon.png',
+      iconRetinaUrl: 'assets/images/marker-icon-2x.png',
+      shadowUrl: 'assets/images/marker-shadow.png'
+    });
+    L.Marker.prototype.options.icon = DefaultIcon;
   },
 
   /**
@@ -77,6 +74,14 @@ export default Ember.Component.extend({
         [50, 7] // north east
       ]);
     }
+  },
+
+  /**
+   * Set map events on zoom and drag.
+   */
+  setupMapEvents() {
+    this.map.on('dragend', this.mapDidMove, this);
+    this.map.on('zoomend', this.mapDidMove, this);
   },
 
   /**
