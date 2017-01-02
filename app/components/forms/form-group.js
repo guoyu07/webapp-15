@@ -11,11 +11,11 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
     let valuePath = this.get('valuePath');
-    defineProperty(this, 'validation', computed.oneWay(`targetObject.validations.attrs.${valuePath}`));
+    defineProperty(this, 'validation', computed.oneWay(`validations.attrs.${valuePath}`));
   },
 
+  didValidate: computed.oneWay('validations.didValidate'),
   notValidating: computed.not('validation.isValidating'),
-  didValidate: computed.oneWay('targetObject.didValidate'),
   isInvalid: computed.oneWay('validation.isInvalid'),
   showErrorClass: computed.and('notValidating', 'showError', 'validation'),
   showError: computed.and('didValidate', 'isInvalid')

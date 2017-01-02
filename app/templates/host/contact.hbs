@@ -17,7 +17,7 @@
           <li>{{t 'host.contact.rule3'}}</li>
         </ol>
         <form>
-          {{#forms/form-group valuePath='message' as |showError|}}
+          {{#forms/form-group valuePath='message' validations=validations as |showError|}}
             <label for="message" class="control-label">{{t 'host.contact.message.label'}}</label>
 
             {{textarea id='message' name='message' value=message class='form-control' rows='10' placeholder=(t 'host.contact.details' firstName=model.user.firstName)}}

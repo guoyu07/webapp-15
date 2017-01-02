@@ -43,9 +43,9 @@ export default buildValidations({
   'address.country.id': validator('presence', true),
   'address.department.id': validator('presence', {
     presence: true,
-    dependentKeys: ['address.country.isFrance'],
-    disabled() {
+    dependentKeys: ['model.address.country.isFrance'],
+    disabled: Ember.computed(function() {
       return this.get('model.address.country.isFrance') === false;
-    }
+    }).volatile()
   })
 });

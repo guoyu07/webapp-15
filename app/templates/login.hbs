@@ -9,12 +9,12 @@
     </div>
   {{/if}}
   <form autocomplete="on" method="POST" {{action 'login' on='submit'}}>
-    {{#forms/form-group valuePath='username' as |showError|}}
+    {{#forms/form-group valuePath='username' validations=validations as |showError|}}
       <label for="username" class="control-label">{{t 'literal.email'}}</label>
       {{input value=username id='username' name='username' type='email' class='form-control'}}
       {{error-display error=validations.attrs.username showError=showError}}
     {{/forms/form-group}}
-    {{#forms/form-group valuePath='password' as |showError|}}
+    {{#forms/form-group valuePath='password' validations=validations as |showError|}}
       <label for="password" class="control-label">{{t 'literal.password'}}</label>
       {{input value=password id='password' name='password' type='password' class='form-control'}}
       {{error-display error=validations.attrs.password showError=showError}}

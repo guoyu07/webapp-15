@@ -20,7 +20,7 @@ export default Ember.Controller.extend(Validations, {
       // Validate the form
       this.validate().then(({ m, validations })=> {
 
-        this.set('didValidate', true);
+        this.set('validations.didValidate', true);
         if (validations.get('isValid')) {
 
           // Get the current user id

@@ -6,7 +6,7 @@
     <p class="form-details mbm">
       {{instructions}}
     </p>
-    {{#forms/form-group valuePath='address.address1' as |showError|}}
+    {{#forms/form-group valuePath='address.address1' validations=validations as |showError|}}
       <label for="address1" class="col-sm-2 control-label">{{t 'address-form.address1.label'}}</label>
 
       <div class="col-sm-10">
@@ -14,7 +14,7 @@
         {{error-display error=validations.attrs.address.address1 showError=showError}}
       </div>
     {{/forms/form-group}}
-    {{#forms/form-group valuePath='address.address2' as |showError|}}
+    {{#forms/form-group valuePath='address.address2' validations=validations as |showError|}}
       <label for="address2" class="col-sm-2 control-label">{{t 'address-form.address2.label'}}</label>
 
       <div class="col-sm-10">
@@ -22,7 +22,7 @@
         {{error-display error=validations.attrs.address.address2 showError=showError}}
       </div>
     {{/forms/form-group}}
-    {{#forms/form-group valuePath='address.city' as |showError|}}
+    {{#forms/form-group valuePath='address.city' validations=validations as |showError|}}
       <label for="city" class="col-sm-2 control-label">{{t 'address-form.city.label'}}</label>
 
       <div class="col-sm-10">
@@ -30,7 +30,7 @@
         {{error-display error=validations.attrs.address.city showError=showError}}
       </div>
     {{/forms/form-group}}
-    {{#forms/form-group valuePath='address.zipCode' as |showError|}}
+    {{#forms/form-group valuePath='address.zipCode' validations=validations as |showError|}}
       <label for="zipCode" class="col-sm-2 control-label">{{t 'address-form.zipCode.label'}}</label>
 
       <div class="col-sm-10">
@@ -38,7 +38,7 @@
         {{error-display error=validations.attrs.address.zipCode showError=showError}}
       </div>
     {{/forms/form-group}}
-    {{#forms/form-group valuePath='address.country.id' as |showError|}}
+    {{#forms/form-group valuePath='address.country.id' validations=validations as |showError|}}
       <label for="country" class="col-sm-2 control-label">{{t 'address-form.country.label'}}</label>
 
       <div class="col-sm-10">
@@ -51,7 +51,7 @@
       </div>
     {{/forms/form-group}}
     {{#if address.country}}
-      {{#forms/form-group valuePath='address.department.id' as |showError|}}
+      {{#forms/form-group valuePath='address.department.id' validations=validations as |showError|}}
         {{#if address.country.isFrance}}
           <label for="department" class="col-sm-2 control-label">{{t 'address-form.department.label'}}</label>
 
@@ -73,7 +73,7 @@
     {{/if}}
     {{#if sessionUser.user.isAdmin}}
       <hr/>
-      {{#forms/form-group valuePath='address.latitude' as |showError|}}
+      {{#forms/form-group valuePath='address.latitude' validations=validations as |showError|}}
         <label for="latitude" class="col-xs-12 col-sm-2 control-label">{{t 'address-form.latitudeLongitude.label'}}</label>
 
         <div class="col-xs-6 col-sm-5">

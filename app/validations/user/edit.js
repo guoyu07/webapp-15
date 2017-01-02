@@ -22,9 +22,9 @@ export default buildValidations({
   ],
   'user.birthDate': validator('date', {
     allowBlank: false,
-    before() {
+    before: Ember.computed(function() {
       return moment().subtract(18, 'year');
-    },
+    }).volatile(),
     format: 'YYYY-MM-DD',
     errorFormat: 'YYYY-MM-DD',
     descriptionKey: 'errors.mustBe18'

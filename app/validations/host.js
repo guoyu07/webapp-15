@@ -31,15 +31,15 @@ export default buildValidations({
   }),
   'host.activities': validator('presence', {
     presence: true,
-    dependentKeys: ['host.activities.[]']
+    dependentKeys: ['model.host.activities.[]']
   }),
   'host.stays': validator('presence', {
     presence: true,
-    dependentKeys: ['host.stays.[]']
+    dependentKeys: ['model.host.stays.[]']
   }),
   'host.lodgings': validator('presence', {
     presence: true,
-    dependentKeys: ['host.lodgings.[]']
+    dependentKeys: ['model.host.lodgings.[]']
   }),
   'host.capacity': validator('presence', true),
   'host.note': validator('length', {

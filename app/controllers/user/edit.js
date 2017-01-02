@@ -32,7 +32,9 @@ export default Ember.Controller.extend(Validations, {
       // Validate the form
       this.validate().then(({ m, validations })=> {
 
-        this.set('didValidate', true);
+        debugger;
+
+        this.set('validations.didValidate', true);
         if (validations.get('isValid')) {
 
           // Save the user

@@ -67,7 +67,7 @@ export default Ember.Controller.extend(Validations, {
 
       this.validate().then(({ m, validations })=> {
 
-        this.set('didValidate', true);
+        this.set('validations.didValidate', true);
         if (validations.get('isValid')) {
 
           let isNew = review.get('isNew');

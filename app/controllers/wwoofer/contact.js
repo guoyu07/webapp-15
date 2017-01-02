@@ -21,7 +21,7 @@ export default Ember.Controller.extend(Validations, {
       // Validate the form
       this.validate().then(({ m, validations })=> {
 
-        this.set('didValidate', true);
+        this.set('validations.didValidate', true);
         if (validations.get('isValid')) {
 
           // Set controller in sending state
@@ -49,7 +49,7 @@ export default Ember.Controller.extend(Validations, {
 
           promise.finally(()=> {
             this.set('isSending', false);
-            this.set('didValidate', false);
+            this.set('validations.didValidate', false);
           });
         } else {
           this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
