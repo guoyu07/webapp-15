@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
    * The data-url to send the photo to.
    */
   photoDataUrl: computed('model.user.id', function() {
-    return `api/users/${this.get('model.user.id')}/photo`;
+    return `/api/users/${this.get('model.user.id')}/photo`;
   }),
 
   actions: {
