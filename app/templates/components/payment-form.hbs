@@ -1,4 +1,21 @@
-<div id="payment-form"></div>
-<button class="btn btn-primary mts btn-block" disabled={{disableSubmit}}>
+<div class="row">
+  <div class="form-group col-xs-12 {{cardNumberClass}}">
+    <label for="cardNumber" class="control-label">{{t 'payment-form.cardNumber.label'}}</label>
+    <div class="form-control" id="cardNumber"></div>
+    <span class="helper-text">{{cardNumberError}}</span>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group col-xs-6 {{expirationDateClass}}">
+    <label for="expirationDate" class="control-label">{{t 'payment-form.expirationDate.label'}}</label>
+    <div class="form-control" id="expirationDate"></div>
+  </div>
+  <div class="form-group col-xs-6 {{cvvClass}}">
+    <label for="cvv" class="control-label">{{t 'payment-form.cvv.label'}}</label>
+    <div class="form-control" id="cvv"></div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary mts btn-block" onclick={{action 'submitPayment' hostedFields}} disabled={{disableSubmitInternal}}>
   <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {{t 'payment-form.pay'}}
 </button>

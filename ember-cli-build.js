@@ -51,7 +51,9 @@ module.exports = function(defaults) {
   app.import('bower_components/leaflet-plugins/layer/tile/Google.js');
 
   // Braintree
-  app.import('bower_components/braintree-web/dist/braintree.js');
+  app.import('bower_components/braintree-web/client.js');
+  app.import('bower_components/braintree-web/hosted-fields.js');
+  app.import('bower_components/braintree-web/paypal.js');
 
   return mergeTrees([
     bootstrapFonts,

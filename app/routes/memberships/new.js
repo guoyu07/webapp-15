@@ -25,10 +25,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     /**
      * Process a payment.
      * @param {Object} payment The payment object containing the nonce.
-     * @param {Object} checkout The checkout object to destroy the payment form.
      */
-    processPayment(payment, checkout) {
-      
+    processPayment(payment) {
+
       payment.itemCode = this.controller.get('itemCode');
       payment.shippingRegion = this.controller.get('shippingRegion');
 
@@ -46,30 +45,22 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       });
 
       promise.then((result)=> {
-        checkout.teardown(()=> {
-          checkout = null;
+        if (result.success === true) {
+          this.get('sessionUser.user').then((user)=> {
+            // Refresh the session across all tabs
+            this.get('sessionUser').refresh();
 
-          if (result.success === true) {
-            this.get('sessionUser.user').then((user)=> {
-              // Refresh the session across all tabs
-              this.get('sessionUser').refresh();
-
-              window.location.replace(`user/${user.id}/memberships`);
-            });
-          } else {
-            this.controller.set('paymentFailureMessage', result.message);
-          }
-        });
+            window.location.replace(`/user/${user.id}/memberships`);
+          });
+        } else {
+          this.controller.set('paymentFailureMessage', result.message);
+        }
       });
       
       promise.catch((err) => {
-        checkout.teardown(()=> {
-          checkout = null;
-
-          if (Ember.get(err, 'errors.firstObject.status') === '409') {
-            this.controller.set('membershipAlreadyActive', true);
-          }
-        });
+        if (Ember.get(err, 'errors.firstObject.status') === '409') {
+          this.controller.set('membershipAlreadyActive', true);
+        }
       });
 
       promise.finally(() => {
