@@ -1,4 +1,6 @@
-<td>{{input type="checkbox" checked=checked}}</td>
+<td>
+  <input type="checkbox" checked={{checked}} onclick={{action 'toggleIsChecked' value='target.checked'}} />
+</td>
 <td>{{membership.user.fullName}}</td>
 <td>{{membership.itemCode}}</td>
 <td>{{membership.paymentType}}</td>

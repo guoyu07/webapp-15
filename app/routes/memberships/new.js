@@ -54,7 +54,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
               // Refresh the session across all tabs
               this.get('sessionUser').refresh();
 
-              window.location.replace(`user/${user.id}/memberships`);
+              window.location.replace(`/user/${user.id}/memberships`);
             });
           } else {
             this.controller.set('paymentFailureMessage', result.message);

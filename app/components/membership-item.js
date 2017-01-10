@@ -15,15 +15,8 @@ export default Ember.Component.extend({
   allChecked: false,
 
   allCheckedToggled: Ember.observer('allChecked', function() {
-    let checked = this.get('checked');
-    const allChecked = this.get('allChecked');
-    this.set('checked', checked || allChecked);
-  }),
-
-  checkedToggled: Ember.observer('checked', function() {
-    const checked = this.get('checked');
-    const membership = this.get('membership');
-    this.sendAction('itemToggled', membership, checked);
+    let checked = this.get('checked') || this.get('allChecked');
+    this.set('checked', checked);
   }),
 
   expireAtClass: computed('membership.isExpired', 'membership.isStillValidInAMonth', function() {
@@ -40,6 +33,12 @@ export default Ember.Component.extend({
   }),
 
   actions: {
+    toggleIsChecked(checked) {
+      this.set('checked', checked);
+
+      let membership = this.get('membership');
+      this.sendAction('itemToggled', membership, checked);
+    },
     markBookletAsSent(membership) {
       membership.set('bookletSentAt', new Date());
       membership.save();

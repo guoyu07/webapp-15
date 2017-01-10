@@ -6,39 +6,13 @@ export default Ember.Controller.extend({
 
   queryParams: ['page', 'itemsPerPage', 'expireSoon', 'userId', 'includeBooklet'],
 
-  /**
-   * The current page.
-   */
   page: 1,
-
-  /**
-   * Number of memberships displayed per page.
-   */
   itemsPerPage: 20,
-
-  /**
-   * Whether to filter memberships expiring withing a month.
-   */
   expireSoon: false,
-
-  /**
-   * Whether to filter memberships including a booklet.
-   */
   includeBooklet: false,
-
-  /**
-   * Whether to filter memberships belonging to a specific user.
-   */
   userId: null,
 
-  /**
-   * Whether the top checkbox is checked.
-   */
   allChecked: false,
-
-  /**
-   * List of selected memberships from the list.
-   */
   selectedMemberships: Ember.A(),
 
   /**
@@ -59,5 +33,12 @@ export default Ember.Controller.extend({
     const totalItems = this.get('memberships.meta.total');
     const itemsPerPage = this.get('itemsPerPage');
     return Math.ceil(totalItems / itemsPerPage);
-  })
+  }),
+
+  actions: {
+    toggleAllChecked(checked) {
+      this.set('allChecked', checked);
+      this.get('selectedMemberships').addObjects(this.get('memberships'));
+    }
+  }
 });
