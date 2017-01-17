@@ -30,11 +30,11 @@ export default Ember.Controller.extend({
 
   shippingRegionOptions: computed('i18n.locale', function() {
     return [
-      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: '4.80' }), price: 4.80 },
-      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: '8.55' }), price: 8.55 },
-      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: '13.05' }), price: 13.05 },
-      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: '9.30' }), price: 9.30 },
-      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: '11.45' }), price: 11.45 }
+      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: '5.01' }), price: 5.01 },
+      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: '8.91' }), price: 8.91 },
+      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: '13.59' }), price: 13.59 },
+      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: '9.91' }), price: 9.91 },
+      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: '12.15' }), price: 12.15 }
     ];
   }),
 
