@@ -27,6 +27,14 @@ export default buildValidations({
       max: 255
     })
   ],
+  'user.phone': validator('length', {
+    allowBlank: true,
+    max: 50
+  }),
+  'wwoofer.emergencyPhone': validator('length', {
+    allowBlank: true,
+    max: 50
+  }),
   'address.latitude': validator('number', {
     allowBlank: true,
     allowString: true,
