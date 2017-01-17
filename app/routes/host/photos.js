@@ -10,7 +10,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     savePhoto(photo) {
 
       // Validate the form
-      photo.validate().then(({ m, validations })=> {
+      photo.validate().then(({ validations })=> {
 
         photo.set('didValidate', true);
         if (validations.get('isValid')) {

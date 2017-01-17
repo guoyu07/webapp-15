@@ -17,7 +17,7 @@ export default Ember.Controller.extend(Validations, {
     login() {
 
       // Validate the form
-      this.validate().then(({ m, validations })=> {
+      this.validate().then(({ validations })=> {
 
         this.set('validations.didValidate', true);
         if (validations.get('isValid')) {

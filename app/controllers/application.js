@@ -41,7 +41,7 @@ export default Ember.Controller.extend(Validations, {
       const impersonatedUserEmail = this.get('impersonatedUserEmail');
 
       // Validate the modal
-      this.validate().then(({ m, validations })=> {
+      this.validate().then(({ validations })=> {
 
         this.set('didValidate', true);
         if (validations.get('isValid')) {

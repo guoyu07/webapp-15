@@ -9,7 +9,7 @@ export default Ember.Controller.extend(Validations, {
       let host = this.get('host');
 
       // Validate the form
-      this.validate().then(({ m, validations })=> {
+      this.validate().then(({ validations })=> {
 
         this.set('validations.didValidate', true);
         if (validations.get('isValid')) {
