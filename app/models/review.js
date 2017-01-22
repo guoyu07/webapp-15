@@ -48,6 +48,11 @@ export default DS.Model.extend({
     return this.get('sessionUser.user.isAdmin') || authorCanEdit;
   }),
 
+  textCharLeft: computed('text.length', function () {
+    let length = this.get('text.length') || 0;
+    return Math.max(0, 1000 - length);
+  }),
+
   replyTextCharLeft: computed('replyText.length', function () {
     let length = this.get('replyText.length') || 0;
     return Math.max(0, 1000 - length);

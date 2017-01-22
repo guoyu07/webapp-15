@@ -17,6 +17,7 @@
     </ul>
     {{#forms/form-group valuePath='review.text' validations=validations as |showError|}}
       <label for="text" class="control-label">{{t 'approve-modal.instructions'}}</label>
+      <span class="pull-right {{unless review.textCharLeft 'text-danger'}}">{{t 'common.charLeft' count=review.textCharLeft}}</span>
       <div class="rating mbs">
         <span class="{{if review.hasFiveStars 'selected'}}">☆</span>
         <span class="{{if review.hasFourStars 'selected'}}">☆</span>
@@ -31,6 +32,7 @@
     {{#if review.replyText}}
       {{#forms/form-group valuePath='review.replyText' validations=validations as |showError|}}
         <label for="replyText" class="control-label">{{t 'approve-modal.replyInstructions'}}</label>
+        <span class="pull-right {{unless review.replyTextCharLeft 'text-danger'}}">{{t 'common.charLeft' count=review.replyTextCharLeft}}</span>
 
         {{textarea id='replyText' name='replyText' value=review.replyText class='form-control' rows='5' disabled=review.replyApprovedAt}}
         {{error-display error=validations.attrs.review.replyText showError=showError}}

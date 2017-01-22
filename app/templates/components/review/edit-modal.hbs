@@ -17,15 +17,19 @@
     </ul>
     {{#forms/form-group valuePath='review.text' validations=validations as |showError|}}
       <label for="text" class="control-label">{{t 'edit-modal.yourReview'}}</label>
-      <div class="rating mbs">
-        <span class="{{if review.hasFiveStars 'selected'}}" onclick={{action 'setRating' 5}}>☆</span><span class="{{if review.hasFourStars 'selected'}}" onclick={{action 'setRating' 4}}>☆</span><span class="{{if review.hasThreeStars 'selected'}}" onclick={{action 'setRating' 3}}>☆</span><span class="{{if review.hasTwoStars 'selected'}}" onclick={{action 'setRating' 2}}>☆</span><span class="{{if review.hasOneStar 'selected'}}" onclick={{action 'setRating' 1}}>☆</span>
-      </div>
+      <span class="pull-right {{unless review.textCharLeft 'text-danger'}}">{{t 'common.charLeft' count=review.textCharLeft}}</span>
       {{error-display error=validations.attrs.review.rating showError=showError}}
 
       {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
       {{error-display error=validations.attrs.review.text showError=showError}}
+      <small>{{t 'edit-modal.approval'}}</small>
     {{/forms/form-group}}
-    <small>{{t 'edit-modal.approval'}}</small>
+    {{#forms/form-group valuePath='review.text' validations=validations as |showError|}}
+      <label class="control-label">{{t 'edit-modal.rating'}}</label>
+      <div class="rating mbs">
+        <span class="{{if review.hasFiveStars 'selected'}}" onclick={{action 'setRating' 5}}>☆</span><span class="{{if review.hasFourStars 'selected'}}" onclick={{action 'setRating' 4}}>☆</span><span class="{{if review.hasThreeStars 'selected'}}" onclick={{action 'setRating' 3}}>☆</span><span class="{{if review.hasTwoStars 'selected'}}" onclick={{action 'setRating' 2}}>☆</span><span class="{{if review.hasOneStar 'selected'}}" onclick={{action 'setRating' 1}}>☆</span>
+      </div>
+    {{/forms/form-group}}
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" {{action submitReview review}} disabled={{review.isSaving}}>
