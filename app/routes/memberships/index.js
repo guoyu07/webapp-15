@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const { service } = Ember.inject;
@@ -34,7 +35,8 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       limit
     };
     if (params.expireSoon === true) {
-      queryParams.expireSoon = true;
+      queryParams.expireStart = moment().toISOString();
+      queryParams.expireEnd = moment().add('months', 1).toISOString();
     }
     if (params.userId) {
       queryParams.userId = params.userId;
