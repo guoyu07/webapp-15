@@ -246,7 +246,7 @@
             <tr>
               <td>
                 <span class="glyphicon glyphicon-envelope mrx"></span>
-                {{mail-to model.user.email (truncate model.user.email limit=28)}}
+                {{mail-to model.user.email (truncate model.user.email limit=26)}}
               </td>
             </tr>
           {{/if}}
@@ -282,11 +282,13 @@
           </tr>
         </tbody>
       </table>
-      <ul class="list-group">
-        {{#link-to 'host.contact' model.id class='list-group-item list-group-item-primary text-center'}}
-          {{t 'host.index.sendMessage'}}
-        {{/link-to}}
-      </ul>
+      {{#unless model.noEmail}}
+        <ul class="list-group">
+          {{#link-to 'host.contact' model.id class='list-group-item list-group-item-primary text-center'}}
+            {{t 'host.index.sendMessage'}}
+          {{/link-to}}
+        </ul>
+      {{/unless}}
     </div>
   </div>
 
