@@ -24,11 +24,11 @@ export default Ember.Component.extend({
     const hasValidMembership = this.get('user.hasNonExpiredWwooferMembership');
     const isStillValidInAMonth = this.get('user.latestWwooferMembership.isStillValidInAMonth');
     if (!hasValidMembership || !isStillValidInAMonth) {
-      return 'glyphicon glyphicon-warning-sign';
+      return 'glyphicon glyphicon-exclamation-sign';
     }
 
     // Membership status ok
-    return 'glyphicon glyphicon-ok';
+    return 'glyphicon glyphicon-ok-sign';
   }),
 
   /**
@@ -42,12 +42,12 @@ export default Ember.Component.extend({
       return;
     }
 
-    // Host is not approved: hourglass or warning
+    // Host is not approved: hourglass or ban
     if (host.get('isApproved') === false) {
       if (host.get('isPendingApproval')) {
         return 'glyphicon glyphicon-hourglass';
       } else {
-        return 'glyphicon glyphicon-warning-sign';
+        return 'glyphicon glyphicon-remove-sign';
       }
     }
 
@@ -55,10 +55,10 @@ export default Ember.Component.extend({
     const hasValidMembership = this.get('user.hasNonExpiredHostMembership');
     const isStillValidInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
     if (!hasValidMembership || !isStillValidInAMonth) {
-      return 'glyphicon glyphicon-warning-sign';
+      return 'glyphicon glyphicon-exclamation-sign';
     }
 
     // Membership status ok
-    return 'glyphicon glyphicon-ok';
+    return 'glyphicon glyphicon-ok-sign';
   })
 });
