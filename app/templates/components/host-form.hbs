@@ -52,6 +52,11 @@
         {{toggle-options values=activitiesService.allActivities selected=host.activities optionValuePath='id'}}
       </div>
     {{/forms/form-group}}
+    {{#if onlyGreenBuildingEnabled}}
+      <div class="col-sm-offset-2 alert alert-warning" role="alert">
+        {{t 'host-form.onlyGreenBuildingEnabled'}}
+      </div>
+    {{/if}}
     <hr class="col-sm-offset-2 col-sm-9 mvs">
     <div class="form-group">
       <label class="col-sm-2 control-label">{{t 'host-form.openingMonths'}}</label>

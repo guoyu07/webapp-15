@@ -23,7 +23,8 @@ export default Ember.Service.extend({
     'beekeeping',
     'bakery',
     'brewery',
-    'foraging'
+    'foraging',
+    'green-building'
   ],
 
   /**

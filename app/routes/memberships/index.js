@@ -36,7 +36,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     };
     if (params.expireSoon === true) {
       queryParams.expireStart = moment().toISOString();
-      queryParams.expireEnd = moment().add('months', 1).toISOString();
+      queryParams.expireEnd = moment().add(1, 'months').toISOString();
     }
     if (params.userId) {
       queryParams.userId = params.userId;
