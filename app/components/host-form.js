@@ -5,7 +5,7 @@ const { computed } = Ember;
 export default Ember.Component.extend({
 
   onlyGreenBuildingEnabled: computed('host.activities.[]', function () {
-    let activities = this.get('host.activities');
+    let activities = this.get('host.activities') || [];
     return activities.get('length') === 1 && activities.includes('green-building');
   }),
 
