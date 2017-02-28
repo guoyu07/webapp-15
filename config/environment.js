@@ -35,12 +35,6 @@ module.exports = function(environment) {
       includeLocales: ['fr']
     },
 
-    trackJs: {
-      config: {
-        token: '48bf177fb24447f19be94f292931ff05'
-      }
-    },
-
     googleMapsApiKey: 'AIzaSyDMCrKYHQ_ymyuWpLEJZT3JyuD9zny_dmE'
   };
 
@@ -55,8 +49,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-
-    ENV.trackJs.config.enabled = true;
   }
 
   if (environment === 'test') {
@@ -68,8 +60,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-
-    ENV.trackJs.config.enabled = false;
   }
 
   if (environment === 'production') {

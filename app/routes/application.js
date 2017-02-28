@@ -10,13 +10,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   ajax: service('ajax'),
 
   beforeModel() {
-    // Set trackJs user if authenticated
-    if (this.get('session.isAuthenticated')) {
-      this.get('sessionUser.user').then((user) => {
-        this.setTrackJsUser(user.get('id'));
-      });
-    }
-
     // Fetch translations from server
     return this.get('translationsFetcher').fetch();
   },
@@ -51,19 +44,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
 
   /**
-   * Sets the current user ID for track JS.
-   * @param userId
-   */
-  setTrackJsUser(userId) {
-    Ember.assert('User id required to set trackJs user.', userId);
-    if (userId && this.trackjs) {
-      this.trackjs.configure({
-        userId: userId.toString()
-      });
-    }
-  },
-
-  /**
    * Performs post-login actions.
    */
   sessionAuthenticated() {
@@ -75,8 +55,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         if (this.get('i18n.locale') !== user.get('locale')) {
           this.get('translationsFetcher').fetch();
         }
-
-        this.setTrackJsUser(user.get('id'));
 
         this.processNewUserModalVisibility();
 
@@ -136,8 +114,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     error(err) {
       if (Ember.get(err, 'errors.firstObject.status') === '404') {
         this.transitionTo('404', 'not-found');
-      } else {
-        this.trackjs.track(err);
       }
     }
   }
