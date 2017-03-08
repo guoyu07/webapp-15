@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
   queryParams: [
     'searchTerm', 'activities', 'lodgings', 'lon', 'lat', 'approvalStatus', 'zoom', 'showMoreFilter',
     'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay',
-    'childrenOk', 'petsOk', 'page'
+    'childrenOk', 'petsOk', 'page', 'favoritesOnly'
   ],
 
   /**
@@ -33,6 +33,7 @@ export default Ember.Controller.extend({
   stay: null,
   activities: [],
   lodgings: [],
+  favoritesOnly: false,
 
   /**
    * Advanced search filters.
@@ -76,11 +77,6 @@ export default Ember.Controller.extend({
    * Indicates whether the list should only show the hosts visible on map.
    */
   syncMapAndList: true,
-
-  /**
-   * The latest host-coordinates XHR request.
-   */
-  dataRequest: null,
 
   /**
    * Indicates whether the map is visible.
@@ -159,58 +155,30 @@ export default Ember.Controller.extend({
     return dptId ? this.store.findRecord('department', dptId) : null;
   }),
 
-  retrieveHosts() {
-    this.set('isLoading', true);
-    this.set('hostCoordinates', { features: [] });
-
-    // Abort any potential previous request to avoid racing issues
-    let dataRequest = this.get('dataRequest');
-    if (dataRequest) {
-      dataRequest.abort();
-    }
-
-    // Prepare params
-    let params = this.getParameters();
-    params.limit = 5000;
-
-    // Create GET request
-    dataRequest = Ember.$.get('/api/host-coordinates', params);
-    this.set('dataRequest', dataRequest);
-
-    dataRequest.done((data)=> {
-      this.set('hostCoordinates', data);
-      this.set('page', 1);
-      this.set('isLoading', false);
-    });
-  },
-
-  getParameters() {
-    return this.getProperties('searchTerm', 'approvalStatus', 'activities', 'lodgings', 'membershipStatus', 'isSuspended',
-      'isHidden', 'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk');
-  },
-
   actions: {
     /**
      * Updates the hosts features.
      */
     updateHosts() {
-      this.retrieveHosts();
+      this.send('search');
     },
 
     /**
      * Updates the host features and toggles the advanced filters visibility.
      */
     applyFilters() {
-      this.retrieveHosts();
+      this.send('search');
       this.toggleProperty('showMoreFilter');
     },
 
     /**
      * Refreshes the list of visible features when the map is loaded or was moved.
      */
-    visibleFeaturesChanged(visibleFeatures) {
+    visibleFeaturesChanged(visibleFeatures, afterMove) {
       this.set('featuresOnMap', visibleFeatures);
-      this.set('page', 1);
+      if (afterMove) {
+        this.set('page', 1);
+      }
     },
 
     /**
@@ -227,57 +195,56 @@ export default Ember.Controller.extend({
     chooseDepartment(department) {
       const id = department ? department.id : null;
       this.set('dptId', id);
-      this.retrieveHosts();
+      this.send('search');
     },
 
     chooseMonths(months) {
       this.set('months', months.mapBy('id'));
-      this.retrieveHosts();
+      this.send('search');
     },
 
     chooseCapacity(capacity) {
       this.set('capacity', capacity.id);
-      this.retrieveHosts();
+      this.send('search');
     },
 
     chooseStay(stay) {
       const id = stay ? stay.id : null;
       this.set('stay', id);
-      this.retrieveHosts();
+      this.send('search');
     },
 
-    /**
-     * Toggles the advanced filters visibility.
-     */
     toggleAdvancedFilters() {
       this.toggleProperty('showMoreFilter');
     },
 
-    /**
-     * Toggles the synchronisation of the map and the list.
-     */
     toggleSyncMapAndList() {
       this.toggleProperty('syncMapAndList');
     },
 
+    toggleFavoritesOnly () {
+      this.toggleProperty('favoritesOnly');
+      this.send('search');
+    },
+
     toggleIsSuspended() {
       this.toggleProperty('isSuspended');
-      this.retrieveHosts();
+      this.send('search');
     },
 
     toggleIsHidden() {
       this.toggleProperty('isHidden');
-      this.retrieveHosts();
+      this.send('search');
     },
 
     toggleChildrenOk() {
       this.toggleProperty('childrenOk');
-      this.retrieveHosts();
+      this.send('search');
     },
 
     togglePetsOk() {
       this.toggleProperty('petsOk');
-      this.retrieveHosts();
+      this.send('search');
     },
 
     addFavorite(host) {

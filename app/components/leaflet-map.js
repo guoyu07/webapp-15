@@ -97,7 +97,7 @@ export default Ember.Component.extend({
     this.geoJsonLayer.addData(markers);
     this.markerClusterGroup.addLayer(this.geoJsonLayer);
 
-    this.updateVisibleFeatures();
+    this.updateVisibleFeatures(false);
   },
 
   /**
@@ -126,13 +126,13 @@ export default Ember.Component.extend({
       this.sendAction('mapMoved', center.lat, center.lng, zoom);
     });
 
-    this.updateVisibleFeatures();
+    this.updateVisibleFeatures(true);
   },
 
   /**
    * Computes the visibility of the features based on map bounds.
    */
-  updateVisibleFeatures() {
+  updateVisibleFeatures(afterMove) {
 
     if (!this.map || !this.geoJsonLayer) {
       return;
@@ -148,7 +148,7 @@ export default Ember.Component.extend({
     });
 
     Ember.run.next(() => {
-      this.sendAction('visibleFeaturesChanged', visibleFeatures);
+      this.sendAction('visibleFeaturesChanged', visibleFeatures, afterMove);
     });
   },
 

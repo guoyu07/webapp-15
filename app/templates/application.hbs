@@ -112,7 +112,7 @@
                 {{/link-to}}
               </li>
               <li>
-                {{#link-to 'user.favorites' sessionUser.user.id}}
+                {{#link-to 'hosts.index' (query-params favoritesOnly='true')}}
                   {{t 'menu.favorites'}}
                 {{/link-to}}
               </li>

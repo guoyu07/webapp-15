@@ -170,7 +170,12 @@
         <div class="row mbs">
           <div class="col-xs-12">
             <button {{action 'toggleAdvancedFilters'}} class="btn btn-primary">
+              <span class="glyphicon glyphicon-filter mrx"></span>
               {{t 'hosts.index.moreFilters'}}
+            </button>
+            <button {{action 'toggleFavoritesOnly'}} class="btn btn-default {{if favoritesOnly 'active'}}">
+              <span class="glyphicon glyphicon-heart mrx"></span>
+              {{t 'hosts.index.favoritesOnly'}}
             </button>
             <ul class="pull-right mts nav nav-pills" role="tablist">
               <li role="presentation" class="active">
