@@ -173,10 +173,12 @@
               <span class="glyphicon glyphicon-filter mrx"></span>
               {{t 'hosts.index.moreFilters'}}
             </button>
-            <button {{action 'toggleFavoritesOnly'}} class="btn btn-default {{if favoritesOnly 'active'}}">
-              <span class="glyphicon glyphicon-heart mrx"></span>
-              {{t 'hosts.index.favoritesOnly'}}
-            </button>
+            {{#if session.isAuthenticated}}
+              <button {{action 'toggleFavoritesOnly'}} class="btn btn-default {{if favoritesOnly 'active'}}">
+                <span class="glyphicon {{if favoritesOnly 'glyphicon-check' 'glyphicon-unchecked'}} mrx"></span>
+                {{t 'hosts.index.favoritesOnly'}}
+              </button>
+            {{/if}}
             <ul class="pull-right mts nav nav-pills" role="tablist">
               <li role="presentation" class="active">
                 {{t 'hosts.index.resultCount' count=hostCoordinates.features.length}}
