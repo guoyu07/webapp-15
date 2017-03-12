@@ -12,11 +12,13 @@ export default Ember.Controller.extend({
   staysService: service('stays'),
   departmentsService: service('departments'),
 
+  dataRequest: null,
+
   // Query parameters bound with the URL
   queryParams: [
     'searchTerm', 'activities', 'lodgings', 'lon', 'lat', 'approvalStatus', 'zoom', 'showMoreFilter',
     'isSuspended', 'isHidden', 'membershipStatus', 'months', 'dptId', 'capacity', 'stay',
-    'childrenOk', 'petsOk', 'page', 'favoritesOnly'
+    'childrenOk', 'petsOk', 'page'
   ],
 
   /**
@@ -155,19 +157,55 @@ export default Ember.Controller.extend({
     return dptId ? this.store.findRecord('department', dptId) : null;
   }),
 
+  getHostCoordinates(params) {
+
+    // Abort any potential previous request to avoid racing issues
+    let dataRequest = this.get('dataRequest');
+    if (dataRequest) {
+      dataRequest.abort();
+    }
+
+    // Set limit
+    params.limit = 5000;
+
+    // Create GET request
+    dataRequest = Ember.$.get('/api/host-coordinates', params);
+    this.set('dataRequest', dataRequest);
+
+    return dataRequest;
+  },
+
+  refreshList() {
+    this.set('isLoading', true);
+    this.set('hostCoordinates', { features: [] });
+
+    let params = this.getProperties('searchTerm', 'approvalStatus', 'activities', 'lodgings', 'membershipStatus', 'isSuspended',
+      'isHidden', 'months', 'dptId', 'stay', 'capacity', 'childrenOk', 'petsOk', 'favoritesOnly');
+
+    this.getHostCoordinates(params).then((hostCoordinates) => {
+      this.set('hostCoordinates', hostCoordinates);
+      this.set('isLoading', false);
+    });
+  },
+  
+  search() {
+    this.set('page', 1);
+    this.refreshList();
+  },
+
   actions: {
     /**
      * Updates the hosts features.
      */
     updateHosts() {
-      this.send('search');
+      this.search();
     },
 
     /**
      * Updates the host features and toggles the advanced filters visibility.
      */
     applyFilters() {
-      this.send('search');
+      this.search();
       this.toggleProperty('showMoreFilter');
     },
 
@@ -195,23 +233,23 @@ export default Ember.Controller.extend({
     chooseDepartment(department) {
       const id = department ? department.id : null;
       this.set('dptId', id);
-      this.send('search');
+      this.search();
     },
 
     chooseMonths(months) {
       this.set('months', months.mapBy('id'));
-      this.send('search');
+      this.search();
     },
 
     chooseCapacity(capacity) {
       this.set('capacity', capacity.id);
-      this.send('search');
+      this.search();
     },
 
     chooseStay(stay) {
       const id = stay ? stay.id : null;
       this.set('stay', id);
-      this.send('search');
+      this.search();
     },
 
     toggleAdvancedFilters() {
@@ -224,27 +262,27 @@ export default Ember.Controller.extend({
 
     toggleFavoritesOnly () {
       this.toggleProperty('favoritesOnly');
-      this.send('search');
+      this.search();
     },
 
     toggleIsSuspended() {
       this.toggleProperty('isSuspended');
-      this.send('search');
+      this.search();
     },
 
     toggleIsHidden() {
       this.toggleProperty('isHidden');
-      this.send('search');
+      this.search();
     },
 
     toggleChildrenOk() {
       this.toggleProperty('childrenOk');
-      this.send('search');
+      this.search();
     },
 
     togglePetsOk() {
       this.toggleProperty('petsOk');
-      this.send('search');
+      this.search();
     },
 
     addFavorite(host) {

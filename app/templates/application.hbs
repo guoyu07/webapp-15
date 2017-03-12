@@ -111,11 +111,6 @@
                   {{t 'menu.memberships'}}
                 {{/link-to}}
               </li>
-              <li>
-                {{#link-to 'hosts.index' (query-params favoritesOnly='true')}}
-                  {{t 'menu.favorites'}}
-                {{/link-to}}
-              </li>
               <li class="divider hidden-xs"></li>
               <li>
                 <a href="#" {{action 'invalidateSession'}}>
