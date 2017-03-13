@@ -50,14 +50,15 @@ export default DS.Model.extend({
   address: DS.belongsTo('address', { async: false }),
   reviews: DS.hasMany('review', { async: true }),
 
-  // First photo
-  mainPhoto: computed.readOnly('photos.firstObject'),
-
-  // Review sorted by creation date (most recent first)
+  // Reviews sorted by creation date (most recent first)
   createdAtSortingDesc: ['createdAt:desc'],
   sortedReviews: computed.sort('reviews', 'createdAtSortingDesc'),
 
   displayedReviews: computed.filterBy('sortedReviews', 'isNew', false),
+
+  // Photos sorted by "is thumbnail"
+  isThumbnailSortingDesc: ['isThumbnail:desc'],
+  sortedPhotos: computed.sort('photos', 'isThumbnailSortingDesc'),
 
   /**
    * Returns the list of activities offered by the host.
@@ -147,15 +148,20 @@ export default DS.Model.extend({
   }),
 
   /**
-   * Returns the host's first photo URL.
+   * Returns the host's thumbnail URL.
    */
-  firstPhotoUrl: computed('photos.firstObject.completeUrl', function() {
-    let photoUrl = this.get('photos.firstObject.completeUrl');
+  thumbnailUrl: computed('thumbnail.completeUrl', function() {
+    let photoUrl = this.get('thumbnail.completeUrl');
     if (Ember.isEmpty(photoUrl)) {
       photoUrl = 'assets/images/wwoof-no-photo.png';
     }
     return photoUrl;
   }),
+
+  /**
+   * Indocates whether the host can upload more photos (max is 10).
+   */
+  canUploadPhotos: computed.lt('photos.length', 10),
 
   /**
    * Indicates whether the host is a favorite of the authenticated user.

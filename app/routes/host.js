@@ -35,7 +35,7 @@ export default Ember.Route.extend({
         tagId: 'meta-og-image',
         attrs: {
           name: 'og:image',
-          content: model.get('mainPhoto.completeUrl')
+          content: model.get('thumbnail.completeUrl')
         }
       },
       {

@@ -3,10 +3,16 @@
     <h3 class="panel-title">{{t 'host.photos.new'}}</h3>
   </div>
   <div class="panel-body">
-    {{photo-uploader dataUrl='/api/photos' model=model mode='host'}}
-    <span class="form-details">
-      {{t 'host.photos.details'}}
-    </span>
+    {{#if model.canUploadPhotos}}
+      {{photo-uploader dataUrl='/api/photos' model=model mode='host'}}
+      <span class="form-details">
+        {{t 'host.photos.details'}}
+      </span>
+    {{else}}
+      <div class="alert alert-warning mbx" role="alert">
+        {{t 'host.photos.limitReached'}}
+      </div>
+    {{/if}}
   </div>
 </div>
 {{#if model.photos}}
