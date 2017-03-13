@@ -14,6 +14,8 @@ export default Ember.Service.extend({
    */
   handleError(error) {
 
+    Ember.assert(error);
+
     let status = Number(Ember.get(error, 'errors.firstObject.status'));
 
     if (isUnauthorizedError(error) || status === 401) {
