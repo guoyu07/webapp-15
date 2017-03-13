@@ -17,15 +17,22 @@
     <div class="panel-body">
       <div class="row">
         {{#each model.photos as |photo|}}
-          <div class="col-sm-4 mbm">
-            {{image-thumb url=photo.completeUrl height=200}}
+          <div class="col-md-6 mbm">
+            {{#image-thumb url=photo.completeUrl height=200}}
+              {{#if photo.isThumbnail}}
+                <span class="label label-info">{{t 'host.photos.coverPhoto'}}</span>
+              {{/if}}
+            {{/image-thumb}}
             <div class="input-group mtx">
               {{input type='text' name='caption' value=photo.caption class='form-control' placeholder=(t 'host.photos.caption.placeholder')}}
               <div class="input-group-btn">
-                <button {{action "savePhoto" photo}} class="btn btn-primary" aria-label={{t 'literal.save'}} title={{t 'literal.save'}} disabled={{photo.cannotSave}}>
+                <button {{action 'savePhoto' photo}} class="btn btn-primary mrx" aria-label={{t 'literal.save'}} title={{t 'literal.save'}} disabled={{photo.cannotSave}}>
                   <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
                 </button>
-                <button {{action "deletePhoto" photo}} class="btn btn-default" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
+                <button {{action 'setAsThumbnail' model photo}} class="btn btn-default {{if photo.isThumbnail 'disabled'}}" aria-label={{t 'host.photos.setAsThumbnail'}} title={{t 'host.photos.setAsThumbnail'}}>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                </button>
+                <button {{action 'deletePhoto' photo}} class="btn btn-danger" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}}>
                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                 </button>
               </div>

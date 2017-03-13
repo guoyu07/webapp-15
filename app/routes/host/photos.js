@@ -25,12 +25,22 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     },
 
     deletePhoto(photo) {
+      if (photo.get('isThumbnail')) {
+        this.get('notify').error(this.get('i18n').t('notify.cannotDeleteThumbnail'));
+        return;
+      }
+
       photo.destroyRecord().then(()=> {
         this.get('notify').success(this.get('i18n').t('notify.photoDeleted'));
       }).catch((err)=> {
-        photo.rollback();
+        photo.rollbackAttributes();
         throw err;
       });
+    },
+
+    setAsThumbnail(host, photo) {
+      host.set('thumbnail', photo);
+      host.save();
     }
   }
 });

@@ -35,12 +35,19 @@ export default DS.Model.extend({
 
   // Relationships
   user: DS.belongsTo('user', { async: true }),
-  address: DS.belongsTo('address', { async: false }),
-  photos: DS.hasMany('photo', { async: false }),
   followers: DS.hasMany('user', {
     inverse: 'favorites',
     async: false
   }),
+  thumbnail: DS.belongsTo('photo', {
+    inverse: null,
+    async: false
+  }),
+  photos: DS.hasMany('photo', {
+    inverse: 'host',
+    async: false
+  }),
+  address: DS.belongsTo('address', { async: false }),
   reviews: DS.hasMany('review', { async: true }),
 
   // First photo

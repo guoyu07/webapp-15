@@ -24,6 +24,10 @@ export default DS.Model.extend(Validations, {
     }
   }),
 
+  isThumbnail: computed('host.thumbnail.id', 'id', function () {
+    return this.get('host.thumbnail.id') === this.get('id');
+  }),
+
   /**
    * Returns true if the photo is in a state where it cannot be saved.
    */
