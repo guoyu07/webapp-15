@@ -24,10 +24,6 @@ export default DS.Model.extend({
   isHostReview: computed.notEmpty('host.id'),
   isWwooferReview: computed.notEmpty('wwoofer.id'),
 
-  reviewee: computed('isHostReview', function () {
-    return this.get('isHostReview') ? this.get('host.user') : this.get('wwoofer.user');
-  }),
-
   hasOneStar: computed.gte('rating', 1),
   hasTwoStars: computed.gte('rating', 2),
   hasThreeStars: computed.gte('rating', 3),

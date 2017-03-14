@@ -50,9 +50,9 @@
                 {{/if}}
                 {{t 'reviews.index.reviewed'}}
                 {{#if review.isHostReview}}
-                  {{#link-to 'host.index' review.reviewee.host.id}}{{review.reviewee.host.farmName}}{{/link-to}}
+                  {{#link-to 'host.index' review.host.id}}{{review.host.farmName}}{{/link-to}}
                 {{else}}
-                  {{#link-to 'wwoofer.index' review.reviewee.wwoofer.id}}{{review.reviewee.fullName}}{{/link-to}}
+                  {{#link-to 'wwoofer.index' review.wwoofer.id}}{{review.wwoofer.user.fullName}}{{/link-to}}
                 {{/if}}
                 {{#unless review.approvedAt}}
                   <span class="pull-right">
@@ -69,15 +69,15 @@
               <div class="panel-body">
                 <p>
                   {{#if review.isHostReview}}
-                    {{#link-to 'host.index' review.reviewee.host.id}}{{review.reviewee.fullName}}{{/link-to}}
+                    {{#link-to 'host.index' review.host.id}}{{review.host.user.fullName}}{{/link-to}}
                   {{else}}
-                    {{#link-to 'wwoofer.index' review.reviewee.wwoofer.id}}{{review.reviewee.fullName}}{{/link-to}}
+                    {{#link-to 'wwoofer.index' review.wwoofer.id}}{{review.wwoofer.user.fullName}}{{/link-to}}
                   {{/if}}
                   {{t 'reviews.index.repliedTo'}}
                   {{#if review.isHostReview}}
-                    {{#link-to 'wwoofer.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
+                    {{#link-to 'wwoofer.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
                   {{else}}
-                    {{#link-to 'host.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
+                    {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
                   {{/if}}
                   {{#unless review.replyApprovedAt}}
                     <span class="pull-right">
