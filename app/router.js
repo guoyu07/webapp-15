@@ -42,6 +42,10 @@ Router.map(function() {
   });
   this.route('reviews', function() {
   });
+  this.route('conversations', function() {
+  });
+  this.route('conversation', { path: '/conversation/:conversation_id' }, function() {
+  });
   this.route('404', { path: '*path' });
 });
 

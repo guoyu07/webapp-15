@@ -1,0 +1,38 @@
+<div class="row mbm">
+  <div class="col-xs-12 col-md-9">
+    {{#if isLoading}}
+      {{partial 'loading'}}
+    {{else}}
+      {{#if conversations}}
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Other User</th>
+              <th>Created At</th>
+              <th>Last Message</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each conversations as |conversation|}}
+              <tr>
+                <td>{{conversation.otherUser.firstName}}</td>
+                <td>{{moment-format conversation.sortedMessages.firstObject.createdAt 'll'}}</td>
+                <td>{{conversation.sortedMessages.firstObject.text}}</td>
+                <td>{{#link-to 'conversation.index' conversation.id}}View{{/link-to}}</td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+
+          <p class="text-center">
+            {{list-pagination currentPage=page totalPages=totalPages targetRoute='wwoofers'}}
+          </p>
+        </div>
+      {{else}}
+        You don't have messages in your inbox.
+      {{/if}}
+    {{/if}}
+  </div>
+</div>

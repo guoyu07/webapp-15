@@ -111,6 +111,11 @@
                   {{t 'menu.memberships'}}
                 {{/link-to}}
               </li>
+              <li>
+                {{#link-to 'conversations.index'}}
+                  {{t 'menu.inbox'}}
+                {{/link-to}}
+              </li>
               <li class="divider hidden-xs"></li>
               <li>
                 <a href="#" {{action 'invalidateSession'}}>
