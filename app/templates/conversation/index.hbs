@@ -1,16 +1,7 @@
-<table class="table table-striped table-bordered table-hover">
-  <thead>
-  <tr>
-    <th></th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  {{#each messages as |message|}}
-    <tr>
+{{#each messages as |message|}}
+  <div class="panel panel-default {{unless message.isCurrentUserAuthor 'col-xs-offset-1'}}">
+    <div class="panel-body">
       <td>{{message.text}}</td>
-      <td>{{message.createdAt}}</td>
-    </tr>
-  {{/each}}
-  </tbody>
-</table>
+    </div>
+  </div>
+{{/each}}
