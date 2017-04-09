@@ -1,7 +1,25 @@
-{{#each messages as |message|}}
-  <div class="panel panel-default {{unless message.isCurrentUserAuthor 'col-xs-offset-1'}}">
-    <div class="panel-body">
-      <td>{{message.text}}</td>
-    </div>
+<div class="row">
+  <div class="col-xs-12 col-md-3">
+    {{image-thumb url=conversation.otherUser.completePhotoUrl height=100}}
+    A photo will be displayed here
   </div>
-{{/each}}
+  <div class="col-xs-12 col-md-9">
+    {{#each messages as |message|}}
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4 col-md-2">
+              {{image-thumb url=message.author.completePhotoUrl height=100}}
+            </div>
+            <div class="col-xs-8 col-md-10">
+              {{message.text}}
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+
+
