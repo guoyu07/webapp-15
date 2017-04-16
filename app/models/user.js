@@ -39,6 +39,16 @@ export default DS.Model.extend({
     }
   }),
 
+  conversationPhotoUrl: computed('photo', 'completePhotoUrl', 'host.thumbnail.completeUrl', 'host.thumbnailUrl', function () {
+    let photo = this.get('photo');
+    let thumbnailUrl = this.get('host.thumbnail.completeUrl');
+    if (photo || !thumbnailUrl) {
+      return this.get('completePhotoUrl');
+    } else {
+      return this.get('host.thumbnailUrl');
+    }
+  }),
+
   isNotAdmin: computed.not('isAdmin'),
 
   /**

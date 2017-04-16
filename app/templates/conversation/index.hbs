@@ -1,6 +1,19 @@
 <div class="row">
   <div class="hidden-xs hidden-sm col-md-3">
-    {{image-thumb url=conversation.otherUser.completePhotoUrl height=200}}
+    {{image-thumb url=conversation.otherUser.conversationPhotoUrl height=200}}
+
+    <h3 class="text-center">{{conversation.otherUser.firstName}}</h3>
+    {{#if conversation.otherUser.host.id}}
+      {{#link-to 'host.index' conversation.otherUser.host.id  class="btn btn-primary btn-block"}}
+        Host Profile
+      {{/link-to}}
+    {{/if}}
+    {{#if conversation.otherUser.wwoofer.id}}
+      {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id class="btn btn-primary btn-block"}}
+        Wwoofer Profile
+      {{/link-to}}
+    {{/if}}
+
   </div>
   <div class="col-xs-12 col-md-9">
     {{#each messages as |message|}}
@@ -8,7 +21,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4 col-md-2">
-              {{image-thumb url=message.author.completePhotoUrl height=100}}
+              {{image-thumb url=message.author.conversationPhotoUrl height=100}}
             </div>
             <div class="col-xs-8 col-md-10">
               {{message.text}}
