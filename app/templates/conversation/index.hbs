@@ -16,12 +16,12 @@
 
   </div>
   <div class="col-xs-12 col-md-9">
-    {{#forms/form-group valuePath='host.fullDescription' validations=validations as |showError|}}
-      {{textarea id='newMessage' name='newMessage'value=newMessage class='form-control' placeholder=(t 'host-form.fullDescription.placeholder') rows="7"}}
-      {{error-display error=validations.attrs.host.fullDescription showError=showError}}
+    {{#forms/form-group}}
+      {{textarea id='newMessage' name='newMessage' value=newMessage class='form-control' placeholder=(t 'host-form.fullDescription.placeholder') rows="7"}}
     {{/forms/form-group}}
     <p class="text-right">
-      <button type="button" class="btn btn-default" onclick={{action 'sendMessage' conversation newMessage}}>Send</button>
+      <span class="pull-left text-muted {{if noCharLeft 'text-danger'}}">{{t 'common.charLeft' count=textCharLeft}}</span>
+      <button type="button" class="btn btn-default" disabled={{noCharLeft}} onclick={{action 'sendMessage' conversation newMessage}}>Send</button>
     </p>
     <hr>
     {{#each conversation.sortedMessages as |message|}}
@@ -32,7 +32,7 @@
               {{image-thumb url=message.author.conversationPhotoUrl height=100}}
             </div>
             <div class="col-xs-8 col-md-10">
-              {{message.text}}
+              {{convert-breaklines message.text}}
             </div>
           </div>
         </div>
