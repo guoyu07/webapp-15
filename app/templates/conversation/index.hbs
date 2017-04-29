@@ -17,14 +17,14 @@
   </div>
   <div class="col-xs-12 col-md-9">
     {{#forms/form-group valuePath='host.fullDescription' validations=validations as |showError|}}
-        {{textarea id='newMessage' name='newMessage'value=newMessage class='form-control' placeholder=(t 'host-form.fullDescription.placeholder') rows="7"}}
-        {{error-display error=validations.attrs.host.fullDescription showError=showError}}
+      {{textarea id='newMessage' name='newMessage'value=newMessage class='form-control' placeholder=(t 'host-form.fullDescription.placeholder') rows="7"}}
+      {{error-display error=validations.attrs.host.fullDescription showError=showError}}
     {{/forms/form-group}}
     <p class="text-right">
-      <button type="button" class="btn btn-default" onclick={{action 'sendMessage'}} >Send</button>
+      <button type="button" class="btn btn-default" onclick={{action 'sendMessage' conversation newMessage}}>Send</button>
     </p>
     <hr>
-    {{#each messages as |message|}}
+    {{#each conversation.sortedMessages as |message|}}
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
@@ -40,6 +40,3 @@
     {{/each}}
   </div>
 </div>
-
-
-
