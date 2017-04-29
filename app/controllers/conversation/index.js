@@ -18,6 +18,10 @@ export default Ember.Controller.extend({
 
   actions: {
     sendMessage(conversation, newMessage) {
+      if (!newMessage) {
+        return;
+      }
+
       let message = this.store.createRecord('message', {
         conversation,
         text: newMessage

@@ -14,8 +14,6 @@ export default Ember.Service.extend({
    */
   handleError(error) {
 
-    Ember.assert(error);
-
     let status = Number(Ember.get(error, 'errors.firstObject.status'));
 
     if (isUnauthorizedError(error) || status === 401) {
@@ -39,5 +37,7 @@ export default Ember.Service.extend({
     } else if (isAjaxError(error) || !isNaN(status)) {
       this.get('notify').error({ html: this.get('i18n').t('notify.submissionError') });
     }
+
+    Ember.assert(error);
   }
 });
