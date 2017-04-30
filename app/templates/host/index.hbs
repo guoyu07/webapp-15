@@ -284,7 +284,7 @@
       </table>
       {{#unless model.noEmail}}
         <ul class="list-group">
-          {{#link-to 'host.contact' model.id class='list-group-item list-group-item-primary text-center'}}
+          {{#link-to 'conversations.new' (query-params user2Id=model.user.id) class='list-group-item list-group-item-primary text-center'}}
             {{t 'host.index.sendMessage'}}
           {{/link-to}}
         </ul>

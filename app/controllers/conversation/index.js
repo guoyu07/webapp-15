@@ -7,6 +7,9 @@ export default Ember.Controller.extend({
 
   ajax: service('ajax'),
 
+  queryParams: ['user2Id'],
+
+  user2Id: null,
   newMessage: null,
 
   textCharLeft: computed('newMessage.length', function () {
