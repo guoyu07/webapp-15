@@ -34,5 +34,25 @@ export default DS.Model.extend({
       otherUser = this.get('user1');
     }
     return otherUser;
+  }),
+
+  currentUserLastReadAt: computed('user1.id', 'user2.id', 'user1LastReadAt', 'user2LastReadAt', 'sessionUser.user.id', function () {
+    let user1Id = this.get('user1.id');
+    let user2Id = this.get('user2.id');
+    let sessionUserId = this.get('sessionUser.user.id');
+
+    let currentUserLastReadAt;
+    if (user1Id === sessionUserId) {
+      currentUserLastReadAt = this.get('user1LastReadAt');
+    } else if (user2Id === sessionUserId) {
+      currentUserLastReadAt = this.get('user2LastReadAt');
+    }
+    return currentUserLastReadAt;
+  }),
+
+  isRead: computed('currentUserLastReadAt', function () {
+    let currentUserLastReadAt = this.get('currentUserLastReadAt');
+    let now = new Date();
+    return currentUserLastReadAt && (currentUserLastReadAt < now);
   })
 });

@@ -6,7 +6,7 @@
       {{#if conversations}}
         <ul class="list-group">
           {{#each conversations as |conversation|}}
-            <li class="list-group-item">
+            <li class="list-group-item {{unless conversation.isRead 'conversation-unread'}}">
               <div class="row">
                 <div class="col-xs-3 col-sm-2">
                   {{#link-to 'conversation.index' conversation.id}}
@@ -24,8 +24,8 @@
                       </p>
                     </div>
                     <div class="col-xs-12 col-sm-10">
-                      {{#link-to 'conversation.index' conversation.id class='conversation-link text-muted'}}
-                        {{truncate conversation.sortedMessages.firstObject.text limit=200}}
+                      {{#link-to 'conversation.index' conversation.id class='conversation-link'}}
+                        <p>{{truncate conversation.sortedMessages.firstObject.text limit=200}}</p>
                       {{/link-to}}
                     </div>
                   </div>
