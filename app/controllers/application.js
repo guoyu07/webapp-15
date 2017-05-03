@@ -2,8 +2,11 @@ import Ember from 'ember';
 import Validations from 'webapp/validations/application';
 
 const { computed } = Ember;
+const { service } = Ember.inject;
 
 export default Ember.Controller.extend(Validations, {
+
+  conversationsService: service('conversations'),
 
   isHostsIndexRoute: computed.equal('currentRouteName', 'hosts.index'),
 

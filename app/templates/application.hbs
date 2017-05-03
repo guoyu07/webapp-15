@@ -59,7 +59,12 @@
           </li>
         {{/if}}
         {{#link-to 'conversations.index' tagName='li' class=(if inboxIsActive 'active')}}
-          <a href={{view.href}}>{{t 'menu.inbox'}}</a>
+          <a href={{view.href}}>
+            {{t 'menu.inbox'}}
+            {{#if conversationsService.conversations.meta.unread}}
+              ({{conversationsService.conversations.meta.unread}})
+            {{/if}}
+          </a>
         {{/link-to}}
         <li>
           {{#if isEnglishLocale}}

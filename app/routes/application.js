@@ -8,6 +8,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
   translationsFetcher: service('translations-fetcher'),
   ajax: service('ajax'),
+  conversationsService: service('conversations'),
 
   beforeModel() {
     // Fetch translations from server
@@ -17,6 +18,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   setupController() {
     if (this.get('session.isAuthenticated')) {
       this.processNewUserModalVisibility();
+      this.get('conversationsService').startCountsAutoReload();
     }
   },
 

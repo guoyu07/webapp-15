@@ -50,9 +50,17 @@ export default DS.Model.extend({
     return currentUserLastReadAt;
   }),
 
-  isRead: computed('currentUserLastReadAt', function () {
+  isRead: computed('currentUserLastReadAt', 'sessionUser.user.id', 'sortedMessages.firstObject.createdAt', 'sortedMessages.firstObject.author.id', function () {
     let currentUserLastReadAt = this.get('currentUserLastReadAt');
-    let now = new Date();
-    return currentUserLastReadAt && (currentUserLastReadAt < now);
+    let lastMessage = this.get('sortedMessages.firstObject');
+    let lastMessageCreatedAt = lastMessage.get('createdAt');
+    let isLastMessageAuthor = lastMessage.get('author.id') === this.get('sessionUser.user.id');
+    let isRead = false;
+    if (isLastMessageAuthor) {
+      isRead = true;
+    } else if (Ember.isPresent(currentUserLastReadAt) && (currentUserLastReadAt > lastMessageCreatedAt)) {
+      isRead = true;
+    }
+    return isRead;
   })
 });
