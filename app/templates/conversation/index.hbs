@@ -3,17 +3,20 @@
     {{image-thumb url=conversation.otherUser.conversationPhotoUrl height=200}}
 
     <h3 class="text-center">{{conversation.otherUser.firstName}}</h3>
-    {{#if conversation.otherUser.host.id}}
-      {{#link-to 'host.index' conversation.otherUser.host.id  class="btn btn-primary btn-block"}}
-        Host Profile
-      {{/link-to}}
-    {{/if}}
-    {{#if conversation.otherUser.wwoofer.id}}
-      {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id class="btn btn-primary btn-block"}}
-        Wwoofer Profile
-      {{/link-to}}
-    {{/if}}
+    <p class="mbm">
+      {{#if conversation.otherUser.host.id}}
+        {{#link-to 'host.index' conversation.otherUser.host.id  class="btn btn-primary btn-block"}}
+          Host Profile
+        {{/link-to}}
+      {{/if}}
+      {{#if conversation.otherUser.wwoofer.id}}
+        {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id class="btn btn-primary btn-block"}}
+          Wwoofer Profile
+        {{/link-to}}
+      {{/if}}
+    </p>
 
+    {{help-articles label='host-message'}}
   </div>
   <div class="col-xs-12 col-md-9">
     {{#forms/form-group}}
@@ -21,7 +24,7 @@
     {{/forms/form-group}}
     <p class="text-right">
       <span class="pull-left text-muted {{if noCharLeft 'text-danger'}}">{{t 'common.charLeft' count=textCharLeft}}</span>
-      <button type="button" class="btn btn-default" disabled={{noCharLeft}} onclick={{action 'sendMessage' conversation newMessage}}>Send</button>
+      <button type="button" class="btn btn-default" disabled={{noCharLeft}} onclick={{action 'sendMessage' conversation newMessage}}>Send Message</button>
     </p>
     <hr>
     {{#each conversation.sortedMessages as |message|}}

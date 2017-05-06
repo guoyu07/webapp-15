@@ -16,14 +16,22 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
     let user1 = this.get('sessionUser.user');
     let user2 = this.store.findRecord('user', user2Id);
+    let previousConversation = this.store.query('conversation', { otherUserId: user2Id });
 
     return Ember.RSVP.hash({
       user1,
-      user2
+      user2,
+      previousConversation
     });
   },
 
   setupController(controller, results) {
+    if (results.previousConversation.get('firstObject')) {
+      this.transitionTo('conversation.index', results.previousConversation.get('firstObject'), {
+        queryParams: { user2Id: null }
+      });
+    }
+
     let conversation = this.store.createRecord('conversation', {
       user1: results.user1,
       user2: results.user2
