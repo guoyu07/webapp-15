@@ -19,22 +19,40 @@ export default Ember.Controller.extend({
 
   noCharLeft: computed.lt('textCharLeft', 0),
 
+  createMessage(conversation, newMessage) {
+    let message = this.store.createRecord('message', {
+      conversation,
+      text: newMessage
+    });
+
+    let promise = message.save();
+
+    promise.then(()=> {
+      this.set('newMessage', null);
+    });
+
+    return promise;
+  },
+
   actions: {
     sendMessage(conversation, newMessage) {
       if (!newMessage) {
         return;
       }
 
-      let message = this.store.createRecord('message', {
-        conversation,
-        text: newMessage
-      });
+      if (conversation.get('isNew')) {
+        let promise = conversation.save();
 
-      let promise = message.save();
+        promise = promise.then(() => {
+          return this.createMessage(conversation, newMessage);
+        });
 
-      promise.then(()=> {
-        this.set('newMessage', null);
-      });
+        promise.then(()=> {
+          this.transitionToRoute('conversation.index', conversation);
+        });
+      } else {
+        this.createMessage(conversation, newMessage);
+      }
     }
   }
 });
