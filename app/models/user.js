@@ -27,6 +27,7 @@ export default DS.Model.extend({
     inverse: 'followers',
     async: true
   }),
+  addresses: computed.collect('host.address', 'wwoofer.address'),
 
   // Computed properties
   completePhotoUrl: computed('photo', function() {

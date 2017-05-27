@@ -40,7 +40,7 @@
           {{list-pagination currentPage=page totalPages=totalPages targetRoute='conversations'}}
         </p>
       {{else}}
-        You don't have messages in your inbox.
+        {{t 'conversations.index.noMessages'}}
       {{/if}}
     {{/if}}
   </div>

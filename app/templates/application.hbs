@@ -58,21 +58,16 @@
             </ul>
           </li>
         {{/if}}
-        {{#link-to 'conversations.index' tagName='li' class=(if inboxIsActive 'active')}}
-          <a href={{view.href}}>
-            {{t 'menu.inbox'}}
-            {{#if conversationsService.conversations.meta.unread}}
-              ({{conversationsService.conversations.meta.unread}})
-            {{/if}}
-          </a>
-        {{/link-to}}
-        <li>
-          {{#if isEnglishLocale}}
-            <a href="https://support.wwoof.fr/hc/en-us/requests/new" target="_blank">{{t 'menu.contact'}}</a>
-          {{else}}
-            <a href="https://support.wwoof.fr/hc/fr/requests/new" target="_blank">{{t 'menu.contact'}}</a>
-          {{/if}}
-        </li>
+        {{#if session.isAuthenticated}}
+          {{#link-to 'conversations.index' tagName='li' class=(if inboxIsActive 'active')}}
+            <a href={{view.href}}>
+              {{t 'menu.inbox'}}
+              {{#if conversationsService.conversations.meta.unread}}
+                ({{conversationsService.conversations.meta.unread}})
+              {{/if}}
+            </a>
+          {{/link-to}}
+        {{/if}}
         {{#if sessionUser.user.isAdmin}}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
@@ -118,6 +113,21 @@
                 {{#link-to 'user.memberships' sessionUser.user.id}}
                   {{t 'menu.memberships'}}
                 {{/link-to}}
+              </li>
+              <li class="divider hidden-xs"></li>
+              <li>
+                {{#if isEnglishLocale}}
+                  <a href="https://support.wwoof.fr/hc/en-us" target="_blank">{{t 'menu.faq'}}</a>
+                {{else}}
+                  <a href="https://support.wwoof.fr/hc/fr" target="_blank">{{t 'menu.faq'}}</a>
+                {{/if}}
+              </li>
+              <li>
+                {{#if isEnglishLocale}}
+                  <a href="https://support.wwoof.fr/hc/en-us/requests/new" target="_blank">{{t 'menu.contact'}}</a>
+                {{else}}
+                  <a href="https://support.wwoof.fr/hc/fr/requests/new" target="_blank">{{t 'menu.contact'}}</a>
+                {{/if}}
               </li>
               <li class="divider hidden-xs"></li>
               <li>

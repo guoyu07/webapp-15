@@ -26,6 +26,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   setupController(controller, results) {
+    // Redirect to an existing conversation if we find one
     if (results.previousConversation.get('firstObject')) {
       this.transitionTo('conversation.index', results.previousConversation.get('firstObject'), {
         queryParams: { user2Id: null }
