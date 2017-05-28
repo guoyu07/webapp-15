@@ -2,8 +2,11 @@ import Ember from 'ember';
 import Validations from 'webapp/validations/application';
 
 const { computed } = Ember;
+const { service } = Ember.inject;
 
 export default Ember.Controller.extend(Validations, {
+
+  conversationsService: service('conversations'),
 
   isHostsIndexRoute: computed.equal('currentRouteName', 'hosts.index'),
 
@@ -28,10 +31,11 @@ export default Ember.Controller.extend(Validations, {
   showNewUserModal: false,
 
   /**
-   * Indicates whether the hosts/wwoofers nav item should be marked as active.
+   * Indicates whether nav items should be marked as active.
    */
   hostsIsActive: computed.match('currentRouteName', /host.index|host.contact/),
   wwoofersIsActive: computed.match('currentRouteName', /wwoofer.index/),
+  inboxIsActive: computed.match('currentRouteName', /conversations.index|conversations.new|conversation.index/),
 
   isEnglishLocale: computed.equal('i18n.locale', 'en'),
 

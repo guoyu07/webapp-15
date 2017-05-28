@@ -17,6 +17,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   renderTemplate() {
-    this.render('user/form', { controller: 'user.edit' });
+    this.render('user/form');
   }
 });

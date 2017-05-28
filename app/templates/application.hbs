@@ -58,14 +58,15 @@
             </ul>
           </li>
         {{/if}}
-        <li>
-          {{#if isEnglishLocale}}
-            <a href="https://support.wwoof.fr/hc/en-us/requests/new" target="_blank">{{t 'menu.contact'}}</a>
-          {{else}}
-            <a href="https://support.wwoof.fr/hc/fr/requests/new" target="_blank">{{t 'menu.contact'}}</a>
-          {{/if}}
-        </li>
         {{#if sessionUser.user.isAdmin}}
+          {{#link-to 'conversations.index' tagName='li' class=(if inboxIsActive 'active')}}
+            <a href={{view.href}}>
+              {{t 'menu.inbox'}}
+              {{#if conversationsService.conversations.meta.unread}}
+                ({{conversationsService.conversations.meta.unread}})
+              {{/if}}
+            </a>
+          {{/link-to}}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -98,7 +99,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="glyphicon glyphicon-user hidden-xs"></span>
-              {{sessionUser.user.firstName}} {{sessionUser.user.lastName}} <b class="caret"></b>
+              {{sessionUser.user.firstName}} <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
               <li>
@@ -110,6 +111,21 @@
                 {{#link-to 'user.memberships' sessionUser.user.id}}
                   {{t 'menu.memberships'}}
                 {{/link-to}}
+              </li>
+              <li class="divider hidden-xs"></li>
+              <li>
+                {{#if isEnglishLocale}}
+                  <a href="https://support.wwoof.fr/hc/en-us" target="_blank">{{t 'menu.faq'}}</a>
+                {{else}}
+                  <a href="https://support.wwoof.fr/hc/fr" target="_blank">{{t 'menu.faq'}}</a>
+                {{/if}}
+              </li>
+              <li>
+                {{#if isEnglishLocale}}
+                  <a href="https://support.wwoof.fr/hc/en-us/requests/new" target="_blank">{{t 'menu.contact'}}</a>
+                {{else}}
+                  <a href="https://support.wwoof.fr/hc/fr/requests/new" target="_blank">{{t 'menu.contact'}}</a>
+                {{/if}}
               </li>
               <li class="divider hidden-xs"></li>
               <li>

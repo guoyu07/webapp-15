@@ -1,0 +1,47 @@
+<div class="row mbm">
+  <div class="col-xs-12">
+    {{#if isLoading}}
+      {{partial 'loading'}}
+    {{else}}
+      {{#if conversations}}
+        <ul class="list-group">
+          {{#each conversations as |conversation|}}
+            <li class="list-group-item {{unless conversation.isRead 'conversation-unread'}}">
+              <div class="row">
+                <div class="col-xs-3 col-sm-2">
+                  {{#link-to 'conversation.index' conversation.id}}
+                    {{image-thumb url=conversation.otherUser.conversationPhotoUrl height=100}}
+                  {{/link-to}}
+                </div>
+                <div class="col-xs-9 col-sm-10">
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-2">
+                      <p>
+                        <strong>{{conversation.otherUser.firstName}}</strong><br class="hidden-xs"/>
+                        {{#if conversation.sortedMessages.firstObject.createdAt}}
+                          <span class="{{if media.isMobile 'pull-right'}}">
+                            {{moment-format conversation.sortedMessages.firstObject.createdAt 'll'}}
+                          </span>
+                        {{/if}}
+                      </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-10">
+                      {{#link-to 'conversation.index' conversation.id class='conversation-link'}}
+                        <p>{{truncate conversation.sortedMessages.firstObject.text limit=200}}</p>
+                      {{/link-to}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+        <p class="text-center">
+          {{list-pagination currentPage=page totalPages=totalPages targetRoute='conversations'}}
+        </p>
+      {{else}}
+        {{t 'conversations.index.noMessages'}}
+      {{/if}}
+    {{/if}}
+  </div>
+</div>

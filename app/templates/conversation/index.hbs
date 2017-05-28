@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="hidden-xs hidden-sm col-md-3">
+    {{image-thumb url=conversation.otherUser.conversationPhotoUrl height=200}}
+
+    <h3 class="text-center">{{conversation.otherUser.firstName}}</h3>
+    <p class="text-center">
+      {{conversation.otherUser.addresses.firstObject.city}} ({{conversation.otherUser.addresses.firstObject.country.name}})
+    </p>
+    <p class="mbm">
+      {{#if conversation.otherUser.host.id}}
+        {{#link-to 'host.index' conversation.otherUser.host.id  class="btn btn-primary btn-block"}}
+          {{t 'conversation.index.hostProfile'}}
+        {{/link-to}}
+      {{/if}}
+      {{#if conversation.otherUser.wwoofer.id}}
+        {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id class="btn btn-primary btn-block"}}
+          {{t 'conversation.index.wwooferProfile'}}
+        {{/link-to}}
+      {{/if}}
+    </p>
+
+    {{help-articles label='host-message'}}
+  </div>
+  <div class="col-xs-12 col-md-9">
+    {{#forms/form-group}}
+      {{textarea id='newMessage' name='newMessage' value=newMessage class='form-control' placeholder=(t 'host.contact.details' firstName=conversation.otherUser.firstName) rows="7"}}
+    {{/forms/form-group}}
+    <p class="text-right">
+      <span class="pull-left text-muted {{if noCharLeft 'text-danger'}}">{{t 'common.charLeft' count=textCharLeft}}</span>
+      <button type="button" class="btn btn-default" disabled={{disableSend}} onclick={{action 'sendMessage' conversation newMessage}}>
+        {{t 'conversation.index.sendMessage'}}
+      </button>
+    </p>
+    <hr>
+    {{#if conversation.isNew}}
+      <strong>
+        {{t 'host.contact.rules'}}
+      </strong>
+      <ol>
+        <li>{{t 'host.contact.rule1'}}</li>
+        <li>{{t 'host.contact.rule2'}}</li>
+        <li>{{t 'host.contact.rule3'}}</li>
+      </ol>
+    {{else}}
+      {{#each conversation.sortedMessages as |message|}}
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-xs-4 col-md-2">
+                {{image-thumb url=message.author.conversationPhotoUrl height=100}}
+              </div>
+              <div class="col-xs-8 col-md-10">
+                {{convert-breaklines message.text}}
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+</div>

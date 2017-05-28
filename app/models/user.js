@@ -27,6 +27,7 @@ export default DS.Model.extend({
     inverse: 'followers',
     async: true
   }),
+  addresses: computed.collect('host.address', 'wwoofer.address'),
 
   // Computed properties
   completePhotoUrl: computed('photo', function() {
@@ -36,6 +37,16 @@ export default DS.Model.extend({
       return `https://s3.amazonaws.com/wwoof-france/photos/users/${encodedPhoto}`;
     } else {
       return '../assets/images/no-photo.png';
+    }
+  }),
+
+  conversationPhotoUrl: computed('photo', 'completePhotoUrl', 'host.thumbnail.completeUrl', 'host.thumbnailUrl', function () {
+    let photo = this.get('photo');
+    let thumbnailUrl = this.get('host.thumbnail.completeUrl');
+    if (photo || !thumbnailUrl) {
+      return this.get('completePhotoUrl');
+    } else {
+      return this.get('host.thumbnailUrl');
     }
   }),
 
