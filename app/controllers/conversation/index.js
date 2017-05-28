@@ -11,6 +11,7 @@ export default Ember.Controller.extend({
 
   user2Id: null,
   newMessage: null,
+  sending: false,
 
   textCharLeft: computed('newMessage.length', function () {
     let length = this.get('newMessage.length') || 0;
@@ -18,6 +19,7 @@ export default Ember.Controller.extend({
   }),
 
   noCharLeft: computed.lt('textCharLeft', 0),
+  disableSend: computed.or('noCharLeft', 'sending'),
 
   createMessage(conversation, newMessage) {
     let message = {
@@ -43,6 +45,7 @@ export default Ember.Controller.extend({
         return;
       }
 
+      this.set('sending', true);
       let promise = this.createMessage(conversation, newMessage);
 
       promise.then((response)=> {
@@ -51,6 +54,10 @@ export default Ember.Controller.extend({
           this.transitionToRoute('conversation.index', response.message.conversationId);
         }
       });
+
+      promise.finally(() => {
+        this.set('sending', false);
+      })
     }
   }
 });

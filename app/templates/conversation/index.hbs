@@ -27,7 +27,7 @@
     {{/forms/form-group}}
     <p class="text-right">
       <span class="pull-left text-muted {{if noCharLeft 'text-danger'}}">{{t 'common.charLeft' count=textCharLeft}}</span>
-      <button type="button" class="btn btn-default" disabled={{noCharLeft}} onclick={{action 'sendMessage' conversation newMessage}}>
+      <button type="button" class="btn btn-default" disabled={{disableSend}} onclick={{action 'sendMessage' conversation newMessage}}>
         {{t 'conversation.index.sendMessage'}}
       </button>
     </p>
