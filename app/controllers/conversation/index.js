@@ -20,12 +20,15 @@ export default Ember.Controller.extend({
   noCharLeft: computed.lt('textCharLeft', 0),
 
   createMessage(conversation, newMessage) {
-    let message = this.store.createRecord('message', {
-      conversation,
+    let message = {
+      recipientId: conversation.get('otherUser.id'),
       text: newMessage
-    });
+    };
 
-    let promise = message.save();
+    let promise = this.get('ajax').post('api/messages', {
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify({ message })
+    });
 
     promise.then(()=> {
       this.set('newMessage', null);
@@ -40,19 +43,14 @@ export default Ember.Controller.extend({
         return;
       }
 
-      if (conversation.get('isNew')) {
-        let promise = conversation.save();
+      let promise = this.createMessage(conversation, newMessage);
 
-        promise = promise.then(() => {
-          return this.createMessage(conversation, newMessage);
-        });
-
-        promise.then(()=> {
-          this.transitionToRoute('conversation.index', conversation);
-        });
-      } else {
-        this.createMessage(conversation, newMessage);
-      }
+      promise.then((response)=> {
+        this.get('store').pushPayload(response);
+        if (conversation.get('isNew')) {
+          this.transitionToRoute('conversation.index', response.message.conversationId);
+        }
+      });
     }
   }
 });
