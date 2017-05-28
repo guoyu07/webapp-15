@@ -86,6 +86,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     },
     userImpersonated() {
       this.store.unloadAll();
+      this.get('conversationsService').getConversationCounts();
       this.transitionTo('hosts.index');
       this.refresh();
     },

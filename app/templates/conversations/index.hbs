@@ -40,7 +40,10 @@
           {{list-pagination currentPage=page totalPages=totalPages targetRoute='conversations'}}
         </p>
       {{else}}
-        {{t 'conversations.index.noMessages'}}
+        <div class="jumbotron">
+          <h1>{{t 'conversations.index.hello' firstName=sessionUser.user.firstName}}</h1>
+          <p>{{t 'conversations.index.noMessages'}}</p>
+        </div>
       {{/if}}
     {{/if}}
   </div>
