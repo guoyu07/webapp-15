@@ -35,7 +35,7 @@ export default Ember.Controller.extend(Validations, {
    */
   hostsIsActive: computed.match('currentRouteName', /host.index|host.contact/),
   wwoofersIsActive: computed.match('currentRouteName', /wwoofer.index/),
-  inboxIsActive: computed.match('currentRouteName', /conversations.index|conversation.index/),
+  inboxIsActive: computed.match('currentRouteName', /conversations.index|conversations.new|conversation.index/),
 
   isEnglishLocale: computed.equal('i18n.locale', 'en'),
 

@@ -31,6 +31,7 @@
         {{t 'conversation.index.sendMessage'}}
       </button>
     </p>
+    <hr>
     {{#if conversation.isNew}}
       <strong>
         {{t 'host.contact.rules'}}
@@ -41,7 +42,6 @@
         <li>{{t 'host.contact.rule3'}}</li>
       </ol>
     {{else}}
-      <hr>
       {{#each conversation.sortedMessages as |message|}}
         <div class="panel panel-default">
           <div class="panel-body">
