@@ -3,7 +3,6 @@
     <ul class="navbar nav">
       <li>{{#link-to 'wwoofer.edit' model.id}}{{t 'literal.editProfile'}}{{/link-to}}</li>
       <li>{{#link-to 'wwoofer.address' model.id}}{{t 'literal.myAddress'}}{{/link-to}}</li>
-      <li>{{#link-to 'wwoofer.photo' model.id}}{{t 'literal.photo'}}{{/link-to}}</li>
     </ul>
     {{#link-to 'wwoofer.index' model.id class="btn btn-primary btn-block mtm mbm" disabled=model.isIncomplete}}
       {{t 'literal.viewProfile'}}

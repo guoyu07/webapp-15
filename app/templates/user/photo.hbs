@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'user.photo.new'}}</h3>
+  </div>
+  <div class="panel-body">
+    {{photo-uploader dataUrl=photoDataUrl model=model mode='user'}}
+  </div>
+</div>
+{{#if model.photo}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{t 'user.photo.edit'}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <button class="btn btn-default" aria-label={{t 'literal.delete'}} title={{t 'literal.delete'}} onclick={{action 'deletePhoto'}}>
+            <span class="glyphicon glyphicon-trash mrx" aria-hidden="true"></span>
+            {{t 'literal.delete'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}

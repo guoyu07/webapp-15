@@ -25,7 +25,6 @@ Router.map(function() {
   this.route('wwoofer', { path: '/wwoofer/:wwoofer_id' }, function() {
     this.route('edit');
     this.route('address');
-    this.route('photo');
     this.route('contact');
   });
   this.route('users', function() {
@@ -35,7 +34,7 @@ Router.map(function() {
     this.route('edit');
     this.route('change-password');
     this.route('memberships');
-    this.route('favorites');
+    this.route('photo');
   });
   this.route('memberships', function() {
     this.route('new');

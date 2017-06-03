@@ -36,7 +36,7 @@ export default DS.Model.extend({
       const encodedPhoto = encodeURIComponent(photo);
       return `https://s3.amazonaws.com/wwoof-france/photos/users/${encodedPhoto}`;
     } else {
-      return '../assets/images/no-photo.png';
+      return '/assets/images/no-photo.png';
     }
   }),
 

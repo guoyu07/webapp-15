@@ -1,7 +1,11 @@
 <div class="row">
   <div class="col-sm-3">
+    {{#link-to 'user.photo' model.id class='hidden-xs'}}
+      {{image-thumb url=model.completePhotoUrl height=250 class='mbm'}}
+    {{/link-to}}
     <ul class="navbar nav">
       <li>{{#link-to 'user.edit' model.id}}{{t 'user.nav.myAccount'}}{{/link-to}}</li>
+      <li class="hidden-sm hidden-md hidden-lg">{{#link-to 'user.photo' model.id}}{{t 'literal.photo'}}{{/link-to}}</li>
       <li>{{#link-to 'user.memberships' model.id}}{{t 'user.nav.memberships'}}{{/link-to}}</li>
       <li>{{#link-to 'user.change-password' model.id}}{{t 'user.nav.myPassword'}}{{/link-to}}</li>
     </ul>

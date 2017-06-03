@@ -10,8 +10,8 @@ export default Ember.Controller.extend({
   /**
    * The data-url to send the photo to.
    */
-  photoDataUrl: computed('model.user.id', function() {
-    return `/api/users/${this.get('model.user.id')}/photo`;
+  photoDataUrl: computed('model.id', function() {
+    return `/api/users/${this.get('model.id')}/photo`;
   }),
 
   actions: {
@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
     deletePhoto() {
 
       // Get user
-      let user = this.get('model.user');
+      let user = this.get('model');
       let url = this.get('photoDataUrl');
 
       // Delete the photo
