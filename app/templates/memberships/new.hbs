@@ -20,6 +20,7 @@
       validations=validations
       isAdminMode=isAdminMode
       itemCodeChanged=(action 'itemCodeChanged')
+      shippingRegionChanged=(action 'shippingRegionChanged')
       paymentTypeDidChange=(action 'paymentTypeDidChange')
       toggleIsFree=(action 'toggleIsFree')
       dateSelected=(action 'dateSelected')}}
@@ -27,7 +28,7 @@
       {{#if isAdminMode}}
         <div class="form-group">
           <div class="col-xs-12">
-            <button {{action 'createMembership'}} class="btn btn-primary mbs" disabled={{isInvalidAdmin}}>
+            <button type="button" class="btn btn-primary mbs" disabled={{isProcessing}} onclick={{action 'createMembership' membership}}>
               {{t 'memberships.new.create'}}
             </button>
           </div>
@@ -51,7 +52,7 @@
                     {{t 'memberships.new.reEnter'}}
                   </button>
                 {{else}}
-                  {{payment-form token=token onSubmit='processPayment' disableSubmit=disableSubmit}}
+                  {{payment-form token=token onSubmit='processPayment' disableSubmit=isProcessing}}
                 {{/if}}
               </div>
             </div>

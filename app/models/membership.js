@@ -37,5 +37,14 @@ export default DS.Model.extend({
   isWwoofer: computed.equal('type', 'W'),
   isHost: computed.equal('type', 'H'),
   isDuo: computed.match('itemCode', /WO2|WOB2/),
-  hasBooklet: computed.match('itemCode', /WOB1|WOB2/)
+  hasBooklet: computed.match('itemCode', /WOB1|WOB2/),
+
+  displayedTotal: computed('total', function () {
+    let total = this.get('total');
+    let displayedTotal = null;
+    if (typeof total === 'number') {
+      displayedTotal = total.toFixed(2);
+    }
+    return displayedTotal;
+  })
 });

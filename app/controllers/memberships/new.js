@@ -7,6 +7,7 @@ const { service } = Ember.inject;
 export default Ember.Controller.extend(Validations, {
 
   ajax: service('ajax'),
+  membershipsService: service('memberships'),
 
   queryParams: ['type', 'itemCode', 'shippingRegion', 'userId'],
 
@@ -48,6 +49,28 @@ export default Ember.Controller.extend(Validations, {
   }),
 
   isInvalidAdmin: computed.not('isValidAdmin'),
+
+  /**
+   * Processes the total (membership + shipping fee).
+   */
+  updateTotal() {
+    let itemCode = this.get('membership.itemCode');
+    let membershipOption = this.get('membershipsService.membershipOptions').findBy('id', itemCode);
+    let itemPrice = membershipOption ? membershipOption.price : 0;
+
+    let shippingRegion = this.get('shippingRegion');
+    let shippingRegionOption = this.get('membershipsService.shippingRegionOptions').findBy('id', shippingRegion);
+    let shippingFee = shippingRegionOption ? shippingRegionOption.price : 0;
+
+    let total = itemPrice + shippingFee;
+
+    let isFree = this.get('isFree');
+    if (isFree) {
+      total = 0;
+    }
+
+    this.set('membership.total', total);
+  },
 
   actions: {
     /**
@@ -120,7 +143,7 @@ export default Ember.Controller.extend(Validations, {
         if (validations.get('isValid')) {
 
           membership.save().then((createdMembership) => {
-            this.transitionTo('user.memberships', createdMembership.get('user'));
+            this.transitionToRoute('user.memberships', createdMembership.get('user'));
           });
         } else {
           this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
@@ -129,7 +152,9 @@ export default Ember.Controller.extend(Validations, {
     },
 
     paymentTypeDidChange(paymentType) {
+      const paymentTypeId = paymentType ? paymentType.id : null;
       this.set('paymentType', paymentType);
+      this.set('membership.paymentType', paymentTypeId);
     },
 
     itemCodeChanged(membershipOption) {
@@ -146,11 +171,19 @@ export default Ember.Controller.extend(Validations, {
         default:
           this.set('shippingRegion', null);
       }
+
+      this.updateTotal();
+    },
+
+    shippingRegionChanged(shippingRegion) {
+      this.set('shippingRegion', shippingRegion);
+      this.updateTotal();
     },
 
     toggleIsFree() {
       this.toggleProperty('isFree');
       this.set('paymentType', null);
+      this.updateTotal();
     },
 
     dateSelected(date) {
