@@ -1,163 +1,85 @@
 <h1>{{t 'memberships.new.title'}}</h1>
 <h4 class="mtm">
   <small>
-    {{#if isWwooferMembership}}
+    {{#if membership.isWwoofer}}
       {{t 'memberships.new.leadWwoof'}}
     {{/if}}
-    {{#if isHostMembership}}
+    {{#if membership.isHost}}
       {{t 'memberships.new.leadHost'}}
     {{/if}}
   </small>
 </h4>
 <div class="row mtl">
   <div class="col-xs-12 col-sm-9">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          {{t 'memberships.new.options'}}
-        </h3>
-      </div>
-      <div class="panel-body">
-        {{#if isWwooferMembership}}
-          <div class="alert alert-warning" role="alert">
-            {{t 'memberships.new.franceOnly'}}
-            {{t 'memberships.new.otherCountries'}}
-          </div>
-        {{/if}}
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label class="col-sm-2 control-label">
-              {{t 'memberships.new.itemCode.label'}}
-            </label>
+    <form class="form-horizontal">
+      {{membership-form
+      membership=membership
+      shippingRegion=shippingRegion
+      paymentType=paymentType
+      isFree=isFree
+      validations=validations
+      isAdminMode=isAdminMode
+      itemCodeChanged=(action 'itemCodeChanged')
+      shippingRegionChanged=(action 'shippingRegionChanged')
+      paymentTypeDidChange=(action 'paymentTypeDidChange')
+      toggleIsFree=(action 'toggleIsFree')
+      dateSelected=(action 'dateSelected')}}
 
-            <div class="col-sm-10">
-              {{#each membershipOptions as |membershipOption|}}
-                <div class="radio">
-                  {{#radio-button value=membershipOption.id groupValue=itemCode changed='membershipOptionChanged'}}
-                    {{membershipOption.name}}
-                  {{/radio-button}}
-                </div>
-              {{/each}}
-            </div>
+      {{#if isAdminMode}}
+        <div class="form-group">
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-primary mbs" disabled={{membership.isSaving}} onclick={{action 'createMembership' membership}}>
+              {{t 'memberships.new.create'}}
+            </button>
           </div>
-          <div class="col-sm-offset-2 col-sm-10">
-            <p class="form-details mbm">
-              {{t 'memberships.new.itemCode.details'}}
-            </p>
-          </div>
-          {{#if showShippingFees}}
-            <div class="form-group">
-              <label for="shippingRegions" class="col-sm-2 control-label">
-                {{t 'memberships.new.shipping.label'}}
-              </label>
-
-              <div class="col-sm-10">
-                {{#each shippingRegionOptions as |shippingRegionOption|}}
-                  <div class="radio">
-                    {{#radio-button value=shippingRegionOption.id groupValue=shippingRegion}}
-                      {{shippingRegionOption.name}}
-                    {{/radio-button}}
+        </div>
+      {{else}}
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">{{t 'memberships.new.creditCard'}}</h4>
+              </div>
+              <div class="panel-body">
+                {{#if membershipAlreadyActive}}
+                  <div class="alert alert-warning mbn" role="alert">{{t 'notify.membershipAlreadyActive'}}</div>
+                {{else if paymentFailureMessage}}
+                  <div class="alert alert-warning" role="alert">
+                    {{t 'memberships.new.paymentFailed'}}
+                    <strong>{{paymentFailureMessage}}</strong>
                   </div>
-                {{/each}}
+                  <button {{action 'resetPaymentForm'}} class="btn btn-primary btn-block">
+                    {{t 'memberships.new.reEnter'}}
+                  </button>
+                {{else}}
+                  {{payment-form token=token onSubmit='processPayment' disableSubmit=isProcessing}}
+                {{/if}}
               </div>
-            </div>
-            <div class="col-sm-offset-2 col-sm-10">
-              <p class="form-details mbm">
-                {{t 'memberships.new.shipping.details'}}
-              </p>
-            </div>
-          {{/if}}
-          {{#if isAdminMode}}
-            <div class="form-group">
-              <label for="shippingRegions" class="col-sm-2 control-label">
-                {{t 'memberships.new.paymentType.label'}}
-              </label>
-
-              <div class="col-sm-10">
-                {{#power-select
-                selected=paymentType
-                options=paymentTypeOptions
-                searchField='name'
-                placeholder=(t 'memberships.new.paymentType.prompt')
-                allowClear=true
-                onchange=(action 'paymentTypeDidChange')
-                disabled=isFree
-                as |paymentType|}}
-                  {{paymentType.name}}
-                {{/power-select}}
-                <div class="checkbox">
-                  <label>
-                    {{input type="checkbox" checked=isFree}}
-                    {{t 'memberships.new.isFree.label'}}
-                  </label>
-                </div>
-              </div>
-            </div>
-          {{/if}}
-          <div class="form-group mbx">
-            <label class="col-sm-2 control-label">{{t 'memberships.new.total'}}</label>
-
-            <div class="col-sm-10">
-              <p class="form-control-static">{{total}} Euros</p>
             </div>
           </div>
-          {{#if isAdminMode}}
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button {{action "createMembership"}} class="btn btn-primary mbs" disabled={{isInvalidAdmin}}>
-                  {{t 'memberships.new.create'}}
-                </button>
+          <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>
               </div>
-            </div>
-          {{/if}}
-        </form>
-      </div>
-    </div>
-    {{#unless isAdminMode}}
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">{{t 'memberships.new.creditCard'}}</h4>
-            </div>
-            <div class="panel-body">
-              {{#if membershipAlreadyActive}}
-                <div class="alert alert-warning mbn" role="alert">{{t 'notify.membershipAlreadyActive'}}</div>
-              {{else if paymentFailureMessage}}
-                <div class="alert alert-warning" role="alert">
-                  {{t 'memberships.new.paymentFailed'}}
-                  <strong>{{paymentFailureMessage}}</strong>
-                </div>
-                <button {{action 'resetPaymentForm'}} class="btn btn-primary btn-block">
-                  {{t 'memberships.new.reEnter'}}
-                </button>
-              {{else}}
-                {{payment-form token=token onSubmit='processPayment' disableSubmit=disableSubmit}}
-              {{/if}}
+              <div class="panel-body">
+                <p>{{t 'memberships.new.address'}}</p>
+                <address>
+                  <strong>WWOOF France</strong><br>
+                  Virginie LOPEZ<br>
+                  9 Allée des Pins<br>
+                  33480 Castelnau-de-Médoc<br>
+                  FRANCE
+                </address>
+                <p class="text-muted">{{t 'memberships.new.checkLimitations'}}</p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">{{t 'memberships.new.checkCash'}}</h4>
-            </div>
-            <div class="panel-body">
-              <p>{{t 'memberships.new.address'}}</p>
-              <address>
-                <strong>WWOOF France</strong><br>
-                Virginie LOPEZ<br>
-                9 Allée des Pins<br>
-                33480 Castelnau-de-Médoc<br>
-                FRANCE
-              </address>
-              <p class="text-muted">{{t 'memberships.new.checkLimitations'}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    {{/unless}}
+      {{/if}}
+    </form>
   </div>
+
   <div class="hidden-xs col-sm-3">
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -180,8 +102,7 @@
         </p>
       </div>
     </div>
-  </div>
-  <div class="hidden-xs col-sm-3">
+
     {{help-articles label='membership-new'}}
   </div>
 </div>

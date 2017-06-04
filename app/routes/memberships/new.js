@@ -11,102 +11,39 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('i18n').t('titles.memberships.new');
   },
 
-  model() {
-    return this.get('ajax').request('api/payment/token');
+  model(params) {
+    let membership = this.store.createRecord('membership', {
+      type: params.type,
+      itemCode: params.itemCode
+    });
+
+    let user = params.userId ?
+      this.store.findRecord('user', params.userId) :
+      this.get('sessionUser.user');
+
+    return Ember.RSVP.hash({
+      paymentToken: this.get('ajax').request('api/payment/token'),
+      user,
+      membership
+    });
   },
 
   setupController(controller, result) {
-    if (result) {
-      controller.set('token', result.token);
+    if (result && result.paymentToken) {
+      result.membership.set('user', result.user);
+      controller.set('token', result.paymentToken.token);
+      controller.set('membership', result.membership);
     }
+    controller.updateTotal();
   },
 
-  actions: {
-    /**
-     * Process a payment.
-     * @param {Object} payment The payment object containing the nonce.
-     * @param {Object} checkout The checkout object to destroy the payment form.
-     */
-    processPayment(payment, checkout) {
-      
-      payment.itemCode = this.controller.get('itemCode');
-      payment.shippingRegion = this.controller.get('shippingRegion');
-
-      // Do not continue if no item code was specified
-      if (!payment.itemCode) {
-        this.get('notify').error(this.get('i18n').t('notify.noItemCode'));
-        return;
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      if (controller.get('membership.isNew')) {
+        controller.get('membership').rollbackAttributes();
       }
-
-      this.controller.set('isProcessing', true);
-
-      let promise = this.get('ajax').post('api/payment/checkout', {
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(payment)
-      });
-
-      promise.then((result)=> {
-        checkout.teardown(()=> {
-          checkout = null;
-
-          if (result.success === true) {
-            this.get('sessionUser.user').then((user)=> {
-              // Refresh the session across all tabs
-              this.get('sessionUser').refresh();
-
-              window.location.replace(`/user/${user.id}/memberships`);
-            });
-          } else {
-            this.controller.set('paymentFailureMessage', result.message);
-          }
-        });
-      });
-      
-      promise.catch((err) => {
-        checkout.teardown(()=> {
-          checkout = null;
-
-          if (Ember.get(err, 'errors.firstObject.status') === '409') {
-            this.controller.set('membershipAlreadyActive', true);
-          }
-        });
-      });
-
-      promise.finally(() => {
-        this.controller.set('isProcessing', false);
-      });
-    },
-
-    resetPaymentForm() {
-      this.controller.set('paymentFailureMessage', null);
-    },
-
-    /**
-     * Creates a membership (admin only).
-     */
-    createMembership() {
-      let promise = this.controller.getNewMembership();
-
-      promise = promise.then((newMembership)=> {
-        return newMembership.save();
-      });
-
-      promise.then((createdMembership)=> {
-        this.transitionTo('user.memberships', createdMembership.get('user'));
-      });
-    },
-
-    membershipOptionChanged(membershipOption) {
-      switch (membershipOption) {
-        case 'WOB1':
-        case 'WOB2':
-          if (!this.controller.get('shippingRegion')) {
-            this.controller.set('shippingRegion', 'FR');
-          }
-          break;
-        default:
-          this.controller.set('shippingRegion', null);
-      }
+      controller.set('membership', null);
+      controller.set('token', null);
     }
   }
 });

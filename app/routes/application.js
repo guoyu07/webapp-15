@@ -8,6 +8,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
   translationsFetcher: service('translations-fetcher'),
   ajax: service('ajax'),
+  errorHandler: service('error-handler'),
   conversationsService: service('conversations'),
 
   beforeModel() {
@@ -117,6 +118,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     error(err) {
       if (Ember.get(err, 'errors.firstObject.status') === '404') {
         this.transitionTo('404', 'not-found');
+      } else {
+        this.get('errorHandler').handleError(err);
       }
     }
   }

@@ -17,6 +17,9 @@ export default DS.Model.extend({
   total: DS.attr('number'),
   reminderSentAt: DS.attr('date'),
   bookletSentAt: DS.attr('date'),
+  firstName2: DS.attr('string'),
+  lastName2: DS.attr('string'),
+  birthDate2: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
 
@@ -31,8 +34,17 @@ export default DS.Model.extend({
   expiresWithinAMonth: computed.and('isNotExpired', 'isNotValidInAMonth'),
   reminderAlreadySent: computed.notEmpty('reminderSentAt'),
 
-  hasBooklet: computed('itemCode', function() {
-    let itemCode = this.get('itemCode');
-    return ['WOB1', 'WOB2'].indexOf(itemCode) >= 0;
+  isWwoofer: computed.equal('type', 'W'),
+  isHost: computed.equal('type', 'H'),
+  isDuo: computed.match('itemCode', /WO2|WOB2/),
+  hasBooklet: computed.match('itemCode', /WOB1|WOB2/),
+
+  displayedTotal: computed('total', function () {
+    let total = this.get('total');
+    let displayedTotal = null;
+    if (typeof total === 'number') {
+      displayedTotal = total.toFixed(2);
+    }
+    return displayedTotal;
   })
 });
