@@ -28,7 +28,7 @@
       {{#if isAdminMode}}
         <div class="form-group">
           <div class="col-xs-12">
-            <button type="button" class="btn btn-primary mbs" disabled={{isProcessing}} onclick={{action 'createMembership' membership}}>
+            <button type="button" class="btn btn-primary mbs" disabled={{membership.isSaving}} onclick={{action 'createMembership' membership}}>
               {{t 'memberships.new.create'}}
             </button>
           </div>
@@ -102,8 +102,7 @@
         </p>
       </div>
     </div>
-  </div>
-  <div class="hidden-xs col-sm-3">
+
     {{help-articles label='membership-new'}}
   </div>
 </div>

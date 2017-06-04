@@ -34,6 +34,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       controller.set('token', result.paymentToken.token);
       controller.set('membership', result.membership);
     }
+    controller.updateTotal();
   },
 
   resetController(controller, isExiting) {

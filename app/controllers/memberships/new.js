@@ -15,10 +15,10 @@ export default Ember.Controller.extend(Validations, {
   itemCode: null,
   shippingRegion: null,
   userId: null,
+
+  membership: null,
   paymentType: null,
   isFree: false,
-  membership: null,
-
   paymentFailureMessage: null,
   membershipAlreadyActive: false,
   isProcessing: false,
@@ -26,32 +26,8 @@ export default Ember.Controller.extend(Validations, {
   hasUserId: computed.notEmpty('userId'),
   isAdminMode: computed.and('sessionUser.user.isAdmin', 'hasUserId'),
 
-  isValid: computed('itemCode', 'hasBooklet', 'shippingRegion', function() {
-    let isValid = false;
-    const itemCode = this.get('itemCode');
-
-    if (itemCode) {
-      if (this.get('hasBooklet')) {
-        isValid = Ember.isPresent(this.get('shippingRegion'));
-      } else {
-        isValid = true;
-      }
-    }
-    return isValid;
-  }),
-
-  isInvalid: computed.not('isValid'),
-
-  disableSubmit: computed.or('isProcessing', 'isInvalid'),
-
-  isValidAdmin: computed('isValid', 'paymentType.id', 'isFree', function() {
-    return this.get('isValid') && (Ember.isPresent(this.get('paymentType.id')) || this.get('isFree'));
-  }),
-
-  isInvalidAdmin: computed.not('isValidAdmin'),
-
   /**
-   * Processes the total (membership + shipping fee).
+   * Process the total (membership + shipping fee).
    */
   updateTotal() {
     let itemCode = this.get('membership.itemCode');
@@ -80,51 +56,64 @@ export default Ember.Controller.extend(Validations, {
      */
     processPayment(payment, checkout) {
 
-      payment.itemCode = this.get('itemCode');
-      payment.shippingRegion = this.get('shippingRegion');
+      this.validate().then(({ validations })=> {
 
-      // Do not continue if no item code was specified
-      if (!payment.itemCode) {
-        this.get('notify').error(this.get('i18n').t('notify.noItemCode'));
-        return;
-      }
+        this.set('validations.didValidate', true);
+        if (validations.get('isValid')) {
 
-      this.set('isProcessing', true);
+          let membership = this.get('membership');
+          let shippingRegion = this.get('shippingRegion');
 
-      let promise = this.get('ajax').post('/api/payment/checkout', {
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(payment)
-      });
+          payment.itemCode = membership.get('itemCode');
+          if (shippingRegion) {
+            payment.shippingRegion = shippingRegion;
+          }
+          if (membership.get('isDuo')) {
+            payment.firstName2 = membership.get('firstName2');
+            payment.lastName2 = membership.get('lastName2');
+            payment.birthDate2 = membership.get('birthDate2');
+          }
 
-      promise.then((result)=> {
-        checkout.teardown(()=> {
-          checkout = null;
+          this.set('isProcessing', true);
 
-          if (result.success === true) {
-            this.get('sessionUser.user').then((user)=> {
-              // Refresh the session across all tabs
-              this.get('sessionUser').refresh();
+          let promise = this.get('ajax').post('/api/payment/checkout', {
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(payment)
+          });
 
-              window.location.replace(`/user/${user.id}/memberships`);
+          promise.then((result)=> {
+            checkout.teardown(()=> {
+              checkout = null;
+
+              if (result.success === true) {
+                this.get('sessionUser.user').then((user)=> {
+                  // Refresh the session across all tabs
+                  this.get('sessionUser').refresh();
+
+                  window.location.replace(`/user/${user.id}/memberships`);
+                });
+              } else {
+                this.set('paymentFailureMessage', result.message);
+              }
             });
-          } else {
-            this.set('paymentFailureMessage', result.message);
-          }
-        });
-      });
+          });
 
-      promise.catch((err) => {
-        checkout.teardown(()=> {
-          checkout = null;
+          promise.catch((err) => {
+            checkout.teardown(()=> {
+              checkout = null;
 
-          if (Ember.get(err, 'errors.firstObject.status') === '409') {
-            this.set('membershipAlreadyActive', true);
-          }
-        });
-      });
+              if (Ember.get(err, 'errors.firstObject.status') === '409') {
+                this.set('membershipAlreadyActive', true);
+              }
+            });
+          });
 
-      promise.finally(() => {
-        this.set('isProcessing', false);
+          promise.finally(() => {
+            this.set('isProcessing', false);
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
       });
     },
 

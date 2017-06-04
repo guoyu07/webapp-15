@@ -27,7 +27,10 @@ export default DS.Model.extend({
     inverse: 'followers',
     async: true
   }),
-  addresses: computed.collect('host.address', 'wwoofer.address'),
+  _addresses: computed.collect('host.address', 'wwoofer.address'),
+  addresses: computed.filter('_addresses', function (address) {
+    return Ember.isPresent(address);
+  }),
 
   // Computed properties
   completePhotoUrl: computed('photo', function() {
