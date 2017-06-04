@@ -1,8 +1,12 @@
 import Ember from 'ember';
+import Validations from 'webapp/validations/membership';
 
 const { computed } = Ember;
+const { service } = Ember.inject;
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(Validations, {
+
+  ajax: service('ajax'),
 
   queryParams: ['type', 'itemCode', 'shippingRegion', 'userId'],
 
@@ -12,116 +16,21 @@ export default Ember.Controller.extend({
   userId: null,
   paymentType: null,
   isFree: false,
+  membership: null,
 
-  _membershipOptions: computed('i18n.locale', function() {
-    return [
-      { id: 'WO1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO1', { price: '25' }), price: 25 },
-      { id: 'WO2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO2', { price: '30' }), price: 30 },
-      { id: 'WOB1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB1', { price: '42' }), price: 42 },
-      { id: 'WOB2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB2', { price: '47' }), price: 47 },
-      { id: 'H', type: 'H', name: this.get('i18n').t('memberships.itemCodes.H', { price: '35' }), price: 35 },
-      { id: 'HR', type: 'H', name: this.get('i18n').t('memberships.itemCodes.HR', { price: '30' }), price: 30 }
-    ];
-  }),
-
-  membershipOptions: computed('_membershipOptions.[]', 'type', function() {
-    return this.get('_membershipOptions').filterBy('type', this.get('type'));
-  }),
-
-  shippingRegionOptions: computed('i18n.locale', function() {
-    return [
-      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: '5.01' }), price: 5.01 },
-      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: '8.91' }), price: 8.91 },
-      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: '13.59' }), price: 13.59 },
-      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: '9.91' }), price: 9.91 },
-      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: '12.15' }), price: 12.15 }
-    ];
-  }),
-
-  paymentTypeOptions: computed('i18n.locale', function() {
-    return [
-      { id: 'CHQ', name: this.get('i18n').t('memberships.paymentTypes.CHQ') },
-      { id: 'ESP', name: this.get('i18n').t('memberships.paymentTypes.ESP') },
-      { id: 'VIRT', name: this.get('i18n').t('memberships.paymentTypes.VIRT') },
-      { id: 'PPL', name: this.get('i18n').t('memberships.paymentTypes.PPL') }
-    ];
-  }),
-
-  isWwooferMembership: computed.equal('type', 'W'),
-  isHostMembership: computed.equal('type', 'H'),
-  itemCodeIncludesShipping: computed.match('itemCode', /WOB1|WOB2/),
+  paymentFailureMessage: null,
+  membershipAlreadyActive: false,
+  isProcessing: false,
 
   hasUserId: computed.notEmpty('userId'),
   isAdminMode: computed.and('sessionUser.user.isAdmin', 'hasUserId'),
 
-  /**
-   * Determines whether the shipping fees menu should be displayed.
-   * It is only displayed for Wwoofer memberships that include the book.
-   */
-  showShippingFees: computed('isWwooferMembership', 'itemCode', function() {
-    let showShippingFees = false;
-    if (this.get('isWwooferMembership') && this.get('itemCodeIncludesShipping')) {
-      showShippingFees = true;
-    }
-    return showShippingFees;
-  }),
-
-  /**
-   * Processes the total (membership + shipping fee).
-   */
-  total: computed('itemCode', 'shippingRegion', 'isFree', function() {
-    const itemCode = this.get('itemCode');
-    const membershipOption = this.get('membershipOptions').findBy('id', itemCode);
-    const itemPrice = membershipOption ? membershipOption.price : 0;
-
-    const shippingRegion = this.get('shippingRegion');
-    const shippingRegionOption = this.get('shippingRegionOptions').findBy('id', shippingRegion);
-    const shippingFee = shippingRegionOption ? shippingRegionOption.price : 0;
-
-    let total = (itemPrice + shippingFee).toFixed(2);
-
-    const isFree = this.get('isFree');
-    if (isFree) {
-      total = 0;
-    }
-    return total;
-  }),
-
-  /**
-   * Returns a new membership model for creation (admins only).
-   * @returns {Promise}
-   */
-  getNewMembership() {
-    const type = this.get('type');
-    const itemCode = this.get('itemCode');
-    let paymentType = this.get('paymentType.id');
-    let total = this.get('total');
-    const isFree = this.get('isFree');
-    const userId = this.get('userId');
-
-    // Reset the payment type if the membership is offered
-    if (isFree) {
-      total = 0;
-      paymentType = null;
-    }
-
-    return this.store.findRecord('user', userId).then((user)=> {
-      return this.store.createRecord('membership', {
-        type,
-        itemCode,
-        paymentType,
-        total,
-        user
-      });
-    });
-  },
-
-  isValid: computed('itemCode', 'itemCodeIncludesShipping', 'shippingRegion', function() {
+  isValid: computed('itemCode', 'hasBooklet', 'shippingRegion', function() {
     let isValid = false;
     const itemCode = this.get('itemCode');
 
     if (itemCode) {
-      if (this.get('itemCodeIncludesShipping')) {
+      if (this.get('hasBooklet')) {
         isValid = Ember.isPresent(this.get('shippingRegion'));
       } else {
         isValid = true;
@@ -141,8 +50,111 @@ export default Ember.Controller.extend({
   isInvalidAdmin: computed.not('isValidAdmin'),
 
   actions: {
+    /**
+     * Process a payment.
+     * @param {Object} payment The payment object containing the nonce.
+     * @param {Object} checkout The checkout object to destroy the payment form.
+     */
+    processPayment(payment, checkout) {
+
+      payment.itemCode = this.get('itemCode');
+      payment.shippingRegion = this.get('shippingRegion');
+
+      // Do not continue if no item code was specified
+      if (!payment.itemCode) {
+        this.get('notify').error(this.get('i18n').t('notify.noItemCode'));
+        return;
+      }
+
+      this.set('isProcessing', true);
+
+      let promise = this.get('ajax').post('/api/payment/checkout', {
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(payment)
+      });
+
+      promise.then((result)=> {
+        checkout.teardown(()=> {
+          checkout = null;
+
+          if (result.success === true) {
+            this.get('sessionUser.user').then((user)=> {
+              // Refresh the session across all tabs
+              this.get('sessionUser').refresh();
+
+              window.location.replace(`/user/${user.id}/memberships`);
+            });
+          } else {
+            this.set('paymentFailureMessage', result.message);
+          }
+        });
+      });
+
+      promise.catch((err) => {
+        checkout.teardown(()=> {
+          checkout = null;
+
+          if (Ember.get(err, 'errors.firstObject.status') === '409') {
+            this.set('membershipAlreadyActive', true);
+          }
+        });
+      });
+
+      promise.finally(() => {
+        this.set('isProcessing', false);
+      });
+    },
+
+    resetPaymentForm() {
+      this.set('paymentFailureMessage', null);
+    },
+
+    /**
+     * Creates a membership (admin only).
+     */
+    createMembership(membership) {
+
+      this.validate().then(({ validations })=> {
+
+        this.set('validations.didValidate', true);
+        if (validations.get('isValid')) {
+
+          membership.save().then((createdMembership) => {
+            this.transitionTo('user.memberships', createdMembership.get('user'));
+          });
+        } else {
+          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
+        }
+      });
+    },
+
     paymentTypeDidChange(paymentType) {
       this.set('paymentType', paymentType);
+    },
+
+    itemCodeChanged(membershipOption) {
+      this.set('itemCode', membershipOption);
+      this.set('membership.itemCode', membershipOption);
+
+      switch (membershipOption) {
+        case 'WOB1':
+        case 'WOB2':
+          if (!this.get('shippingRegion')) {
+            this.set('shippingRegion', 'FR');
+          }
+          break;
+        default:
+          this.set('shippingRegion', null);
+      }
+    },
+
+    toggleIsFree() {
+      this.toggleProperty('isFree');
+      this.set('paymentType', null);
+    },
+
+    dateSelected(date) {
+      this.set('membership.birthDate2', date.format('YYYY-MM-DD'));
     }
   }
 });

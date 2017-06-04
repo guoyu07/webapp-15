@@ -26,72 +26,7 @@
     {{/forms/form-group}}
   </div>
 </div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{t 'wwoofer-form.otherWwoofer'}}</h3>
-  </div>
-  <div class="panel-body">
-    <p class="form-details">
-      {{t 'wwoofer-form.otherWwooferInstructions'}}
-    </p>
-    {{#if canEditOtherWwoofer }}
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" name="otherWwoofer" checked={{secondWwooferChecked}} onclick={{action toggleSecondWwoofer value='target.checked'}}>
-              {{t 'wwoofer-form.otherWwoofer.label'}}
-            </label>
-          </div>
-        </div>
-      </div>
-    {{else}}
-      {{#unless secondWwooferChecked}}
-        <div class="col-sm-offset-2 col-sm-10">
-          {{t 'wwoofer-form.noOtherWwoofer'}}
-        </div>
-      {{/unless}}
-    {{/if}}
-    {{#if secondWwooferChecked}}
-      {{#forms/form-group valuePath='wwoofer.firstName2' validations=validations as |showError|}}
-        <label for="firstName2" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
 
-        <div class="col-sm-10">
-          {{#if canEditOtherWwoofer}}
-            {{input id='firstName2' type='text' name='firstName2' value=wwoofer.firstName2 class='form-control'}}
-            {{error-display error=validations.attrs.wwoofer.firstName2 showError=showError}}
-          {{else}}
-            <p class="form-control-static">{{wwoofer.firstName2}}</p>
-          {{/if}}
-        </div>
-      {{/forms/form-group}}
-      {{#forms/form-group valuePath='wwoofer.lastName2' validations=validations as |showError|}}
-        <label for="lastName2" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
-
-        <div class="col-sm-10">
-          {{#if canEditOtherWwoofer}}
-            {{input id='lastName2' type='text' name='lastName2' value=wwoofer.lastName2 class='form-control'}}
-            {{error-display error=validations.attrs.wwoofer.lastName2 showError=showError}}
-          {{else}}
-            <p class="form-control-static">{{wwoofer.lastName2}}</p>
-          {{/if}}
-        </div>
-      {{/forms/form-group}}
-      {{#forms/form-group valuePath='wwoofer.birthDate2' validations=validations as |showError|}}
-        <label for="birthDate2" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
-
-        <div class="col-sm-10">
-          {{#if canEditOtherWwoofer}}
-            {{date-picker selectedDate=selectedDate dateSelected=dateSelected}}
-            {{error-display error=validations.attrs.wwoofer.birthDate2 showError=showError}}
-          {{else}}
-            <p class="form-control-static">{{moment-format wwoofer.birthDate2}}</p>
-          {{/if}}
-        </div>
-      {{/forms/form-group}}
-    {{/if}}
-  </div>
-</div>
 {{#if sessionUser.user.isAdmin}}
   <div class="panel panel-default">
     <div class="panel-heading">
