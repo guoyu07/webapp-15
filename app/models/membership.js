@@ -39,6 +39,17 @@ export default DS.Model.extend({
   isDuo: computed.match('itemCode', /WO2|WOB2/),
   hasBooklet: computed.match('itemCode', /WOB1|WOB2/),
 
+  /**
+   * Returns the full name of the second wwoofer.
+   */
+  fullName2: computed('firstName2', 'lastName2', function() {
+    const firstName2 = this.get('firstName2');
+    const lastName2 = this.get('lastName2');
+    if (firstName2 || lastName2) {
+      return `${firstName2} ${lastName2}`;
+    }
+  }),
+
   displayedTotal: computed('total', function () {
     let total = this.get('total');
     let displayedTotal = null;

@@ -50,7 +50,7 @@
             {{#each wwoofers as |wwoofer|}}
               <tr>
                 <td>{{wwoofer.user.fullName}}</td>
-                <td>{{wwoofer.fullName2}}</td>
+                <td>{{wwoofer.user.latestWwooferMembership.fullName2}}</td>
                 <td class="hidden-xs hidden-sm">{{wwoofer.address.city}}</td>
                 <td class="hidden-xs hidden-sm">{{wwoofer.address.country.name}}</td>
                 <td>

@@ -18,17 +18,6 @@ export default DS.Model.extend({
   address: DS.belongsTo('address', { async: false }),
 
   /**
-   * Returns the full name of the second wwoofer.
-   */
-  fullName2: computed('firstName2', 'lastName2', function() {
-    const firstName2 = this.get('firstName2');
-    const lastName2 = this.get('lastName2');
-    if (firstName2 || lastName2) {
-      return `${firstName2} ${lastName2}`;
-    }
-  }),
-
-  /**
    * Indicates whether the wwoofer profile is complete (i.e. ready for payment).
    */
   isComplete: computed('intro', 'address.id', function() {
