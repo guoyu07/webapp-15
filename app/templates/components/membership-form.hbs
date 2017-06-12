@@ -5,12 +5,6 @@
     </h3>
   </div>
   <div class="panel-body">
-    {{#if membership.isWwoofer}}
-      <div class="alert alert-warning" role="alert">
-        {{t 'membership-form.franceOnly'}}
-        {{t 'membership-form.otherCountries'}}
-      </div>
-    {{/if}}
     {{#forms/form-group valuePath='membership.itemCode' validations=validations as |showError|}}
       <label class="col-sm-2 control-label">{{t 'membership-form.itemCode.label'}}</label>
 
@@ -25,12 +19,14 @@
         {{error-display error=validations.attrs.membership.itemCode showError=showError}}
       </div>
     {{/forms/form-group}}
-    <div class="col-sm-offset-2 col-sm-10">
-      <p class="form-details mbm">
-        {{t 'membership-form.itemCode.details'}}
-      </p>
-    </div>
-    {{#if membership.hasBooklet}}
+    {{#if membership.isNew}}
+      <div class="col-sm-offset-2 col-sm-10">
+        <p class="form-details mbm">
+          {{t 'membership-form.itemCode.details'}}
+        </p>
+      </div>
+    {{/if}}
+    {{#if showShippingRegions}}
       {{#forms/form-group valuePath='shippingRegion' validations=validations as |showError|}}
         <label for="shippingRegions" class="col-sm-2 control-label">{{t 'membership-form.shipping.label'}}</label>
 
@@ -67,12 +63,15 @@
           as |paymentType|}}
             {{paymentType.name}}
           {{/power-select}}
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" checked={{isFree}} onclick={{toggleIsFree}} />
-              {{t 'membership-form.isFree.label'}}
-            </label>
-          </div>
+
+          {{#if membership.isNew}}
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" checked={{isFree}} onclick={{toggleIsFree}} />
+                {{t 'membership-form.isFree.label'}}
+              </label>
+            </div>
+          {{/if}}
           {{error-display error=validations.attrs.membership.paymentType showError=showError}}
         </div>
       {{/forms/form-group}}
@@ -81,7 +80,14 @@
       <label class="col-sm-2 control-label">{{t 'membership-form.total'}}</label>
 
       <div class="col-sm-10">
-        <p class="form-control-static">{{membership.displayedTotal}} Euros</p>
+        {{#if membership.isNew}}
+          <p class="form-control-static">{{membership.displayedTotal}} Euros</p>
+        {{else}}
+          <div class="input-group">
+            {{input id='total' type='number' name='total' value=membership.total class='form-control'}}
+            <div class="input-group-addon">Euros</div>
+          </div>
+        {{/if}}
         {{error-display error=validations.attrs.membership.total showError=showError}}
       </div>
     {{/forms/form-group}}

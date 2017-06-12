@@ -34,6 +34,12 @@
           </div>
         </div>
       {{else}}
+        {{#if membership.isWwoofer}}
+          <div class="alert alert-warning" role="alert">
+            {{t 'membership-form.franceOnly'}}
+            {{t 'membership-form.otherCountries'}}
+          </div>
+        {{/if}}
         <div class="row">
           <div class="col-sm-6">
             <div class="panel panel-default">

@@ -19,6 +19,7 @@ export default Ember.Controller.extend(Validations, {
   membership: null,
   paymentType: null,
   isFree: false,
+  selectedDate: null,
   paymentFailureMessage: null,
   membershipAlreadyActive: false,
   isProcessing: false,
@@ -150,15 +151,19 @@ export default Ember.Controller.extend(Validations, {
       this.set('itemCode', membershipOption);
       this.set('membership.itemCode', membershipOption);
 
-      switch (membershipOption) {
-        case 'WOB1':
-        case 'WOB2':
-          if (!this.get('shippingRegion')) {
-            this.set('shippingRegion', 'FR');
-          }
-          break;
-        default:
-          this.set('shippingRegion', null);
+      if (this.get('membership.isDuo') === false) {
+        this.set('membership.firstName2', null);
+        this.set('membership.lastName2', null);
+        this.set('membership.birthDate2', null);
+        this.set('selectedDate', null);
+      }
+
+      if (this.get('membership.hasBooklet') === true) {
+        if (!this.get('shippingRegion')) {
+          this.set('shippingRegion', 'FR');
+        }
+      } else {
+        this.set('shippingRegion', null);
       }
 
       this.updateTotal();

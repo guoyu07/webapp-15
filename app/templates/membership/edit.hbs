@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form class="form-horizontal">
+      {{membership-form
+          membership=membership
+          paymentType=paymentType
+          validations=validations
+          isAdminMode=isAdminMode
+          selectedDate=selectedDate
+          itemCodeChanged=(action 'itemCodeChanged')
+          paymentTypeDidChange=(action 'paymentTypeDidChange')
+          dateSelected=(action 'dateSelected')}}
+
+      <div class="form-group">
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-primary mbs" disabled={{membership.isSaving}} onclick={{action 'saveMembership' membership}}>
+            {{t 'literal.save'}}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -39,6 +39,9 @@ Router.map(function() {
   this.route('memberships', function() {
     this.route('new');
   });
+  this.route('membership', { path: '/membership/:membership_id' }, function() {
+    this.route('edit');
+  });
   this.route('reviews', function() {
   });
   this.route('conversations', function() {

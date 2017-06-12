@@ -11,7 +11,7 @@ export default buildValidations({
       presence: true,
       dependentKeys: ['model.membership.hasBooklet'],
       disabled: Ember.computed(function() {
-        return this.get('model.membership.hasBooklet') === false;
+        return this.get('model.membership.isNew') === false || this.get('model.membership.hasBooklet') === false;
       }).volatile()
     })
   ],
