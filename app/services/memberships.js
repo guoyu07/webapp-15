@@ -33,7 +33,8 @@ export default Ember.Service.extend({
       { id: 'CHQ', name: this.get('i18n').t('memberships.paymentTypes.CHQ') },
       { id: 'ESP', name: this.get('i18n').t('memberships.paymentTypes.ESP') },
       { id: 'VIRT', name: this.get('i18n').t('memberships.paymentTypes.VIRT') },
-      { id: 'PPL', name: this.get('i18n').t('memberships.paymentTypes.PPL') }
+      { id: 'PPL', name: this.get('i18n').t('memberships.paymentTypes.PPL') },
+      { id: 'CARD', name: this.get('i18n').t('memberships.paymentTypes.CARD') }
     ];
   })
 });
