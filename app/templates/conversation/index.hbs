@@ -43,14 +43,15 @@
       </ol>
     {{else}}
       {{#each conversation.sortedMessages as |message|}}
-        <div class="panel panel-default">
+        <div class="panel panel-default {{if message.isCurrentUserAuthor 'panel-dark'}}">
           <div class="panel-body">
             <div class="row">
               <div class="col-xs-4 col-md-2">
                 {{image-thumb url=message.author.conversationPhotoUrl height=100}}
               </div>
               <div class="col-xs-8 col-md-10">
-                {{convert-breaklines message.text}}
+                <p class="message-text">{{convert-breaklines message.text}}</p>
+                <small class="text-muted">{{moment-format message.createdAt 'll'}}</small>
               </div>
             </div>
           </div>
