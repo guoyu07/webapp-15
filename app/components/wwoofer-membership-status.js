@@ -12,9 +12,9 @@ export default Ember.Component.extend({
   /**
    * Returns the CSS class of the panel based on the wwoofer's membership status.
    */
-  panelClass: computed('user.hasWwooferMemberships', 'user.latestWwooferMembership.isStillValidInAMonth', function() {
+  panelClass: computed('user.hasWwooferMemberships', 'user.latestWwooferMembership.isStillActiveInAMonth', function() {
     const hasWwooferMemberships = this.get('user.hasWwooferMemberships');
-    const stillGoodInAMonth = this.get('user.latestWwooferMembership.isStillValidInAMonth');
+    const stillGoodInAMonth = this.get('user.latestWwooferMembership.isStillActiveInAMonth');
 
     let panelClass = 'panel-success';
     if (!hasWwooferMemberships) {

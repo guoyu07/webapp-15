@@ -19,14 +19,14 @@ export default Ember.Component.extend({
     this.set('checked', checked);
   }),
 
-  expireAtClass: computed('membership.isExpired', 'membership.isStillValidInAMonth', function() {
+  expireAtClass: computed('membership.isExpired', 'membership.isStillActiveInAMonth', function() {
     const isExpired = this.get('membership.isExpired');
-    const isStillValidInAMonth = this.get('membership.isStillValidInAMonth');
+    const isStillActiveInAMonth = this.get('membership.isStillActiveInAMonth');
 
     let cssClass = 'text-success';
     if (isExpired) {
       cssClass = 'text-danger';
-    } else if (!isStillValidInAMonth) {
+    } else if (!isStillActiveInAMonth) {
       cssClass = 'text-warning';
     }
     return cssClass;

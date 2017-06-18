@@ -15,7 +15,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     this.get('sessionUser.user').then((user)=> {
       if (!user.get('wwoofer.id')) {
         this.transitionTo('wwoofers.new');
-      } else if (!user.get('hasNonExpiredMembership')) {
+      } else if (!user.get('hasActiveMembership')) {
         this.transitionTo('memberships.new', {
           queryParams: { type: 'W', itemCode: 'WO1' }
         });

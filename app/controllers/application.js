@@ -13,7 +13,7 @@ export default Ember.Controller.extend(Validations, {
   /**
    * Indicates whether the current user can see the "Wwoofers" link in the main menu.
    */
-  canSeeWwoofersLink: computed.or('sessionUser.user.hasNonExpiredHostMembership', 'sessionUser.user.isAdmin'),
+  canSeeWwoofersLink: computed.or('sessionUser.user.hasActiveHostMembership', 'sessionUser.user.isAdmin'),
 
   /**
    * Email address of the user to impersonate (admins only).

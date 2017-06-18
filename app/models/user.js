@@ -77,7 +77,8 @@ export default DS.Model.extend({
    */
   hasMemberships: computed.notEmpty('sortedMemberships'),
   latestMembership: computed.readOnly('sortedMemberships.firstObject'),
-  hasNonExpiredMembership: computed.and('hasMemberships', 'latestMembership.isNotExpired'),
+  hasActiveMembership: computed.and('hasMemberships', 'latestMembership.isActive'),
+  hasNoActiveMembership: computed.not('hasActiveMembership'),
 
   /**
    * Wwoofer memberships computed properties.
@@ -86,7 +87,7 @@ export default DS.Model.extend({
   hasWwooferMemberships: computed.notEmpty('wwooferMemberships'),
   latestWwooferMembership: computed.readOnly('wwooferMemberships.firstObject'),
   firstWwooferMembership: computed.readOnly('wwooferMemberships.lastObject'),
-  hasNonExpiredWwooferMembership: computed.and('hasWwooferMemberships', 'latestWwooferMembership.isNotExpired'),
+  hasActiveWwooferMembership: computed.and('hasWwooferMemberships', 'latestWwooferMembership.isActive'),
 
   /**
    * Host memberships computed properties.
@@ -95,5 +96,5 @@ export default DS.Model.extend({
   hasHostMemberships: computed.notEmpty('hostMemberships'),
   latestHostMembership: computed.readOnly('hostMemberships.firstObject'),
   firstHostMembership: computed.readOnly('hostMemberships.lastObject'),
-  hasNonExpiredHostMembership: computed.and('hasHostMemberships', 'latestHostMembership.isNotExpired')
+  hasActiveHostMembership: computed.and('hasHostMemberships', 'latestHostMembership.isActive')
 });

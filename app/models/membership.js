@@ -28,10 +28,10 @@ export default DS.Model.extend({
 
   // Computed properties
   isExpired: computed.lt('expireAt', moment()),
-  isNotExpired: computed.not('isExpired'),
-  isStillValidInAMonth: computed.gt('expireAt', moment().add(1, 'months')),
-  isNotValidInAMonth: computed.not('isStillValidInAMonth'),
-  expiresWithinAMonth: computed.and('isNotExpired', 'isNotValidInAMonth'),
+  isActive: computed.not('isExpired'),
+  isStillActiveInAMonth: computed.gt('expireAt', moment().add(1, 'months')),
+  isExpiredInAMonth: computed.not('isStillActiveInAMonth'),
+  expiresWithinAMonth: computed.and('isActive', 'isExpiredInAMonth'),
   reminderAlreadySent: computed.notEmpty('reminderSentAt'),
 
   isWwoofer: computed.equal('type', 'W'),

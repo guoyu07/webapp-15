@@ -127,15 +127,9 @@
         </tbody>
       </table>
       <ul class="list-group">
-        {{#if sessionUser.user.isAdmin}}
-          {{#link-to 'conversations.new' (query-params user2Id=model.user.id) class='list-group-item list-group-item-primary text-center'}}
-            {{t 'wwoofer.index.sendMessage'}}
-          {{/link-to}}
-        {{else}}
-          {{#link-to 'wwoofer.contact' model.id class='list-group-item list-group-item-primary text-center'}}
-            {{t 'wwoofer.index.sendMessage'}}
-          {{/link-to}}
-        {{/if}}
+        {{#link-to 'conversations.new' (query-params user2Id=model.user.id) disabledWhen=sessionUser.user.hasNoActiveMembership class='list-group-item list-group-item-primary text-center'}}
+          {{t 'wwoofer.index.sendMessage'}}
+        {{/link-to}}
       </ul>
     </div>
   </div>

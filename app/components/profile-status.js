@@ -19,11 +19,11 @@ export default Ember.Component.extend({
   /**
    * Provides the class name to style the component for wwoofer profile
    */
-  wwooferProfileClass: computed('user.hasNonExpiredWwooferMembership', 'user.latestWwooferMembership.isStillValidInAMonth', function() {
+  wwooferProfileClass: computed('user.hasActiveWwooferMembership', 'user.latestWwooferMembership.isStillActiveInAMonth', function() {
     // Host has no active membership: warning
-    const hasValidMembership = this.get('user.hasNonExpiredWwooferMembership');
-    const isStillValidInAMonth = this.get('user.latestWwooferMembership.isStillValidInAMonth');
-    if (!hasValidMembership || !isStillValidInAMonth) {
+    const hasValidMembership = this.get('user.hasActiveWwooferMembership');
+    const isStillActiveInAMonth = this.get('user.latestWwooferMembership.isStillActiveInAMonth');
+    if (!hasValidMembership || !isStillActiveInAMonth) {
       return 'glyphicon glyphicon-exclamation-sign';
     }
 
@@ -34,7 +34,7 @@ export default Ember.Component.extend({
   /**
    * Provides the class name to style the component for host profile
    */
-  hostProfileClass: computed('user.host.isPendingApproval', 'user.host.isApproved', 'user.hasNonExpiredHostMembership', 'user.latestHostMembership.isStillValidInAMonth', function() {
+  hostProfileClass: computed('user.host.isPendingApproval', 'user.host.isApproved', 'user.hasActiveHostMembership', 'user.latestHostMembership.isStillActiveInAMonth', function() {
     const host = this.get('user.host');
 
     // Return if the Host has not been requested yet
@@ -52,9 +52,9 @@ export default Ember.Component.extend({
     }
 
     // Host has no active membership: warning
-    const hasValidMembership = this.get('user.hasNonExpiredHostMembership');
-    const isStillValidInAMonth = this.get('user.latestHostMembership.isStillValidInAMonth');
-    if (!hasValidMembership || !isStillValidInAMonth) {
+    const hasValidMembership = this.get('user.hasActiveHostMembership');
+    const isStillActiveInAMonth = this.get('user.latestHostMembership.isStillActiveInAMonth');
+    if (!hasValidMembership || !isStillActiveInAMonth) {
       return 'glyphicon glyphicon-exclamation-sign';
     }
 

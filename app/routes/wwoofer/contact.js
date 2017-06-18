@@ -19,7 +19,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     this.get('sessionUser.user').then((user)=> {
       if (!user.get('host.id')) {
         this.transitionTo('hosts.new');
-      } else if (!user.get('hasNonExpiredMembership')) {
+      } else if (!user.get('hasActiveMembership')) {
         this.transitionTo('memberships.new', {
           queryParams: { type: 'H', itemCode: 'H' }
         });

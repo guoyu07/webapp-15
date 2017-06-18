@@ -3,7 +3,7 @@
 </div>
 <div class="panel-body">
   {{#if user.hasHostMemberships}}
-    {{#if user.latestHostMembership.isStillValidInAMonth}}
+    {{#if user.latestHostMembership.isStillActiveInAMonth}}
       {{t 'host.membership-status.valid'}}
     {{else}}
       <p>

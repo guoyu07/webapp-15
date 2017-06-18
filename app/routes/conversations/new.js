@@ -8,6 +8,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('i18n').t('titles.users.new');
   },
 
+  beforeModel(transition) {
+    this.get('sessionUser.user').then((user)=> {
+      if (user.get('hasNoActiveMembership')) {
+        transition.abort();
+      }
+    });
+  },
+
   model(params, transition) {
     let user2Id = params.user2Id;
     if (!user2Id) {

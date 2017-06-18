@@ -3,7 +3,7 @@
 </div>
 <div class="panel-body">
   {{#if user.hasWwooferMemberships}}
-    {{#if user.latestWwooferMembership.isStillValidInAMonth}}
+    {{#if user.latestWwooferMembership.isStillActiveInAMonth}}
       {{t 'wwoofer.membership-status.valid'}}
     {{else}}
       <p>

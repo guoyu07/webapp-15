@@ -7,7 +7,7 @@ export default Ember.Controller.extend(Validations, {
   /**
    * Indicates whether the host contact info can be displayed to the current user.
    */
-  isActiveMember: computed.readOnly('sessionUser.user.hasNonExpiredMembership'),
+  isActiveMember: computed.readOnly('sessionUser.user.hasActiveMembership'),
 
   /**
    * Indicates whether the notes about the host should be displayed.
@@ -34,12 +34,12 @@ export default Ember.Controller.extend(Validations, {
   /**
    * Disable new review button if the current wwoofer has already reviewed the host.
    */
-  disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasNonExpiredWwooferMembership',
+  disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasActiveWwooferMembership',
     'model.reviews.@each.author', 'model.reviews.@each.isNew', 'sessionUser.user.id', function () {
     if (!this.get('session.isAuthenticated')) {
       return false;
     }
-    if (!this.get('sessionUser.user.hasNonExpiredWwooferMembership')) {
+    if (!this.get('sessionUser.user.hasActiveWwooferMembership')) {
       return true;
     }
 
