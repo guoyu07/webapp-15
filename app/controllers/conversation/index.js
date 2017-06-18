@@ -13,6 +13,17 @@ export default Ember.Controller.extend({
   newMessage: null,
   sending: false,
 
+  newMessagePlaceholder: computed('conversation.isNew', function () {
+    let isNew = this.get('conversation.isNew');
+    let firstName = this.get('conversation.otherUser.firstName');
+
+    let placeholder;
+    if (isNew) {
+      placeholder = this.get('i18n').t('host.contact.details', { firstName });
+    }
+    return placeholder;
+  }),
+
   textCharLeft: computed('newMessage.length', function () {
     let length = this.get('newMessage.length') || 0;
     return 1000 - length;

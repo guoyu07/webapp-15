@@ -23,7 +23,7 @@
   </div>
   <div class="col-xs-12 col-md-9">
     {{#forms/form-group}}
-      {{textarea id='newMessage' name='newMessage' value=newMessage class='form-control' placeholder=(t 'host.contact.details' firstName=conversation.otherUser.firstName) rows="7"}}
+      {{textarea id='newMessage' name='newMessage' value=newMessage class='form-control' placeholder=newMessagePlaceholder rows="7"}}
     {{/forms/form-group}}
     <p class="text-right">
       <span class="pull-left text-muted {{if noCharLeft 'text-danger'}}">{{t 'common.charLeft' count=textCharLeft}}</span>
