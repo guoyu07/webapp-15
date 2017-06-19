@@ -55,6 +55,7 @@ export default Ember.Controller.extend({
       if (!newMessage) {
         return;
       }
+      newMessage = newMessage.trim();
 
       this.set('sending', true);
       let promise = this.createMessage(conversation, newMessage);
