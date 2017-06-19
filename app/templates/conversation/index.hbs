@@ -26,7 +26,15 @@
       {{textarea id='newMessage' name='newMessage' value=newMessage class='form-control' placeholder=newMessagePlaceholder rows="7"}}
     {{/forms/form-group}}
     <p class="text-right">
-      <span class="pull-left text-muted {{if noCharLeft 'text-danger'}}">{{t 'common.charLeft' count=textCharLeft}}</span>
+      <span class="pull-left text-muted {{if noCharLeft 'text-danger'}}">
+        {{t 'common.charLeft' count=textCharLeft}}
+        {{#if conversation.isNew}}
+          /
+          {{t 'conversation.index.quota'
+              count=conversationsService.conversations.meta.lastDay
+              remaining=conversationsService.conversations.meta.remaining}}
+        {{/if}}
+      </span>
       <button type="button" class="btn btn-default" disabled={{disableSend}} onclick={{action 'sendMessage' conversation newMessage}}>
         {{t 'conversation.index.sendMessage'}}
       </button>

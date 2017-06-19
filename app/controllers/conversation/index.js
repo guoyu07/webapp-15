@@ -6,6 +6,7 @@ const { service } = Ember.inject;
 export default Ember.Controller.extend({
 
   ajax: service('ajax'),
+  conversationsService: service('conversations'),
 
   queryParams: ['user2Id'],
 
@@ -30,7 +31,8 @@ export default Ember.Controller.extend({
   }),
 
   noCharLeft: computed.lt('textCharLeft', 0),
-  disableSend: computed.or('noCharLeft', 'sending'),
+  quotaReached: computed.lte('conversationsService.conversations.meta.remaining'),
+  disableSend: computed.or('noCharLeft', 'quotaReached', 'sending'),
 
   createMessage(conversation, newMessage) {
     let message = {
@@ -63,7 +65,9 @@ export default Ember.Controller.extend({
       promise.then((response)=> {
         this.get('store').pushPayload(response);
         if (conversation.get('isNew')) {
-          this.transitionToRoute('conversation.index', response.message.conversationId);
+          this.transitionToRoute('conversation.index', response.message.conversationId, {
+            queryParams: { user2Id: null }
+          });
         }
       });
 
