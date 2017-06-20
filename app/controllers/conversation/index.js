@@ -57,7 +57,10 @@ export default Ember.Controller.extend({
       if (!newMessage) {
         return;
       }
+
+      // Sanitize text
       newMessage = newMessage.trim();
+      newMessage = newMessage.replace(/\n\s*\n\s*\n/g, '\n\n');
 
       this.set('sending', true);
       let promise = this.createMessage(conversation, newMessage);
