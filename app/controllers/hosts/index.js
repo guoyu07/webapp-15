@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 
 export default Ember.Controller.extend({
 
+  media: service('media'),
   activitiesService: service('activities'),
   lodgingsService: service('lodgings'),
   monthsService: service('months'),
