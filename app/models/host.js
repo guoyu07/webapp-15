@@ -153,7 +153,7 @@ export default DS.Model.extend({
   thumbnailUrl: computed('thumbnail.completeUrl', function() {
     let photoUrl = this.get('thumbnail.completeUrl');
     if (Ember.isEmpty(photoUrl)) {
-      photoUrl = 'assets/images/wwoof-no-photo.png';
+      photoUrl = '/assets/images/wwoof-no-photo.png';
     }
     return photoUrl;
   }),

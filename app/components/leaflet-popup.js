@@ -26,7 +26,7 @@ export default Ember.Component.extend({
     const photo = this.get('photo');
     let photoUrl;
     if (Ember.isEmpty(photo)) {
-      photoUrl = 'assets/images/wwoof-no-photo.png';
+      photoUrl = '/assets/images/wwoof-no-photo.png';
     } else {
       photoUrl = `https://s3.amazonaws.com/wwoof-france/photos/hosts/${photo}`;
     }

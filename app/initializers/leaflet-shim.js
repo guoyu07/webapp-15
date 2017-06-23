@@ -1,5 +1,5 @@
 export function initialize() {
-  L.Icon.Default.imagePath = 'assets/images';
+  L.Icon.Default.imagePath = '/assets/images';
 }
 
 export default {
