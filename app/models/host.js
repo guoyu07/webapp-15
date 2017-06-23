@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import moment from 'moment';
 
 const { computed } = Ember;
 const { service } = Ember.inject;
