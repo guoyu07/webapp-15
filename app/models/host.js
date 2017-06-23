@@ -183,5 +183,9 @@ export default DS.Model.extend({
     const completeUrl = `https://app.wwoof.fr/host/${this.get('id')}`;
     const encodedUrl = encodeURIComponent(completeUrl);
     return `http://www.facebook.com/sharer.php?u=${encodedUrl}`;
+  }),
+
+  isRecent: computed('createdAt', function() {
+    return moment().subtract(3, 'month').isBefore(this.get('createdAt'));
   })
 });
