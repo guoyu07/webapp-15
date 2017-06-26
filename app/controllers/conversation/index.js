@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
 
   noCharLeft: computed.lt('textCharLeft', 0),
   quotaReached: computed.lte('conversationsService.conversations.meta.remaining'),
-  disableSend: computed.or('noCharLeft', 'quotaReached', 'sending'),
+  disableSend: computed.or('noCharLeft', 'quotaReached', 'sending', 'sessionUser.user.hasNoActiveMembership'),
 
   createMessage(conversation, newMessage) {
     let message = {
