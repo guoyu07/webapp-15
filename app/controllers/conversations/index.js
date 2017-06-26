@@ -6,11 +6,13 @@ const { service } = Ember.inject;
 export default Ember.Controller.extend({
   media: service('media'),
 
-  queryParams: ['page', 'itemsPerPage'],
+  queryParams: ['page', 'itemsPerPage', 'searchTerm'],
 
   page: 1,
   itemsPerPage: 5,
+  searchTerm: '',
 
+  isLoading: false,
   conversations: [],
 
   totalPages: computed('conversations.meta.total', 'itemsPerPage', function() {

@@ -8,30 +8,14 @@ export default Ember.Controller.extend({
 
   queryParams: ['page', 'itemsPerPage', 'searchTerm', 'country'],
 
-  /**
-   * The current page.
-   */
   page: 1,
-
-  /**
-   * Number of users displayed per page.
-   */
   itemsPerPage: 20,
-
-  /**
-   * Whether the controller is in loading state.
-   */
-  isLoading: false,
-
-  /**
-   * Search filters.
-   */
   searchTerm: '',
   country: null,
 
-  /**
-   * Process the total number of pages that can be displayed.
-   */
+  isLoading: false,
+  wwoofers: [],
+
   totalPages: computed('wwoofers.meta.total', 'itemsPerPage', function() {
     const totalItems = this.get('wwoofers.meta.total');
     const itemsPerPage = this.get('itemsPerPage');
