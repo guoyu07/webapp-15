@@ -4,7 +4,7 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'div',
-  classNames: ['carousel', 'slide'],
+  classNames: ['carousel', 'slide', 'host-carousel'],
   attributeBindings: ['dataRide:data-ride'],
   dataRide: 'carousel',
 

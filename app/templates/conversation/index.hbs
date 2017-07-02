@@ -3,11 +3,11 @@
     <div class="hidden-xs">
       {{#if conversation.otherUser.host.id}}
         {{#link-to 'host.index' conversation.otherUser.host.id}}
-          {{image-thumb url=conversation.otherUser.conversationPhotoUrl height=200}}
+          {{image-thumb src=conversation.otherUser.conversationUrlThumb2}}
         {{/link-to}}
       {{else}}
         {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id}}
-          {{image-thumb url=conversation.otherUser.conversationPhotoUrl height=200}}
+          {{image-thumb src=conversation.otherUser.conversationUrlThumb2}}
         {{/link-to}}
       {{/if}}
     </div>
@@ -63,7 +63,7 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-xs-4 col-md-2">
-                {{image-thumb url=message.author.conversationPhotoUrl height=100}}
+                {{image-thumb src=message.author.conversationUrlThumb1}}
               </div>
               <div class="col-xs-8 col-md-10">
                 <p class="message-text">{{convert-breaklines message.text}}</p>

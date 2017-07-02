@@ -1,9 +1,8 @@
 {{#link-to 'host' host.id title=host.displayedFarmName}}
-  {{#image-thumb url=host.thumbnailUrl height=250}}
-    {{#if host.isRecent}}
-      <span class="label label-primary">{{t 'literal.new'}}</span>
-    {{/if}}
-  {{/image-thumb}}
+  <img src={{host.displayedThumbnail.urlMedium}} />
+  {{#if host.isRecent}}
+    <span class="label label-primary">{{t 'literal.new'}}</span>
+  {{/if}}
 {{/link-to}}
 
 {{#if isFavorite}}

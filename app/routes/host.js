@@ -13,6 +13,8 @@ export default Ember.Route.extend({
     let description = truncate.compute([model.get('fullDescription')], { limit: 200 }) || '';
     description = description.replace(/\s+/g, ' ');
 
+    let thumbnailUrl = model.get('displayedThumbnail.urlLarge');
+
     return [
       {
         type: 'meta',
@@ -35,7 +37,7 @@ export default Ember.Route.extend({
         tagId: 'meta-og-image',
         attrs: {
           name: 'og:image',
-          content: model.get('thumbnail.completeUrl')
+          content: thumbnailUrl
         }
       },
       {

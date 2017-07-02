@@ -35,6 +35,10 @@ module.exports = function(environment) {
       includeLocales: ['fr']
     },
 
+    thumbor: {
+      baseUrl: 'http://162.243.22.196/unsafe'
+    },
+
     googleMapsApiKey: 'AIzaSyDMCrKYHQ_ymyuWpLEJZT3JyuD9zny_dmE'
   };
 
