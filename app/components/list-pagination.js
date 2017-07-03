@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   tagName: 'nav',
   currentPage: 1,
-  pageOffset: 2,
+  pageOffset: 1,
   totalPages: null,
   targetRoute: null,
 
