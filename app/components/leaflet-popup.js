@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'webapp/config/environment';
 
 const { computed } = Ember;
 
@@ -23,14 +24,7 @@ export default Ember.Component.extend({
    * Returns the photo URL to display based on the photo property.
    */
   photoUrl: computed('photo', function() {
-    const photo = this.get('photo');
-    let photoUrl;
-    if (Ember.isEmpty(photo)) {
-      photoUrl = '/assets/images/wwoof-no-photo.png';
-    } else {
-      photoUrl = `https://s3.amazonaws.com/wwoof-france/photos/hosts/${photo}`;
-    }
-    return photoUrl;
+    let fileName = this.get('photo') || 'default.png';
+    return `${config.thumbor.baseUrl}/380x253/photos/hosts/${fileName}`;
   })
-
 });

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import config from 'webapp/config/environment';
 
 const { computed } = Ember;
 
@@ -32,32 +33,41 @@ export default DS.Model.extend({
     return Ember.isPresent(address);
   }),
 
-  // Computed properties
-  completePhotoUrl: computed('photo', function() {
-    const photo = this.get('photo');
-    if (Ember.isPresent(photo)) {
-      const encodedPhoto = encodeURIComponent(photo);
-      return `https://s3.amazonaws.com/wwoof-france/photos/users/${encodedPhoto}`;
+  getImageUrl(size) {
+    let fileName = this.get('photo') || 'default.png';
+    return `${config.thumbor.baseUrl}/${size}/photos/users/${fileName}`;
+  },
+
+  photoUrlThumb2: computed('photo', function () {
+    return this.getImageUrl('250x250');
+  }),
+
+  photoUrlThumb1: computed('photo', function () {
+    return this.getImageUrl('100x100');
+  }),
+
+  conversationUrlThumb1: computed('photo', 'host.thumbnail.urlThumb1', function () {
+    let photo = this.get('photo');
+    let hostThumbnailUrl = this.get('host.thumbnail.urlThumb1');
+    if (photo || !hostThumbnailUrl) {
+      return this.getImageUrl('100x100');
     } else {
-      return '/assets/images/no-photo.png';
+      return hostThumbnailUrl;
     }
   }),
 
-  conversationPhotoUrl: computed('photo', 'completePhotoUrl', 'host.thumbnail.completeUrl', 'host.thumbnailUrl', function () {
+  conversationUrlThumb2: computed('photo', 'host.thumbnail.urlThumb2', function () {
     let photo = this.get('photo');
-    let thumbnailUrl = this.get('host.thumbnail.completeUrl');
-    if (photo || !thumbnailUrl) {
-      return this.get('completePhotoUrl');
+    let hostThumbnailUrl = this.get('host.thumbnail.urlThumb2');
+    if (photo || !hostThumbnailUrl) {
+      return this.getImageUrl('250x250');
     } else {
-      return this.get('host.thumbnailUrl');
+      return hostThumbnailUrl;
     }
   }),
 
   isNotAdmin: computed.not('isAdmin'),
 
-  /**
-   * Returns the full name of the user.
-   */
   fullName: computed('firstName', 'lastName', function() {
     const firstName = this.get('firstName');
     const lastName = this.get('lastName');

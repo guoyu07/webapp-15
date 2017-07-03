@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 
   store: service('store'),
 
-  classNames: ['thumbnail host-item'],
+  classNames: ['thumbnail', 'host-item'],
 
   hostId: null,
 

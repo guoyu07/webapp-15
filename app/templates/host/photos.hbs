@@ -24,11 +24,13 @@
       <div class="row">
         {{#each model.photos as |photo|}}
           <div class="col-md-6 mbm">
-            {{#image-thumb url=photo.completeUrl height=200}}
-              {{#if photo.isThumbnail}}
-                <span class="label label-info">{{t 'host.photos.coverPhoto'}}</span>
-              {{/if}}
-            {{/image-thumb}}
+            {{image-thumb src=photo.urlMedium title=photo.caption}}
+            {{#if photo.isThumbnail}}
+              <span class="label label-info label-cover-photo">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                {{t 'host.photos.coverPhoto'}}
+              </span>
+            {{/if}}
             <div class="input-group mtx">
               {{input type='text' name='caption' value=photo.caption class='form-control' placeholder=(t 'host.photos.caption.placeholder')}}
               <div class="input-group-btn">

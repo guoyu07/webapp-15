@@ -35,6 +35,10 @@ module.exports = function(environment) {
       includeLocales: ['fr']
     },
 
+    thumbor: {
+      baseUrl: 'http://image.wwoof.fr/unsafe'
+    },
+
     googleMapsApiKey: 'AIzaSyDMCrKYHQ_ymyuWpLEJZT3JyuD9zny_dmE'
   };
 

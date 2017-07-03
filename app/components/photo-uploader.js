@@ -3,6 +3,8 @@ import Ember from 'ember';
 const { computed } = Ember;
 const { service } = Ember.inject;
 
+const MAX_SIZE = 1024 * 1024 * 5; // 5 mb
+
 export default Ember.Component.extend({
 
   store: service('store'),
@@ -43,30 +45,14 @@ export default Ember.Component.extend({
     Ember.$('#file_upload').fileupload({
       dataType: 'json',
       formData: this.get('formData'),
-      done(e, data) {
-        const mode = self.get('mode');
-        if (mode === 'host') {
-          self.get('doneHost')(e, data, self);
-        } else if (mode === 'user') {
-          self.get('doneUser')(e, data, self);
-        }
-      },
-      error() {
-        self.get('notify').error({ html: self.get('i18n').t('notify.submissionError') });
-      },
-      progressall(e, data) {
-        const progress = parseInt(data.loaded / data.total * 100, 10);
-        Ember.$('.progress-bar').css('width', `${progress}%`);
-        Ember.$('.progress-bar').html(`${progress}%`);
-      },
       add(e, data) {
         let goUpload = true;
         Ember.$.each(data.files, function(index, file) {
-          if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(file.name)) {
+          if (!(/\.(jpg|jpeg)$/i).test(file.name)) {
             self.get('notify').error(self.get('i18n').t('notify.imageFormatError', { fileName: file.name }));
             goUpload = false;
           }
-          if (file.size > 5000000) { // 5mb
+          if (file.size > MAX_SIZE) {
             self.get('notify').error(self.get('i18n').t('notify.imageSizeError', { fileName: file.name }));
             goUpload = false;
           }
@@ -76,6 +62,26 @@ export default Ember.Component.extend({
           Ember.$('.progress-bar').html('0%');
           data.submit();
         }
+      },
+      progressall(e, data) {
+        let progress = parseInt(data.loaded / data.total * 100, 10);
+        progress = Math.min(progress, 80);
+        Ember.$('.progress-bar').css('width', `${progress}%`);
+        Ember.$('.progress-bar').html(`${progress}%`);
+      },
+      done(e, data) {
+        Ember.$('.progress-bar').css('width', `100%`);
+        Ember.$('.progress-bar').html(`100%`);
+
+        let mode = self.get('mode');
+        if (mode === 'host') {
+          self.get('doneHost')(e, data, self);
+        } else if (mode === 'user') {
+          self.get('doneUser')(e, data, self);
+        }
+      },
+      error() {
+        self.get('notify').error({ html: self.get('i18n').t('notify.submissionError') });
       }
     });
   },

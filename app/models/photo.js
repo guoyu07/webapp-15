@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import config from 'webapp/config/environment';
 import Validations from 'webapp/validations/photo';
 
 const { computed } = Ember;
@@ -13,15 +14,25 @@ export default DS.Model.extend(Validations, {
   // Relationships
   host: DS.belongsTo('host', { async: false }),
 
-  /**
-   * Returns the complete URL of the photo.
-   */
-  completeUrl: computed('fileName', function() {
-    const fileName = this.get('fileName');
-    if (!Ember.isEmpty(fileName)) {
-      const encodedFileName = encodeURIComponent(fileName);
-      return `https://s3.amazonaws.com/wwoof-france/photos/hosts/${encodedFileName}`;
-    }
+  getImageUrl(size) {
+    let fileName = this.get('fileName') || 'default.png';
+    return `${config.thumbor.baseUrl}/${size}/photos/hosts/${fileName}`;
+  },
+
+  urlLarge: computed('filename', function () {
+    return this.getImageUrl('815x458');
+  }),
+
+  urlMedium: computed('filename', function () {
+    return this.getImageUrl('380x253');
+  }),
+
+  urlThumb2: computed('filename', function () {
+    return this.getImageUrl('250x250');
+  }),
+
+  urlThumb1: computed('filename', function () {
+    return this.getImageUrl('100x100');
   }),
 
   isThumbnail: computed('host.thumbnail.id', 'id', function () {

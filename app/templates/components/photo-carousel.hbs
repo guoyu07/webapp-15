@@ -7,19 +7,17 @@
 <div class="carousel-inner" role="listbox">
   {{#each photos as |photo|}}
     <div class="item">
-      {{#image-thumb url=photo.completeUrl height=300}}
-        <div class="carousel-caption">
-          {{photo.caption}}
-        </div>
-      {{/image-thumb}}
+      <img src={{photo.urlLarge}} />
+      <div class="carousel-caption">
+        {{photo.caption}}
+      </div>
     </div>
   {{else}}
     <div class="item">
-      {{#image-thumb url='/assets/images/wwoof-no-photo.png' height=300}}
-        <div class="carousel-caption">
-          {{t 'host.index.noPhotoCaption'}}
-        </div>
-      {{/image-thumb}}
+      <img src={{noPhotoUrl}} />
+      <div class="carousel-caption">
+        {{t 'host.index.noPhotoCaption'}}
+      </div>
     </div>
   {{/each}}
 </div>

@@ -148,15 +148,8 @@ export default DS.Model.extend({
     return this.get('farmName') || this.get('shortDescription') || '[Unnamed Farm]';
   }),
 
-  /**
-   * Returns the host's thumbnail URL.
-   */
-  thumbnailUrl: computed('thumbnail.completeUrl', function() {
-    let photoUrl = this.get('thumbnail.completeUrl');
-    if (Ember.isEmpty(photoUrl)) {
-      photoUrl = '/assets/images/wwoof-no-photo.png';
-    }
-    return photoUrl;
+  displayedThumbnail: computed('thumbnail', function () {
+    return this.get('thumbnail') || this.store.createRecord('photo');
   }),
 
   /**
