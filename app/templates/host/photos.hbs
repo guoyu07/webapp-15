@@ -24,7 +24,7 @@
       <div class="row">
         {{#each model.photos as |photo|}}
           <div class="col-md-6 mbm">
-            {{image-thumb src=photo.urlMedium}}
+            {{image-thumb src=photo.urlMedium title=photo.caption}}
             {{#if photo.isThumbnail}}
               <span class="label label-info label-cover-photo">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
