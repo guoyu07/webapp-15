@@ -148,7 +148,7 @@ export default DS.Model.extend({
     return this.get('farmName') || this.get('shortDescription') || '[Unnamed Farm]';
   }),
 
-  displayedThumbnail: computed('thumbnail', function () {
+  displayedThumbnail: computed('thumbnail', function() {
     return this.get('thumbnail') || this.store.createRecord('photo');
   }),
 
