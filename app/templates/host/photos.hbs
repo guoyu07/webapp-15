@@ -26,7 +26,10 @@
           <div class="col-md-6 mbm">
             {{image-thumb src=photo.urlMedium}}
             {{#if photo.isThumbnail}}
-              <span class="label label-info">{{t 'host.photos.coverPhoto'}}</span>
+              <span class="label label-info label-cover-photo">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                {{t 'host.photos.coverPhoto'}}
+              </span>
             {{/if}}
             <div class="input-group mtx">
               {{input type='text' name='caption' value=photo.caption class='form-control' placeholder=(t 'host.photos.caption.placeholder')}}
