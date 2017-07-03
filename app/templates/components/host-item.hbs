@@ -1,17 +1,31 @@
 {{#link-to 'host' host.id title=host.displayedFarmName}}
   <img src={{host.displayedThumbnail.urlMedium}} />
-  {{#if host.isRecent}}
-    <span class="label label-primary">{{t 'literal.new'}}</span>
-  {{/if}}
 {{/link-to}}
 
-{{#if isFavorite}}
-  <span class="glyphicon glyphicon-larger glyphicon-heart text-primary" title={{t 'common.removeFavorite'}} {{action 'remove' host}}></span>
-{{else}}
-  <span class="glyphicon glyphicon-larger glyphicon-heart-empty text-primary" title={{t 'common.addFavorite'}} {{action 'add' host}}></span>
-{{/if}}
+<div class="btn-group-vertical btn-group-xs" role="group" aria-label="...">
+  {{#if isFavorite}}
+    <button type="button" class="btn btn-primary" onclick={{action 'remove' host}} title={{t 'common.removeFavorite'}}>
+      <span class="glyphicon glyphicon-larger glyphicon-heart"></span>
+    </button>
+  {{else}}
+    <button type="button" class="btn btn-primary" onclick={{action 'add' host}} title={{t 'common.addFavorite'}}>
+      <span class="glyphicon glyphicon-larger glyphicon-heart-empty"></span>
+    </button>
+  {{/if}}
+  {{#if host.reviews.length}}
+    <div class="btn btn-primary">
+      <span class="glyphicon glyphicon-comment mrx"></span>{{host.reviews.length}}
+    </div>
+  {{/if}}
+  {{#if host.isRecent}}
+    <div class="btn btn-primary text-uppercase">
+      {{t 'literal.new'}}
+    </div>
+  {{/if}}
+</div>
 
 <div class="caption host-item-caption">
   <h3 class="overflow-ellipsis">{{host.displayedFarmName}}</h3>
+
   <p>{{truncate host.fullDescription limit=200}}</p>
 </div>
