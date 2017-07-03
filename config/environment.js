@@ -36,7 +36,7 @@ module.exports = function(environment) {
     },
 
     thumbor: {
-      baseUrl: 'https://d2bd8fmevszgzt.cloudfront.net'
+      baseUrl: 'https://images.wwoof.fr'
     },
 
     googleMapsApiKey: 'AIzaSyDMCrKYHQ_ymyuWpLEJZT3JyuD9zny_dmE'
