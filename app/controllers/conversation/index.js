@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
 
   textCharLeft: computed('newMessage.length', function () {
     let length = this.get('newMessage.length') || 0;
-    return 2000 - length;
+    return 3000 - length;
   }),
 
   noCharLeft: computed.lt('textCharLeft', 0),
