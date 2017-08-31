@@ -9,6 +9,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   beforeModel(transition) {
+    this._super(transition);
     this.get('sessionUser.user').then((user)=> {
       if (user.get('hasNoActiveMembership')) {
         transition.abort();

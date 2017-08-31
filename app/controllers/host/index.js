@@ -26,23 +26,18 @@ export default Ember.Controller.extend(Validations, {
   showReviewModal: false,
   showDeleteReviewModal: false,
 
-  /**
-   * Indicates whether the edit profile buttons should be displayed.
-   */
   showEditProfileButton: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile'),
 
-  /**
-   * Disable new review button if the current wwoofer has already reviewed the host.
-   */
-  disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasActiveWwooferMembership',
+  disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasWwooferMemberships',
     'model.reviews.@each.author', 'model.reviews.@each.isNew', 'sessionUser.user.id', function () {
     if (!this.get('session.isAuthenticated')) {
       return false;
     }
-    if (!this.get('sessionUser.user.hasActiveWwooferMembership')) {
+    if (!this.get('sessionUser.user.hasWwooferMemberships')) {
       return true;
     }
 
+    // Disable new review button if the current wwoofer has already reviewed the host
     let authorIds = this.get('model.reviews').filterBy('isNew', false).mapBy('author.id');
     let userId = this.get('sessionUser.user.id');
 

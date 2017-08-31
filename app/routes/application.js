@@ -11,7 +11,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   errorHandler: service('error-handler'),
   conversationsService: service('conversations'),
 
-  beforeModel() {
+  beforeModel(transition) {
+    this._super(transition);
     // Fetch translations from server
     return this.get('translationsFetcher').fetch();
   },
