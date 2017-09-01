@@ -1,11 +1,7 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-const { service } = Ember.inject;
-
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
-
-  ajax: service('ajax'),
 
   titleToken() {
     return this.get('i18n').t('titles.memberships.index');
@@ -26,19 +22,21 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model(params) {
+    let page = params.page || 1;
     let limit = params.itemsPerPage || 20;
-    let queryParams = {
-      offset: (params.page - 1) * limit,
+    let offset = (page - 1) * limit;
+    let membershipsParams = {
+      offset,
       limit
     };
     if (params.userId) {
-      queryParams.userId = params.userId;
+      membershipsParams.userId = params.userId;
     }
     if (params.includeBooklet === true) {
-      queryParams.includeBooklet = true;
+      membershipsParams.includeBooklet = true;
     }
 
-    return this.store.query('membership', queryParams)
+    return this.store.query('membership', membershipsParams)
   },
 
   afterModel() {
@@ -55,7 +53,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     }
     controller.setProperties({
       includeBooklet: false,
-      userId: null
+      userId: ''
     });
   },
 

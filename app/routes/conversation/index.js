@@ -5,6 +5,10 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
+  titleToken() {
+    return this.get('i18n').t('titles.conversation.index');
+  },
+
   conversationsService: service('conversations'),
 
   model(params, transition) {

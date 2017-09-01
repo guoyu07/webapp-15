@@ -2,6 +2,11 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
+
+  titleToken() {
+    return this.get('i18n').t('titles.conversations.index');
+  },
+
   queryParams: {
     page: {
       refreshModel: true
@@ -14,9 +19,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model(params) {
-    const page = params.page || 1;
-    const limit = params.itemsPerPage || 5;
-    const offset = (page - 1) * limit;
+    let page = params.page || 1;
+    let limit = params.itemsPerPage || 5;
+    let offset = (page - 1) * limit;
     const conversationParams = Ember.merge(params, {
       offset,
       limit
