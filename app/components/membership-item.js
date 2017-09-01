@@ -6,18 +6,7 @@ export default Ember.Component.extend({
 
   tagName: 'tr',
 
-  classNameBindings: ['checked:active'],
-
   membership: null,
-
-  checked: false,
-
-  allChecked: false,
-
-  allCheckedToggled: Ember.observer('allChecked', function() {
-    let checked = this.get('checked') || this.get('allChecked');
-    this.set('checked', checked);
-  }),
 
   expireAtClass: computed('membership.isExpired', 'membership.isStillActiveInAMonth', function() {
     const isExpired = this.get('membership.isExpired');
@@ -33,12 +22,6 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    toggleIsChecked(checked) {
-      this.set('checked', checked);
-
-      let membership = this.get('membership');
-      this.sendAction('itemToggled', membership, checked);
-    },
     markBookletAsSent(membership) {
       membership.set('bookletSentAt', new Date());
       membership.save();

@@ -1,62 +1,57 @@
-<div class="page-header">
-  <h1>
-    {{#if userId}}
-      {{t 'memberships.index.titleUser' fullName=user.fullName}}
-    {{else}}
-      {{t 'memberships.index.titleAll'}}
-    {{/if}}
-  </h1>
+<div class="row mbm">
+  <div class="col-xs-12 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'memberships.index.search'}}</h3>
+      </div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="searchTerm">{{t 'memberships.index.search.label'}}</label>
+            {{input type='text'
+                    id='searchTerm'
+                    class='form-control'
+                    value=userId
+                    placeholder='12345'
+                    enter='search'}}
+          </div>
+          <div class="checkbox">
+            <label>
+              {{input type="checkbox" checked=includeBooklet}}
+              {{t 'memberships.index.includeBooklet.label'}}
+            </label>
+          </div>
+          <button {{action 'search'}} class="btn btn-block btn-primary" disabled={{isLoading}}>
+            {{t 'literal.search'}}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-9">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{{t 'memberships.index.fullName'}}</th>
+          <th>{{t 'memberships.index.code'}}</th>
+          <th>{{t 'memberships.index.paymentType'}}</th>
+          <th>{{t 'memberships.index.total'}}</th>
+          <th>{{t 'memberships.index.createdAt'}}</th>
+          <th>{{t 'memberships.index.expireAt'}}</th>
+          <th>{{t 'memberships.index.bookletSent'}}</th>
+          <th>{{t 'literal.actions'}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each memberships as |membership|}}
+          {{membership-item membership=membership allChecked=allChecked itemToggled='itemToggled'}}
+        {{/each}}
+      </tbody>
+    </table>
+
+    <p class="text-center">
+      {{list-pagination currentPage=page totalPages=totalPages targetRoute='memberships'}}
+    </p>
+  </div>
 </div>
-
-<form class="form-inline">
-  <div class="checkbox">
-    <label>
-      {{input type="checkbox" checked=expireSoon}}
-      {{t 'memberships.index.expireSoon.label'}}
-    </label>
-  </div>
-  <div class="checkbox">
-    <label>
-      {{input type="checkbox" checked=includeBooklet}}
-      {{t 'memberships.index.includeBooklet.label'}}
-    </label>
-  </div>
-  <div class="form-group mlm">
-    <button {{action 'sendReminder' membership}} class="btn btn-primary" disabled={{cannotSendReminders}}>
-      {{t 'memberships.index.sendReminder'}} ({{remindableMembershipCount}})
-    </button>
-  </div>
-  <div class="form-group">
-    <button {{action 'clearFilters'}} class="btn btn-default">
-      {{t 'memberships.index.clearFilters'}}
-    </button>
-  </div>
-</form>
-
-<table class="table table-hover mtm">
-  <thead>
-    <tr>
-      <th>
-        <input type="checkbox" checked={{allChecked}} onclick={{action 'toggleAllChecked' value='target.checked'}} />
-      </th>
-      <th>{{t 'memberships.index.fullName'}}</th>
-      <th>{{t 'memberships.index.code'}}</th>
-      <th>{{t 'memberships.index.paymentType'}}</th>
-      <th>{{t 'memberships.index.total'}}</th>
-      <th>{{t 'memberships.index.createdAt'}}</th>
-      <th>{{t 'memberships.index.expireAt'}}</th>
-      <th>{{t 'memberships.index.reminderSent'}}</th>
-      <th>{{t 'memberships.index.bookletSent'}}</th>
-      <th>{{t 'literal.actions'}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each memberships as |membership|}}
-      {{membership-item membership=membership allChecked=allChecked itemToggled='itemToggled'}}
-    {{/each}}
-  </tbody>
-</table>
-
-<p class="text-center">
-  {{list-pagination currentPage=page totalPages=totalPages targetRoute='memberships'}}
-</p>

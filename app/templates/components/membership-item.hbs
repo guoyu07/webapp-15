@@ -1,19 +1,9 @@
-<td>
-  <input type="checkbox" checked={{checked}} onclick={{action 'toggleIsChecked' value='target.checked'}} />
-</td>
 <td>{{membership.user.fullName}}</td>
 <td>{{membership.itemCode}}</td>
 <td>{{membership.paymentType}}</td>
 <td>{{membership.total}} Euro</td>
 <td>{{moment-format membership.createdAt 'll'}}</td>
 <td class={{expireAtClass}}>{{moment-format membership.expireAt 'll'}}</td>
-<td>
-  {{#if membership.reminderSentAt}}
-    <span class="glyphicon glyphicon-ok" title={{moment-format membership.reminderSentAt}}></span>
-  {{else}}
-    {{t 'literal.no'}}
-  {{/if}}
-</td>
 <td>
   {{#if membership.hasBooklet}}
     {{#if membership.bookletSentAt}}
