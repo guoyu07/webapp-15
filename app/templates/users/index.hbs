@@ -1,31 +1,36 @@
-<div class="page-header">
-  <h1>
-    {{t 'users.index.title'}}
-  </h1>
-</div>
-
 <div class="row mbm">
-  <div class="col-xs-12">
-    <form class="form-inline">
-      <div class="checkbox">
-        <label>
-          {{input type="checkbox" checked=isSuspended}}
-          {{t 'users.index.isSuspended.label'}}
-        </label>
+  <div class="col-xs-12 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'users.index.search'}}</h3>
       </div>
-      <div class="form-group mlm">
-        <label for="searchTerm" class="sr-only">{{t 'literals.search'}}</label>
-        {{input type="text" class="form-control" id="searchTerm" placeholder=(t 'users.index.search.placeholder') value=searchTerm enter="search"}}
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="searchTerm">{{t 'users.index.search.label'}}</label>
+            {{input type="text"
+                    class="form-control"
+                    id="searchTerm"
+                    placeholder=(t 'users.index.search.placeholder')
+                    value=searchTerm enter="search"}}
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                {{input type="checkbox" checked=isSuspended}}
+                {{t 'users.index.isSuspended.label'}}
+              </label>
+            </div>
+          </div>
+          <button {{action 'search'}} class="btn btn-block btn-primary" disabled={{isLoading}}>
+            {{t 'literal.search'}}
+          </button>
+        </form>
       </div>
-      <button {{action "search"}} class="btn btn-primary" disabled={{isLoading}}>
-      {{t 'literal.search'}}
-      </button>
-    </form>
+    </div>
   </div>
-</div>
 
-<div class="row mbm">
-  <div class="col-xs-12">
+  <div class="col-xs-12 col-md-9">
     {{#if isLoading}}
       {{partial 'loading'}}
     {{else}}
