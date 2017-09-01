@@ -9,7 +9,8 @@ export default Ember.Controller.extend({
   page: 1,
   itemsPerPage: 20,
   includeBooklet: false,
-  userId: null,
+  userId: '',
+  isLoading: false,
 
   /**
    * Process the total number of pages that can be displayed.

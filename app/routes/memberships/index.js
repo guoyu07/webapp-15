@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import moment from 'moment';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const { service } = Ember.inject;
@@ -16,16 +15,17 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     page: {
       refreshModel: true
     },
-    userId: {
-      refreshModel: true
-    },
     includeBooklet: {
       refreshModel: true
     }
   },
 
-  model(params) {
+  beforeModel(transition) {
+    this._super(transition);
+    this.controllerFor('memberships.index').set('isLoading', true);
+  },
 
+  model(params) {
     let limit = params.itemsPerPage || 20;
     let queryParams = {
       offset: (params.page - 1) * limit,
@@ -41,8 +41,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.store.query('membership', queryParams)
   },
 
-  setupController(controller, result) {
-    controller.set('memberships', result);
+  afterModel() {
+    this.controllerFor('memberships.index').set('isLoading', false);
+  },
+
+  setupController(controller, memberships) {
+    controller.set('memberships', memberships);
   },
 
   resetController(controller, isExiting) {
@@ -53,5 +57,14 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       includeBooklet: false,
       userId: null
     });
+  },
+
+  actions: {
+    search() {
+      // Reset pagination
+      this.controller.set('page', 1);
+
+      this.refresh();
+    }
   }
 });
