@@ -16,5 +16,7 @@
   {{/if}}
 </td>
 <td>
-  {{#link-to 'membership.edit' membership.id}}{{t 'literal.edit'}}{{/link-to}}
+  {{#link-to 'membership.edit' membership.id class='list-action mrx'}}
+    <span class="glyphicon glyphicon-pencil" title={{t 'literal.edit'}}></span>
+  {{/link-to}}
 </td>

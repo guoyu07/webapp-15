@@ -48,7 +48,7 @@
           </thead>
           <tbody>
           {{#each users as |user|}}
-            {{user-item user=user}}
+            {{user-item user=user impersonate=(action 'impersonateUser')}}
           {{/each}}
           </tbody>
         </table>

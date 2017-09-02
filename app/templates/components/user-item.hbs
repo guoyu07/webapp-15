@@ -16,8 +16,11 @@
   {{/if}}
 </td>
 <td>
-  {{#link-to 'user.edit' user.id}}{{t 'literal.edit'}}{{/link-to}} |
-  {{#link-to 'memberships.index' (query-params userId=user.id)}}{{t 'literal.memberships'}}{{/link-to}}
-  {{!--|
-  <a href="#" {{action "impersonateUser"}} disabled={{isLoading}}>{{t 'impersonate.button'}}</a>--}}
+  {{#link-to 'user.edit' user.id class='list-action mrx'}}
+    <span class="glyphicon glyphicon-pencil" title={{t 'literal.edit'}}></span>
+  {{/link-to}}
+  {{#link-to 'memberships.index' (query-params userId=user.id) class='list-action mrx'}}
+    <span class="glyphicon glyphicon-euro" title={{t 'literal.memberships'}}></span>
+  {{/link-to}}
+  <span class="glyphicon glyphicon-eye-open list-action" title={{t 'user-item.impersonate'}} onClick={{action impersonate user.email}}></span>
 </td>

@@ -32,7 +32,7 @@ export default BaseAuthenticator.extend({
     return this.get('ajax').post(url, {
       contentType: 'application/json; charset=utf-8',
       data: JSON.stringify({
-        email: options.impersonatedUserEmail
+        email: options.email
       })
     });
   },

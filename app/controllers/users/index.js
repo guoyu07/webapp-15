@@ -8,24 +8,10 @@ export default Ember.Controller.extend({
 
   queryParams: ['page', 'itemsPerPage', 'searchTerm', 'isSuspended'],
 
-  /**
-   * The current page.
-   */
   page: 1,
-
-  /**
-   * Number of users displayed per page.
-   */
   itemsPerPage: 20,
-
-  /**
-   * Whether the controller is in loading state.
-   */
   isLoading: false,
 
-  /**
-   * Search filters.
-   */
   searchTerm: '',
   isSuspended: false,
 
@@ -36,5 +22,20 @@ export default Ember.Controller.extend({
     const totalItems = this.get('users.meta.total');
     const itemsPerPage = this.get('itemsPerPage');
     return Math.ceil(totalItems / itemsPerPage);
-  })
+  }),
+
+  actions: {
+    impersonateUser(email) {
+
+      // Authenticate user
+      let auth = this.get('session').authenticate('authenticator:impersonation', { email });
+
+      auth.then(()=> {
+        this.get('notify').success(this.get('i18n').t('notify.userImpersonated', { email }));
+
+        // Refresh the app
+        this.send('userImpersonated');
+      });
+    }
+  }
 });
