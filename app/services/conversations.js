@@ -25,7 +25,7 @@ export default Ember.Service.extend({
   startCountsAutoReload() {
     if (this.get('autoReloadStarted') === false) {
       this.getConversationCounts();
-      this._initAutoReloadTimer();
+      // this._initAutoReloadTimer();
       this.set('autoReloadStarted', true);
     }
   },
