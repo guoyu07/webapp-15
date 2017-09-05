@@ -22,5 +22,5 @@
   {{#link-to 'memberships.index' (query-params userId=user.id) class='list-action mrx'}}
     <span class="glyphicon glyphicon-euro" title={{t 'literal.memberships'}}></span>
   {{/link-to}}
-  <span class="glyphicon glyphicon-eye-open list-action" title={{t 'user-item.impersonate'}} onClick={{action impersonate user.email}}></span>
+  <span class="glyphicon glyphicon-eye-open list-action" title={{t 'user-item.impersonate'}} onclick={{action impersonate user.email}}></span>
 </td>

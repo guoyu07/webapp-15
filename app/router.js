@@ -43,6 +43,10 @@ Router.map(function() {
     this.route('edit');
   });
   this.route('reviews', function() {
+    this.route('new');
+  });
+  this.route('review', { path: '/review/:review_id' }, function() {
+    this.route('edit');
   });
   this.route('conversations', function() {
     this.route('new');

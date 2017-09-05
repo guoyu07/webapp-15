@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import Validations from 'webapp/validations/review';
 
 const { computed } = Ember;
 
-export default Ember.Controller.extend(Validations, {
+export default Ember.Controller.extend({
   /**
    * Indicates whether the host contact info can be displayed to the current user.
    */
@@ -21,10 +20,6 @@ export default Ember.Controller.extend(Validations, {
   isCurrentUserProfile: computed('sessionUser.user.id', 'model.user.id', function() {
     return this.get('sessionUser.user.id') === this.get('model.user.id');
   }),
-
-  review: null,
-  showReviewModal: false,
-  showDeleteReviewModal: false,
 
   showEditProfileButton: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile'),
 
@@ -55,74 +50,22 @@ export default Ember.Controller.extend(Validations, {
         this.send('addUserFavorite', host, user);
       }
     },
-    /**
-     * Submits a review for the current host.
-     */
-    submitReview(review) {
-
-      this.validate().then(({ validations })=> {
-
-        this.set('validations.didValidate', true);
-        if (validations.get('isValid')) {
-
-          let isNew = review.get('isNew');
-          let promise = review.save();
-
-          promise.then(()=> {
-            this.set('review', null);
-            this.set('showReviewModal', false);
-
-            if (isNew) {
-              this.get('notify').success(this.get('i18n').t('notify.reviewSubmitted'));
-            }
-          });
-        } else {
-          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
-        }
-      });
-    },
     writeNewReview() {
       if (!this.get('session.isAuthenticated')) {
         return this.transitionToRoute('login');
       }
-
-      let review = this.get('review');
-
-      if (!review || !review.get('isNew')) {
-        let host = this.get('model');
-        let author = this.get('sessionUser.user');
-
-        review = this.store.createRecord('review', {
-          host,
-          author
-        });
-
-        this.set('review', review);
-      }
-
-      this.set('showReviewModal', true);
-    },
-    editReview(review) {
-      this.set('review', review);
-      this.set('showReviewModal', true);
+      this.transitionToRoute('reviews.new', { queryParams: { hostId: this.get('model.id') } });
     },
     deleteReview(review) {
-      let promise = review.destroyRecord();
+      let confirmed = confirm(this.get('i18n').t('host.index.areYouSure'));
 
-      promise.then(()=> {
-        this.set('review', null);
-        this.set('showDeleteReviewModal', false);
-      });
-    },
-    openDeleteReviewModal(review) {
-      this.set('review', review);
-      this.set('showDeleteReviewModal', true);
-    },
-    closeDeleteReviewModal() {
-      this.set('showDeleteReviewModal', false);
-    },
-    closeReviewModal() {
-      this.set('showReviewModal', false);
+      if (confirmed) {
+        let promise = review.destroyRecord();
+
+        promise.then(()=> {
+          this.get('notify').success(this.get('i18n').t('notify.reviewDeleted'));
+        });
+      }
     },
     saveReviewReply(review) {
       let promise = review.save();

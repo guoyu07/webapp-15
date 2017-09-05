@@ -16,9 +16,6 @@ export default Ember.Controller.extend(Validations, {
   pendingApproval: true,
   searchTerm: '',
 
-  review: null,
-  isApprovingReview: false,
-
   /**
    * Process the total number of pages that can be displayed.
    */
@@ -33,49 +30,61 @@ export default Ember.Controller.extend(Validations, {
       this.toggleProperty('pendingApproval');
     },
     approveReview(review) {
+      this.set('isApprovingReview', true);
 
-      this.validate().then(({ validations })=> {
+      let url = [config.apiHost, config.apiNamespace, 'reviews', review.get('id'), 'approve'].join('/');
+      let promise = this.get('ajax').post(url);
 
-        this.set('validations.didValidate', true);
-        if (validations.get('isValid')) {
+      promise.then(()=> {
+        this.get('notify').success(this.get('i18n').t('notify.reviewApproved'));
+        this.send('refresh');
+      });
 
-          this.set('isApprovingReview', true);
-          let promise = review.save();
-
-          promise = promise.then(()=> {
-            let action = review.get('approvedAt') ? 'approveReply' : 'approve';
-            let url = [config.apiHost, config.apiNamespace, 'reviews', review.get('id'), action].join('/');
-            return this.get('ajax').post(url);
-          });
-
-          promise.then(()=> {
-            this.get('notify').success(this.get('i18n').t('notify.reviewApproved'));
-            this.set('review', null);
-            this.send('refresh');
-          });
-
-          promise.finally(() => {
-            review.reload();
-            this.set('isApprovingReview', false);
-          });
-        } else {
-          this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));
-        }
+      promise.finally(() => {
+        review.reload();
+        this.set('isApprovingReview', false);
       });
     },
     deleteReview(review) {
-      let promise = review.destroyRecord();
+      let confirmed = confirm(this.get('i18n').t('reviews.index.areYouSure'));
+
+      if (confirmed) {
+        let promise = review.destroyRecord();
+
+        promise.then(()=> {
+          this.get('notify').success(this.get('i18n').t('notify.reviewDeleted'));
+          this.send('refresh');
+        });
+      }
+    },
+    approveReply(review) {
+      this.set('isApprovingReview', true);
+
+      let url = [config.apiHost, config.apiNamespace, 'reviews', review.get('id'), 'approveReply'].join('/');
+      let promise = this.get('ajax').post(url);
 
       promise.then(()=> {
-        this.set('review', null);
+        this.get('notify').success(this.get('i18n').t('notify.replyApproved'));
         this.send('refresh');
       });
+
+      promise.finally(() => {
+        review.reload();
+        this.set('isApprovingReview', false);
+      });
     },
-    openReviewModal(review) {
-      this.set('review', review);
-    },
-    closeReviewModal() {
-      this.set('review', null);
+    deleteReply(review) {
+      let confirmed = confirm(this.get('i18n').t('reviews.index.areYouSureReply'));
+
+      if (confirmed) {
+        review.set('replyText', null);
+        let promise = review.save();
+
+        promise.then(()=> {
+          this.get('notify').success(this.get('i18n').t('notify.replyDeleted'));
+          this.send('refresh');
+        });
+      }
     }
   }
 });

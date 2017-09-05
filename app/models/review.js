@@ -30,6 +30,10 @@ export default DS.Model.extend({
   hasFourStars: computed.gte('rating', 4),
   hasFiveStars: computed.gte('rating', 5),
 
+  hasReply: computed.notEmpty('replyText'),
+  isApproved: computed.notEmpty('approvedAt'),
+  isReplyApproved: computed.notEmpty('replyApprovedAt'),
+
   /**
    * Indicates whether the authenticated user is the author of the review.
    */
@@ -39,9 +43,26 @@ export default DS.Model.extend({
 
   canDelete: computed.or('sessionUser.user.isAdmin', 'isCurrentUserAuthor'),
 
-  canEdit: computed('sessionUser.user.isAdmin', 'isCurrentUserAuthor', 'approvedAt', function () {
-    let authorCanEdit = this.get('isCurrentUserAuthor') && Ember.isEmpty(this.get('approvedAt'));
-    return this.get('sessionUser.user.isAdmin') || authorCanEdit;
+  canEdit: computed('sessionUser.user.isAdmin', 'isCurrentUserAuthor', 'isApproved', function () {
+    let canEdit = false;
+    if (this.get('isCurrentUserAuthor') === true && this.get('isApproved') === false) {
+      canEdit = true;
+    } else if (this.get('sessionUser.user.isAdmin')) {
+      canEdit = true;
+    }
+    return canEdit;
+  }),
+
+  canViewReply: computed('sessionUser.user.isAdmin', 'hasReply', 'isReplyApproved', function () {
+    let canViewReply = false;
+    if (this.get('hasReply')) {
+      if (this.get('isReplyApproved')) {
+        canViewReply = true;
+      } else if (this.get('sessionUser.user.isAdmin')) {
+        canViewReply = true;
+      }
+    }
+    return canViewReply;
   }),
 
   textCharLeft: computed('text.length', function () {
