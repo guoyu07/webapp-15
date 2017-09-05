@@ -11,15 +11,20 @@
 }
 .rating > span.selected,
 .rating > span.selected ~ span,
-.rating > span:hover,
-.rating > span:hover ~ span {
-  color: transparent;
+.rating-editable > span:hover,
+.rating-editable > span:hover ~ span {
+  color: gold;
+}
+
+.rating-editable > span:hover,
+.rating-editable > span:hover ~ span {
   cursor: pointer;
 }
+
 .rating > span.selected:before,
 .rating > span.selected ~ span:before,
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
+.rating-editable > span:hover:before,
+.rating-editable > span:hover ~ span:before {
   content: "\2605";
   position: absolute;
   color: gold;

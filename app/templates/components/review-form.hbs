@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{t 'review-form.title'}}</h3>
+  </div>
+  <div class="panel-body">
+    {{#forms/form-group}}
+      <label class="col-sm-2 control-label">{{t 'review-form.communityGuidelines'}}</label>
+      <div class="col-sm-10">
+        <ul>
+          <li>{{t 'review-form.guideline1'}}</li>
+          <li>{{t 'review-form.guideline2'}}</li>
+          <li>{{t 'review-form.guideline3'}}</li>
+          <li>{{t 'review-form.guideline4'}}</li>
+        </ul>
+      </div>
+    {{/forms/form-group}}
+
+    {{#forms/form-group valuePath='review.text' validations=validations as |showError|}}
+      <label for="text" class="col-sm-2 control-label">{{t 'review-form.yourReview'}}</label>
+
+      <div class="col-sm-10">
+        {{textarea id='text' name='text' value=review.text class='form-control' rows='7'}}
+        {{error-display error=validations.attrs.review.text showError=showError}}
+        <small>
+          <span class="{{unless review.textCharLeft 'text-danger'}}">{{t 'common.charLeft' count=review.textCharLeft}}</span>.
+          {{t 'review-form.approval'}}
+        </small>
+      </div>
+    {{/forms/form-group}}
+
+    {{#forms/form-group valuePath='review.rating' validations=validations as |showError|}}
+      <label class="col-sm-2 control-label">{{t 'review-form.rating'}}</label>
+      <div class="col-sm-10">
+        <div class="rating">
+          {{review-rating review=review readonly=false setRating=(action 'setRating')}}
+        </div>
+        <small>{{t 'review-form.internalUse'}}</small>
+        {{error-display error=validations.attrs.review.rating showError=showError}}
+      </div>
+    {{/forms/form-group}}
+  </div>
+</div>
+
+{{#if showReplyForm}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{t 'review-form.replyTitle'}}</h3>
+    </div>
+    <div class="panel-body">
+      {{#forms/form-group valuePath='review.text' validations=validations as |showError|}}
+        <label for="replyText" class="col-sm-2 control-label">{{t 'review-form.replyText.label'}}</label>
+
+        <div class="col-sm-10">
+          {{textarea id='replyText' name='replyText' value=review.replyText class='form-control' rows='7'}}
+          {{error-display error=validations.attrs.review.replyText showError=showError}}
+          <small>
+            <span class="{{unless review.replyTextCharLeft 'text-danger'}}">{{t 'common.charLeft' count=review.replyTextCharLeft}}</span>.
+          </small>
+        </div>
+      {{/forms/form-group}}
+    </div>
+  </div>
+{{/if}}

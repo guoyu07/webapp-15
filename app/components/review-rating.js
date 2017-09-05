@@ -1,10 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  review: null,
+
+  classNames: ['rating'],
+  classNameBindings: ['readonly::rating-editable'],
+
   actions: {
     setRating(rating) {
-      this.set('review.rating', rating);
+      this.get('setRating')(rating);
     }
   }
 });
