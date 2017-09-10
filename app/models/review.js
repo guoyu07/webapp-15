@@ -73,5 +73,9 @@ export default DS.Model.extend({
   replyTextCharLeft: computed('replyText.length', function () {
     let length = this.get('replyText.length') || 0;
     return Math.max(0, 1000 - length);
+  }),
+
+  revieweeName: computed('isHostReview', 'host.farmName', 'wwoofer.user.firstName', function () {
+    return this.get('isHostReview') === true ? this.get('host.farmName') : this.get('wwoofer.user.firstName');
   })
 });

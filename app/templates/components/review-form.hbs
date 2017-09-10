@@ -1,6 +1,12 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{{t 'review-form.title'}}</h3>
+    <h3 class="panel-title">
+      {{#if review.isHostReview}}
+        {{t 'review-form.titleHost' name=review.revieweeName}}
+      {{else}}
+        {{t 'review-form.titleWwoofer' name=review.revieweeName}}
+      {{/if}}
+    </h3>
   </div>
   <div class="panel-body">
     {{#forms/form-group}}
