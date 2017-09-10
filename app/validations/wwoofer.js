@@ -16,9 +16,5 @@ export default buildValidations({
       min: 100,
       max: 2000
     })
-  ],
-  'wwoofer.note': validator('length', {
-    allowBlank: true,
-    max: 2000
-  })
+  ]
 });

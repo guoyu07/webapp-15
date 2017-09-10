@@ -47,9 +47,5 @@ export default buildValidations({
     presence: true,
     dependentKeys: ['model.host.lodgings.[]']
   }),
-  'host.capacity': validator('presence', true),
-  'host.note': validator('length', {
-    allowBlank: true,
-    max: 2000
-  })
+  'host.capacity': validator('presence', true)
 });

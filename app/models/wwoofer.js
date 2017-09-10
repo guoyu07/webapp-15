@@ -6,7 +6,6 @@ const { computed } = Ember;
 export default DS.Model.extend({
 
   // Attributes
-  note: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
   intro: DS.attr('string'),

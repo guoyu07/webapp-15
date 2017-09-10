@@ -19,6 +19,7 @@ export default DS.Model.extend({
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
   photo: DS.attr('string'),
+  note: DS.attr('string'),
 
   // Relationships
   host: DS.belongsTo('host', { async: true }),

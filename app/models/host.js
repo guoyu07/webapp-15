@@ -30,7 +30,6 @@ export default DS.Model.extend({
   capacity: DS.attr('number'),
   childrenOk: DS.attr('boolean'),
   petsOk: DS.attr('boolean'),
-  note: DS.attr('string'),
   createdAt: DS.attr('date'),
   updatedAt: DS.attr('date'),
 

@@ -30,5 +30,9 @@ export default buildValidations({
     errorFormat: 'YYYY-MM-DD',
     descriptionKey: 'errors.mustBe18'
   }),
-  'user.locale': validator('presence', true)
+  'user.locale': validator('presence', true),
+  'user.note': validator('length', {
+    allowBlank: true,
+    max: 2000
+  })
 });
