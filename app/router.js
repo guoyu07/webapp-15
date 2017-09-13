@@ -19,13 +19,13 @@ Router.map(function() {
     this.route('photos');
     this.route('contact');
   });
+  this.route('become-wwoofer', function () {
+    this.route('intro');
+    this.route('contact');
+  });
   this.route('wwoofers', function() {
-    this.route('new');
   });
   this.route('wwoofer', { path: '/wwoofer/:wwoofer_id' }, function() {
-    this.route('edit');
-    this.route('address');
-    this.route('contact');
   });
   this.route('users', function() {
     this.route('new');
@@ -35,6 +35,7 @@ Router.map(function() {
     this.route('change-password');
     this.route('memberships');
     this.route('photo');
+    this.route('settings');
   });
   this.route('memberships', function() {
     this.route('new');
@@ -54,6 +55,7 @@ Router.map(function() {
   this.route('conversation', { path: '/conversation/:conversation_id' }, function() {
   });
   this.route('404', { path: '*path' });
+  this.route('activation');
 });
 
 export default Router;

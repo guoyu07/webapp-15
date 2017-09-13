@@ -1,12 +1,11 @@
 import Ember from 'ember';
-import Validations from 'webapp/validations/wwoofer';
+import Validations from 'webapp/validations/user/intro';
 
 export default Ember.Controller.extend(Validations, {
   actions: {
     saveWwoofer() {
 
-      // Get the wwoofer
-      let wwoofer = this.get('wwoofer');
+      let user = this.get('user');
 
       // Validate the form
       this.validate().then(({ validations })=> {
@@ -14,14 +13,13 @@ export default Ember.Controller.extend(Validations, {
         this.set('validations.didValidate', true);
         if (validations.get('isValid')) {
 
-          // Create the wwoofer
-          wwoofer.save().then(()=> {
+          user.save().then(()=> {
             this.get('notify').success(this.get('i18n').t('notify.wwooferCreated'));
 
             // Refresh the session across all tabs
             this.get('sessionUser').refresh();
-            
-            this.transitionToRoute('wwoofer.address', wwoofer);
+
+            this.transitionToRoute('become-wwoofer.contact');
           });
         } else {
           this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));

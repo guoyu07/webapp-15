@@ -1,0 +1,65 @@
+<form class="form-horizontal">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{t 'user.form.preferredLanguage'}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          {{#radio-button classNames="radio-inline" value="fr" groupValue=user.locale}}
+            Français
+          {{/radio-button}}
+          {{#radio-button classNames="radio-inline" value="en" groupValue=user.locale}}
+            English
+          {{/radio-button}}
+        </div>
+      </div>
+      <div class="col-sm-offset-2 col-sm-10">
+            <span class="form-details">
+              {{t 'user.form.localeDetails'}}
+            </span>
+      </div>
+    </div>
+  </div>
+
+  {{#if sessionUser.user.isAdmin}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{t 'literal.admins'}}</h3>
+      </div>
+      <div class="panel-body">
+        {{#forms/form-group valuePath='user.note' validations=validations as |showError|}}
+          <label for="note" class="col-sm-2 control-label">{{t 'user.form.note.label'}}</label>
+
+          <div class="col-sm-10">
+            {{textarea id='note' name='note' value=user.note class='form-control' rows="4"}}
+            {{error-display error=validations.attrs.user.note showError=showError}}
+          </div>
+        {{/forms/form-group}}
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                {{input type="checkbox" name="isHidden" checked=user.isSuspended}}
+                {{t 'user.form.isSuspended.label'}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <span class="form-details">
+              {{t 'user.form.isSuspendedDetails'}}
+            </span>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <button type="button" class="btn btn-primary" onclick={{action 'saveUser'}} disabled={{user.isSaving}}>
+        {{t 'literal.save'}}
+      </button>
+    </div>
+  </div>
+</form>

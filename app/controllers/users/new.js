@@ -2,17 +2,6 @@ import Ember from 'ember';
 import Validations from 'webapp/validations/users/new';
 
 export default Ember.Controller.extend(Validations, {
-
-  /**
-   * Indicates whether the user's first/last name can be edited.
-   */
-  canEditName: true,
-
-  /**
-   * Indicates whether the user's birth date can be edited.
-   */
-  canEditBirthDate: true,
-
   termsOk: false,
   insuranceOk: false,
   selectedDate: null,
@@ -39,7 +28,7 @@ export default Ember.Controller.extend(Validations, {
           user.save().then(()=> {
 
             // Authenticate user
-            const auth = this.get('session').authenticate('authenticator:passport', {
+            let auth = this.get('session').authenticate('authenticator:passport', {
               username: user.get('email'),
               password: user.get('password')
             });

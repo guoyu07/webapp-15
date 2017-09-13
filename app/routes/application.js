@@ -19,7 +19,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
   setupController() {
     if (this.get('session.isAuthenticated')) {
-      this.processNewUserModalVisibility();
       this.get('conversationsService').startCountsAutoReload();
     }
   },
@@ -31,27 +30,10 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
 
   /**
-   * Processes whether the new user modal should be visible.
-   */
-  processNewUserModalVisibility() {
-    this.get('sessionUser.user').then((user)=> {
-      const promise = Ember.RSVP.hash({
-        host: user.get('host'),
-        wwoofer: user.get('wwoofer')
-      });
-
-      promise.then((results)=> {
-        const showModal = Ember.isEmpty(results.host) && Ember.isEmpty(results.wwoofer);
-        this.controller.set('showNewUserModal', showModal);
-      });
-    });
-  },
-
-  /**
    * Performs post-login actions.
    */
   sessionAuthenticated() {
-    const attemptedTransition = this.get('session.attemptedTransition');
+    let attemptedTransition = this.get('session.attemptedTransition');
 
     if (attemptedTransition) {
       this.get('sessionUser.user').then((user) => {
@@ -59,8 +41,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         if (this.get('i18n.locale') !== user.get('locale')) {
           this.get('translationsFetcher').fetch();
         }
-
-        this.processNewUserModalVisibility();
 
         attemptedTransition.retry();
         this.set('session.attemptedTransition', null);

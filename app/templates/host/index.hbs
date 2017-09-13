@@ -1,9 +1,3 @@
-{{#if showNote}}
-  <div class="alert alert-info" role="alert">
-    <strong>{{t 'host.index.note'}}</strong>: {{model.user.note}}
-  </div>
-{{/if}}
-
 <div class="row">
   <div class="col-xs-12 col-md-9">
     <div class="row">
@@ -15,6 +9,9 @@
               <div class="col-xs-10">
                 <h3 class="mbx">
                   {{model.displayedFarmName}}
+                  {{#if showEditProfileButton}}
+                    ({{#link-to 'host.edit' model.id}}{{t 'literal.editProfile'}}{{/link-to}})
+                  {{/if}}
                 </h3>
               </div>
               <div class="col-xs-2 mtm">
@@ -30,6 +27,13 @@
     </div>
 
     <div class="row">
+      {{#if showNote}}
+        <div class="col-xs-12">
+          <div class="alert alert-info" role="alert">
+            <strong>{{t 'host.index.note'}}</strong>: {{model.user.note}}
+          </div>
+        </div>
+      {{/if}}
       <div class="col-xs-12 col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -44,7 +48,11 @@
               <td>
                 <span class="glyphicon glyphicon-user mrx"></span>
                 {{#if isActiveMember}}
-                  <span class="capitalize">{{model.user.fullName}}</span>
+                  <span class="capitalize">
+                    {{#link-to 'user.index' model.user.id}}
+                      {{model.user.firstName}}
+                    {{/link-to}}
+                  </span>
                 {{else}}
                   {{members-only}}
                 {{/if}}
@@ -88,13 +96,6 @@
             </tr>
             </tbody>
           </table>
-          {{#if showEditProfileButton}}
-            <ul class="list-group">
-              {{#link-to 'host.edit' model.id class='list-group-item list-group-item-default text-center'}}
-                {{t 'literal.editProfile'}}
-              {{/link-to}}
-            </ul>
-          {{/if}}
         </div>
 
         {{#if model.activities}}
@@ -246,7 +247,7 @@
       </table>
       {{#unless model.noEmail}}
         <ul class="list-group">
-          {{#link-to 'conversations.new' (query-params user2Id=model.user.id) disabledWhen=sessionUser.user.hasNoActiveMembership class='list-group-item list-group-item-primary text-center'}}
+          {{#link-to 'conversations.new' (query-params user2Id=model.user.id) class='list-group-item list-group-item-primary text-center'}}
             {{t 'host.index.sendMessage'}}
           {{/link-to}}
         </ul>

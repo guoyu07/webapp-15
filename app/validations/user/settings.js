@@ -1,7 +1,8 @@
 import { validator, buildValidations } from 'ember-cp-validations';
 
 export default buildValidations({
-  caption: validator('length', {
-    max: 100
+  'user.locale': validator('presence', true),
+  'user.note': validator('length', {
+    max: 2000
   })
 });

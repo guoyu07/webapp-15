@@ -7,16 +7,16 @@
       <label for="phone" class="col-sm-2 control-label">{{t 'wwoofer-contact-details.phone.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='phone' name='phone' value=wwoofer.user.phone class='form-control' placeholder=(t 'wwoofer-contact-details.phone.placeholder')}}
+        {{input type='text' id='phone' name='phone' value=user.phone class='form-control' placeholder=(t 'wwoofer-contact-details.phone.placeholder')}}
         {{error-display error=validations.attrs.user.phone showError=showError}}
       </div>
     {{/forms/form-group}}
-    {{#forms/form-group valuePath='wwoofer.emergencyPhone' validations=validations as |showError|}}
+    {{#forms/form-group valuePath='user.emergencyPhone' validations=validations as |showError|}}
       <label for="emergencyPhone" class="col-sm-2 control-label">{{t 'wwoofer-contact-details.emergencyPhone.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='emergencyPhone' name='emergencyPhone' value=wwoofer.emergencyPhone class='form-control' placeholder=(t 'wwoofer-contact-details.phone.placeholder')}}
-        {{error-display error=validations.attrs.wwoofer.emergencyPhone showError=showError}}
+        {{input type='text' id='emergencyPhone' name='emergencyPhone' value=user.emergencyPhone class='form-control' placeholder=(t 'wwoofer-contact-details.phone.placeholder')}}
+        {{error-display error=validations.attrs.user.emergencyPhone showError=showError}}
       </div>
     {{/forms/form-group}}
     <div class="col-sm-offset-2 col-sm-10">

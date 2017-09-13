@@ -5,37 +5,31 @@ export default buildValidations({
   'address.address1': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],
   'address.address2': validator('length', {
-    allowBlank: true,
     max: 255
   }),
   'address.zipCode': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 10
     })
   ],
   'address.city': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],
   'address.latitude': validator('number', {
-    allowBlank: true,
     allowString: true,
     integer: false,
     gte: -90,
     lte: 90
   }),
   'address.longitude': validator('number', {
-    allowBlank: true,
     allowString: true,
     integer: false,
     gte: -180,
@@ -46,7 +40,6 @@ export default buildValidations({
   'user.phone': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 50
     })
   ],

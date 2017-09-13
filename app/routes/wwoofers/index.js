@@ -21,21 +21,20 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   model(params) {
-    const page = params.page || 1;
-    const limit = params.itemsPerPage || 20;
-    const offset = (page - 1) * limit;
-    const wwooferParams = Ember.merge(params, {
+    let page = params.page || 1;
+    let limit = params.itemsPerPage || 20;
+    let offset = (page - 1) * limit;
+    let userParams = {
       offset,
       limit
-    });
-
-    let promises = {
-      wwoofers: this.store.query('wwoofer', wwooferParams)
     };
+    let promises = {};
 
     if (params.country) {
+      userParams.country = params.country;
       promises.country = this.store.findRecord('country', params.country);
     }
+    promises.users = this.store.query('user', userParams);
 
     return Ember.RSVP.hash(promises);
   },
@@ -45,7 +44,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   },
 
   setupController(controller, results) {
-    controller.set('wwoofers', results.wwoofers);
+    controller.set('users', results.users);
     controller.set('selectedCountry', results.country);
   },
 

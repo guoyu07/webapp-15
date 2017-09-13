@@ -14,10 +14,10 @@ export default Ember.Controller.extend({
   country: null,
 
   isLoading: false,
-  wwoofers: [],
+  users: [],
 
-  totalPages: computed('wwoofers.meta.total', 'itemsPerPage', function() {
-    const totalItems = this.get('wwoofers.meta.total');
+  totalPages: computed('users.meta.total', 'itemsPerPage', function() {
+    const totalItems = this.get('users.meta.total');
     const itemsPerPage = this.get('itemsPerPage');
     return Math.ceil(totalItems / itemsPerPage);
   }),
@@ -26,7 +26,7 @@ export default Ember.Controller.extend({
     countryDidChange(country) {
       // Reset pagination
       this.set('page', 1);
-      
+
       const id = country ? country.id : null;
       this.set('country', id);
       this.set('selectedCountry', country);

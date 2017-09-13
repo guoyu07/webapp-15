@@ -13,6 +13,9 @@ export default DS.Model.extend({
   lastName: DS.attr('string'),
   birthDate: DS.attr('string'),
   phone: DS.attr('string'),
+  emergencyPhone: DS.attr('string'),
+  intro: DS.attr('string'),
+  tripMotivation: DS.attr('string'),
   isAdmin: DS.attr('boolean'),
   isSuspended: DS.attr('boolean'),
   locale: DS.attr('string'),
@@ -22,14 +25,14 @@ export default DS.Model.extend({
   note: DS.attr('string'),
 
   // Relationships
+  address: DS.belongsTo('address', { async: false }),
   host: DS.belongsTo('host', { async: true }),
-  wwoofer: DS.belongsTo('wwoofer', { async: true }),
   memberships: DS.hasMany('membership', { async: true }),
   favorites: DS.hasMany('host', {
     inverse: 'followers',
     async: true
   }),
-  _addresses: computed.collect('host.address', 'wwoofer.address'),
+  _addresses: computed.collect('host.address', 'address'),
   addresses: computed.filter('_addresses', function (address) {
     return Ember.isPresent(address);
   }),
@@ -88,6 +91,7 @@ export default DS.Model.extend({
    */
   hasMemberships: computed.notEmpty('sortedMemberships'),
   latestMembership: computed.readOnly('sortedMemberships.firstObject'),
+  firstMembership: computed.readOnly('sortedMemberships.lastObject'),
   hasActiveMembership: computed.and('hasMemberships', 'latestMembership.isActive'),
   hasNoActiveMembership: computed.not('hasActiveMembership'),
 

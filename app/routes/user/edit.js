@@ -7,16 +7,22 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('i18n').t('titles.user.edit');
   },
 
-  setupController(controller, user) {
-    let selectedDate = null;
-    if (user.get('birthDate')) {
-      selectedDate = moment(user.get('birthDate'));
-    }
-    controller.set('selectedDate', selectedDate);
-    controller.set('user', user);
+  model() {
+    let user = this.get('sessionUser.user');
+    let address = user.get('address');
+
+    return Ember.RSVP.hash({
+      user,
+      address
+    });
   },
 
-  renderTemplate() {
-    this.render('user/form');
+  setupController(controller, models) {
+    let selectedDate = null;
+    if (models.user.get('birthDate')) {
+      selectedDate = moment(models.user.get('birthDate'));
+    }
+    controller.set('selectedDate', selectedDate);
+    controller.setProperties(models);
   }
 });

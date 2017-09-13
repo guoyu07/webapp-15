@@ -8,7 +8,22 @@
 </h4>
 <div class="row mtl">
   <div class="col-sm-9 ">
-    {{partial 'user/form'}}
+    <form class="form-horizontal">
+      {{user-form
+        user=user
+        selectedDate=selectedDate
+        termsOk=termsOk
+        insuranceOk=insuranceOk
+        dateSelected=(action 'dateSelected')}}
+
+      <div class="form-group mbx">
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-primary pull-right" onclick={{action 'saveUser'}} disabled={{user.isSaving}}>
+            {{t 'literal.continue'}} <span class="glyphicon glyphicon-menu-right"></span>
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="col-sm-3 hidden-xs">
     <div class="panel panel-primary">

@@ -40,7 +40,6 @@ export default buildValidations({
       }).volatile(),
     }),
     validator('length', {
-      allowBlank: true,
       max: 255
     })
   ],
@@ -53,7 +52,6 @@ export default buildValidations({
       }).volatile(),
     }),
     validator('length', {
-      allowBlank: true,
       max: 255
     })
   ],

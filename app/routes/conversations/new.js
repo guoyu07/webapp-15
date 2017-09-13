@@ -12,7 +12,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     this._super(transition);
     this.get('sessionUser.user').then((user)=> {
       if (user.get('hasNoActiveMembership')) {
-        transition.abort();
+        if (Ember.isBlank(user.get('host.id'))) {
+          this.transitionTo('become-wwoofer.intro');
+        } else {
+          transition.abort();
+        }
       }
     });
   },

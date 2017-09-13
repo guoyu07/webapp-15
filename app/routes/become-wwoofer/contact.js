@@ -6,13 +6,22 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('i18n').t('titles.wwoofer.address');
   },
 
+  beforeModel(transition) {
+    this._super(transition);
+    return this.get('sessionUser.user').then((user)=> {
+      if (Ember.isPresent(user.get('address.id'))) {
+        this.transitionTo('memberships.new', {
+          queryParams: { type: 'W', itemCode: 'WO1' }
+        });
+      }
+    });
+  },
+
   model() {
-    const wwoofer = this.modelFor('wwoofer');
-    const user = wwoofer.get('user');
-    const address = wwoofer.get('address') || this.store.createRecord('address');
+    let user = this.get('sessionUser.user');
+    let address = this.store.createRecord('address');
 
     return Ember.RSVP.hash({
-      wwoofer,
       user,
       address
     });

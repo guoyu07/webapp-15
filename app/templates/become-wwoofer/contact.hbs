@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-9">
+    <form class="form-horizontal">
+      {{address-form
+        address=address
+        instructions=instructions
+        validations=validations
+        countryDidChange=(action 'countryDidChange')
+        departmentDidChange=(action 'departmentDidChange')}}
+
+      {{phone-form
+        validations=validations
+        user=user}}
+
+      <div class="form-group">
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-primary pull-right" onclick={{action 'saveContactInfo'}} disabled={{address.isSaving}}>
+            {{t 'literal.continue'}} <span class="glyphicon glyphicon-menu-right"></span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="hidden-xs col-sm-3">
+    {{help-articles label='wwoofer-new'}}
+  </div>
+</div>

@@ -4,7 +4,6 @@ export default buildValidations({
   'host.farmName': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       min: 5,
       max: 50
     })
@@ -12,7 +11,6 @@ export default buildValidations({
   'host.shortDescription': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       min: 5,
       max: 255
     })
@@ -20,13 +18,11 @@ export default buildValidations({
   'host.fullDescription': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       min: 300,
       max: 5000
     })
   ],
   'host.travelDetails': validator('length', {
-    allowBlank: true,
     max: 255
   }),
   'host.activities': [

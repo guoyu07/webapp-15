@@ -3,9 +3,11 @@
     <h3 class="panel-title">{{t 'address-form.title'}}</h3>
   </div>
   <div class="panel-body">
-    <p class="form-details mbm">
-      {{instructions}}
-    </p>
+    {{#if instructions}}
+      <p class="form-details mbm">
+        {{instructions}}
+      </p>
+    {{/if}}
     {{#forms/form-group valuePath='address.address1' validations=validations as |showError|}}
       <label for="address1" class="col-sm-2 control-label">{{t 'address-form.address1.label'}}</label>
 

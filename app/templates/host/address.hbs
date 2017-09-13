@@ -16,7 +16,7 @@
     <div class="col-xs-12">
       <button {{action 'saveAddress'}} disabled={{address.isSaving}} class="btn btn-primary {{if address.isNew 'pull-right'}}">
         {{#if address.isNew}}
-          {{t 'literal.continue'}}
+          {{t 'literal.continue'}} <span class="glyphicon glyphicon-menu-right"></span>
         {{else}}
           {{t 'literal.save'}}
         {{/if}}

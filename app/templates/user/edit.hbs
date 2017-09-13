@@ -1,0 +1,32 @@
+<form class="form-horizontal">
+  {{user-form
+    user=user
+    selectedDate=selectedDate
+    validations=validations
+    dateSelected=(action 'dateSelected')}}
+
+  {{intro-form
+    user=user
+    validations=validations}}
+
+  {{#if user.address.id}}
+    {{address-form
+      address=address
+      instructions=instructions
+      validations=validations
+      countryDidChange=(action 'countryDidChange')
+      departmentDidChange=(action 'departmentDidChange')}}
+  {{/if}}
+
+  {{phone-form
+    validations=validations
+    user=user}}
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <button type="button" class="btn btn-primary" onclick={{action 'saveUser'}} disabled={{user.isSaving}}>
+        {{t 'literal.save'}}
+      </button>
+    </div>
+  </div>
+</form>
