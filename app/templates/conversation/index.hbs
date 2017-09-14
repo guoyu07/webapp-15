@@ -50,12 +50,12 @@
     <hr>
     {{#if conversation.isNew}}
       <strong>
-        {{t 'host.contact.rules'}}
+        {{t 'conversation.index.rules'}}
       </strong>
       <ol>
-        <li>{{t 'host.contact.rule1'}}</li>
-        <li>{{t 'host.contact.rule2'}}</li>
-        <li>{{t 'host.contact.rule3'}}</li>
+        <li>{{t 'conversation.index.rule1'}}</li>
+        <li>{{t 'conversation.index.rule2'}}</li>
+        <li>{{t 'conversation.index.rule3'}}</li>
       </ol>
     {{else}}
       {{#each conversation.sortedMessages as |message|}}

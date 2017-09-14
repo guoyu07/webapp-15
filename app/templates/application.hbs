@@ -14,11 +14,11 @@
     <div class="collapse navbar-collapse" onclick={{action 'navBarClicked' value='target'}}>
       <ul class="nav navbar-nav">
         {{#link-to 'hosts.index' tagName='li' class=(if hostsIsActive 'active' 'pute') activeClass=''}}
-          <a href={{view.href}}>{{t 'navbar.hostList'}}</a>
+          <a href={{view.href}}>{{t 'menu.hostList'}}</a>
         {{/link-to}}
         {{#if canSeeWwoofersLink}}
           {{#link-to 'wwoofers.index' tagName='li' class=(if wwoofersIsActive 'active')}}
-            <a href={{view.href}}>{{t 'literal.wwoofers'}}</a>
+            <a href={{view.href}}>{{t 'menu.wwooferList'}}</a>
           {{/link-to}}
         {{/if}}
 
@@ -59,14 +59,14 @@
         <ul class="nav navbar-nav navbar-right">
           {{#if sessionUser.user.host.id}}
             {{#link-to 'host.index' sessionUser.user.host.id tagName='li' activeClass=''}}
-              <a href={{view.href}}>{{t 'navbar.hostProfile'}}</a>
+              <a href={{view.href}}>{{t 'menu.hostProfile'}}</a>
             {{/link-to}}
           {{else}}
             {{#link-to 'become-wwoofer.intro' tagName='li' class=(if newWwooferIsActive 'active')}}
-              <a href={{view.href}}>{{t 'navbar.becomeWwoofer'}}</a>
+              <a href={{view.href}}>{{t 'menu.becomeWwoofer'}}</a>
             {{/link-to}}
             {{#link-to 'hosts.new' tagName='li' class=(if newHostIsActive 'active')}}
-              <a href={{view.href}}>{{t 'navbar.becomeHost'}}</a>
+              <a href={{view.href}}>{{t 'menu.becomeHost'}}</a>
             {{/link-to}}
           {{/if}}
           <li class="dropdown">

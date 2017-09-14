@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
 
     let placeholder;
     if (isNew) {
-      placeholder = this.get('i18n').t('host.contact.details', { firstName });
+      placeholder = this.get('i18n').t('conversation.index.details', { firstName });
     }
     return placeholder;
   }),
