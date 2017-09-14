@@ -182,7 +182,11 @@
           <ul class="list-group">
             {{#if isActiveMember}}
               {{#each model.displayedReviews as |review|}}
-                {{review-item review=review saveReviewReply=(action 'saveReviewReply') deleteReview=(action 'deleteReview')}}
+                {{review-item
+                  review=review
+                  isCurrentUserProfile=isCurrentUserProfile
+                  saveReviewReply=(action 'saveReviewReply')
+                  deleteReview=(action 'deleteReview')}}
               {{else}}
                 <li class="list-group-item">{{t 'host.index.noReviews' firstName=model.user.firstName}}</li>
               {{/each}}
