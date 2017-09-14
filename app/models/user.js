@@ -80,6 +80,10 @@ export default DS.Model.extend({
     }
   }),
 
+  isWwooferProfileComplete: computed('intro', 'address.id', function() {
+    return Ember.isPresent(this.get('intro')) && Ember.isPresent(this.get('address.id'));
+  }),
+
   /**
    * Order memberships by expiration date (most recent first).
    */

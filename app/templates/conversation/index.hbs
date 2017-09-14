@@ -21,8 +21,7 @@
         {{#link-to 'host.index' conversation.otherUser.host.id  class="btn btn-primary btn-block"}}
           {{t 'conversation.index.hostProfile'}}
         {{/link-to}}
-      {{/if}}
-      {{#if conversation.otherUser.wwoofer.id}}
+      {{else}}
         {{#link-to 'user.index' conversation.otherUser.id class="btn btn-primary btn-block"}}
           {{t 'conversation.index.wwooferProfile'}}
         {{/link-to}}

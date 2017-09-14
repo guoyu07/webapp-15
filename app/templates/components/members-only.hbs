@@ -1,13 +1,7 @@
 {{#if session.isAuthenticated}}
-  {{#if sessionUser.user.wwoofer.id}}
-    {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1')}}
-      {{t 'host.index.membersOnly'}}
-    {{/link-to}}
-  {{else}}
-    {{#link-to 'wwoofers.index'}}
-      {{t 'host.index.membersOnly'}}
-    {{/link-to}}
-  {{/if}}
+  {{#link-to 'become-wwoofer.intro'}}
+    {{t 'host.index.membersOnly'}}
+  {{/link-to}}
 {{else}}
   {{#link-to 'users.new'}}
     {{t 'host.index.membersOnly'}}
