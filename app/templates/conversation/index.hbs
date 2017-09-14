@@ -6,7 +6,7 @@
           {{image-thumb src=conversation.otherUser.conversationUrlThumb2}}
         {{/link-to}}
       {{else}}
-        {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id}}
+        {{#link-to 'user.index' conversation.otherUser.id}}
           {{image-thumb src=conversation.otherUser.conversationUrlThumb2}}
         {{/link-to}}
       {{/if}}
@@ -23,7 +23,7 @@
         {{/link-to}}
       {{/if}}
       {{#if conversation.otherUser.wwoofer.id}}
-        {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id class="btn btn-primary btn-block"}}
+        {{#link-to 'user.index' conversation.otherUser.id class="btn btn-primary btn-block"}}
           {{t 'conversation.index.wwooferProfile'}}
         {{/link-to}}
       {{/if}}

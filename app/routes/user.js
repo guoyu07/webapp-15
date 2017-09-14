@@ -3,6 +3,6 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
   titleToken(model) {
-    return model.get('fullName');
+    return model.get('firstName');
   }
 });

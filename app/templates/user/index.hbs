@@ -4,7 +4,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          {{t 'wwoofer.index.contact' firstName=user.firstName}}
+          {{t 'user.index.contact' firstName=user.firstName}}
         </h3>
       </div>
       <table class="table">
@@ -29,27 +29,33 @@
       </table>
       <ul class="list-group">
         {{#link-to 'conversations.new' (query-params user2Id=user.id) disabledWhen=sessionUser.user.hasNoActiveMembership class='list-group-item list-group-item-primary text-center'}}
-          {{t 'wwoofer.index.sendMessage'}}
+          {{t 'user.index.sendMessage'}}
         {{/link-to}}
       </ul>
     </div>
   </div>
 
   <div class="col-xs-12 col-sm-8 col-md-9">
-    <h1 class="mtn">
+    <h1 class="mtn big-guy">
       <span class="capitalize">{{t 'user.index.hi' name=user.firstName}}</span>
     </h1>
-    <p><strong>
-      {{t 'user.index.from' city=user.addresses.firstObject.city country=user.addresses.firstObject.country.name}} &centerdot;
-      {{#if user.hasMemberships}}
-        {{t 'wwoofer.index.memberSince'}} {{moment-format user.firstMembership.createdAt 'MMMM YYYY'}}
-      {{else}}
-        {{t 'wwoofer.index.notAMember'}}
-      {{/if}}
-    </strong></p>
+    <p>
+      <strong>
+        {{t 'user.index.from' city=user.addresses.firstObject.city country=user.addresses.firstObject.country.name}} &centerdot;
+        {{#if user.hasMemberships}}
+          {{t 'user.index.memberSince'}} {{moment-format user.firstMembership.createdAt 'MMMM YYYY'}}
+        {{else}}
+          {{t 'user.index.notAMember'}}
+        {{/if}}
+        {{#if showEditProfileButton}}
+          &centerdot;
+          {{#link-to 'user.edit' user.id}}{{t 'literal.editProfile'}}{{/link-to}}
+        {{/if}}
+      </strong>
+    </p>
     {{#if showNote}}
       <div class="alert alert-info" role="alert">
-        <strong>{{t 'wwoofer.index.note'}}</strong>: {{user.note}}
+        <strong>{{t 'user.index.note'}}</strong>: {{user.note}}
       </div>
     {{/if}}
     <div class="panel panel-default mtm">
@@ -62,7 +68,7 @@
         {{#if user.wwoofer.intro}}
           {{convert-breaklines user.wwoofer.intro}}
         {{else}}
-          <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
+          <i>{{t 'user.index.informationNotProvided'}}</i>
         {{/if}}
       </div>
     </div>
@@ -77,7 +83,7 @@
         {{#if user.wwoofer.tripMotivation}}
           {{convert-breaklines user.wwoofer.tripMotivation}}
         {{else}}
-          <i>{{t 'wwoofer.index.informationNotProvided'}}</i>
+          <i>{{t 'user.index.informationNotProvided'}}</i>
         {{/if}}
       </div>
     </div>
