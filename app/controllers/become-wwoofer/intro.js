@@ -14,7 +14,7 @@ export default Ember.Controller.extend(Validations, {
         if (validations.get('isValid')) {
 
           user.save().then(()=> {
-            this.get('notify').success(this.get('i18n').t('notify.wwooferCreated'));
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
 
             // Refresh the session across all tabs
             this.get('sessionUser').refresh();
