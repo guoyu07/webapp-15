@@ -1,10 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{{t 'wwoofer-form.moreAboutYou'}}</h3>
+    <h3 class="panel-title">{{t 'intro-form.moreAboutYou'}}</h3>
   </div>
   <div class="panel-body">
     {{#forms/form-group valuePath='user.intro' validations=validations as |showError|}}
-      <label for="intro" class="col-sm-2 control-label">{{t 'wwoofer-form.intro.label'}}</label>
+      <label for="intro" class="col-sm-2 control-label">{{t 'intro-form.intro.label'}}</label>
 
       <div class="col-sm-10">
         {{textarea id='intro' name='intro' value=user.intro class='form-control' rows='5'}}
@@ -12,7 +12,7 @@
       </div>
     {{/forms/form-group}}
     {{#forms/form-group valuePath='user.tripMotivation' validations=validations as |showError|}}
-      <label for="tripMotivation" class="col-sm-2 control-label">{{t 'wwoofer-form.tripMotivation.label'}}</label>
+      <label for="tripMotivation" class="col-sm-2 control-label">{{t 'intro-form.tripMotivation.label'}}</label>
 
       <div class="col-sm-10">
         {{textarea id='tripMotivation' name='tripMotivation' value=user.tripMotivation class='form-control' rows='5'}}

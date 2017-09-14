@@ -1,27 +1,27 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{{t 'wwoofer-contact-details.phoneNumbers'}}</h3>
+    <h3 class="panel-title">{{t 'phone-form.phoneNumbers'}}</h3>
   </div>
   <div class="panel-body">
     {{#forms/form-group valuePath='user.phone' validations=validations as |showError|}}
-      <label for="phone" class="col-sm-2 control-label">{{t 'wwoofer-contact-details.phone.label'}}</label>
+      <label for="phone" class="col-sm-2 control-label">{{t 'phone-form.phone.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='phone' name='phone' value=user.phone class='form-control' placeholder=(t 'wwoofer-contact-details.phone.placeholder')}}
+        {{input type='text' id='phone' name='phone' value=user.phone class='form-control' placeholder=(t 'phone-form.phone.placeholder')}}
         {{error-display error=validations.attrs.user.phone showError=showError}}
       </div>
     {{/forms/form-group}}
     {{#forms/form-group valuePath='user.emergencyPhone' validations=validations as |showError|}}
-      <label for="emergencyPhone" class="col-sm-2 control-label">{{t 'wwoofer-contact-details.emergencyPhone.label'}}</label>
+      <label for="emergencyPhone" class="col-sm-2 control-label">{{t 'phone-form.emergencyPhone.label'}}</label>
 
       <div class="col-sm-10">
-        {{input type='text' id='emergencyPhone' name='emergencyPhone' value=user.emergencyPhone class='form-control' placeholder=(t 'wwoofer-contact-details.phone.placeholder')}}
+        {{input type='text' id='emergencyPhone' name='emergencyPhone' value=user.emergencyPhone class='form-control' placeholder=(t 'phone-form.phone.placeholder')}}
         {{error-display error=validations.attrs.user.emergencyPhone showError=showError}}
       </div>
     {{/forms/form-group}}
     <div class="col-sm-offset-2 col-sm-10">
       <p class="form-details">
-        {{t 'wwoofer-contact-details.emergencyPhone.instructions'}}
+        {{t 'phone-form.emergencyPhone.instructions'}}
       </p>
     </div>
   </div>

@@ -61,12 +61,12 @@
     <div class="panel panel-default mtm">
       <div class="panel-heading">
         <h3 class="panel-title">
-          {{t 'wwoofer-form.intro.label'}}
+          {{t 'user.index.intro'}}
         </h3>
       </div>
       <div class="panel-body">
-        {{#if user.wwoofer.intro}}
-          {{convert-breaklines user.wwoofer.intro}}
+        {{#if user.intro}}
+          {{convert-breaklines user.intro}}
         {{else}}
           <i>{{t 'user.index.informationNotProvided'}}</i>
         {{/if}}
@@ -76,12 +76,12 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          {{t 'wwoofer-form.tripMotivation.label'}}
+          {{t 'user.index.tripMotivation'}}
         </h3>
       </div>
       <div class="panel-body">
-        {{#if user.wwoofer.tripMotivation}}
-          {{convert-breaklines user.wwoofer.tripMotivation}}
+        {{#if user.tripMotivation}}
+          {{convert-breaklines user.tripMotivation}}
         {{else}}
           <i>{{t 'user.index.informationNotProvided'}}</i>
         {{/if}}
