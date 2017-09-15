@@ -2,7 +2,7 @@
 <td>{{user.email}}</td>
 <td>{{moment-format user.createdAt 'll'}}</td>
 <td class="text-center">
-  {{#if user.intro}}
+  {{#if user.hasWwooferMemberships}}
     {{#link-to 'user.index' user.id}}
       {{profile-status type='wwoofer' user=user}}
     {{/link-to}}

@@ -17,7 +17,7 @@
             </td>
           </tr>
         {{/if}}
-        {{#if user.phone}}
+        {{#if showPhone}}
           <tr>
             <td>
               <span class="glyphicon glyphicon-earphone mrx"></span>
@@ -28,7 +28,7 @@
         </tbody>
       </table>
       <ul class="list-group">
-        {{#link-to 'conversations.new' (query-params user2Id=user.id) disabledWhen=sessionUser.user.hasNoActiveMembership class='list-group-item list-group-item-primary text-center'}}
+        {{#link-to 'conversations.new' (query-params user2Id=user.id) class='list-group-item list-group-item-primary text-center'}}
           {{t 'user.index.sendMessage'}}
         {{/link-to}}
       </ul>
