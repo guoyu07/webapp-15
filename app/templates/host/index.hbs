@@ -48,7 +48,7 @@
               <td>
                 <span class="glyphicon glyphicon-user mrx"></span>
                 {{#if isActiveMember}}
-                  <span class="capitalize">
+                  <span class="text-capitalize">
                     {{#link-to 'user.index' model.user.id}}
                       {{model.user.firstName}}
                     {{/link-to}}
@@ -62,7 +62,7 @@
               <td>
                 <span class="glyphicon glyphicon-map-marker mrx"></span>
                 {{#if isActiveMember}}
-                  <span class="capitalize">{{model.address.city}} ({{model.address.department.name}})</span>
+                  <span class="text-capitalize">{{model.address.city}}</span> ({{model.address.department.name}})
                 {{else}}
                   {{members-only}}
                 {{/if}}
@@ -301,7 +301,7 @@
         <tbody>
         {{#each model.openingCalendar as |month|}}
           <tr>
-            <td class="capitalize">
+            <td class="text-capitalize">
               {{month.label}}
             </td>
             <td class="text-right {{if month.isOpen 'text-primary' 'text-danger'}}">
