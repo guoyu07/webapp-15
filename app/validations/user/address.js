@@ -1,40 +1,30 @@
 import Ember from 'ember';
 import { validator, buildValidations } from 'ember-cp-validations';
 
+const { computed } = Ember;
+
 export default buildValidations({
   'address.address1': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],
   'address.address2': validator('length', {
-    allowBlank: true,
     max: 255
   }),
   'address.zipCode': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 10
     })
   ],
   'address.city': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],
-  'user.phone': validator('length', {
-    allowBlank: true,
-    max: 50
-  }),
-  'wwoofer.emergencyPhone': validator('length', {
-    allowBlank: true,
-    max: 50
-  }),
   'address.latitude': validator('number', {
     allowBlank: true,
     allowString: true,
@@ -54,7 +44,9 @@ export default buildValidations({
     presence: true,
     dependentKeys: ['model.address.country.isFrance'],
     disabled: Ember.computed(function() {
-      return this.get('model.address.country.isFrance') === false;
+      return this.get('model.disableAddressValidation') || this.get('model.address.country.isFrance') === false;
     }).volatile()
   })
+}, {
+  disabled: computed.readOnly('model.disableAddressValidation')
 });

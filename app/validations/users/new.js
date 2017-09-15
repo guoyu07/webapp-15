@@ -10,7 +10,6 @@ export default buildValidations({
   'user.password': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       min: 8,
       max: 25
     })
@@ -18,14 +17,12 @@ export default buildValidations({
   'user.firstName': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],
   'user.lastName': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],

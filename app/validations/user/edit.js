@@ -10,14 +10,12 @@ export default buildValidations({
   'user.firstName': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],
   'user.lastName': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 255
     })
   ],
@@ -29,10 +27,5 @@ export default buildValidations({
     format: 'YYYY-MM-DD',
     errorFormat: 'YYYY-MM-DD',
     descriptionKey: 'errors.mustBe18'
-  }),
-  'user.locale': validator('presence', true),
-  'user.note': validator('length', {
-    allowBlank: true,
-    max: 2000
   })
 });

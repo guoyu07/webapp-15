@@ -6,7 +6,7 @@
           {{image-thumb src=conversation.otherUser.conversationUrlThumb2}}
         {{/link-to}}
       {{else}}
-        {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id}}
+        {{#link-to 'user.index' conversation.otherUser.id}}
           {{image-thumb src=conversation.otherUser.conversationUrlThumb2}}
         {{/link-to}}
       {{/if}}
@@ -21,9 +21,8 @@
         {{#link-to 'host.index' conversation.otherUser.host.id  class="btn btn-primary btn-block"}}
           {{t 'conversation.index.hostProfile'}}
         {{/link-to}}
-      {{/if}}
-      {{#if conversation.otherUser.wwoofer.id}}
-        {{#link-to 'wwoofer.index' conversation.otherUser.wwoofer.id class="btn btn-primary btn-block"}}
+      {{else}}
+        {{#link-to 'user.index' conversation.otherUser.id class="btn btn-primary btn-block"}}
           {{t 'conversation.index.wwooferProfile'}}
         {{/link-to}}
       {{/if}}
@@ -50,12 +49,12 @@
     <hr>
     {{#if conversation.isNew}}
       <strong>
-        {{t 'host.contact.rules'}}
+        {{t 'conversation.index.rules'}}
       </strong>
       <ol>
-        <li>{{t 'host.contact.rule1'}}</li>
-        <li>{{t 'host.contact.rule2'}}</li>
-        <li>{{t 'host.contact.rule3'}}</li>
+        <li>{{t 'conversation.index.rule1'}}</li>
+        <li>{{t 'conversation.index.rule2'}}</li>
+        <li>{{t 'conversation.index.rule3'}}</li>
       </ol>
     {{else}}
       {{#each conversation.sortedMessages as |message|}}

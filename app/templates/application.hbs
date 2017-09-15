@@ -1,9 +1,9 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid {{unless isHostsIndexRoute 'main-container'}}">
     <div class="navbar-header">
-      <a href="http://www.wwoof.fr" class="navbar-brand logo">
+      {{#link-to 'hosts.index' class="navbar-brand logo"}}
         <img src="/assets/images/wwoof-fr-logo.png">
-      </a>
+      {{/link-to}}
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -13,50 +13,16 @@
     </div>
     <div class="collapse navbar-collapse" onclick={{action 'navBarClicked' value='target'}}>
       <ul class="nav navbar-nav">
-        {{#link-to 'hosts' tagName='li' class=(if hostsIsActive 'active')}}
-          <a href={{view.href}}>{{t 'navbar.hostList'}}</a>
+        {{#link-to 'hosts.index' tagName='li' class=(if hostsIsActive 'active' 'pute') activeClass=''}}
+          <a href={{view.href}}>{{t 'menu.hostList'}}</a>
         {{/link-to}}
         {{#if canSeeWwoofersLink}}
-          {{#link-to 'wwoofers' tagName='li' class=(if wwoofersIsActive 'active')}}
-            <a href={{view.href}}>{{t 'literal.wwoofers'}}</a>
+          {{#link-to 'wwoofers.index' tagName='li' class=(if wwoofersIsActive 'active')}}
+            <a href={{view.href}}>{{t 'menu.wwooferList'}}</a>
           {{/link-to}}
         {{/if}}
+
         {{#if session.isAuthenticated}}
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              {{t "navbar.myProfiles" }} <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              {{#if sessionUser.user.wwoofer.id}}
-                <li>
-                  {{#link-to 'wwoofer.edit' sessionUser.user.wwoofer.id}}
-                    {{profile-status type='wwoofer' user=sessionUser.user class='prx'}} {{t 'navbar.editWwooferProfile'}}
-                  {{/link-to}}
-                </li>
-              {{else}}
-                <li>
-                  {{#link-to 'wwoofers.new'}}
-                    {{t 'navbar.createWwooferProfile'}}
-                  {{/link-to}}
-                </li>
-              {{/if}}
-              <li class="divider hidden-xs"></li>
-              {{#if sessionUser.user.host.id}}
-                <li>
-                  {{#link-to 'host.edit' sessionUser.user.host.id}}
-                    {{profile-status type='host' user=sessionUser.user class='prx'}}
-                    {{t 'navbar.editHostProfile'}}
-                  {{/link-to}}
-                </li>
-              {{else}}
-                <li>
-                  {{#link-to 'hosts.new'}}
-                    {{t 'navbar.createHostProfile'}}
-                  {{/link-to}}
-                </li>
-              {{/if}}
-            </ul>
-          </li>
           {{#link-to 'conversations.index' tagName='li' class=(if inboxIsActive 'active')}}
             <a href={{view.href}}>
               {{t 'menu.inbox'}}
@@ -91,6 +57,22 @@
       </ul>
       {{#if session.isAuthenticated}}
         <ul class="nav navbar-nav navbar-right">
+          {{#if sessionUser.user.host.id}}
+            {{#link-to 'host.index' sessionUser.user.host.id tagName='li' activeClass=''}}
+              <a href={{view.href}}>
+                {{profile-status type='host' user=sessionUser.user class='prx'}}{{t 'menu.hostProfile'}}
+              </a>
+            {{/link-to}}
+          {{else}}
+            {{#unless sessionUser.user.hasWwooferMemberships}}
+              {{#link-to 'become-wwoofer.intro' tagName='li' class=(if newWwooferIsActive 'active')}}
+                <a href={{view.href}}>{{t 'menu.becomeWwoofer'}}</a>
+              {{/link-to}}
+            {{/unless}}
+            {{#link-to 'hosts.new' tagName='li' class=(if newHostIsActive 'active')}}
+              <a href={{view.href}}>{{t 'menu.becomeHost'}}</a>
+            {{/link-to}}
+          {{/if}}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle profile-image" data-toggle="dropdown">
               <img class="img-circle" src={{sessionUser.user.photoUrlThumb1}}>&nbsp;
@@ -99,6 +81,11 @@
             <ul class="dropdown-menu">
               <li>
                 {{#link-to 'user.edit' sessionUser.user.id}}
+                  {{t 'menu.myProfile'}}
+                {{/link-to}}
+              </li>
+              <li>
+                {{#link-to 'user.settings' sessionUser.user.id}}
                   {{t 'menu.myAccount'}}
                 {{/link-to}}
               </li>
@@ -147,9 +134,5 @@
 <div class="container-fluid {{unless isHostsIndexRoute 'main-container mtm mbm'}}">
   {{outlet}}
 </div>
-
-{{#if showNewUserModal}}
-  {{new-user-modal create=(action 'create') close=(action 'closeNewUserModal')}}
-{{/if}}
 
 {{ember-notify messageStyle='bootstrap' closeAfter=4000}}

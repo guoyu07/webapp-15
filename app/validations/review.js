@@ -4,7 +4,6 @@ export default buildValidations({
   'review.text': [
     validator('presence', true),
     validator('length', {
-      allowBlank: false,
       max: 1000
     })
   ],
@@ -19,7 +18,6 @@ export default buildValidations({
   ],
   'review.replyText': [
     validator('length', {
-      allowBlank: true,
       max: 1000
     })
   ],

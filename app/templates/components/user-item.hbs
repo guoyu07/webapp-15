@@ -1,17 +1,17 @@
-<td>{{user.fullName}}</td>
+<td>{{#link-to 'user.index' user.id}}{{user.fullName}}{{/link-to}}</td>
 <td>{{user.email}}</td>
 <td>{{moment-format user.createdAt 'll'}}</td>
 <td class="text-center">
-  {{#if user.wwoofer}}
-    {{#link-to 'wwoofer.edit' user.wwoofer.id}}
-      {{profile-status type="wwoofer" user=user}}
+  {{#if user.hasWwooferMemberships}}
+    {{#link-to 'user.index' user.id}}
+      {{profile-status type='wwoofer' user=user}}
     {{/link-to}}
   {{/if}}
 </td>
 <td class="text-center">
   {{#if user.host}}
-    {{#link-to 'host.edit' user.host.id}}
-      {{profile-status type="host" user=user}}
+    {{#link-to 'host.index' user.host.id}}
+      {{profile-status type='host' user=user}}
     {{/link-to}}
   {{/if}}
 </td>

@@ -28,9 +28,9 @@
       <small>{{t 'user.memberships.renewalInstructions'}}</small>
     {{else}}
       {{t 'user.memberships.noWwooferMemberships'}}
-      {{#if showGetwwooferMembershipLink}}
-        {{#link-to 'memberships.new' (query-params type='W' itemCode='WO1')}}
-          {{t 'user.memberships.getNow'}}
+      {{#if sessionUser.user.isNotAdmin}}
+        {{#link-to 'become-wwoofer.intro'}}
+          {{t 'user.memberships.becomeWwoofer'}}
         {{/link-to}}
       {{/if}}
     {{/if}}

@@ -100,7 +100,7 @@
     </div>
     <div class="panel-body">
       {{#forms/form-group valuePath='membership.firstName2' validations=validations as |showError|}}
-        <label for="firstName2" class="col-sm-2 control-label">{{t 'user.form.firstName.label'}}</label>
+        <label for="firstName2" class="col-sm-2 control-label">{{t 'membership-form.firstName.label'}}</label>
 
         <div class="col-sm-10">
           {{input id='firstName2' type='text' name='firstName2' value=membership.firstName2 class='form-control'}}
@@ -108,7 +108,7 @@
         </div>
       {{/forms/form-group}}
       {{#forms/form-group valuePath='membership.lastName2' validations=validations as |showError|}}
-        <label for="lastName2" class="col-sm-2 control-label">{{t 'user.form.lastName.label'}}</label>
+        <label for="lastName2" class="col-sm-2 control-label">{{t 'membership-form.lastName.label'}}</label>
 
         <div class="col-sm-10">
           {{input id='lastName2' type='text' name='lastName2' value=membership.lastName2 class='form-control'}}
@@ -116,7 +116,7 @@
         </div>
       {{/forms/form-group}}
       {{#forms/form-group valuePath='membership.birthDate2' validations=validations as |showError|}}
-        <label for="birthDate2" class="col-sm-2 control-label">{{t 'user.form.birthDate.label'}}</label>
+        <label for="birthDate2" class="col-sm-2 control-label">{{t 'membership-form.birthDate.label'}}</label>
 
         <div class="col-sm-10">
           {{date-picker selectedDate=selectedDate dateSelected=dateSelected}}

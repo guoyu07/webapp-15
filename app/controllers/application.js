@@ -15,32 +15,17 @@ export default Ember.Controller.extend({
   canSeeWwoofersLink: computed.or('sessionUser.user.hasActiveHostMembership', 'sessionUser.user.isAdmin'),
 
   /**
-   * Whether the new user modal should be visible.
-   */
-  showNewUserModal: false,
-
-  /**
    * Indicates whether nav items should be marked as active.
    */
-  hostsIsActive: computed.match('currentRouteName', /host.index|host.contact/),
-  wwoofersIsActive: computed.match('currentRouteName', /wwoofer.index/),
-  inboxIsActive: computed.match('currentRouteName', /conversations.index|conversations.new|conversation.index/),
+  hostsIsActive: computed.match('currentRouteName', /hosts\.index/),
+  newHostIsActive: computed.match('currentRouteName', /hosts\.new/),
+  newWwooferIsActive: computed.match('currentRouteName', /become-wwoofer/),
+  wwoofersIsActive: computed.match('currentRouteName', /wwoofer\.index/),
+  inboxIsActive: computed.match('currentRouteName', /conversations\.index|conversations\.new|conversation\.index/),
 
   isEnglishLocale: computed.equal('i18n.locale', 'en'),
 
   actions: {
-
-    closeNewUserModal() {
-      this.toggleProperty('showNewUserModal');
-    },
-
-    create(type) {
-      this.toggleProperty('showNewUserModal');
-
-      const route = (type === 'W') ? 'wwoofers.new' : 'hosts.new';
-      this.transitionToRoute(route);
-    },
-
     /**
      * Collapses the navigation menu on mobile/tablet.
      */

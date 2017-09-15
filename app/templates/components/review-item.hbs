@@ -3,7 +3,7 @@
     {{convert-breaklines review.text}}
   </p>
   <p class="text-muted small">
-    {{#link-to 'wwoofer.index' review.author.wwoofer.id}}{{review.author.firstName}}{{/link-to}} - {{moment-format review.createdAt 'MMMM YYYY'}}
+    {{#link-to 'user.index' review.author.id}}{{review.author.firstName}}{{/link-to}} - {{moment-format review.createdAt 'MMMM YYYY'}}
     {{#unless review.approvedAt}}
       <span class="label label-info">{{t 'host.index.pendingApproval'}}</span>
     {{/unless}}

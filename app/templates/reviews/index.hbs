@@ -38,7 +38,7 @@
             <div class="panel-body">
               <p>
                 {{#if review.isHostReview}}
-                  {{#link-to 'wwoofer.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
+                  {{#link-to 'user.index' review.author.id}}{{review.author.fullName}}{{/link-to}}
                 {{else}}
                   {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
                 {{/if}}
@@ -46,7 +46,7 @@
                 {{#if review.isHostReview}}
                   {{#link-to 'host.index' review.host.id}}{{review.host.farmName}}{{/link-to}}
                 {{else}}
-                  {{#link-to 'wwoofer.index' review.wwoofer.id}}{{review.wwoofer.user.fullName}}{{/link-to}}
+                  {{#link-to 'user.index' review.todo.id}}{{review.todo.fullName}}{{/link-to}}
                 {{/if}}
                 <small class="pull-right">{{review-rating review=review readonly=true}}</small>
               </p>
@@ -72,11 +72,11 @@
                   {{#if review.isHostReview}}
                     {{#link-to 'host.index' review.host.id}}{{review.host.user.fullName}}{{/link-to}}
                   {{else}}
-                    {{#link-to 'wwoofer.index' review.wwoofer.id}}{{review.wwoofer.user.fullName}}{{/link-to}}
+                    {{#link-to 'user.index' review.todo.id}}{{review.todo.user.fullName}}{{/link-to}}
                   {{/if}}
                   {{t 'reviews.index.repliedTo'}}
                   {{#if review.isHostReview}}
-                    {{#link-to 'wwoofer.index' review.author.wwoofer.id}}{{review.author.fullName}}{{/link-to}}
+                    {{#link-to 'user.index' review.author.id}}{{review.author.fullName}}{{/link-to}}
                   {{else}}
                     {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
                   {{/if}}

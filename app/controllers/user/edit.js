@@ -1,33 +1,28 @@
 import Ember from 'ember';
-import Validations from 'webapp/validations/user/edit';
+import UserValidations from 'webapp/validations/user/edit';
+import IntroValidations from 'webapp/validations/user/intro';
+import AddressValidations from 'webapp/validations/user/address';
+import PhoneValidations from 'webapp/validations/user/phone';
 
 const { computed } = Ember;
-const { service } = Ember.inject;
 
-export default Ember.Controller.extend(Validations, {
+export default Ember.Controller.extend(UserValidations, IntroValidations, AddressValidations, PhoneValidations, {
 
-  translationsFetcher: service('translations-fetcher'),
-
+  user: null,
+  address: null,
   selectedDate: null,
 
-  noSelectedDate: computed.empty('selectedDate'),
-
   /**
-   * Indicates whether the user's first/last name can be edited.
+   * Hosts do not have a user address, skip validation.
    */
-  canEditName: computed.readOnly('sessionUser.user.isAdmin'),
-
-  /**
-   * Indicates whether the user's birth date can be edited.
-   * Legacy users do not have a birth date so give them a chance to set one when editing their info.
-   */
-  canEditBirthDate: computed.or('sessionUser.user.isAdmin', 'noSelectedDate'),
+  disableAddressValidation: computed.empty('address.id'),
 
   actions: {
     saveUser() {
 
-      // Get the user
+      // Get the models
       let user = this.get('user');
+      let address = this.get('address');
 
       // Validate the form
       this.validate().then(({ validations })=> {
@@ -35,14 +30,14 @@ export default Ember.Controller.extend(Validations, {
         this.set('validations.didValidate', true);
         if (validations.get('isValid')) {
 
-          // Save the user
-          user.save().then(()=> {
-            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
+          let promises = [user.save()];
+          if (address) {
+            promises.push(address.save());
+          }
 
-            // Fetch translations from server if the user locale was updated
-            if (this.get('i18n.locale') !== user.get('locale')) {
-              this.get('translationsFetcher').fetch();
-            }
+          // Save all models
+          Ember.RSVP.all(promises).then(()=> {
+            this.get('notify').success(this.get('i18n').t('notify.informationUpdated'));
 
             // Refresh the session across all tabs
             this.get('sessionUser').refresh();
@@ -62,6 +57,14 @@ export default Ember.Controller.extend(Validations, {
 
     dateSelected(date) {
       this.set('user.birthDate', date.format('YYYY-MM-DD'));
+    },
+
+    countryDidChange(country) {
+      this.set('address.country', country);
+    },
+
+    departmentDidChange(department) {
+      this.set('address.department', department);
     }
   }
 });
