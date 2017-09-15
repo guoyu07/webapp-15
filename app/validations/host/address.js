@@ -24,12 +24,14 @@ export default buildValidations({
     })
   ],
   'address.latitude': validator('number', {
+    allowBlank: true,
     allowString: true,
     integer: false,
     gte: -90,
     lte: 90
   }),
   'address.longitude': validator('number', {
+    allowBlank: true,
     allowString: true,
     integer: false,
     gte: -180,
