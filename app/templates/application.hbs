@@ -59,7 +59,9 @@
         <ul class="nav navbar-nav navbar-right">
           {{#if sessionUser.user.host.id}}
             {{#link-to 'host.index' sessionUser.user.host.id tagName='li' activeClass=''}}
-              <a href={{view.href}}>{{t 'menu.hostProfile'}}</a>
+              <a href={{view.href}}>
+                {{profile-status type='host' user=sessionUser.user class='prx'}}{{t 'menu.hostProfile'}}
+              </a>
             {{/link-to}}
           {{else}}
             {{#unless sessionUser.user.hasWwooferMemberships}}
