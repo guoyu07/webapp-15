@@ -180,7 +180,7 @@
             </h3>
           </div>
           <ul class="list-group">
-            {{#if isActiveMember}}
+            {{#if sessionUser.user.hasMemberships}}
               {{#each model.displayedReviews as |review|}}
                 {{review-item
                   review=review
