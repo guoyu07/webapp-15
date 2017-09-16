@@ -7,22 +7,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     return this.get('i18n').t('titles.user.edit');
   },
 
-  model() {
-    let user = this.get('sessionUser.user');
-    let address = user.get('address');
-
-    return Ember.RSVP.hash({
-      user,
-      address
-    });
-  },
-
-  setupController(controller, models) {
+  setupController(controller, user) {
     let selectedDate = null;
-    if (models.user.get('birthDate')) {
-      selectedDate = moment(models.user.get('birthDate'));
+    if (user.get('birthDate')) {
+      selectedDate = moment(user.get('birthDate'));
     }
     controller.set('selectedDate', selectedDate);
-    controller.setProperties(models);
+    controller.set('user', user);
+    controller.set('address', user.get('address'));
   }
 });
