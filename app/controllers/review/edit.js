@@ -5,7 +5,7 @@ export default Ember.Controller.extend(Validations, {
 
   queryParams: ['from'],
 
-  from: 'host',
+  from: '',
 
   actions: {
     saveReview(review) {
@@ -21,11 +21,12 @@ export default Ember.Controller.extend(Validations, {
             this.get('notify').success(this.get('i18n').t('notify.reviewUpdated'));
 
             // Redirect user
-            let from = this.get('from');
-            if (from === 'host') {
-              this.transitionToRoute('host.index', review.get('host.id'));
-            } else if (from === 'admin') {
+            if (this.get('from') === 'admin') {
               this.transitionToRoute('reviews.index');
+            } else if (review.get('isHostReview')) {
+              this.transitionToRoute('host.index', review.get('host.id'));
+            } else {
+              this.transitionToRoute('user.index', review.get('reviewee.id'));
             }
           });
         } else {

@@ -3,8 +3,9 @@ import Validations from 'webapp/validations/review';
 
 export default Ember.Controller.extend(Validations, {
 
-  queryParams: ['hostId'],
+  queryParams: ['revieweeId', 'hostId'],
 
+  revieweeId: null,
   hostId: null,
 
   review: null,
@@ -19,7 +20,12 @@ export default Ember.Controller.extend(Validations, {
 
           review.save().then(()=> {
             this.get('notify').success(this.get('i18n').t('notify.reviewSubmitted'));
-            this.transitionToRoute('host.index', review.get('host.id'));
+
+            if (review.get('isHostReview')) {
+              this.transitionToRoute('host.index', review.get('host.id'));
+            } else {
+              this.transitionToRoute('user.index', review.get('reviewee.id'));
+            }
           });
         } else {
           this.get('notify').error(this.get('i18n').t('notify.submissionInvalid'));

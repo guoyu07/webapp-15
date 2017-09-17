@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
       return true;
     }
 
-    // Disable new review button if the current wwoofer has already reviewed the host
+    // Disable new review button if the wwoofer currently authenticated has already reviewed the host
     let authorIds = this.get('model.reviews').filterBy('isNew', false).mapBy('author.id');
     let userId = this.get('sessionUser.user.id');
 
@@ -45,7 +45,12 @@ export default Ember.Controller.extend({
       if (!this.get('session.isAuthenticated')) {
         return this.transitionToRoute('login');
       }
-      this.transitionToRoute('reviews.new', { queryParams: { hostId: this.get('model.id') } });
+      this.transitionToRoute('reviews.new', {
+        queryParams: {
+          revieweeId: this.get('model.user.id'),
+          hostId: this.get('model.id')
+        }
+      });
     },
     deleteReview(review) {
       let confirmed = confirm(this.get('i18n').t('host.index.areYouSure'));

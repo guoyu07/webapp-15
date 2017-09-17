@@ -4,6 +4,7 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'p',
+  text: '',
   isExpanded: false,
   truncateAt: 300,
 
@@ -12,7 +13,7 @@ export default Ember.Component.extend({
    */
   actions: {
     toggle() {
-      this.set('isExpanded', !this.get('isExpanded'));
+      this.toggleProperty('isExpanded');
     }
   },
 
@@ -24,6 +25,14 @@ export default Ember.Component.extend({
     if (!Ember.isEmpty(text)) {
       text = this.get('isExpanded') ? text : text.slice(0, this.get('truncateAt')).concat('...');
     }
-    return text;
+
+    text = Ember.Handlebars.Utils.escapeExpression(text);
+    text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+    return Ember.String.htmlSafe(text);
+  }),
+
+  canExpand: computed('isExpanded', 'text.length', function() {
+    return this.get('isExpanded') === false
+      && this.get('text.length') > this.get('truncateAt');
   })
 });
