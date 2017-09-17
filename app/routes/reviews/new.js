@@ -9,15 +9,15 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   model(params) {
     let promises = {
-      user: this.get('sessionUser.user'),
-      host: this.store.findRecord('host', params.hostId)
+      author: this.get('sessionUser.user'),
+      reviewee: this.store.findRecord('user', params.revieweeId)
     };
+    if (params.hostId) {
+      promises.host = this.store.findRecord('host', params.hostId);
+    }
 
     return Ember.RSVP.hash(promises).then((result)=> {
-      return this.store.createRecord('review', {
-        host: result.host,
-        author: result.user
-      });
+      return this.store.createRecord('review', result);
     });
   },
 

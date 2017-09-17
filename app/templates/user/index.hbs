@@ -33,6 +33,13 @@
         {{/link-to}}
       </ul>
     </div>
+
+    <div class="list-group">
+      <button class="list-group-item {{if disableNewReview 'disabled'}}" disabled={{disableNewReview}} onclick={{action 'writeNewReview'}}>
+        <span class="glyphicon glyphicon-pencil mrx"></span>
+        {{t 'user.index.writeReview' firstName=user.firstName}}
+      </button>
+    </div>
   </div>
 
   <div class="col-xs-12 col-sm-8 col-md-9">
@@ -86,6 +93,32 @@
           <i>{{t 'user.index.informationNotProvided'}}</i>
         {{/if}}
       </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-comment mrx"></span>
+          {{t 'literal.reviews'}}
+        </h3>
+      </div>
+      <ul class="list-group">
+        {{#if sessionUser.user.hasMemberships}}
+          {{#each user.displayedWwooferReceivedReviews as |review|}}
+            {{review-item
+              review=review
+              isCurrentUserProfile=isCurrentUserProfile
+              saveReviewReply=(action 'saveReviewReply')
+              deleteReview=(action 'deleteReview')}}
+          {{else}}
+            <li class="list-group-item">{{t 'user.index.noReviews'}}</li>
+          {{/each}}
+        {{else}}
+          <li class="list-group-item">
+            {{members-only}}
+          </li>
+        {{/if}}
+      </ul>
     </div>
   </div>
 </div>

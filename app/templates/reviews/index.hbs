@@ -37,16 +37,14 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <p>
-                {{#if review.isHostReview}}
-                  {{#link-to 'user.index' review.author.id}}{{review.author.fullName}}{{/link-to}}
-                {{else}}
-                  {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
-                {{/if}}
+                {{#link-to 'user.index' review.author.id}}{{review.author.fullName}}{{/link-to}}
+                {{#unless review.isHostReview}}
+                  [{{#link-to 'host.index' review.author.host.id}}{{review.author.host.farmName}}{{/link-to}}]
+                {{/unless}}
                 {{t 'reviews.index.reviewed'}}
+                {{#link-to 'user.index' review.reviewee.id}}{{review.reviewee.fullName}}{{/link-to}}
                 {{#if review.isHostReview}}
-                  {{#link-to 'host.index' review.host.id}}{{review.host.farmName}}{{/link-to}}
-                {{else}}
-                  {{#link-to 'user.index' review.todo.id}}{{review.todo.fullName}}{{/link-to}}
+                  [{{#link-to 'host.index' review.host.id}}{{review.host.farmName}}{{/link-to}}]
                 {{/if}}
                 <small class="pull-right">{{review-rating review=review readonly=true}}</small>
               </p>
@@ -69,17 +67,15 @@
             <div class="panel panel-default col-xs-offset-1">
               <div class="panel-body">
                 <p>
+                  {{#link-to 'user.index' review.reviewee.id}}{{review.reviewee.fullName}}{{/link-to}}
                   {{#if review.isHostReview}}
-                    {{#link-to 'host.index' review.host.id}}{{review.host.user.fullName}}{{/link-to}}
-                  {{else}}
-                    {{#link-to 'user.index' review.todo.id}}{{review.todo.user.fullName}}{{/link-to}}
+                    [{{#link-to 'host.index' review.host.id}}{{review.host.farmName}}{{/link-to}}]
                   {{/if}}
                   {{t 'reviews.index.repliedTo'}}
-                  {{#if review.isHostReview}}
-                    {{#link-to 'user.index' review.author.id}}{{review.author.fullName}}{{/link-to}}
-                  {{else}}
-                    {{#link-to 'host.index' review.author.host.id}}{{review.author.fullName}}{{/link-to}}
-                  {{/if}}
+                  {{#link-to 'user.index' review.author.id}}{{review.author.fullName}}{{/link-to}}
+                  {{#unless review.isHostReview}}
+                    [{{#link-to 'host.index' review.author.host.id}}{{review.author.host.farmName}}{{/link-to}}]
+                  {{/unless}}
                 </p>
                 <p>{{convert-breaklines review.replyText}}</p>
                 {{#if review.replyApprovedAt}}

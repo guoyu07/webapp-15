@@ -17,12 +17,12 @@ export default DS.Model.extend({
   replyApprovedAt: DS.attr('date'),
 
   // Relationships
-  host: DS.belongsTo('host', { async: true }),
-  wwoofer: DS.belongsTo('wwoofer', { async: true }),
   author: DS.belongsTo('user', { async: true }),
+  reviewee: DS.belongsTo('user', { async: true }),
+  host: DS.belongsTo('host', { async: true }),
 
   isHostReview: computed.notEmpty('host.id'),
-  isWwooferReview: computed.notEmpty('wwoofer.id'),
+  isWwooferReview: computed.not('isHostReview'),
 
   hasOneStar: computed.gte('rating', 1),
   hasTwoStars: computed.gte('rating', 2),
@@ -73,9 +73,5 @@ export default DS.Model.extend({
   replyTextCharLeft: computed('replyText.length', function () {
     let length = this.get('replyText.length') || 0;
     return Math.max(0, 1000 - length);
-  }),
-
-  revieweeName: computed('isHostReview', 'host.farmName', 'wwoofer.user.firstName', function () {
-    return this.get('isHostReview') === true ? this.get('host.farmName') : this.get('wwoofer.user.firstName');
   })
 });

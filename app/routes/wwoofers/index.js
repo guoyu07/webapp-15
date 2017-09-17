@@ -30,6 +30,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     };
     let promises = {};
 
+    if (params.searchTerm) {
+      userParams.searchTerm = params.searchTerm;
+    }
     if (params.country) {
       userParams.country = params.country;
       promises.country = this.store.findRecord('country', params.country);

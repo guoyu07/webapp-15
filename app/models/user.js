@@ -32,10 +32,22 @@ export default DS.Model.extend({
     inverse: 'followers',
     async: true
   }),
+  writtenReviews: DS.hasMany('reviews', {
+    inverse: 'author',
+    async: true
+  }),
+  receivedReviews: DS.hasMany('reviews', {
+    inverse: 'reviewee',
+    async: true
+  }),
+
   _addresses: computed.collect('host.address', 'address'),
   addresses: computed.filter('_addresses', function (address) {
     return Ember.isPresent(address);
   }),
+
+  wwooferReceivedReviews: computed.filterBy('receivedReviews', 'isHostReview', false),
+  displayedWwooferReceivedReviews: computed.filterBy('wwooferReceivedReviews', 'isNew', false),
 
   getImageUrl(size) {
     let fileName = this.get('photo') || 'default.png';
@@ -48,6 +60,10 @@ export default DS.Model.extend({
 
   photoUrlThumb1: computed('photo', function () {
     return this.getImageUrl('100x100');
+  }),
+
+  photoUrlThumbMini: computed('photo', function () {
+    return this.getImageUrl('48x48');
   }),
 
   conversationUrlThumb1: computed('photo', 'host.thumbnail.urlThumb1', function () {

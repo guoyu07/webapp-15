@@ -1,10 +1,8 @@
-{{convert-breaklines displayedText}}
-<strong>
-  <a href="#" {{action 'toggle'}}>
-    {{#if isExpanded}}
-      {{t 'literal.hide'}}
-    {{else}}
+<span class="keep-me">{{convert-breaklines displayedText}}</span>
+{{#if canExpand}}
+  <strong>
+    <a href="#" {{action 'toggle'}}>
       {{t 'literal.showMore'}}
-    {{/if}}
-  </a>
-</strong>
+    </a>
+  </strong>
+{{/if}}
