@@ -46,7 +46,8 @@ export default DS.Model.extend({
     return Ember.isPresent(address);
   }),
 
-  displayedReceivedReviews: computed.filterBy('receivedReviews', 'isNew', false),
+  wwooferReceivedReviews: computed.filterBy('receivedReviews', 'isHostReview', false),
+  displayedWwooferReceivedReviews: computed.filterBy('wwooferReceivedReviews', 'isNew', false),
 
   getImageUrl(size) {
     let fileName = this.get('photo') || 'default.png';

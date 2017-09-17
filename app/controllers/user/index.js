@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
   showPhone: computed.and('hasPhone', 'sessionUser.user.hasActiveMembership'),
 
   disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasHostMemberships',
-    'user.receivedReviews.@each.author', 'user.receivedReviews.@each.isNew', 'sessionUser.user.id', function () {
+    'user.receivedReviews.@each.author', 'user.receivedReviews.@each.isNew', 'sessionUser.user.id', function() {
       if (!this.get('session.isAuthenticated')) {
         return false;
       }
@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
       }
 
       // Disable new review button if the host currently authenticated has already reviewed the wwoofer
-      let authorIds = this.get('model.receivedReviews').filterBy('isNew', false).mapBy('author.id');
+      let authorIds = this.get('user.receivedReviews').filterBy('isNew', false).mapBy('author.id');
       let userId = this.get('sessionUser.user.id');
 
       return authorIds.includes(userId);
@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
       if (confirmed) {
         let promise = review.destroyRecord();
 
-        promise.then(()=> {
+        promise.then(() => {
           this.get('notify').success(this.get('i18n').t('notify.reviewDeleted'));
         });
       }
@@ -58,7 +58,7 @@ export default Ember.Controller.extend({
     saveReviewReply(review) {
       let promise = review.save();
 
-      promise.then(()=> {
+      promise.then(() => {
         this.get('notify').success(this.get('i18n').t('notify.replySubmitted'));
       });
     }

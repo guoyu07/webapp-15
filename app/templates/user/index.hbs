@@ -37,7 +37,7 @@
     <div class="list-group">
       <button class="list-group-item {{if disableNewReview 'disabled'}}" disabled={{disableNewReview}} onclick={{action 'writeNewReview'}}>
         <span class="glyphicon glyphicon-pencil mrx"></span>
-        {{t 'host.index.writeReview'}}
+        {{t 'user.index.writeReview' firstName=user.firstName}}
       </button>
     </div>
   </div>
@@ -104,7 +104,7 @@
       </div>
       <ul class="list-group">
         {{#if sessionUser.user.hasMemberships}}
-          {{#each user.displayedReceivedReviews as |review|}}
+          {{#each user.displayedWwooferReceivedReviews as |review|}}
             {{review-item
               review=review
               isCurrentUserProfile=isCurrentUserProfile
