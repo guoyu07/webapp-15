@@ -12,6 +12,15 @@
   background-color: #eeeeee;
 }
 
-.message-text {
-  min-height: 70px;
+.conversation-item {
+  height: 100px;
+  padding: 20px;
+}
+
+.conversation-text {
+  overflow: hidden;
+  height: 40px;
+  @media (min-width: @screen-sm-min) {
+    height: 60px;
+  }
 }

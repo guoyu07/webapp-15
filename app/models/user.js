@@ -59,10 +59,6 @@ export default DS.Model.extend({
   }),
 
   photoUrlThumb1: computed('photo', function () {
-    return this.getImageUrl('100x100');
-  }),
-
-  photoUrlThumbMini: computed('photo', function () {
     return this.getImageUrl('48x48');
   }),
 
@@ -70,7 +66,7 @@ export default DS.Model.extend({
     let photo = this.get('photo');
     let hostThumbnailUrl = this.get('host.thumbnail.urlThumb1');
     if (photo || !hostThumbnailUrl) {
-      return this.getImageUrl('100x100');
+      return this.getImageUrl('48x48');
     } else {
       return hostThumbnailUrl;
     }

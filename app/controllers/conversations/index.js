@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   queryParams: ['page', 'itemsPerPage', 'searchTerm'],
 
   page: 1,
-  itemsPerPage: 5,
+  itemsPerPage: 10,
   searchTerm: '',
 
   isLoading: false,

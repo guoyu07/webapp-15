@@ -32,7 +32,7 @@ export default DS.Model.extend(Validations, {
   }),
 
   urlThumb1: computed('filename', function () {
-    return this.getImageUrl('100x100');
+    return this.getImageUrl('48x48');
   }),
 
   isThumbnail: computed('host.thumbnail.id', 'id', function () {
