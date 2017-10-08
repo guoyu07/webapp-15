@@ -11,21 +11,23 @@
           {{/if}}
         </h2>
         <hr>
-        <ul class="list-unstyled mbn">
+        <ul class="list-unstyled list-user-actions mbn">
           {{#if canEditProfile}}
-            <li class="mbs">
+            <li>
               <span class="glyphicon glyphicon-pencil mrx"></span>
               {{#link-to 'user.edit' user.id}}{{t 'literal.editProfile'}}{{/link-to}}
             </li>
           {{/if}}
-          <li class="{{if showReviewLink 'mbs' 'mbn'}}">
-            <span class="glyphicon glyphicon-envelope mrx"></span>
-            {{#link-to 'conversations.new' (query-params user2Id=user.id)}}
-              {{t 'user.index.sendMessage'}}
-            {{/link-to}}
-          </li>
+          {{#unless user.host.noEmail}}
+            <li>
+              <span class="glyphicon glyphicon-envelope mrx"></span>
+              {{#link-to 'conversations.new' (query-params user2Id=user.id)}}
+                {{t 'user.index.sendMessage'}}
+              {{/link-to}}
+            </li>
+          {{/unless}}
           {{#if showReviewLink}}
-            <li class="mbn">
+            <li>
               <span class="glyphicon glyphicon-comment mrx"></span>
               {{#link-to 'reviews.new' (query-params revieweeId=user.id)}}
                 {{t 'user.index.writeReview'}}
