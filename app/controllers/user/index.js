@@ -12,26 +12,24 @@ export default Ember.Controller.extend({
 
   showNote: computed.and('user.note', 'sessionUser.user.isAdmin'),
 
-  showEditProfileButton: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile'),
+  canEditProfile: computed.or('sessionUser.user.isAdmin', 'isCurrentUserProfile'),
 
-  hasPhone: computed.notEmpty('user.phone'),
-  showPhone: computed.and('hasPhone', 'sessionUser.user.hasActiveMembership'),
+  showReviewLink: computed('user.hasWwooferMemberships', 'sessionUser.user.hasHostMemberships', 'user.receivedReviews.@each.author', 'user.receivedReviews.@each.isNew', 'sessionUser.user.id', function() {
+    let showReviewLink = false;
 
-  disableNewReview: computed('session.isAuthenticated', 'sessionUser.user.hasHostMemberships',
-    'user.receivedReviews.@each.author', 'user.receivedReviews.@each.isNew', 'sessionUser.user.id', function() {
-      if (!this.get('session.isAuthenticated')) {
-        return false;
-      }
-      if (!this.get('sessionUser.user.hasHostMemberships')) {
-        return true;
-      }
+    if (!this.get('user.hasWwooferMemberships')) {
+      showReviewLink = false;
+    } else if (this.get('sessionUser.user.hasHostMemberships')) {
 
-      // Disable new review button if the host currently authenticated has already reviewed the wwoofer
+      // Check if the host currently authenticated has already reviewed the wwoofer
       let authorIds = this.get('user.receivedReviews').filterBy('isNew', false).mapBy('author.id');
       let userId = this.get('sessionUser.user.id');
 
-      return authorIds.includes(userId);
-    }),
+      showReviewLink = !authorIds.includes(userId);
+    }
+
+    return showReviewLink;
+  }),
 
   actions: {
     writeNewReview() {
