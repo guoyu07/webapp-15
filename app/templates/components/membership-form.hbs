@@ -25,36 +25,38 @@
           {{t 'membership-form.itemCode.details'}}
         </p>
       </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" checked={{membership.includeBooklet}} onclick={{toggleBookletIncluded}} />
-              {{t 'membership-form.booklet'}}
-            </label>
+      {{#if membership.isWwoofer}}
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" checked={{membership.includeBooklet}} onclick={{toggleBookletIncluded}} />
+                {{t 'membership-form.booklet'}}
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-      {{#if membership.includeBooklet}}
-        {{#forms/form-group valuePath='shippingRegion' validations=validations as |showError|}}
-          <label for="shippingRegions" class="col-sm-2 control-label">{{t 'membership-form.shipping.label'}}</label>
+        {{#if membership.includeBooklet}}
+          {{#forms/form-group valuePath='shippingRegion' validations=validations as |showError|}}
+            <label for="shippingRegions" class="col-sm-2 control-label">{{t 'membership-form.shipping.label'}}</label>
 
-          <div class="col-sm-10">
-            {{#each membershipsService.shippingRegionOptions as |shippingRegionOption|}}
-              <div class="radio">
-                {{#radio-button value=shippingRegionOption.id groupValue=shippingRegion changed=shippingRegionChanged}}
-                  {{shippingRegionOption.name}}
-                {{/radio-button}}
-              </div>
-            {{/each}}
-            {{error-display error=validations.attrs.shippingRegion showError=showError}}
+            <div class="col-sm-10">
+              {{#each membershipsService.shippingRegionOptions as |shippingRegionOption|}}
+                <div class="radio">
+                  {{#radio-button value=shippingRegionOption.id groupValue=shippingRegion changed=shippingRegionChanged}}
+                    {{shippingRegionOption.name}}
+                  {{/radio-button}}
+                </div>
+              {{/each}}
+              {{error-display error=validations.attrs.shippingRegion showError=showError}}
+            </div>
+          {{/forms/form-group}}
+          <div class="col-sm-offset-2 col-sm-10">
+            <p class="form-details mbm">
+              {{t 'membership-form.shipping.details'}}
+            </p>
           </div>
-        {{/forms/form-group}}
-        <div class="col-sm-offset-2 col-sm-10">
-          <p class="form-details mbm">
-            {{t 'membership-form.shipping.details'}}
-          </p>
-        </div>
+        {{/if}}
       {{/if}}
     {{/if}}
     {{#if isAdminMode}}

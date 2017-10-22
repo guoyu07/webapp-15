@@ -13,7 +13,7 @@ export default DS.Model.extend({
   saleId: DS.attr('string'),
   expireAt: DS.attr('date'),
   itemCode: DS.attr('string'),
-  includeBooklet: DS.attr('boolean'),
+  includeBooklet: DS.attr('boolean', { defaultValue: false }),
   paymentType: DS.attr('string'),
   total: DS.attr('number'),
   reminderSentAt: DS.attr('date'),
