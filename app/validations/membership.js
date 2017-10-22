@@ -9,9 +9,9 @@ export default buildValidations({
   'shippingRegion': [
     validator('presence', {
       presence: true,
-      dependentKeys: ['model.membership.hasBooklet'],
+      dependentKeys: ['model.membership.includeBooklet'],
       disabled: Ember.computed(function() {
-        return this.get('model.membership.isNew') === false || this.get('model.membership.hasBooklet') === false;
+        return this.get('model.membership.isNew') === false || this.get('model.membership.includeBooklet') === false;
       }).volatile()
     })
   ],

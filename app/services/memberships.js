@@ -11,8 +11,6 @@ export default Ember.Service.extend({
     return [
       { id: 'WO1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO1', { price: '25' }), price: 25 },
       { id: 'WO2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WO2', { price: '30' }), price: 30 },
-      { id: 'WOB1', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB1', { price: '42' }), price: 42 },
-      { id: 'WOB2', type: 'W', name: this.get('i18n').t('memberships.itemCodes.WOB2', { price: '47' }), price: 47 },
       { id: 'H', type: 'H', name: this.get('i18n').t('memberships.itemCodes.H', { price: '35' }), price: 35 },
       { id: 'HR', type: 'H', name: this.get('i18n').t('memberships.itemCodes.HR', { price: '30' }), price: 30 }
     ];
@@ -20,11 +18,8 @@ export default Ember.Service.extend({
 
   shippingRegionOptions: computed('i18n.locale', function() {
     return [
-      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: '5.01' }), price: 5.01 },
-      { id: 'OM1', name: this.get('i18n').t('memberships.shipping.OM1', { price: '8.91' }), price: 8.91 },
-      { id: 'OM2', name: this.get('i18n').t('memberships.shipping.OM2', { price: '13.59' }), price: 13.59 },
-      { id: 'EU', name: this.get('i18n').t('memberships.shipping.EU', { price: '9.91' }), price: 9.91 },
-      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: '12.15' }), price: 12.15 }
+      { id: 'FR', name: this.get('i18n').t('memberships.shipping.FR', { price: '5' }), price: 5 },
+      { id: 'WD', name: this.get('i18n').t('memberships.shipping.WD', { price: '10' }), price: 10 }
     ];
   }),
 

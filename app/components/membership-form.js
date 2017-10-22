@@ -13,5 +13,5 @@ export default Ember.Component.extend({
     return this.get('membershipsService.membershipOptions').filterBy('type', this.get('membership.type'));
   }),
 
-  showShippingRegions: computed.and('membership.hasBooklet', 'membership.isNew')
+  showShippingRegions: computed.and('includeBooklet', 'membership.isNew')
 });
