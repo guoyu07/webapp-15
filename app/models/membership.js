@@ -13,6 +13,7 @@ export default DS.Model.extend({
   saleId: DS.attr('string'),
   expireAt: DS.attr('date'),
   itemCode: DS.attr('string'),
+  includeBooklet: DS.attr('boolean', { defaultValue: false }),
   paymentType: DS.attr('string'),
   total: DS.attr('number'),
   reminderSentAt: DS.attr('date'),
@@ -36,8 +37,7 @@ export default DS.Model.extend({
 
   isWwoofer: computed.equal('type', 'W'),
   isHost: computed.equal('type', 'H'),
-  isDuo: computed.match('itemCode', /WO2|WOB2/),
-  hasBooklet: computed.match('itemCode', /WOB1|WOB2/),
+  isDuo: computed.equal('itemCode', 'WO2'),
 
   /**
    * Returns the full name of the second wwoofer.

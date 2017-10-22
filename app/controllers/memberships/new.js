@@ -9,7 +9,7 @@ export default Ember.Controller.extend(Validations, {
   ajax: service('ajax'),
   membershipsService: service('memberships'),
 
-  queryParams: ['type', 'itemCode', 'shippingRegion', 'userId'],
+  queryParams: ['type', 'itemCode', 'userId'],
 
   type: null,
   itemCode: null,
@@ -39,7 +39,9 @@ export default Ember.Controller.extend(Validations, {
     let shippingRegionOption = this.get('membershipsService.shippingRegionOptions').findBy('id', shippingRegion);
     let shippingFee = shippingRegionOption ? shippingRegionOption.price : 0;
 
-    let total = itemPrice + shippingFee;
+    let bookletPrice = this.get('membership.includeBooklet') ? 17 : 0;
+
+    let total = itemPrice + bookletPrice + shippingFee;
 
     let isFree = this.get('isFree');
     if (isFree) {
@@ -66,6 +68,7 @@ export default Ember.Controller.extend(Validations, {
           let shippingRegion = this.get('shippingRegion');
 
           payment.itemCode = membership.get('itemCode');
+          payment.includeBooklet = membership.get('includeBooklet');
           if (shippingRegion) {
             payment.shippingRegion = shippingRegion;
           }
@@ -147,23 +150,15 @@ export default Ember.Controller.extend(Validations, {
       this.set('membership.paymentType', paymentTypeId);
     },
 
-    itemCodeChanged(membershipOption) {
-      this.set('itemCode', membershipOption);
-      this.set('membership.itemCode', membershipOption);
+    itemCodeChanged(itemCode) {
+      this.set('itemCode', itemCode);
+      this.set('membership.itemCode', itemCode);
 
       if (this.get('membership.isDuo') === false) {
         this.set('membership.firstName2', null);
         this.set('membership.lastName2', null);
         this.set('membership.birthDate2', null);
         this.set('selectedDate', null);
-      }
-
-      if (this.get('membership.hasBooklet') === true) {
-        if (!this.get('shippingRegion')) {
-          this.set('shippingRegion', 'FR');
-        }
-      } else {
-        this.set('shippingRegion', null);
       }
 
       this.updateTotal();
@@ -178,6 +173,22 @@ export default Ember.Controller.extend(Validations, {
       this.toggleProperty('isFree');
       this.set('paymentType', null);
       this.updateTotal();
+    },
+
+    toggleBookletIncluded() {
+      this.toggleProperty('membership.includeBooklet');
+
+      if (this.get('membership.includeBooklet')) {
+        let region;
+        this.get('membership.user.addresses.firstObject.country').then((country) => {
+          region = country.get('isFrance') ? 'FR' : 'WD';
+          this.set('shippingRegion', region);
+          this.updateTotal();
+        });
+      } else {
+        this.set('shippingRegion', null);
+        this.updateTotal();
+      }
     },
 
     dateSelected(date) {

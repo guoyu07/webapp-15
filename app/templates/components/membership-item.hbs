@@ -5,7 +5,7 @@
 <td>{{moment-format membership.createdAt 'll'}}</td>
 <td class={{expireAtClass}}>{{moment-format membership.expireAt 'll'}}</td>
 <td>
-  {{#if membership.hasBooklet}}
+  {{#if membership.includeBooklet}}
     {{#if membership.bookletSentAt}}
       <span class="glyphicon glyphicon-ok" title={{moment-format membership.bookletSentAt}}></span>
     {{else}}
