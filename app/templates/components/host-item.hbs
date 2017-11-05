@@ -12,9 +12,9 @@
       <span class="glyphicon glyphicon-larger glyphicon-heart-empty"></span>
     </button>
   {{/if}}
-  {{#if host.reviewCount}}
+  {{#if host.reviewIds.length}}
     <div class="btn btn-primary">
-      <span class="glyphicon glyphicon-comment mrx"></span>{{host.reviewCount}}
+      <span class="glyphicon glyphicon-comment mrx"></span>{{host.reviewIds.length}}
     </div>
   {{/if}}
   {{#if host.isRecent}}

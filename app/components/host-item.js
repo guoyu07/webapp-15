@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   classNames: ['thumbnail', 'host-item'],
 
   hostId: null,
+  favoriteIds: [],
 
   /**
    * Returns the current host.
@@ -18,15 +19,11 @@ export default Ember.Component.extend({
     return this.get('store').findRecord('host', this.get('hostId'));
   }),
 
-  userFavorites: [],
-
-  favoritesIds: computed.mapBy('userFavorites', 'id'),
-
   /**
    * Indicates whether the host is a favorite.
    */
-  isFavorite: computed('favoritesIds.[]', 'host.id', function() {
-    let favoritesIds = this.get('favoritesIds');
+  isFavorite: computed('favoriteIds.[]', 'host.id', function() {
+    let favoritesIds = this.get('favoriteIds');
     let hostId = this.get('host.id');
     let isFavorite = false;
     if (favoritesIds && hostId) {

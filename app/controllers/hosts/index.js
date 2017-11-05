@@ -188,7 +188,7 @@ export default Ember.Controller.extend({
       this.set('isLoading', false);
     });
   },
-  
+
   search() {
     this.set('page', 1);
     this.refreshList();
@@ -302,7 +302,7 @@ export default Ember.Controller.extend({
           this.send('removeUserFavorite', host, user);
         });
       } else {
-        this.send('addUserFavorite', host);
+        this.send('removeUserFavorite', host);
       }
     }
   }

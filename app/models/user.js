@@ -49,6 +49,11 @@ export default DS.Model.extend({
   wwooferReceivedReviews: computed.filterBy('receivedReviews', 'isHostReview', false),
   displayedWwooferReceivedReviews: computed.filterBy('wwooferReceivedReviews', 'isNew', false),
 
+  // Use this instead of favorites.mapBy('id') to prevent Ember data from fetching the records
+  favoriteIds: computed('favorites.[]', function () {
+    return this.hasMany('favorites').ids();
+  }),
+
   getImageUrl(size) {
     let fileName = this.get('photo') || 'default.png';
     return `${config.thumbor.baseUrl}/${size}/photos/users/${fileName}`;
