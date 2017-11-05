@@ -50,6 +50,11 @@ export default DS.Model.extend({
   address: DS.belongsTo('address', { async: false }),
   reviews: DS.hasMany('review', { async: true }),
 
+  // Number of reviews - use this instead of reviews.length to prevent Ember data from fetching the reviews
+  reviewCount: computed('reviews', function() {
+    return this.hasMany('reviews').ids().length;
+  }),
+
   // Reviews sorted by creation date (most recent first)
   createdAtSortingDesc: ['createdAt:desc'],
   sortedReviews: computed.sort('reviews', 'createdAtSortingDesc'),
