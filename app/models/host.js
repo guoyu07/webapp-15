@@ -152,7 +152,7 @@ export default DS.Model.extend({
   }),
 
   /**
-   * Indocates whether the host can upload more photos (max is 10).
+   * Indicates whether the host can upload more photos (max is 10).
    */
   canUploadPhotos: computed.lt('photos.length', 10),
 

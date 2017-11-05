@@ -177,6 +177,9 @@
               <button {{action 'toggleFavoritesOnly'}} class="btn btn-default {{if favoritesOnly 'active'}}">
                 <span class="glyphicon {{if favoritesOnly 'glyphicon-check' 'glyphicon-unchecked'}} mrx"></span>
                 {{t 'hosts.index.favoritesOnly'}}
+                {{#if sessionUser.user.favorites.length}}
+                  ({{sessionUser.user.favorites.length}})
+                {{/if}}
               </button>
             {{/if}}
             <ul class="pull-right mts nav nav-pills" role="tablist">
